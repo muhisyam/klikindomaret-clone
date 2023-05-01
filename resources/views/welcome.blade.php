@@ -101,10 +101,14 @@
                                 <img class="h-8" src="{{ asset('img/navbar/logo.png') }}" alt="logo">
                             </a>
                         </div>
-                        <div class="category flex items-center mx-10 text-[#0079c2]">
+                        <div class="category flex items-center mx-10 text-[#0079c2]" data-tooltip-target="category--tooltip" data-tooltip-placement="bottom">
                             <span class="icon"><i class="ri-dashboard-fill"></i></span>
                             <span class="mx-1.5">Kategori</span>
                             <span class="icon"><i class="ri-arrow-drop-down-line"></i></span>
+                        </div>
+                        <div id="category--tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Lihat Kategori
+                            <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                         <div class="search__bar w-[39rem]">
                             <form action="">
@@ -119,9 +123,13 @@
                         </div>
                     </div>
                     <div class="right__side flex">
-                        <button class="shopping__basket drop-shadow-sm mt-1 me-7 text-xl text-[#0079c2]">
+                        <button class="shopping__basket drop-shadow-sm mt-1 me-7 text-xl text-[#0079c2]"  data-tooltip-target="shopping__basket--tooltip" data-tooltip-placement="bottom">
                             <span><i class="ri-shopping-basket-fill"></i></span>
                         </button>
+                        <div id="shopping__basket--tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Lihat Keranjang
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
                         <div class="guest__button text-sm">
                             <button type="button" class="rounded-lg border border-[#0079c2] me-2.5 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
                             <button type="button" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
