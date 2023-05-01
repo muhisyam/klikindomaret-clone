@@ -1,0 +1,64 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+    background-image: url(../img/navbar/bg_header.png);
+    background-size: cover;
+}
+
+.navbar .top__section .icon,
+.navbar .bottom__section .icon  {
+    margin-top: 3px;
+    transform: scale(1.25);
+}
+
+.dropdown__app::after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 8px 6px;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -6px;
+    right: 54px;
+    margin-right: 130px;
+}
+
+.dropdown__service::after {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 8px 6px;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -6px;
+    right: 54px;
+    margin-right: -10px;
+}
+
+.navbar .top__section .right__side .guest__info {
+    animation: changeInfo 8s infinite;
+}
+
+@keyframes changeInfo {
+    0%, 25%, 100% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    50%, 75% {
+        transform: translate3d(0, -50%, 0);
+    }
+}
+
+.app__download:hover,
+.user__service:hover,
+.socmed>.icon:hover,
+.category:hover {
+    color: #0079c2;
+    cursor: pointer;
+}
