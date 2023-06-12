@@ -14,17 +14,19 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
         <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+        <link href="{{ asset('css/swiper-bundle.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     </head>
     <body>
         @include('frontend.components.navbar')
 
-        <div class="container mx-auto max-w-7xl">
-            <h1>ssdadsaasd</h1>
+        <div class="container mx-auto max-w-7xl mt-6">
+            @yield('content')
         </div>
 
         {{-- footer --}}
         
+        <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     </body>
 </html>
