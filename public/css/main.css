@@ -2,6 +2,28 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+/* 
+--------------------=================--------------------
+==================== Global Section ====================
+--------------------=================-------------------- 
+*/
+
+.blink {
+    animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* 
+--------------------=================--------------------
+==================== Navbar Section =====================
+--------------------=================-------------------- 
+*/
+
 .navbar {
     background-image: url(../img/navbar/bg_header.png);
     background-size: cover;
@@ -61,4 +83,24 @@ body {
 .category:hover {
     color: #0079c2;
     cursor: pointer;
+}
+
+/* 
+--------------------=================--------------------
+==================== Channel Section ====================
+--------------------=================-------------------- 
+*/
+
+.wrapper__channel {
+    background-image: url(../img/home/bg_other_produk.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.channel .wrapper__channel .list__channel .tag {
+    position: absolute;
+    width: 40px;
+    top: 50px;
+    left: 20px;
 }

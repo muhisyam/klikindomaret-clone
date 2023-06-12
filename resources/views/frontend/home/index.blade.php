@@ -17,3 +17,14 @@
 @include('frontend.home.inc.channel')
 
 @endsection
+
+@section('scripts')
+<script>
+    
+    const swiper = new Swiper('.list__channel', {
+        slidesPerView: 12.5,
+        spaceBetween: 20,
+        preventClicks: true
+    });
+</script>
+@endsection
