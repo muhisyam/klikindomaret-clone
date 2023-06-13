@@ -15,7 +15,8 @@
 </div>
 
 @include('frontend.home.inc.heroes')
-@include('frontend.home.inc.channel')
+@include('frontend.home.inc.channels')
+@include('frontend.home.inc.banners_promo')
 
 
 @endsection
@@ -23,7 +24,7 @@
 @section('scripts')
 <script>
     // Swipper Hero section
-    const heroSwiper = new Swiper('.list__heroes-banner', {
+    const heroSwiper = new Swiper('.list-heroes-banner', {
         slidesPerView: 1.317991,
         centeredSlides: true,
         loop: true,
@@ -39,7 +40,7 @@
     });
 
     // Swipper Channel section
-    const channelSwiper = new Swiper('.list__channel', {
+    const channelSwiper = new Swiper('.list-channel', {
         slidesPerView: 12.5,
         spaceBetween: 20,
         preventClicks: true

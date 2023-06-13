@@ -83,13 +83,13 @@ body {
     background-size: cover;
 }
 
-.navbar .top__section .icon,
-.navbar .bottom__section .icon  {
+.navbar .top-section .icon,
+.navbar .bottom-section .icon  {
     margin-top: 3px;
     transform: scale(1.25);
 }
 
-.dropdown__app::after {
+.dropdown-app::after {
     content: '';
     position: absolute;
     border-style: solid;
@@ -103,7 +103,7 @@ body {
     margin-right: 130px;
 }
 
-.dropdown__service::after {
+.dropdown-service::after {
     content: '';
     position: absolute;
     border-style: solid;
@@ -117,7 +117,7 @@ body {
     margin-right: -10px;
 }
 
-.navbar .top__section .right__side .guest__info {
+.navbar .top-section .right-side .guest-info {
     animation: changeInfo 8s infinite;
 }
 
@@ -131,9 +131,9 @@ body {
     }
 }
 
-.app__download:hover,
-.user__service:hover,
-.socmed>.icon:hover,
+.app-download:hover,
+.user-service:hover,
+.social-media>.icon:hover,
 .category:hover {
     color: #0079c2;
     cursor: pointer;
@@ -159,14 +159,14 @@ body {
 --------------------=================-------------------- 
 */
 
-.wrapper__channel {
+.wrapper-channel {
     background-image: url(../img/home/bg_other_produk.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.channel .wrapper__channel .list__channel .tag {
+.channel .wrapper-channel .list-channel .tag {
     position: absolute;
     width: 40px;
     top: 50px;
