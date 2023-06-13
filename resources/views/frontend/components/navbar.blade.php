@@ -1,4 +1,4 @@
-<nav class="navbar text-[#313131]">
+<nav class="navbar sticky top-0 drop-shadow text-[#313131]">
     <div class="container mx-auto max-w-7xl h-full">
         <div class="top__section flex justify-between">
             <div class="left__side flex text-xs">
