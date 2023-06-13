@@ -159,14 +159,14 @@ body {
 --------------------=================-------------------- 
 */
 
-.wrapper-channel {
+.channel-wrapper {
     background-image: url(../img/home/bg_other_produk.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.channel .wrapper-channel .list-channel .tag {
+.channel .channel-wrapper .list-channel .tag {
     position: absolute;
     width: 40px;
     top: 50px;
