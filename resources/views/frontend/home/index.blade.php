@@ -14,14 +14,32 @@
     </button>
 </div>
 
+@include('frontend.home.inc.heroes')
 @include('frontend.home.inc.channel')
+
 
 @endsection
 
 @section('scripts')
 <script>
-    
-    const swiper = new Swiper('.list__channel', {
+    // Swipper Hero section
+    const heroSwiper = new Swiper('.list__heroes-banner', {
+        slidesPerView: 1.317991,
+        centeredSlides: true,
+        loop: true,
+        spaceBetween: 20,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
+
+    // Swipper Channel section
+    const channelSwiper = new Swiper('.list__channel', {
         slidesPerView: 12.5,
         spaceBetween: 20,
         preventClicks: true

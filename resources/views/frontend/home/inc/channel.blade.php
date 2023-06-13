@@ -5,7 +5,7 @@
         </h2>
         <div class="swiper list__channel">
             <div class="swiper-wrapper">
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://food.klikindomaret.com/" data-name='Food'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/products/banners/Icon_Food.png" alt="Icon Food">
@@ -15,7 +15,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/" data-name='Produk Virtual'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/products/banners/Icon_Virtual.png" alt="Icon Virtual">
@@ -25,7 +25,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://travel.klikindomaret.com/" data-name='Travel'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <div class="tag blink">
@@ -38,7 +38,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://tiket.klikindomaret.com/" data-name='Tiket Wahana'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <div class="tag blink">
@@ -51,7 +51,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/IndomaretPoinku" data-name='Indomaret Poinku'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <div class="tag blink">
@@ -64,7 +64,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/" data-name='Pulsa Paket Data'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualpulsapaketdata3x.jpg" alt="Icon Pulsa">
@@ -74,7 +74,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/pln" data-name='Listrik PLN'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualpln3x.jpg" alt="Icon Listrik">
@@ -84,7 +84,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/multifinance" data-name='Multi Finance'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualmultifinance3x.jpg" alt="Icon Multi Finance">
@@ -94,7 +94,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/EWallet" data-name='E-Samsat'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualesamsat3x.jpg" alt="Icon E-Samsat">
@@ -104,7 +104,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/EWallet" data-name='E-Money'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualemoney3x.jpg" alt="Icon E-Money">
@@ -114,7 +114,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/pdam" data-name='PDAM'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualpdam3x.jpg" alt="Icon PDAM">
@@ -124,7 +124,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/internettv" data-name='Internet TV Kabel'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualinternettvkabel3x.jpg" alt="Icon TV Kabel">
@@ -134,7 +134,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/bpjs" data-name='BPJS'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualbpjs3x.jpg" alt="Icon BPJS">
@@ -144,7 +144,7 @@
                         </h3>
                     </a>
                 </div>
-                <div class="swiper-slide item">
+                <div class="swiper-slide item__channel">
                     <a href="https://virtual.klikindomaret.com/category/pgn" data-name='GAS'>
                         <div class="media w-[80px] p-4 bg-white rounded-md shadow">
                             <img src="https://assets.klikindomaret.com/images/virtualklik/category/category_virtualgaspgn3x.jpg" alt="Icon GAS">
