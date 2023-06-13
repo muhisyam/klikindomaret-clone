@@ -16,7 +16,7 @@
 
 @include('frontend.home.inc.heroes')
 @include('frontend.home.inc.channels')
-@include('frontend.home.inc.banners_promo')
+@include('frontend.home.inc.promo_banners')
 
 
 @endsection
@@ -44,6 +44,12 @@
         slidesPerView: 12.5,
         spaceBetween: 20,
         preventClicks: true
+    });
+
+    // Swipper Promo section
+    const promoSwiper = new Swiper('.list-promo', {
+        slidesPerView: 2.5,
+        spaceBetween: 20,
     });
 </script>
 @endsection
