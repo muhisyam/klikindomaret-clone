@@ -20,7 +20,7 @@
     <body>
         @include('frontend.components.navbar')
 
-        <div class="container mx-auto max-w-7xl mt-6">
+        <div class="container relative -z-10 mx-auto max-w-7xl mt-6">
             @yield('content')
         </div>
 

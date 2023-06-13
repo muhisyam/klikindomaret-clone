@@ -1,5 +1,5 @@
-<div class="channel">
-    <div class="wrapper-channel min-h-[212px] py-4 px-6 rounded-lg">
+<div class="channel mb-6">
+    <div class="channel-wrapper min-h-[212px] py-4 px-6 rounded-lg">
         <h2 class="title mb-6 text-lg text-[#313131] font-bold">
             Produk Lainnya
         </h2>
