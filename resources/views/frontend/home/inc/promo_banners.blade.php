@@ -1,4 +1,4 @@
-<div class="promo-banner">
+<div class="promo-banner mb-6">
     <div class="promo-wrapper">
         <div class="heading-text mb-6 flex justify-between items-center">
             <div class="left-side">
@@ -7,7 +7,7 @@
                 </h2>
             </div> 
             <div class="right-side">
-                <a class="text-sm text-[#0079c2]" href="">
+                <a class="text-sm text-[#0079c2]" href="" data-heading-name="">
                     Lihat Semua
                 </a>
             </div>

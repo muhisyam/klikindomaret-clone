@@ -17,7 +17,9 @@
 @include('frontend.home.inc.heroes')
 @include('frontend.home.inc.channels')
 @include('frontend.home.inc.promo_banners')
+@include('frontend.home.inc.official_stores')
 
+<div class="h-[1000px] bg-lime-300 text-xl">Dump section</div>
 
 @endsection
 
@@ -49,6 +51,12 @@
     // Swipper Promo section
     const promoSwiper = new Swiper('.list-promo', {
         slidesPerView: 2.5,
+        spaceBetween: 20,
+    });
+
+    // Official Store section
+    const storeSwiper = new Swiper('.list-store', {
+        slidesPerView: 8,
         spaceBetween: 20,
     });
 </script>
