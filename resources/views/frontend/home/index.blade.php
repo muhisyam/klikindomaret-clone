@@ -18,6 +18,7 @@
 @include('frontend.home.inc.channels')
 @include('frontend.home.inc.promo_banners')
 @include('frontend.home.inc.official_stores')
+@include('frontend.home.inc.flashsale')
 
 <div class="h-[1000px] bg-lime-300 text-xl">Dump section</div>
 
@@ -31,6 +32,10 @@
         centeredSlides: true,
         loop: true,
         spaceBetween: 20,
+        autoplay: {
+            delay: 2000,
+            pauseOnMouseEnter: true
+        },
         pagination: {
             el: ".swiper-pagination",
             clickable: true,
@@ -58,6 +63,13 @@
     const storeSwiper = new Swiper('.list-store', {
         slidesPerView: 8,
         spaceBetween: 20,
+    });
+
+    // Flash Sale section
+    const flashSwiper = new Swiper('.list-flash', {
+        slidesPerView: 7,
+        spaceBetween: 20,
+        freeMode: true
     });
 </script>
 @endsection

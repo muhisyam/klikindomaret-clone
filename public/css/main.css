@@ -85,7 +85,7 @@ body {
 
 .navbar .top-section .icon,
 .navbar .bottom-section .icon  {
-    margin-top: 3px;
+    line-height: 0;
     transform: scale(1.25);
 }
 
@@ -188,7 +188,19 @@ body {
 }
 
 /* 
-----------------========================-----------------
-================ Official Store Section =================
-----------------========================----------------- 
+------------------====================-------------------
+================== Flash Sale Section ===================
+------------------====================------------------- 
 */
+
+.flash-thumbnail-wrapper {
+    position: absolute;
+    width: 225px;
+    height: 300px;
+    margin-top: 0;
+    padding: 0;
+    border-radius: 12px;
+    background-image: url(https://flash-sale.klikindomaret.com/static/media/backgorund-purple-FS.ac129e50259fdb58ae1f.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
