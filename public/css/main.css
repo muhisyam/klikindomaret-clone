@@ -172,3 +172,22 @@ body {
     top: 50px;
     left: 20px;
 }
+
+/* 
+-----------------======================------------------
+================= Promo Banner Section ==================
+-----------------======================------------------ 
+*/
+
+/* .promo-banner .item-promo img:hover {
+    transition: all .2s ease-in-out;
+    scale: 1.02;
+} */
+
+.promo-banner .item-promo a {
+    display: block;
+    transition: transform .3s;
+}
+.promo-banner .item-promo a:hover {
+    transform: scale(1.02);
+}
