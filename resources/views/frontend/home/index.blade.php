@@ -25,51 +25,5 @@
 @endsection
 
 @section('scripts')
-<script>
-    // Swipper Hero section
-    const heroSwiper = new Swiper('.list-heroes-banner', {
-        slidesPerView: 1.317991,
-        centeredSlides: true,
-        loop: true,
-        spaceBetween: 20,
-        autoplay: {
-            delay: 2000,
-            pauseOnMouseEnter: true
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-    });
-
-    // Swipper Channel section
-    const channelSwiper = new Swiper('.list-channel', {
-        slidesPerView: 12.5,
-        spaceBetween: 20,
-        preventClicks: true
-    });
-
-    // Swipper Promo section
-    const promoSwiper = new Swiper('.list-promo', {
-        slidesPerView: 2.5,
-        spaceBetween: 20,
-    });
-
-    // Official Store section
-    const storeSwiper = new Swiper('.list-store', {
-        slidesPerView: 8,
-        spaceBetween: 20,
-    });
-
-    // Flash Sale section
-    const flashSwiper = new Swiper('.list-flash', {
-        slidesPerView: 7,
-        spaceBetween: 20,
-        freeMode: true
-    });
-</script>
+@include('frontend.home.js.home_main_js')
 @endsection

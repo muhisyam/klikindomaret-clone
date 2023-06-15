@@ -129,19 +129,13 @@
 					</a> 
 				</div>
 			</div>
-			<div class="swiper-button-next left">
-				<span>
-					<i class="ri-checkbox-blank-circle-fill absolute z-0 scale-[3.5] text-white"></i>
-					<i class="ri-arrow-right-s-line absolute scale-[2.5] ps-[2px] font-bold text-[#0079c2]"></i>
-				</span>
+			<div class="swiper-button-next !w-11 !h-11 !right-[16%] bg-white rounded-[50%] shadow-md">
+				<i class="ri-arrow-right-s-line absolute scale-[2.5] font-bold text-[#0079c2] mt-[5px] ms-1"></i>
 			</div>
-			<div class="swiper-button-prev">
-				<span>
-					<i class="ri-checkbox-blank-circle-fill absolute z-0 scale-[3.5] text-white"></i>
-					<i class="ri-arrow-left-s-line absolute scale-[2.5] pe-[2px] font-bold text-[#0079c2]"></i>
-				</span>
+			<div class="swiper-button-prev !w-11 !h-11 !left-[14.5%] bg-white rounded-[50%] shadow-md">
+				<i class="ri-arrow-left-s-line absolute scale-[2.5] font-bold text-[#0079c2] mt-[5px] me-[1px]"></i>
 			</div>
-			<div class="swiper-pagination"></div>
+			<div class="swiper-pagination !relative table !-top-10 !w-fit bg-[#41414142] rounded-[20px] mx-auto px-3"></div>
 		</div>
 	</div>
 </div>
