@@ -66,12 +66,12 @@
             </div>
             <div class="right-side h-8 w-1/3 rounded-b-xl drop-shadow-md bg-slate-50 overflow-hidden cursor-pointer">
                 <div class="first-box flex mx-3.5 mt-1 text-sm">  
-                    <span class="icon text-xs mb-7"><i class="ri-map-pin-fill"></i></span>
+                    <span class="icon text-xs pt-[7px]"><i class="ri-map-pin-fill"></i></span>
                     <span class="guest-info ms-2 mt-[-3px] leading-7 text-xs">
                         <span>Harga untuk wilayah JAKARTA PUSAT , Gunung Sahari Selatan</span>
                         <span class="text-[#0079c2]">Masuk dulu yuk untuk ganti alamat & lokasimu</span>
                     </span>
-                    <span class="icon"><i class="ri-arrow-drop-down-line"></i></span>
+                    <span class="icon pt-1"><i class="ri-arrow-drop-down-line"></i></span>
                 </div>
             </div>
         </div>
@@ -83,9 +83,9 @@
                     </a>
                 </div>
                 <div class="category flex items-center mx-10 text-[#0079c2]" data-tooltip-target="category-tooltip" data-tooltip-placement="bottom">
-                    <span class="icon"><i class="ri-dashboard-fill"></i></span>
+                    <span class="icon mt-0.5"><i class="ri-dashboard-fill"></i></span>
                     <span class="mx-1.5">Kategori</span>
-                    <span class="icon"><i class="ri-arrow-drop-down-line"></i></span>
+                    <span class="icon mt-0.5"><i class="ri-arrow-drop-down-line"></i></span>
                 </div>
                 <div id="category-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Lihat Kategori

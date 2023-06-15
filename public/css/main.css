@@ -66,8 +66,12 @@ body {
 
 .navbar .top-section .icon,
 .navbar .bottom-section .icon  {
-    line-height: 1;
     transform: scale(1.25);
+}
+
+.navbar .bottom-section .icon,
+.navbar .top-section .left-side .icon {
+    line-height: 0;
 }
 
 .dropdown-app::after {
