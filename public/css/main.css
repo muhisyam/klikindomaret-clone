@@ -194,13 +194,24 @@ body {
 */
 
 .flash-thumbnail-wrapper {
-    position: absolute;
-    width: 225px;
-    height: 300px;
-    margin-top: 0;
-    padding: 0;
-    border-radius: 12px;
     background-image: url(https://flash-sale.klikindomaret.com/static/media/backgorund-purple-FS.ac129e50259fdb58ae1f.png);
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.stock-progress,
+.stock-progress-bar {
+    display: flex;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.stock-progress-bar {
+    transition: width .6s ease;
+}
+
+.progress-icon {
+    background: url(../img/flash_sale/flash_progress_fire.png);
+    background-size: contain;
+    background-repeat: no-repeat;
 }
