@@ -1,7 +1,7 @@
 <script>
     // Swipper Hero section
     const heroSwiper = new Swiper('.list-heroes-banner', {
-        slidesPerView: 1.317991,
+        slidesPerView: 1.317992,
         centeredSlides: true,
         loop: true,
         spaceBetween: 20,
@@ -14,8 +14,8 @@
             clickable: true,
         },
         navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
+            nextEl: ".swiper-heroes-next",
+            prevEl: ".swiper-heroes-prev"
         },
     });
 
@@ -45,8 +45,19 @@
         spaceBetween: 20,
         freeMode: true,
         navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev"
+            nextEl: ".swiper-flashsale-next",
+            prevEl: ".swiper-flashsale-prev"
+        }
+    });
+
+    // Product Promo section
+    const productPromoSwiper = new Swiper('.product-promo .list-product', {
+        slidesPerView: 7.5,
+        slidesPerGroup: 3,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: "#promo-product-id42141-next",
+            prevEl: "#promo-product-id42141-prev"
         }
     });
 

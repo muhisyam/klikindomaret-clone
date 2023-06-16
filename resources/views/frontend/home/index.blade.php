@@ -2,7 +2,7 @@
 
 @section('content')
     
-<div id="alert" class="flex p-4 mb-4 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+<div id="alert" class="flex p-4 mb-6 text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
     <i class="ri-information-fill text-[#0079c2] scale-[1.5]"></i>
     <span class="sr-only">Info</span>
     <div class="ml-3 text-md font-medium">
@@ -14,16 +14,18 @@
     </button>
 </div>
 
-@include('frontend.home.inc.heroes')
-@include('frontend.home.inc.channels')
-@include('frontend.home.inc.promo_banners')
-@include('frontend.home.inc.official_stores')
-@include('frontend.home.inc.flashsale')
+@include('frontend.home.includes.heroes')
+@include('frontend.home.includes.channels')
+@include('frontend.home.includes.promo-banners')
+@include('frontend.home.includes.official-stores')
+@include('frontend.home.includes.flashsale')
+
+@include('frontend.home.includes.product-promos')
 
 <div class="h-[1000px] bg-lime-300 text-xl">Dump section</div>
 
 @endsection
 
 @section('scripts')
-@include('frontend.home.js.home_main_js')
+@include('frontend.home.js.home-main-js')
 @endsection

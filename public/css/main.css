@@ -53,6 +53,10 @@ body {
     opacity: 0;
 }
 
+.product-promo .swiper-button-disabled {
+    opacity: 0;
+}
+
 /* 
 --------------------=================--------------------
 ==================== Navbar Section =====================
@@ -206,4 +210,16 @@ body {
     background: url(../img/flash_sale/flash_progress_fire.png);
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+/* 
+-----------------======================------------------
+================= Product Promo Section ==================
+-----------------======================------------------ 
+*/
+
+.promo-collection .item-product:hover {
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
+    transition: all 0.1s ease-in-out;
+    transform: scale(1.025);
 }

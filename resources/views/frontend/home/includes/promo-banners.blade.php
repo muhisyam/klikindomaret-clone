@@ -1,6 +1,6 @@
 <div class="promo-banner mb-6">
     <div class="promo-wrapper">
-        <div class="heading-text mb-6 flex justify-between items-center">
+        <div class="heading-text mb-4 flex justify-between items-center">
             <div class="left-side">
                 <h2 class="title text-lg text-[#313131] font-bold">
                     Promo Lainnya
@@ -12,7 +12,7 @@
                 </a>
             </div>
         </div>
-        <div class="promo-content-wrapper">
+        <div class="promo-content">
             <div class="swiper list-promo">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide item-promo" id="" data-promo-id="" data-promo-name="">

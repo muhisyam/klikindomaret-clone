@@ -1,6 +1,6 @@
-<div class="flash-sale mb-6">
+<div class="flash-sale mb-10">
     <div class="flash-wrapper">
-        <div class="heading-text mb-6 flex justify-between items-center">
+        <div class="heading-text mb-4 flex justify-between items-center">
             <div class="left-side">
                 <h2 class="title text-lg text-[#313131] font-bold">
                     Flash Sale
@@ -24,12 +24,12 @@
                 </div>
             </div>
             <div class="swiper list-flash !pl-40">
-                <div class="swiper-wrapper pt-5 pb-3">
+                <div class="swiper-wrapper pt-5 pb-4">
                     <div class="swiper-slide item-flash w-[135px] bg-white rounded hover:shadow-md">
                         <a href="https://klikindomaret.com/product/white-coffee-7" data-product-name="">
                             <div class="item-flash-wrapper">
                                 <div class="media grid place-items-center h-[155px] object-cover">
-                                    <img class="max-w-[120px]" src="https://assets.klikindomaret.com/products/20090829/20090829_thumb.jpg?2020.05.01" alt="Product Image">
+                                    <img class="max-w-[120px]" src="https://assets.klikindomaret.com/products/20090829/20090829_thumb.jpg?2020.05.01" alt="Product Image" loading="lazy">
                                 </div>
                                 <div class="content px-2 pb-4 ">
                                     <div class="title line-clamp-2 text-[#313131] text-xs text-ellipsis font-bold mb-1">Old Town White Coffee Hazelnut 15X40g</div>
@@ -74,7 +74,7 @@
                         <a href="https://klikindomaret.com/product/white-coffee-7" data-product-name="">
                             <div class="item-flash-wrapper">
                                 <div class="media grid place-items-center h-[155px] object-cover">
-                                    <img class="max-w-[120px]" src="https://assets.klikindomaret.com/products/20074669/20074669_thumb.jpg?2020.05.01" alt="Product Image">
+                                    <img class="max-w-[120px]" src="https://assets.klikindomaret.com/products/20074669/20074669_thumb.jpg?2020.05.01" alt="Product Image" loading="lazy">
                                 </div>
                                 <div class="content px-2 pb-4 ">
                                     <div class="title line-clamp-2 text-[#313131] text-xs text-ellipsis font-bold mb-1">Tropicana Slim Sweetener Stevia 50X2.6G</div>
@@ -116,10 +116,10 @@
                         </a>
                     </div>
                 </div>
-                <div class="swiper-button-next !w-11 !h-11 shadow-md bg-white rounded-[50%] me-2">
+                <div class="swiper-flashsale-next swiper-button-next !w-11 !h-11 shadow-md bg-white rounded-[50%] me-2">
                     <i class="ri-arrow-right-s-line absolute scale-[2.5] ps-[1px] pt-[1px] font-bold text-[#0079c2]"></i>
                 </div>
-                <div class="swiper-button-prev !w-11 !h-11 shadow-md bg-white rounded-[50%] ms-2">
+                <div class="swiper-flashsale-prev swiper-button-prev !w-11 !h-11 shadow-md bg-white rounded-[50%] ms-2">
                     <i class="ri-arrow-left-s-line absolute scale-[2.5] pe-[1px] pt-[1px] font-bold text-[#0079c2]"></i>
                 </div>
             </div>
