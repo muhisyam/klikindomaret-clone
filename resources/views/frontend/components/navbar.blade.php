@@ -1,5 +1,5 @@
 <nav class="navbar sticky top-0 z-10 drop-shadow text-[#313131]">
-    <div class="container mx-auto max-w-7xl h-full">
+    <div class="navbar-wrapper container mx-auto max-w-7xl h-full">
         <div class="top-section flex justify-between">
             <div class="left-side flex text-xs">
                 <div class="app-download my-auto">

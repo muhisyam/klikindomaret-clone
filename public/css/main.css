@@ -78,7 +78,7 @@ body {
     line-height: 0;
 }
 
-.dropdown-app::after {
+.navbar .dropdown-app::after {
     content: '';
     position: absolute;
     border-style: solid;
@@ -92,7 +92,7 @@ body {
     margin-right: 130px;
 }
 
-.dropdown-service::after {
+.navbar .dropdown-service::after {
     content: '';
     position: absolute;
     border-style: solid;
@@ -120,10 +120,10 @@ body {
     }
 }
 
-.app-download:hover,
-.user-service:hover,
-.social-media>.icon:hover,
-.category:hover {
+.navbar .app-download:hover,
+.navbar .user-service:hover,
+.navbar .social-media>.icon:hover,
+.navbar .category:hover {
     color: #0079c2;
     cursor: pointer;
 }
