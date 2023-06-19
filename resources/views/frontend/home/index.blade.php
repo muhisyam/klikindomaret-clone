@@ -25,8 +25,6 @@
 @include('frontend.home.includes.why-shopping')
 @include('frontend.home.includes.app-download')
 
-<div class="h-[1000px] bg-lime-300 text-xl">Dump section</div>
-
 @endsection
 
 @section('scripts')

@@ -10,6 +10,15 @@ body {
 --------------------================--------------------- 
 */
 
+.navbar .app-download:hover,
+.navbar .user-service:hover,
+.navbar .social-media>.icon:hover,
+.navbar .category:hover,
+.footer .list-item-footer ul>li>a:hover {
+    color: #0079c2;
+    cursor: pointer;
+}
+
 .blink {
     animation: blinker 2s linear infinite;
 }
@@ -78,6 +87,10 @@ body {
     line-height: 0;
 }
 
+.navbar .top-section .user-service .wrapper-dropdown-service .icon {
+    line-height: initial;
+}
+
 .navbar .dropdown-app::after {
     content: '';
     position: absolute;
@@ -118,14 +131,6 @@ body {
     50%, 75% {
         transform: translate3d(0, -50%, 0);
     }
-}
-
-.navbar .app-download:hover,
-.navbar .user-service:hover,
-.navbar .social-media>.icon:hover,
-.navbar .category:hover {
-    color: #0079c2;
-    cursor: pointer;
 }
 
 /* 
@@ -223,3 +228,64 @@ body {
     transition: all 0.1s ease-in-out;
     transform: scale(1.025);
 }
+
+/* 
+-----------------=====================-------------------
+================= App Download Section ==================
+-----------------=====================------------------- 
+*/
+
+.app-download-bg {
+    background-image: url(../img/footer/bg_footer.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* 
+--------------------===============----------------------
+==================== Footer Section =====================
+--------------------===============---------------------- 
+*/
+
+.footer .top-section .item-footer:nth-child(3) input:focus {
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+}
+
+.footer .bottom-section .item-footer:first ul li {
+    height: 35px;
+    float: left;
+    margin-bottom: 10px;
+}
+
+.footer .bottom-section .item-footer ul li span {
+    background: url(https://www.klikindomaret.com/Assets/image/new_footer_sprites.png);
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-size: 400px;
+    padding: 5px 45px 12px;
+}
+
+.footer .bottom-section .item-footer ul li .isaku { background-position: -5px -4px; }
+.footer .bottom-section .item-footer ul li .visa { background-position: -107px -2px; }
+.footer .bottom-section .item-footer ul li .mastercard { background-position: -207px -2px; }
+.footer .bottom-section .item-footer ul li .jcb { background-position: -308px -3px; }
+.footer .bottom-section .item-footer ul li .bca { background-position: -12px -59px; }
+.footer .bottom-section .item-footer ul li .cimbniaga { background-position: -104px -59px; }
+.footer .bottom-section .item-footer ul li .mandiri { background-position: -201px -59px; }
+.footer .bottom-section .item-footer ul li .bni { background-position: -303px -59px; }
+.footer .bottom-section .item-footer ul li .bri { background-position: -207px -170px; }
+.footer .bottom-section .item-footer ul li .permata-bank { background-position: -250px -192px; background-size: 335px; }
+.footer .bottom-section .item-footer ul li .bca-klikpay { background-position: -1px -114px; }
+.footer .bottom-section .item-footer ul li .rekening-ponsel { background-position: -217px -114px;}
+.footer .bottom-section .item-footer ul li .akulaku { background-position: -311px -114px; }
+.footer .bottom-section .item-footer ul li .indomaret { background-position: -5px -170px; }
+.footer .bottom-section .item-footer ul li .cod { background-position: -107px -170px; }
+.footer .bottom-section .item-footer ul li .amex { background-position: -309px -170px; }
+.footer .bottom-section .item-footer ul li .briva { background-position: -203px -228px; }
+.footer .bottom-section .item-footer ul li .spay { background-position: -10px -228px; }
+.footer .bottom-section .item-footer ul li .ovo { background-position: -113px -228px; }
+.footer .bottom-section .item-footer ul li .gopay { background-position: -160px -408px; background-size: 328px; }
+.footer .bottom-section .item-footer ul li .jenius { background-position: -76px -408px; background-size: 328px; }
+.footer .bottom-section .item-footer ul li .indodana { background-position: 0px -494px; }
+.footer .bottom-section .item-footer ul li .idelivery { background-position: -8px -289px; }
+.footer .bottom-section .item-footer ul li .indo-paket { background-position: -109px -290px }

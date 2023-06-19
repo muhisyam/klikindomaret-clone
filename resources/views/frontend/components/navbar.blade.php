@@ -47,7 +47,7 @@
                                     <span class="icon text-lg me-4"><i class="ri-phone-fill"></i></span>
                                     <div class="wrapper-desc">
                                         <div class="text-[13px]">(021) 1500280</div>
-                                        <div class="text-[10px] text-[#95989A]">(Senin-Minggu jam 08.00-17.00 WIB)</div>
+                                        <div class="text-[10px] text-[#95989A]">Senin-Minggu, 08.00-17.00 WIB</div>
                                     </div>
                                 </div>
                             </div>
