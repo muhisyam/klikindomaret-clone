@@ -1,5 +1,5 @@
 <div class="app-download">
-    <div class="app-download-bg absolute bg-[#F9C828] h-56 w-screen left-0 -z-10"></div>
+    <div class="app-download-bg absolute bg-[#F9C828] h-56 w-full left-0 -z-10"></div>
     <div class="download-wrapper grid grid-cols-4 pt-8 pb-11">
         <div class="left-side col-span-3 my-auto">
             <div class="download-content">
