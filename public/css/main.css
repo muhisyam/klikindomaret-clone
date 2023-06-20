@@ -10,10 +10,10 @@ body {
 --------------------================--------------------- 
 */
 
-.navbar .app-download:hover,
-.navbar .user-service:hover,
-.navbar .social-media>.icon:hover,
-.navbar .category:hover,
+.top-header .app-download:hover,
+.top-header .user-service:hover,
+.top-header .social-media .icon:hover,
+.top-header .category:hover,
 .footer .list-item-footer ul>li>a:hover {
     color: #0079c2;
     cursor: pointer;
@@ -68,30 +68,30 @@ body {
 
 /* 
 --------------------=================--------------------
-==================== Navbar Section =====================
+==================== Header Section =====================
 --------------------=================-------------------- 
 */
 
-.navbar {
-    background-image: url(../img/navbar/bg_header.png);
+.top-header {
+    background-image: url(../img/header/bg_header.png);
     background-size: cover;
 }
 
-.navbar .top-section .icon,
-.navbar .bottom-section .icon  {
+.top-header .top-section .icon,
+.top-header .bottom-section .icon  {
     transform: scale(1.25);
 }
 
-.navbar .bottom-section .icon,
-.navbar .top-section .left-side .icon {
+.top-header .bottom-section .icon,
+.top-header .top-section .left-side .icon {
     line-height: 0;
 }
 
-.navbar .top-section .user-service .wrapper-dropdown-service .icon {
+.top-header .top-section .user-service .wrapper-dropdown-service .icon {
     line-height: initial;
 }
 
-.navbar .dropdown-app::after {
+.top-header .dropdown-app::after {
     content: '';
     position: absolute;
     border-style: solid;
@@ -105,7 +105,7 @@ body {
     margin-right: 130px;
 }
 
-.navbar .dropdown-service::after {
+.top-header .dropdown-service::after {
     content: '';
     position: absolute;
     border-style: solid;
@@ -119,7 +119,7 @@ body {
     margin-right: -10px;
 }
 
-.navbar .top-section .right-side .guest-info {
+.top-header .top-section .right-side .guest-info {
     animation: changeInfo 8s infinite;
 }
 
@@ -131,6 +131,18 @@ body {
     50%, 75% {
         transform: translate3d(0, -50%, 0);
     }
+}
+
+.bottom-header .top-section ul li.active {
+    border-bottom: 1px solid #0079C2;
+}
+
+.bottom-header .top-section ul li.active a {
+    color: #0079C2;
+}
+
+.bottom-header .top-section ul li.active a img {
+    filter: brightness(1) grayscale(0);
 }
 
 /* 

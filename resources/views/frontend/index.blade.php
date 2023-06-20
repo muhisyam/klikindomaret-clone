@@ -18,14 +18,17 @@
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     </head>
     <body>
-        @include('frontend.components.navbar')
-
-        <div class="container mx-auto max-w-7xl mt-6">
+        <header class="header fixed w-full top-0 z-10 drop-shadow text-[#313131]">
+            @include('frontend.components.navbar')
+        </header>
+        
+        <div class="container mx-auto max-w-7xl mt-30">
             @yield('content')
         </div>
 
         @include('frontend.components.footer')
 
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
         @yield('scripts')

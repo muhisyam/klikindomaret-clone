@@ -1,5 +1,5 @@
-<nav class="navbar sticky top-0 z-10 drop-shadow text-[#313131]">
-    <div class="navbar-wrapper container mx-auto max-w-7xl h-full">
+<div class="top-header">
+    <div class="header-wrapper container mx-auto max-w-7xl h-full">
         <div class="top-section flex justify-between">
             <div class="left-side flex text-xs">
                 <div class="app-download my-auto">
@@ -12,16 +12,16 @@
                     <div id="dropdown-app-id"class="dropdown-app z-10 bg-white rounded-lg shadow w-[240px] hidden">
                         <div class="wrapper-dropdown-app p-5">
                             <div class="qrcode">
-                                <img src="{{ asset('img/navbar/qr_download.png') }}" alt="qrcode">
+                                <img src="{{ asset('img/header/qr_download.png') }}" alt="qrcode">
                             </div>
                             <div class="playstore w-[140px] mx-auto my-2.5">
                                 <a href="#">
-                                    <img src="{{ asset('img/navbar/logo_googleplay.png') }}" alt="logo_googleplay">
+                                    <img src="{{ asset('img/header/logo_googleplay.png') }}" alt="logo_googleplay">
                                 </a>
                             </div>
                             <div class="playstore w-[140px] mx-auto my-2.5">
                                 <a href="#">
-                                    <img src="{{ asset('img/navbar/logo_appStore.png') }}" alt="logo_appstore">
+                                    <img src="{{ asset('img/header/logo_appStore.png') }}" alt="logo_appstore">
                                 </a>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="right-side h-8 w-1/3 rounded-b-xl drop-shadow-md bg-slate-50 overflow-hidden cursor-pointer">
+            <div class="right-side h-8 w-1/3 rounded-b-xl drop-shadow-md bg-white overflow-hidden cursor-pointer">
                 <div class="first-box flex mx-3.5 mt-1 text-sm">  
                     <span class="icon text-xs pt-[7px]"><i class="ri-map-pin-fill"></i></span>
                     <span class="guest-info ms-2 mt-[-3px] leading-7 text-xs">
@@ -79,7 +79,7 @@
             <div class="left-side flex items-center w-[80%] max-w-[60rem]">
                 <div class="logo">
                     <a href="https://www.klikindomaret.com/">
-                        <img class="h-8" src="{{ asset('img/navbar/logo.png') }}" alt="logo">
+                        <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="logo">
                     </a>
                 </div>
                 <div class="category flex items-center mx-10 text-[#0079c2]" data-tooltip-target="category-tooltip" data-tooltip-placement="bottom">
@@ -115,8 +115,7 @@
                     <button type="button" class="rounded-lg border border-[#0079c2] me-2.5 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
                     <button type="button" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
                 </div>
-
             </div>
         </div>
     </div>
-</nav>
+</div>
