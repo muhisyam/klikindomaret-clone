@@ -20,6 +20,7 @@
     <body>
         <header class="header fixed w-full top-0 z-10 drop-shadow text-[#313131]">
             @include('frontend.components.navbar')
+            @include('frontend.components.category')
         </header>
         
         <div class="container mx-auto max-w-7xl mt-30">

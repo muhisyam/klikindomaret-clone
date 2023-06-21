@@ -1,4 +1,4 @@
-<div class="footer bg-white">
+<footer class="footer bg-white">
     <div class="footer-wrapper container mx-auto max-w-7xl py-5">
         <div class="footer-content top-section grid grid-cols-6 text-sm text-[#95989A] mb-10">
             <div class="item-footer">
