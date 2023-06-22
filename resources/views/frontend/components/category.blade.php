@@ -1,4 +1,5 @@
-<div class="bottom-header w-full bg-white">
+<div class="bottom-header w-full bg-white hidden">
+    <div class="header-overlay fixed w-full h-screen bg-black opacity-50 -z-10 hidden"></div>
     <div class="header-wrapper">
         <div class="top-section menu-category-content shadow mb-[1px]">
             <ul class="list-menu-category text-[#313131] text-sm">
@@ -34,8 +35,12 @@
                 </li>
             </ul>
         </div>
-        <div class="bottom-section list-category-content">
+        <div class="bottom-section list-category-content min-h-[440px]">
             @include('frontend.components.includes.category-retail')
+            @include('frontend.components.includes.category-food')
+            @include('frontend.components.includes.category-virtual')
+            @include('frontend.components.includes.category-travel')
+            @include('frontend.components.includes.category-tiket')
         </div>
     </div>
 </div>
