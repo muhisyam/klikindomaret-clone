@@ -1,4 +1,4 @@
-<div class="list-category-wrapper" id="category-tiket" data-list-name="Tiket" style="display: none">
+<div class="list-category-wrapper hidden" id="category-tiket" data-list-name="Tiket">
     <div class="category-tiket-content text-xs px-8 pt-5">
         <div class="category-tiket-wrapper">
             <div class="list-category-tiket grid grid-cols-5 gap-5">

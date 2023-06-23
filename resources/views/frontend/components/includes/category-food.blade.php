@@ -1,4 +1,4 @@
-<div class="list-category-wrapper" id="category-food" data-list-name="Food" style="display: none">
+<div class="list-category-wrapper hidden" id="category-food" data-list-name="Food">
     <div class="category-food-content text-xs px-8 pt-5">
         <div class="neaby-store-wrapper w-56 flex items-center border border-[#E3E3E3] rounded mb-5 p-2">
             <img class="w-8 me-2 mb-1" src="https://www.klikindomaret.com/Assets/image/header/icon_store_nearby.png">

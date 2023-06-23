@@ -1,4 +1,4 @@
-<div class="list-category-wrapper" id="category-travel" data-list-name="Travel" style="display: none">
+<div class="list-category-wrapper hidden" id="category-travel" data-list-name="Travel">
     <div class="category-travel-content text-xs px-8 pt-5">
         <div class="category-travel-wrapper">
             <div class="list-category-travel grid grid-cols-5 gap-5">

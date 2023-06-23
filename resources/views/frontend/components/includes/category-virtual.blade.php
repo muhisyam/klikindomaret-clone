@@ -1,4 +1,4 @@
-<div class="list-category-wrapper" id="category-virtual" data-list-name="Virtual" style="display: none">
+<div class="list-category-wrapper hidden" id="category-virtual" data-list-name="Virtual">
     <div class="category-virtual-content text-xs px-8 pt-5">
         <div class="category-virtual-wrapper">
             <div class="list-category-virtual grid grid-cols-5 gap-5">
