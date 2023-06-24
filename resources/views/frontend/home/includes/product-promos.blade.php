@@ -17,7 +17,7 @@
                 <div class="product-content">
                     <div class="swiper list-product !px-6 !pt-4 !pb-5">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -61,7 +61,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -105,7 +105,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -149,7 +149,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -193,7 +193,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -237,7 +237,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -281,7 +281,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -325,7 +325,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -369,7 +369,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
@@ -413,7 +413,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="swiper-slide item-product w-[135px] rounded-lg" id="" data-flag="" data-store-code="">
+                            <div class="swiper-slide item-product w-[135px] rounded-lg duration-100 ease-in-out hover:!scale-[1.025]" id="" data-flag="" data-store-code="">
                                 <a href="https://klikindomaret.com/product/detergent-bubuksoftener-1" data-product-name="">
                                     <div class="item-product-wrapper rounded-lg">
                                         <div class="media object-cover mb-5">
