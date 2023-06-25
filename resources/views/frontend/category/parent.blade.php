@@ -29,33 +29,30 @@
         <div class="left-side w-[21.2%] bg-white rounded-lg p-5 mr-4">
             <div class="accordion-filter-wrapper">
                 <div class="accordion-filter-heading">
-                    <button class="w-full flex items-center justify-between text-sm font-bold text-[#313131] border-b border-[#C5C5C5] pb-5 mb-2" type="button" aria-expanded="true" aria-controls="accordion-body">
+                    <button class="w-full flex items-center justify-between text-sm font-bold text-[#313131] border-b border-[#C5C5C5] pb-5" type="button" data-accordion-target="#subcategory-filter" aria-expanded="true" aria-controls="accordion-body">
                         <span>Makanan</span>
                         <i class="ri-arrow-down-s-line text-[#0079C2] duration-300"></i>
                     </button>
                 </div>
-                <div class="accordion-filter-content hide h-[275px] overflow-hidden border-b border-[#C5C5C5]" aria-labelledby="accordion-heading">
+                <div id="subcategory-filter" class="accordion-filter-content hide overflow-hidden border-b border-[#C5C5C5] py-2" aria-labelledby="accordion-heading">
                     <ul class="list-subcategory-filter text-sm">
-                        <li class="item-subcategory-filter py-2" data-category-name="">
-                            <a class="block duration-200 hover:text-[#0079C2] hover:no-underline hover:ml-2" href="#" data-category-name="Sarapan">Sarapan</a>
+                        <li class="item-subcategory-filter py-1.5" data-category-name="">
+                            <a class="block duration-200 hover:text-[#0079C2] hover:ml-2" href="#" data-category-name="Sarapan">Sarapan</a>
                         </li>
-                        <li class="item-subcategory-filter py-2" data-category-name="">
-                            <a class="block duration-200 hover:text-[#0079C2] hover:no-underline hover:ml-2" href="#" data-category-name="Makanan Kaleng">Makanan Kaleng</a>
+                        <li class="item-subcategory-filter py-1.5" data-category-name="">
+                            <a class="block duration-200 hover:text-[#0079C2] hover:ml-2" href="#" data-category-name="Makanan Kaleng">Makanan Kaleng</a>
                         </li>
-                        <li class="item-subcategory-filter py-2" data-category-name="">
-                            <a class="block duration-200 hover:text-[#0079C2] hover:no-underline hover:ml-2" href="#" data-category-name="Bahan Masakan">Bahan Masakan</a>
+                        <li class="item-subcategory-filter py-1.5" data-category-name="">
+                            <a class="block duration-200 hover:text-[#0079C2] hover:ml-2" href="#" data-category-name="Bahan Masakan">Bahan Masakan</a>
                         </li>
-                        <li class="item-subcategory-filter py-2" data-category-name="">
-                            <a class="block duration-200 hover:text-[#0079C2] hover:no-underline hover:ml-2" href="#" data-category-name="Cokelat & Permen">Cokelat & Permen</a>
+                        <li class="item-subcategory-filter py-1.5" data-category-name="">
+                            <a class="block duration-200 hover:text-[#0079C2] hover:ml-2" href="#" data-category-name="Cokelat & Permen">Cokelat & Permen</a>
                         </li>
-                        <li class="item-subcategory-filter py-2" data-category-name="">
-                            <a class="block duration-200 hover:text-[#0079C2] hover:no-underline hover:ml-2" href="#" data-category-name="Makanan Instan">Makanan Instan</a>
+                        <li class="item-subcategory-filter py-1.5" data-category-name="">
+                            <a class="block duration-200 hover:text-[#0079C2] hover:ml-2" href="#" data-category-name="Makanan Instan">Makanan Instan</a>
                         </li>
-                        <li class="item-subcategory-filter py-2" data-category-name="">
-                            <a class="block duration-200 hover:text-[#0079C2] hover:no-underline hover:ml-2" href="#" data-category-name="Cemilan & Biskuit">Cemilan & Biskuit</a>
-                        </li>
-                        <li class="item-subcategory-filter py-2" data-category-name="">
-                            <a class="block duration-200 hover:text-[#0079C2] hover:no-underline hover:ml-2" href="#" data-category-name="Healthy Food">Healthy Food</a>
+                        <li class="item-subcategory-filter py-1.5" data-category-name="">
+                            <a class="block duration-200 hover:text-[#0079C2] hover:ml-2" href="#" data-category-name="Cemilan & Biskuit">Cemilan & Biskuit</a>
                         </li>
                     </ul>
                 </div>
