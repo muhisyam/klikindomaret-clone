@@ -213,18 +213,40 @@
             <div class="category-product-wrapper">
                 <div class="category-product-content">
                     <div class="list-heading mb-7">
-                        <div class="item-heading-1">
-                            <div class="left-side w-1/2">
+                        <div class="item-heading-1 flex">
+                            <div class="left-side w-full">
                                 <div class="search-filter-wrapper relative w-4/5 border border-[#C5C5C5] rounded p-2 px-4">
-                                    <input type="text" placeholder="Cari Produk disini..." class="w-full text-sm border-none p-0 pr-12 focus:ring-transparent">
-                                    <i class="ri-search-line absolute top-0 right-0 bg-[#B2D6ED] text-white rounded scale-75 py-2 px-5"></i>
-                                    {{-- <i class="ri-close-line"></i> --}}
+                                    <input id="text-search-filter" type="text" placeholder="Cari Produk disini..." class="w-full text-sm border-none p-0 pr-12 focus:ring-transparent">
+                                    <i class="ri-search-line search-icon absolute top-0 right-0 bg-[#B2D6ED] text-white rounded scale-75 py-2 px-5"></i>
+                                    {{-- <i class="ri-close-line reset-icon absolute top-0 right-0 bg-[#B2D6ED] text-white text-xl rounded scale-75 py-1.5 px-[18px]"></i> --}}
                                 </div>
                             </div> 
-                            <div class="right-side w-1/2">
+                            <div class="right-side w-full">
+                                <div class="select-filter-wrapper w-1/2 text-sm float-right cursor-pointer select-none">
+                                    <div class="select-box flex justify-between items-center border border-[#C5C5C5] rounded p-2 px-4">
+                                        <div class="select-info">Urutkan: <span>Harga Termahal</span></div>
+                                        <i class="ri-arrow-down-s-line text-[#0079C2] font-bold duration-300"></i>
+                                    </div>
+                                    <div class="select-option hidden relative">
+                                        <ul class="list-option absolute top-0 w-full bg-white border border-[#C5C5C5] rounded-b shadow-lg z-10">
+                                            <li class="item-option py-2 px-4 hover:bg-[#0079C2] hover:text-white hover:cursor-pointer">
+                                                Alfabet (A-Z)
+                                            </li>
+                                            <li class="item-option py-2 px-4 hover:bg-[#0079C2] hover:text-white hover:cursor-pointer">
+                                                Alfabet (A-Z)
+                                            </li>
+                                            <li class="item-option py-2 px-4 hover:bg-[#0079C2] hover:text-white hover:cursor-pointer">
+                                                Alfabet (A-Z)
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="item-heading-2">
+                            <h2 class="title text-sm text-[#CCC] mt-3">
+                                Menampilkan <span>1 - 50 </span>product
+                            </h2>
                         </div>
                     </div>
                     <div class="list-category-product grid grid-cols-6 gap-4 mb-14">

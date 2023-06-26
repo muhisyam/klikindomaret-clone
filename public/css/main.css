@@ -278,7 +278,8 @@ body {
 -----------------=====================------------------- 
 */
 
-.category .accordion-filter-heading button.active i {
+.category .accordion-filter-heading button.active i,
+.category .right-side .item-heading-1 .select-filter-wrapper.active .select-box i {
     rotate: 180deg;
 }
 
@@ -312,7 +313,7 @@ body {
 }
 
 .category .left-side .button-cta-filter button.active,
-.category .right-side .item-heading-1 .search-filter-wrapper i.active {
+.category .right-side .item-heading-1 .search-filter-wrapper .search-icon.active {
     background-color: #0079C2;
 }
 

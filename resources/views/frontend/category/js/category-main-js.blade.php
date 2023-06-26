@@ -1,4 +1,15 @@
 <script>
+    // Product Promo section
+    const productPromoSwiper = new Swiper('.category-section-content .list-category-product', {
+        slidesPerView: 6,
+        slidesPerGroup: 2,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: "#promo-product-category-next",
+            prevEl: "#promo-product-category-prev"
+        }
+    });
+
     const accordListBtn = document.querySelectorAll('.accordion-filter-heading button');
     const arrayAccordList = [].slice.call(accordListBtn);
     
@@ -18,15 +29,41 @@
         });
     });
 
+    const inputSearchFilter = document.querySelector('#text-search-filter');
 
-    // Product Promo section
-    const productPromoSwiper = new Swiper('.category-section-content .list-category-product', {
-        slidesPerView: 6,
-        slidesPerGroup: 2,
-        spaceBetween: 20,
-        navigation: {
-            nextEl: "#promo-product-category-next",
-            prevEl: "#promo-product-category-prev"
+    inputSearchFilter.addEventListener('input', function () {
+        const searchIcon = document.querySelector('.search-filter-wrapper .search-icon');
+
+        if (inputSearchFilter.value) {
+            searchIcon.classList.add('active');
+        } else {
+            searchIcon.classList.remove('active');
         }
     });
+
+    const btnSelectFilter = document.querySelector('.select-filter-wrapper');
+
+    btnSelectFilter.addEventListener('click', function () {
+        const selectBox = document.querySelector('.select-box');
+        const selectOption = document.querySelector('.select-option');
+        const listOption = document.querySelector('.list-option');
+        const isSelectHidden = selectOption.classList.contains('hidden');
+
+        if (isSelectHidden) {
+            btnSelectFilter.classList.add('active');
+            selectBox.classList.remove('rounded');
+            selectBox.classList.add('rounded-t');
+            selectBox.classList.add('border-b-0');
+            listOption.classList.add('border-t-0');
+            selectOption.classList.toggle('hidden');
+        } else {
+            btnSelectFilter.classList.remove('active');
+            selectBox.classList.add('rounded');
+            selectBox.classList.remove('rounded-t');
+            selectBox.classList.remove('border-b-0');
+            listOption.classList.remove('border-t-0');
+            selectOption.classList.toggle('hidden');
+        }
+    });
+
 </script>

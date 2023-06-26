@@ -18,7 +18,7 @@
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     </head>
     <body>
-        <header class="header fixed w-full top-0 z-10 drop-shadow text-[#313131]">
+        <header class="header fixed w-full top-0 z-50 drop-shadow text-[#313131]">
             @include('frontend.components.navbar')
             @include('frontend.components.category')
         </header>
