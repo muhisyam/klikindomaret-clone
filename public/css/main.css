@@ -55,13 +55,13 @@ body {
     height: 10px;
     background: #fff;
     opacity: 1;
-    border: 1px solid #0079c2;
+    border: 1px solid #0079C2;
     margin: 0 2px !important;
 }
 
 .heroes-banner .swiper-pagination-bullet-active {
     opacity: 1;
-    background: #0079c2 !important;
+    background: #0079C2 !important;
 }
 
 .flash-sale .swiper-button-disabled {
@@ -315,6 +315,11 @@ body {
 .category .left-side .button-cta-filter button.active,
 .category .right-side .item-heading-1 .search-filter-wrapper .search-icon.active {
     background-color: #0079C2;
+}
+
+.category .right-side .tabs-menu-wrapper .item-menu.active {
+    color: #0079C2;
+    border-bottom: solid 2px #0079C2;
 }
 
 /* 
