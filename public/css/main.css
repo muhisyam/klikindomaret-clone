@@ -273,9 +273,9 @@ body {
 ########################################################
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
------------------=====================-------------------
-================= Accodion Section ==================
------------------=====================------------------- 
+---------------------================--------------------
+===================== Filter Section ====================
+---------------------================--------------------
 */
 
 .category .accordion-filter-heading button.active i,
@@ -312,23 +312,24 @@ body {
     border-radius: 5px;
 }
 
-.category .left-side .button-cta-filter button.active,
-.category .right-side .item-heading-1 .search-filter-wrapper .search-icon.active {
+.category .left-side .button-cta-filter button.active {
     background-color: #0079C2;
-}
-
-.category .right-side .tabs-menu-wrapper .item-menu.active {
-    color: #0079C2;
-    border-bottom: solid 2px #0079C2;
 }
 
 /* 
 ----------------=========================----------------
-=============== Product Recommend Section ===============
+=============== Promo Banner Section ===============
 ----------------=========================----------------
 */
 
+.category .right-side .item-heading-1 .search-filter-wrapper .search-icon.active {
+    background-color: #0079C2;
+}
 
+.category .right-side .tab-menu-wrapper .item-tab.active {
+    color: #0079C2;
+    border-bottom: solid 2px #0079C2;
+}
 
 
 

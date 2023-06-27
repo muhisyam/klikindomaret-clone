@@ -18,13 +18,63 @@
     </ol>
 </nav>
 
-<section class="promo-banner mb-6">
-    <div class="promo wrapper">
-        <div class="left-side">
-
+<section class="promo mb-6">
+    <div class="promo-wrapper flex">
+        <div class="left-side w-[68.4%] mr-4">
+            <div class="promo-banner-content" id="" data-promo-id="" data-promo-name="">
+                <img class="rounded-lg" src="https://assets.klikindomaret.com///products/promopage/promo%20tebus%20murah%20sikat%20gigi.jpeg" alt="" loading="lazy">
+            </div>
         </div>
-        <div class="right-side">
-            
+        <div class="right-side w-[31.4%] bg-white rounded-lg p-5">
+            <div class="promo-information-content">
+                <div class="title font-bold mb-4">Setiap pembelian produk Toiletries senilai Rp50.000,- dapatkan diskon Rp10.000,-</div>
+                <div class="description flex items-center mb-4">
+                    <div class="share-link mr-4">
+                        <div class="link-wrapper flex">
+                            <a href="#" target="_blank">
+                                <img class="max-w-[26px] rounded-sm mr-2" src="https://www.freepnglogos.com/uploads/facebook-logo-design-1.png" alt="Facebook Icon">
+                            </a>
+                            <a class="" href="#" target="_blank">
+                                <img class="max-w-[26px] rounded-sm" src="https://seeklogo.com/images/T/twitter-icon-square-logo-108D17D373-seeklogo.com.png" alt="Twitter Icon">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="period">
+                        <div class="period-header text-[#95989A] text-sm">
+                            <i class="ri-time-line mr-2"></i>
+                            Periode
+                        </div>
+                        <div class="period-info">
+                            25 Jun 2023 - 05 Jul 2023
+                        </div>
+                    </div>
+                </div>
+                <div class="coupon-wrapper">
+                    <div class="coupon-code relative bg-[#DEF7E3] text-[#118E1C] border border-dashed border-[#118E1C] rounded p-2 mb-3">
+                        <div class="header">
+                            <img class="max-w-[22px] inline-block mr-1" src="https://www.klikindomaret.com/Assets/image/kupon_green.png" alt="Coupon Icon">
+                            <span class="text-sm">Kode Kupon:</span>
+                        </div>
+                        <div class="code text-lg font-bold">
+                            BABYCARE10
+                        </div>
+                        <div class="copy-code absolute w-[40px] h-[102%] -right-[1px] -top-[1px] grid place-items-center bg-white border border-[#118e1C] rounded-tr rounded-br cursor-pointer">
+                            <i class="ri-clipboard-line"></i>
+                        </div>
+                        <div class="sold-out">
+                            <img class="absolute max-w-[100px] right-12 top-3" src="https://www.klikindomaret.com/Assets/image/soldout.png" alt="">
+                        </div>
+                    </div>
+                    <div class="stock-progress h-1.5 bg-[#E6E6E6] mb-1">
+                        <div class="stock-progress-bar bg-[#118E1C]" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80%" style="width: 80%">
+                        </div>
+                    </div>
+                    <div class="coupon-stock text-sm text-[#CCC]">
+                        Sisa kuota promosi
+                        <span class="float-right text-[#118E1C]">80%</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -181,16 +231,103 @@
                 </div>
             </div>
         </div>
-        <div class="right-side w-[77.2%] bg-white rounded-lg px-6 py-5">
-            <div class="tabs-menu-wrapper">
-                <ul class="list-menu text-sm border-b border-[#C5C5C5]">
-                    <li class="item-menu min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer">
+        <div class="right-side w-[77.2%] bg-white rounded-lg p-5">
+            <div class="tab-menu-wrapper mb-7">
+                <ul class="list-tab text-sm border-b border-[#C5C5C5]">
+                    <li class="item-tab min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer" data-tab-target="#product-promo">
                         Produk
                     </li>
-                    <li class="item-menu active min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer">
+                    <li class="item-tab active min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer" data-tab-target="#product-promo">
                         Syarat dan Ketentuan
                     </li>
                 </ul>
+            </div>
+            <div class="tab-panel-wrapper">
+                <div class="list-panel">
+                    <div class="item-panel-1" id="product-promo">
+                        <div class="category-product-wrapper">
+                            <div class="category-product-content">
+                                <div class="list-heading mb-7">
+                                    <div class="item-heading-1 flex">
+                                        <div class="left-side w-full">
+                                            <div class="search-filter-wrapper relative w-4/5 border border-[#C5C5C5] rounded p-2 px-4">
+                                                <input id="text-search-filter" type="text" placeholder="Cari Produk disini..." class="w-full text-sm border-none p-0 pr-12 focus:ring-transparent">
+                                                <i class="ri-search-line search-icon absolute top-0 right-0 bg-[#B2D6ED] text-white rounded scale-75 py-2 px-5"></i>
+                                                {{-- <i class="ri-close-line reset-icon absolute top-0 right-0 bg-[#B2D6ED] text-white text-xl rounded scale-75 py-1.5 px-[18px]"></i> --}}
+                                            </div>
+                                        </div> 
+                                        <div class="right-side w-full">
+                                            <div class="select-filter-wrapper w-1/2 text-sm float-right cursor-pointer select-none">
+                                                <div class="select-box flex justify-between items-center border border-[#C5C5C5] rounded p-2 px-4">
+                                                    <div class="select-info">Urutkan: <span>Harga Termahal</span></div>
+                                                    <i class="ri-arrow-down-s-line text-[#0079C2] font-bold duration-300"></i>
+                                                </div>
+                                                <div class="select-option hidden relative">
+                                                    <ul class="list-option absolute top-0 w-full bg-white border border-[#C5C5C5] rounded-b shadow-lg z-10">
+                                                        <li class="item-option py-2 px-4 hover:bg-[#0079C2] hover:text-white hover:cursor-pointer">
+                                                            Alfabet (A-Z)
+                                                        </li>
+                                                        <li class="item-option py-2 px-4 hover:bg-[#0079C2] hover:text-white hover:cursor-pointer">
+                                                            Alfabet (A-Z)
+                                                        </li>
+                                                        <li class="item-option py-2 px-4 hover:bg-[#0079C2] hover:text-white hover:cursor-pointer">
+                                                            Alfabet (A-Z)
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-heading-2">
+                                        <h2 class="title text-sm text-[#CCC] mt-3">
+                                            Menampilkan <span>1 - 50 </span>product
+                                        </h2>
+                                    </div>
+                                </div>
+                                <div class="list-category-product grid grid-cols-6 gap-4 mb-14">
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                    @include('frontend.category.includes.list-product')
+                                </div>
+                                <div class="pagination flex justify-center py-3 text-sm">
+                                    <div>Pagination</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-panel-2 hidden" id="term-condition-promo">
+                        <div class="term-condition-wrapper pb-14">
+                            <h2 class="font-bold mb-3">Syarat dan Ketentuan Promo Pesta Tebus Murah Sikat Gigi</h2>
+                            <ol class="list-decimal text-sm ml-4">
+                                <li class="pl-1 mb-3">Setiap belanja <strong>produk Pasta Gigi senilai minimal Rp50.000,-</strong> pada halaman promo Klik Indomaret, konsumen dapat <strong>Tebus Murah 1 Sikat Gigi.</strong></li>
+                                <li class="pl-1 mb-3"><strong>Periode promo 22 - 27 Juni 2023.</strong></li>
+                                <li class="pl-1 mb-3"><strong>Promo berlaku kelipatan, maks diskon 5x per transaksi.</strong></li>
+                                <li class="pl-1 mb-3"><strong>Tersedia Kuota 30.864 selama periode promo.</strong></li>
+                                <li class="pl-1 mb-3">Mohon dipastikan item <strong>tebus murah sudah terpilih</strong> dan lanjutkan dengan klik tombol <strong>'Pilih Produk'.</strong></li>
+                                <li class="pl-1 mb-3"><strong>Apabila tebus murah tidak tampil pada halaman promo Klik Indomaret, maka kuota nya sudah habis.</strong></li>
+                                <li class="pl-1 mb-3">Dengan melakukan transaksi di dalam program ini, maka konsumen dianggap mengerti dan menyetujui semua <a class="text-[#0079C2]" href="https://www.klikindomaret.com/bantuan/syarat-dan-ketentuan">syarat dan ketentuan yang berlaku.</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
