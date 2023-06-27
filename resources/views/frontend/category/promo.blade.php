@@ -31,12 +31,20 @@
                 <div class="description flex items-center mb-4">
                     <div class="share-link mr-4">
                         <div class="link-wrapper flex">
-                            <a href="#" target="_blank">
+                            <a href="#" target="_blank" data-tooltip-target="facebook-share-tooltip" data-tooltip-placement="bottom">
                                 <img class="max-w-[26px] rounded-sm mr-2" src="https://www.freepnglogos.com/uploads/facebook-logo-design-1.png" alt="Facebook Icon">
                             </a>
-                            <a class="" href="#" target="_blank">
+                            <div id="facebook-share-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                                Share ke Facebook
+                                <div class="tooltip-arrow" data-popper-arrow></div>
+                            </div>
+                            <a class="" href="#" target="_blank" data-tooltip-target="twitter-share-tooltip" data-tooltip-placement="bottom">
                                 <img class="max-w-[26px] rounded-sm" src="https://seeklogo.com/images/T/twitter-icon-square-logo-108D17D373-seeklogo.com.png" alt="Twitter Icon">
                             </a>
+                            <div id="twitter-share-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                                Share ke Twitter
+                                <div class="tooltip-arrow" data-popper-arrow></div>
+                            </div>
                         </div>
                     </div>
                     <div class="period">
@@ -59,10 +67,14 @@
                             BABYCARE10
                         </div>
                         <div class="copy-code absolute w-[40px] h-[102%] -right-[1px] -top-[1px] grid place-items-center bg-white border border-[#118e1C] rounded-tr rounded-br cursor-pointer">
-                            <i class="ri-clipboard-line"></i>
+                            <i class="ri-clipboard-line p-2" data-tooltip-target="copy-coupon-tooltip"></i>
+                        </div>
+                        <div id="copy-coupon-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                            Salin Kode
+                            <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                         <div class="sold-out">
-                            <img class="absolute max-w-[100px] right-12 top-3" src="https://www.klikindomaret.com/Assets/image/soldout.png" alt="">
+                            <img class="absolute max-w-[100px] right-12 top-3" src="https://www.klikindomaret.com/Assets/image/soldout.png" alt="Soldout Image">
                         </div>
                     </div>
                     <div class="stock-progress h-1.5 bg-[#E6E6E6] mb-1">
