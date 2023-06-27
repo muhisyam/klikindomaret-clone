@@ -322,10 +322,6 @@ body {
 ----------------=========================----------------
 */
 
-.category .right-side .item-heading-1 .search-filter-wrapper .search-icon.active {
-    background-color: #0079C2;
-}
-
 .category .right-side .tab-menu-wrapper .item-tab.active {
     color: #0079C2;
     border-bottom: solid 2px #0079C2;

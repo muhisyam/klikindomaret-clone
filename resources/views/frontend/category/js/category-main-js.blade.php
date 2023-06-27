@@ -33,11 +33,14 @@
 
     inputSearchFilter.addEventListener('input', function () {
         const searchIcon = document.querySelector('.search-filter-wrapper .search-icon');
+        const clearIcon = document.querySelector('.search-filter-wrapper .clear-icon');
 
         if (inputSearchFilter.value) {
-            searchIcon.classList.add('active');
+            searchIcon.classList.add('hidden');
+            clearIcon.classList.remove('hidden');
         } else {
-            searchIcon.classList.remove('active');
+            searchIcon.classList.remove('hidden');
+            clearIcon.classList.add('hidden');
         }
     });
 
@@ -64,6 +67,33 @@
             listOption.classList.remove('border-t-0');
             selectOption.classList.toggle('hidden');
         }
+    });
+
+    const tabButtonHeading = document.querySelectorAll('.category .right-side .item-tab');
+    const arrayTabButton = [].slice.call(tabButtonHeading);
+
+    arrayTabButton.map((menuTab) => {
+        menuTab.addEventListener('click', function () {
+            const allPanelTab = document.querySelector('.list-panel').children;
+            const arrayPanelTab = [].slice.call(allPanelTab);
+            
+            arrayTabButton.map((menuTab) => {
+                menuTab.classList.remove('active');
+            });
+            
+            arrayPanelTab.map((panelTab) => {
+                panelTab.classList.add('hidden');
+            });
+
+            const panelDataTarget = menuTab.getAttribute('data-tab-target');
+            const panelTarget = document.querySelector(panelDataTarget);
+            const isPanelHidden = panelTarget.classList.contains('hidden');
+            
+            if (isPanelHidden) {
+                menuTab.classList.add('active');
+                panelTarget.classList.remove('hidden');
+            }
+        }); 
     });
 
 </script>

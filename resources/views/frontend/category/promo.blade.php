@@ -246,10 +246,10 @@
         <div class="right-side w-[77.2%] bg-white rounded-lg p-5">
             <div class="tab-menu-wrapper mb-7">
                 <ul class="list-tab text-sm border-b border-[#C5C5C5]">
-                    <li class="item-tab min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer" data-tab-target="#product-promo">
+                    <li class="item-tab active min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer" data-tab-target="#product-promo">
                         Produk
                     </li>
-                    <li class="item-tab active min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer" data-tab-target="#product-promo">
+                    <li class="item-tab min-w-[120px] inline-block text-center px-6 pb-3 pt-0 hover:text-[#0079C2] hover:cursor-pointer" data-tab-target="#term-condition-promo">
                         Syarat dan Ketentuan
                     </li>
                 </ul>
@@ -264,8 +264,8 @@
                                         <div class="left-side w-full">
                                             <div class="search-filter-wrapper relative w-4/5 border border-[#C5C5C5] rounded p-2 px-4">
                                                 <input id="text-search-filter" type="text" placeholder="Cari Produk disini..." class="w-full text-sm border-none p-0 pr-12 focus:ring-transparent">
-                                                <i class="ri-search-line search-icon absolute top-0 right-0 bg-[#B2D6ED] text-white rounded scale-75 py-2 px-5"></i>
-                                                {{-- <i class="ri-close-line reset-icon absolute top-0 right-0 bg-[#B2D6ED] text-white text-xl rounded scale-75 py-1.5 px-[18px]"></i> --}}
+                                                <i class="ri-search-line search-icon absolute top-0 right-0 bg-[#0079C2] text-white rounded scale-75 py-2 px-5"></i>
+                                                <i class="ri-close-line clear-icon absolute top-0 right-0 bg-[#0079C2] text-white text-xl rounded scale-75 py-1.5 px-[18px] hidden"></i>
                                             </div>
                                         </div> 
                                         <div class="right-side w-full">
@@ -330,7 +330,13 @@
                             <h2 class="font-bold mb-3">Syarat dan Ketentuan Promo Pesta Tebus Murah Sikat Gigi</h2>
                             <ol class="list-decimal text-sm ml-4">
                                 <li class="pl-1 mb-3">Setiap belanja <strong>produk Pasta Gigi senilai minimal Rp50.000,-</strong> pada halaman promo Klik Indomaret, konsumen dapat <strong>Tebus Murah 1 Sikat Gigi.</strong></li>
-                                <li class="pl-1 mb-3"><strong>Periode promo 22 - 27 Juni 2023.</strong></li>
+                                <li class="pl-1 mb-3">
+                                    <strong>Kupon promo hanya berlaku selama 45 menit setelah memasukkan kode kupon.</strong>
+                                    <ol class="list-decimal text-sm ml-4">
+                                        <li class="pl-1 mb-3"><strong>Tersedia kuota kupon 5.000 per hari.</strong></li>
+                                        <li class="pl-1 mb-3"><strong>Promo hanya berlaku di platform aplikasi Klik Indomaret.</strong></li>
+                                    </ol>
+                                </li>
                                 <li class="pl-1 mb-3"><strong>Promo berlaku kelipatan, maks diskon 5x per transaksi.</strong></li>
                                 <li class="pl-1 mb-3"><strong>Tersedia Kuota 30.864 selama periode promo.</strong></li>
                                 <li class="pl-1 mb-3">Mohon dipastikan item <strong>tebus murah sudah terpilih</strong> dan lanjutkan dengan klik tombol <strong>'Pilih Produk'.</strong></li>
