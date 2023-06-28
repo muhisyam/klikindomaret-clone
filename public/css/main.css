@@ -327,6 +327,21 @@ body {
     border-bottom: solid 2px #0079C2;
 }
 
+.category .right-side .tab-panel-wrapper .term-condition-wrapper ol {
+    counter-reset: item;
+}
+
+.category .right-side .tab-panel-wrapper .term-condition-wrapper ol li::before {
+    content: counters(item, ".") ".";
+    counter-increment: item;
+}
+
+.category .right-side .tab-panel-wrapper .term-condition-wrapper ol ol {
+    margin-left: 24px;
+}
+
+
+
 
 
 /* 

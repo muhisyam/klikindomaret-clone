@@ -47,10 +47,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="period">
-                        <div class="period-header text-[#95989A] text-sm">
-                            <i class="ri-time-line mr-2"></i>
-                            Periode
+                    <div class="period text-sm">
+                        <div class="period-header text-[#95989A]">
+                            <i class="ri-time-line mr-1"></i>
+                            <span class="relative -top-[2px]">Periode</span>
                         </div>
                         <div class="period-info">
                             25 Jun 2023 - 05 Jul 2023
@@ -58,32 +58,45 @@
                     </div>
                 </div>
                 <div class="coupon-wrapper">
-                    <div class="coupon-code relative bg-[#DEF7E3] text-[#118E1C] border border-dashed border-[#118E1C] rounded p-2 mb-3">
-                        <div class="header">
-                            <img class="max-w-[22px] inline-block mr-1" src="https://www.klikindomaret.com/Assets/image/kupon_green.png" alt="Coupon Icon">
-                            <span class="text-sm">Kode Kupon:</span>
+                    <div class="with-coupon">
+                        <div class="coupon-code relative bg-[#DEF7E3] text-[#118E1C] border border-dashed border-[#118E1C] rounded p-2 mb-3">
+                            <div class="header">
+                                <img class="max-w-[22px] inline-block mr-1" src="https://www.klikindomaret.com/Assets/image/kupon_green.png" alt="Coupon Icon">
+                                <span class="text-sm">Kode Kupon:</span>
+                            </div>
+                            <div class="code text-lg font-bold">
+                                <span>BABYCARE10</span>
+                            </div>
+                            <div class="copy-code absolute w-[40px] h-[102%] -right-[1px] -top-[1px] grid place-items-center bg-white border border-[#118e1C] rounded-tr rounded-br cursor-pointer">
+                                <i class="ri-clipboard-line py-4 px-2" id="copy-code" data-tooltip-target="copy-coupon-tooltip"></i>
+                                <i class="ri-check-line hidden py-4 px-2" id="copied-code" data-tooltip-target="copied-coupon-tooltip"></i>
+                            </div>
+                            <div id="copy-coupon-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                                Salin Kode
+                                <div class="tooltip-arrow" data-popper-arrow></div>
+                            </div>
+                            <div id="copied-coupon-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                                Kode berhasil disalin
+                                <div class="tooltip-arrow" data-popper-arrow></div>
+                            </div>
+                            <div class="sold-out">
+                                <img class="absolute max-w-[100px] right-12 top-3" src="https://www.klikindomaret.com/Assets/image/soldout.png" alt="Soldout Image">
+                            </div>
                         </div>
-                        <div class="code text-lg font-bold">
-                            BABYCARE10
+                        <div class="stock-progress h-1.5 bg-[#E6E6E6] mb-1">
+                            <div class="stock-progress-bar bg-[#118E1C]" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80%" style="width: 80%">
+                            </div>
                         </div>
-                        <div class="copy-code absolute w-[40px] h-[102%] -right-[1px] -top-[1px] grid place-items-center bg-white border border-[#118e1C] rounded-tr rounded-br cursor-pointer">
-                            <i class="ri-clipboard-line p-2" data-tooltip-target="copy-coupon-tooltip"></i>
-                        </div>
-                        <div id="copy-coupon-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
-                            Salin Kode
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
-                        <div class="sold-out">
-                            <img class="absolute max-w-[100px] right-12 top-3" src="https://www.klikindomaret.com/Assets/image/soldout.png" alt="Soldout Image">
+                        <div class="coupon-stock text-sm text-[#CCC]">
+                            Sisa kuota promosi
+                            <span class="float-right text-[#118E1C]">80%</span>
                         </div>
                     </div>
-                    <div class="stock-progress h-1.5 bg-[#E6E6E6] mb-1">
-                        <div class="stock-progress-bar bg-[#118E1C]" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80%" style="width: 80%">
+                    <div class="without-coupon hidden">
+                        <div class="coupon-code relative h-[70px] text-[#95989A] text-center leading-[70px] border border-dashed border-[#CCC] rounded">
+                            <img class="max-w-[22px] inline-block grayscale opacity-50 mr-1" src="https://www.klikindomaret.com/Assets/image/kupon_green.png" alt="Coupon Icon">
+                            <span class="text-sm">Tanpa Kode Kupon</span>
                         </div>
-                    </div>
-                    <div class="coupon-stock text-sm text-[#CCC]">
-                        Sisa kuota promosi
-                        <span class="float-right text-[#118E1C]">80%</span>
                     </div>
                 </div>
             </div>
@@ -328,20 +341,20 @@
                     <div class="item-panel-2 hidden" id="term-condition-promo">
                         <div class="term-condition-wrapper pb-14">
                             <h2 class="font-bold mb-3">Syarat dan Ketentuan Promo Pesta Tebus Murah Sikat Gigi</h2>
-                            <ol class="list-decimal text-sm ml-4">
-                                <li class="pl-1 mb-3">Setiap belanja <strong>produk Pasta Gigi senilai minimal Rp50.000,-</strong> pada halaman promo Klik Indomaret, konsumen dapat <strong>Tebus Murah 1 Sikat Gigi.</strong></li>
-                                <li class="pl-1 mb-3">
+                            <ol class="text-sm">
+                                <li class="leading-8 before:pr-2">Setiap belanja <strong>produk Pasta Gigi senilai minimal Rp50.000,-</strong> pada halaman promo Klik Indomaret, konsumen dapat <strong>Tebus Murah 1 Sikat Gigi.</strong></li>
+                                <li class="leading-8 before:pr-2">
                                     <strong>Kupon promo hanya berlaku selama 45 menit setelah memasukkan kode kupon.</strong>
-                                    <ol class="list-decimal text-sm ml-4">
-                                        <li class="pl-1 mb-3"><strong>Tersedia kuota kupon 5.000 per hari.</strong></li>
-                                        <li class="pl-1 mb-3"><strong>Promo hanya berlaku di platform aplikasi Klik Indomaret.</strong></li>
+                                    <ol class="text-sm">
+                                        <li class="leading-8 before:pr-2"><strong>Tersedia kuota kupon 5.000 per hari.</strong></li>
+                                        <li class="leading-8 before:pr-2"><strong>Promo hanya berlaku di platform aplikasi Klik Indomaret.</strong></li>
                                     </ol>
                                 </li>
-                                <li class="pl-1 mb-3"><strong>Promo berlaku kelipatan, maks diskon 5x per transaksi.</strong></li>
-                                <li class="pl-1 mb-3"><strong>Tersedia Kuota 30.864 selama periode promo.</strong></li>
-                                <li class="pl-1 mb-3">Mohon dipastikan item <strong>tebus murah sudah terpilih</strong> dan lanjutkan dengan klik tombol <strong>'Pilih Produk'.</strong></li>
-                                <li class="pl-1 mb-3"><strong>Apabila tebus murah tidak tampil pada halaman promo Klik Indomaret, maka kuota nya sudah habis.</strong></li>
-                                <li class="pl-1 mb-3">Dengan melakukan transaksi di dalam program ini, maka konsumen dianggap mengerti dan menyetujui semua <a class="text-[#0079C2]" href="https://www.klikindomaret.com/bantuan/syarat-dan-ketentuan">syarat dan ketentuan yang berlaku.</a></li>
+                                <li class="leading-8 before:pr-2"><strong>Promo berlaku kelipatan, maks diskon 5x per transaksi.</strong></li>
+                                <li class="leading-8 before:pr-2"><strong>Tersedia Kuota 30.864 selama periode promo.</strong></li>
+                                <li class="leading-8 before:pr-2">Mohon dipastikan item <strong>tebus murah sudah terpilih</strong> dan lanjutkan dengan klik tombol <strong>'Pilih Produk'.</strong></li>
+                                <li class="leading-8 before:pr-2"><strong>Apabila tebus murah tidak tampil pada halaman promo Klik Indomaret, maka kuota nya sudah habis.</strong></li>
+                                <li class="leading-8 before:pr-2">Dengan melakukan transaksi di dalam program ini, maka konsumen dianggap mengerti dan menyetujui semua <a class="text-[#0079C2]" href="https://www.klikindomaret.com/bantuan/syarat-dan-ketentuan">syarat dan ketentuan yang berlaku.</a></li>
                             </ol>
                         </div>
                     </div>

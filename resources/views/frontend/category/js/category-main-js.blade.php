@@ -10,6 +10,19 @@
         }
     });
 
+    const btnCopyCoupon = document.querySelector('.copy-code');
+
+    btnCopyCoupon.addEventListener('click', function () {
+        const couponCode = document.querySelector('.coupon-code .code span').innerHTML;
+        const iconCopy = document.querySelector('#copy-code');
+        const iconCopied = document.querySelector('#copied-code');
+
+        navigator.clipboard.writeText(couponCode);
+        iconCopy.classList.add('hidden');
+        iconCopied.classList.remove('hidden');
+        btnCopyCoupon.classList.remove('bg-white');
+    });
+
     const accordListBtn = document.querySelectorAll('.accordion-filter-heading button');
     const arrayAccordList = [].slice.call(accordListBtn);
     
