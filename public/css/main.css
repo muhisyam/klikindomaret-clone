@@ -340,8 +340,21 @@ body {
     margin-left: 24px;
 }
 
+/* 
+--------------------===============----------------------
+==================== Footer Section =====================
+--------------------===============---------------------- 
+*/
 
+.detail-product .left-side .product-thumbnail .item-thumbnail.active {
+    border: solid 1px #0079C2;
+    border-radius: 8px;
+}
 
+.detail-product .right-side .product-info-wrapper .flash-sale-header {
+    background-image: url(https://www.klikindomaret.com/Assets/image/pdp_fs_bg.png);
+    background-size: cover;
+}
 
 
 /* 
