@@ -9,4 +9,20 @@
         //     prevEl: "#promo-product-category-prev"
         // }
     });
+
+    const btnShare = document.querySelector('.product-info-wrapper .social-media-share button');
+    
+    btnShare.addEventListener('click', function () {
+        const shareWrapper = document.querySelector('.product-info-wrapper .social-media-share .social-media-wrapper');
+        return shareWrapper.classList.toggle('hidden');
+    });
+    
+    const btnExpandProductSpec = document.querySelector('.product-info-wrapper .product-spec-wrapper .button-expand-content');
+    
+    btnExpandProductSpec.addEventListener('click', function () {
+        const productSpecificationWrapper = document.querySelector('.product-info-wrapper .product-spec-wrapper');
+        return productSpecificationWrapper.classList.toggle('hide');
+    });
+
+    
 </script>

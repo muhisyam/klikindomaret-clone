@@ -347,9 +347,9 @@ input::-webkit-inner-spin-button {
 }
 
 /* 
---------------------===============----------------------
-==================== Footer Section =====================
---------------------===============---------------------- 
+-----------------======================------------------
+================ Detail Product Section =================
+-----------------======================------------------
 */
 
 .detail-product .left-side .product-thumbnail .item-thumbnail.active {
@@ -362,6 +362,15 @@ input::-webkit-inner-spin-button {
     background-size: cover;
 }
 
+.detail-product .right-side .product-info-wrapper .product-spec-wrapper.hide {
+    padding-bottom: 50px;
+}
+
+.detail-product .right-side .product-info-wrapper .product-spec-wrapper.hide .product-spec-content {
+    max-height: 200px;
+    overflow: hidden;
+    padding-bottom: 0px;
+}
 
 /* 
 --------------------===============----------------------

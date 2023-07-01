@@ -63,10 +63,10 @@
                         <div class="countdown bg-[#ED3128] rounded px-2">00:01:04</div>
                     </div>
                 </div>
-                <div class="product-desc-wrapper bg-white rounded-lg p-5">
-                    <div class="product-title text-xl font-bold mb-2">
+                <div class="product-desc-wrapper relative bg-white rounded-lg p-5 mb-4">
+                    <h2 class="product-title text-xl font-bold mb-2">
                         Klik Indomaret Tas Ramah Lingkungan Parasut
-                    </div>
+                    </h2>
                     <div class="find-store mb-4">
                         <button class="flex items-center bg-[#FAE7D4] rounded-full py-0.5 px-2">
                             <i class="ri-map-pin-2-fill text-[#0079C2] mr-1"></i>
@@ -83,7 +83,7 @@
                             <span>Rp 10.000</span>
                         </div>
                     </div>
-                    <div class="product-btn-wrapper">
+                    <div class="bottom-btn-wrapper flex justify-between">
                         <div class="product-qty flex items-center">
                             <span class="font-bold mr-4">Qty</span>
                             <div class="input-qty-wrapper">
@@ -97,8 +97,85 @@
                             </div>
                         </div>
                         <div class="btn-cart">
-                            <button type="button max-w-[270px] bg-[#]" class="add-to-cart" id=""></button>
+                            <button type="button" class="add-to-cart flex items-center justify-center w-60 h-10 bg-[#0079C2] text-white text-sm font-bold rounded" id="" data-page-name="" data-plu="" data-product-id="" data-product-price="" data-address-type="" data-address="" data-wh-code="">
+                                <i class="ri-add-line mr-2"></i>
+                                <span>Keranjang</span>
+                            </button>
                         </div>
+                    </div>
+                    <div class="top-bottom-wrapper absolute top-5 right-5 flex gap-2">
+                        <button type="button" class="btn-favorite w-8 h-8 grid place-items-center bg-[#CBCBCB] text-white text-lg rounded-full">
+                            <i class="ri-heart-line leading-0"></i>
+                        </button>
+                        <div class="social-media-share relative">
+                            <button type="button" class="btn-share w-8 h-8 grid place-items-center bg-[#CBCBCB] text-white text-lg rounded-full">
+                                <i class="ri-share-fill leading-0"></i>
+                            </button>
+                            <div class="social-media-wrapper hidden absolute top-10 right-0 flex items-center gap-3 bg-white rounded drop-shadow-md py-2 p-3">
+                                <a href="#" target="_blank">
+                                    <img class="max-w-[26px] rounded" src="https://www.klikindomaret.net/Assets/image/svg/icon_fb.svg" alt="Facebook Icon">
+                                </a>
+                                <a href="#" target="_blank">
+                                    <img class="max-w-[26px] rounded" src="https://www.klikindomaret.net/Assets/image/svg/icon_twitter.svg" alt="Twitter Icon">
+                                </a>
+                                <a href="#" target="_blank">
+                                    <img class="max-w-[26px] rounded" src="https://www.klikindomaret.net/Assets/image/svg/icon_wa.svg" alt="Whatsapp Icon">
+                                </a>
+                                <a href="#" target="_blank">
+                                    <img class="max-w-[26px] rounded" src="https://www.klikindomaret.net/Assets/image/svg/icon_copy_link.svg" alt="Link Icon">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-store-wrapper bg-white flex items-center rounded-lg p-5 mb-4">
+                    <div class="store-icon mr-2">
+                        <img class="w-14 h-14 bg-white rounded-full shadow p-1" src="https://www.klikindomaret.net/Assets/image/icon_store_pdp.png" alt="Store Icon">
+                    </div>
+                    <div class="store-name text-sm font-bold cursor-default" data-tooltip-target="product-store-tooltip" data-tooltip-placement="right">Toko Indomaret</div>
+                    <div id="product-store-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                        Produk disediakan dan dikirim oleh Toko Indomaret
+                    </div>
+                </div>
+                <div class="product-spec-wrapper hide relative bg-white text-sm rounded-lg p-5">
+                    <div class="product-spec-content pb-8">
+                        <div class="desc-wrapper mb-4">
+                            <h3 class="desc-label font-bold">Deskripsi Product</h3>
+                            <span class="desc-info">Minuman Yogurt dengan Rasa Strawberry. Merk yogurt dari bermacam-macam rasa buah yang satu ini sudah sangat terkenal. Bahkan, Anda tidak perlu repot-repot menemukan yogurt ini karena Cimory Yogurt Drink sudah dijual bebas di pasaran. Hadir dengan berbagai macam rasa, yogurt ini terbuat dari 100 persen susu sapi segar yang telah melalui proses fermentasi. Minuman bewarna keputih-putihan yang rasanya enak dan segar ini juga mengandung sejumlah bakteri baik yang bagus untuk memelihara kesehatan pencernaan. Jika dibandingkan produk yoghurt lainnya, yoghurt ini mempunyai nilai sodium dan kalium yang tinggi, sehingga yoghurt ini bisa membantu untuk memperkuat imunitas tubuh.</span>
+                        </div>
+                        <div class="list-spec-wrapper">
+                            <div class="item-spec-1 mb-4">
+                                <h3 class="spec-label font-bold">Cara Penggunaan:</h3>
+                                <span class="spec-info">Kocok sebelum diminum.</span>
+                            </div>
+                            <div class="item-spec-2 mb-4">
+                                <h3 class="spec-label font-bold">Cara Penyimpanan:</h3>
+                                <span class="spec-info">Selalu simpan di lemari pendingin. Setelah kemasan dibuka, sebaiknya segera dihabiskan.</span>
+                            </div>
+                            <div class="item-spec-3 mb-4">
+                                <h3 class="spec-label font-bold">Komposisi:</h3>
+                                <span class="spec-info">Susu sapi segar (51%), air, gula, susu skim bubuk, susu bubuk full krim, penstabil nabati, sari buah stroberi (0.1%), perisa sintetik stroberi, kultur Streptococcus thermophilus dan Lactobacillus delbrueckii subsp bulgaricus, pewarna karmin CI. No. 75470.</span>
+                            </div>
+                            <div class="item-spec-4 mb-4">
+                                <h3 class="spec-label font-bold">Takaran Per Kemasan:</h3>
+                                <span class="spec-info">Sajian per kemasan: 2</span>
+                            </div>
+                            <div class="item-spec-5 mb-4">
+                                <h3 class="spec-label font-bold">Takaran Per Serving:</h3>
+                                <span class="spec-info">Energi total 90kkal, energi dari lemak 10kkal. % AKG: Lemak total 1g, protein 3g, karbohidrat total 18g, gula 13g, natrium 45mg, kalium 135mg. kalsium 10%, fosfor 10%.</span>
+                            </div>
+                            <div class="item-spec-6 mb-4">
+                                <h3 class="spec-label font-bold">Takaran Per Saji:</h3>
+                                <span class="spec-info">Takaran saji: 125mL</span>
+                            </div>
+                        </div>
+                        <div class="product-plu">
+                            <h3 class="plu-label font-bold">PLU:</h3>
+                            <span class="plu-info">20056214</span>
+                        </div>
+                    </div>
+                    <div class="button-expand-content absolute bottom-5">
+                        <button class="text-[#0079C2] hover:underline" type="button">Lihat Selengkapnya</button>
                     </div>
                 </div>
             </div>
