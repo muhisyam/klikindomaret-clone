@@ -88,11 +88,11 @@
                             <span class="font-bold mr-4">Qty</span>
                             <div class="input-qty-wrapper">
                                 <button type="button" class="text-[#C5C5C5] text-sm font-bold border border-[#C5C5C5] rounded py-2 px-3 hover:bg-[#0079C2] hover:text-white hover:border-[#0079C2]" id="btn-min-qty">
-                                    <i class="ri-add-line"></i>
+                                    <i class="ri-subtract-line"></i>
                                 </button>
                                 <input type="number" class="w-10 h-10 text-center border-0 border-b border-[#C5C5C5] p-0 mx-1 focus:ring-transparent focus:border-[#C5C5C5]" value="1" id="input-qty">
                                 <button type="button" class="text-[#C5C5C5] text-sm font-bold border border-[#C5C5C5] rounded py-2 px-3 hover:bg-[#0079C2] hover:text-white hover:border-[#0079C2]" id="btn-plus-qty">
-                                    <i class="ri-subtract-line"></i>
+                                    <i class="ri-add-line"></i>
                                 </button>
                             </div>
                         </div>

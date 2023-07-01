@@ -28,6 +28,25 @@
         return shareWrapper.classList.toggle('hidden');
     });
     
+    const btnSubQty = document.querySelector('.detail-product #btn-min-qty');
+    const btnAddQty = document.querySelector('.detail-product #btn-plus-qty');
+    
+    btnSubQty.addEventListener('click', function () {
+        let inputQty = document.querySelector('.detail-product #input-qty');
+        let valueInput = parseFloat(inputQty.value);
+        
+        if (valueInput != 1) {
+            return inputQty.value = valueInput - 1;
+        }
+    });
+
+    btnAddQty.addEventListener('click', function () {
+        let inputQty = document.querySelector('.detail-product #input-qty');
+        let valueInput = parseFloat(inputQty.value);
+        
+        return inputQty.value = valueInput + 1;
+    });
+
     const btnExpandProductSpec = document.querySelector('.product-info-wrapper .product-spec-wrapper .button-expand-content');
     
     btnExpandProductSpec.addEventListener('click', function () {
