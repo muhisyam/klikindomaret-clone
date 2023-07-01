@@ -183,6 +183,8 @@
     </div>
 </section>
 
+@include('frontend.components.list-product')
+
 @endsection
 
 @section('scripts')

@@ -36,6 +36,7 @@ input::-webkit-inner-spin-button {
 }
 
 .promo-collection .item-product:hover,
+.section-collection .item-product:hover,
 .product-recommend-wrapper .item-product-recommend:hover,
 .category-product-content .item-category-product:hover {
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);

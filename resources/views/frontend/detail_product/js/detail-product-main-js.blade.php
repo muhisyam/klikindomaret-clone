@@ -10,6 +10,17 @@
         // }
     });
 
+    // Product per Section Collection section
+    const productSectionCollection = new Swiper('.product-content .list-product', {
+        slidesPerView: 7.5,
+        slidesPerGroup: 3,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: "#product-section-id42141-next",
+            prevEl: "#product-section-id42141-prev"
+        }
+    });
+
     const btnShare = document.querySelector('.product-info-wrapper .social-media-share button');
     
     btnShare.addEventListener('click', function () {
