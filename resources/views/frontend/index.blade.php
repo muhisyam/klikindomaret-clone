@@ -24,7 +24,8 @@
             @include('frontend.components.clean-header')
         </header>
         
-        <div class="container mx-auto max-w-7xl mt-30">
+        {{-- <div class="container mx-auto max-w-7xl mt-30"> --}}
+        <div class="container mx-auto max-w-7xl mt-24">
             @yield('content')
         </div>
 
