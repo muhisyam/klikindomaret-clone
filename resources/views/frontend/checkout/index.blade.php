@@ -30,7 +30,7 @@
                             <div class="total-product text-[#313131]">(<span>2</span> Item)</div>
                         </div>
                         <div class="list-product-wrapper">
-                            <div class="item-product-1 flex p-4">
+                            <div class="item-product-1 flex p-4" id="cart-id214124" data-cart-id="id214124" data-product-id="" data-plu="" data-price="">
                                 <div class="media w-1/12 mr-2">
                                     <img src="https://assets.klikindomaret.com/products/20122571/20122571_thumb.jpg?Version.20.03.1.01" alt="Product Image">
                                 </div>
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="item-product-2 flex p-4">
+                            <div class="item-product-2 flex p-4" id="cart-id79879" data-cart-id="id79879" data-product-id="" data-plu="" data-price="">
                                 <div class="media w-1/12 mr-2">
                                     <img src="https://assets.klikindomaret.com/products/20122571/20122571_thumb.jpg?Version.20.03.1.01" alt="Product Image">
                                 </div>
@@ -145,8 +145,8 @@
                         </div>
                     </div>
                     <div class="button-summary-wrapper w-full">
-                        <button class="w-full bg-[#0079C2] text-white text-sm text-center font-bold rounded py-2 px-4">Pilih Metode Pembayaran</button>
-                        {{-- <button class="w-full bg-[#0079C2] text-white text-sm text-center font-bold rounded py-2 px-4">Bayar</button> --}}
+                        <button class="w-full bg-[#0079C2] text-white text-sm text-center font-bold rounded py-2 px-4" data-page-name="" data-flag="" data-store-code="">Pilih Metode Pembayaran</button>
+                        {{-- <button class="w-full bg-[#0079C2] text-white text-sm text-center font-bold rounded py-2 px-4" data-page-name="" data-flag="" data-store-code="">Bayar</button> --}}
                         {{-- <button class="w-full flex items-center justify-center bg-[#0079C2] text-white text-sm font-bold rounded py-2 px-4">
                             <span class="icon leading-none me-2"><i class="ri-refresh-line"></i></span>
                             <span>Perbarui Keranjang</span>
