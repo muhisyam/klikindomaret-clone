@@ -19,15 +19,17 @@
     </head>
     <body>
         <header class="header fixed w-full top-0 z-50 drop-shadow text-[#313131]">
-            @include('frontend.components.navbar')
-            @include('frontend.components.category')
+            {{-- @include('frontend.components.navbar')
+            @include('frontend.components.category') --}}
+            @include('frontend.components.clean-header')
         </header>
         
         <div class="container mx-auto max-w-7xl mt-30">
             @yield('content')
         </div>
 
-        @include('frontend.components.footer')
+        {{-- @include('frontend.components.footer') --}}
+        @include('frontend.components.clean-footer')
 
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
