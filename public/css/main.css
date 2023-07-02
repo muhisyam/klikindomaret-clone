@@ -42,6 +42,10 @@ input::-webkit-inner-spin-button {
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
 }
 
+.checkout .input-coupon-voucher button.disabled {
+    opacity: .4;
+}
+
 /* 
 ---------------------==============---------------------
 ===================== Override Css =====================
@@ -378,6 +382,10 @@ input::-webkit-inner-spin-button {
 =================== Checkout Section ====================
 --------------------================---------------------
 */
+
+.checkout .checkout-wrapper>.left-side {
+    min-height: calc(100vh - 180px);
+}
 
 .checkout .product-cart-wrapper .list-product-wrapper>div[class|="item-product"]:not(:last-child) {
     border-bottom: 1px solid #EEE;
