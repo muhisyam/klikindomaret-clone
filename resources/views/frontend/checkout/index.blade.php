@@ -30,7 +30,7 @@
                             <div class="total-product text-[#313131]">(<span>2</span> Item)</div>
                         </div>
                         <div class="list-product-wrapper">
-                            <div class="item-product-1 flex p-4" id="cart-id214124" data-cart-id="id214124" data-product-id="" data-plu="" data-price="">
+                            <div class="item-product-1 relative flex p-4" id="cart-id214124" data-cart-id="id214124" data-product-id="" data-plu="" data-price="">
                                 <div class="media w-1/12 mr-2">
                                     <img src="https://assets.klikindomaret.com/products/20122571/20122571_thumb.jpg?Version.20.03.1.01" alt="Product Image">
                                 </div>
@@ -70,8 +70,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="button-delete-product absolute top-0 right-0">
+                                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="item-product-2 flex p-4" id="cart-id79879" data-cart-id="id79879" data-product-id="" data-plu="" data-price="">
+                            <div class="item-product-2 relative flex p-4" id="cart-id79879" data-cart-id="id79879" data-product-id="" data-plu="" data-price="">
                                 <div class="media w-1/12 mr-2">
                                     <img src="https://assets.klikindomaret.com/products/20122571/20122571_thumb.jpg?Version.20.03.1.01" alt="Product Image">
                                 </div>
@@ -103,16 +108,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="button-delete-product absolute top-0 right-0">
+                                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="subtotal flex bg-[#F9F9F9] border-t border-[#EEE] text-sm font-bold py-2 px-4">
                             <div class="left-side w-2/3 text-end">Subtotal:</div>
                             <div class="right-side ms-auto">Rp 111.157.500</div>
                         </div>
+                        <div id="delete-product-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            Hapus produk ini
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            {{-- <div class="h-[1000px]"></div> --}}
         </div>
         <div class="right-side checkout-summary w-1/4">
             <div class="summary-wrapper sticky top-20">
