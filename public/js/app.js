@@ -1,4 +1,4 @@
-headerCategory();
+// headerCategory();
 
 function headerCategory() {
     const btnCategory = document.querySelector('.bottom-section .category');

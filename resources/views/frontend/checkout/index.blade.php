@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="checkout mb-6">
-    <div class="checkout-wrapper relative flex gap-6">
+    <div class="checkout-wrapper flex gap-6">
         <div class="left-side checkout-info w-3/4">
             <div id="alert" class="flex items-center p-4 mb-4 text-blue-800 rounded-lg bg-blue-50" role="alert">
                 <i class="ri-information-fill text-[#0079C2] scale-[1.5] leading-none"></i>
@@ -14,10 +14,10 @@
                     <i class="ri-close-line scale-[1.5]"></i>
                 </button>
             </div>
-            <div class="free-ongkir flex bg-white text-sm rounded-lg py-3 px-4 mb-4">
-                <span class="icon text-[#0079C2] mr-2"><i class="ri-takeaway-fill"></i></span>
+            <div class="free-shipping flex items-center bg-white text-sm rounded-lg py-3 px-4 mb-4">
+                <span class="icon text-[#0079C2] leading-none mr-2"><i class="ri-takeaway-fill"></i></span>
                 Yuk, tambah belanjaan kamu supaya dapat gratis ongkos kirim!
-                <button class="text-[#0079C2] ml-1">
+                <button class="btn-free-shipping text-[#0079C2] ml-1" data-modal-target="#popupFreeShipping">
                     Lihat Selengkapnya
                 </button>
             </div>
@@ -119,10 +119,6 @@
                             <div class="left-side w-2/3 text-end">Subtotal:</div>
                             <div class="right-side ms-auto">Rp 111.157.500</div>
                         </div>
-                        <div id="delete-product-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                            Hapus produk ini
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -174,7 +170,53 @@
                 </div>
             </div>
         </div>
+        {{-- Modal --}}
+        <div class="list-modal">
+            <div class="item-modal modal" id="popupFreeShipping">
+                <div class="modal-wrapper w-96 bg-white rounded-lg p-5">
+                    <div class="modal-content">
+                        <div class="media w-32 mx-auto mb-4">
+                            <img src="https://www.klikindomaret.com/Assets/image/image-free-ongkir.png" alt="Free Shipping Image">
+                        </div>
+                        <div class="desc mb-4">
+                            Dapatkan gratis ongkos kirim dengan pembelanjaan minimal tertentu dalam satu penjual sebagai berikut:
+                        </div>
+                        <div class="list-info mb-6">
+                            <div class="item-info-1 mb-2">
+                                <div class="media w-24">
+                                    <img src="https://assets.klikindomaret.com/images/klikindomaret/icon_pilihan_waktu.png">
+                                </div>
+                                <div class="desc text-xs">
+                                    Belanja produk toko Indomaret minimal <strong>Rp 100.000</strong>
+                                </div>
+                            </div>
+                            <div class="item-info-1">
+                                <div class="media w-24">
+                                    <img src="https://assets.klikindomaret.com/images/klikindomaret/icon_express.png">
+                                </div>
+                                <div class="desc text-xs">
+                                    Belanja produk toko Indomaret minimal <strong>Rp 150.000</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-close-modal">
+                            <button class="w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" data-modal-hide="#popupFreeShipping">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-overlay fixed w-full h-screen top-0 left-0 bg-black opacity-50 z-[55] hidden"></div>
+        </div>
+        {{-- Tooltip --}}
+        <div id="delete-product-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Hapus produk ini
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+@include('frontend.checkout.js.checkout-main-js')
 @endsection

@@ -82,7 +82,7 @@
                         <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="logo">
                     </a>
                 </div>
-                <div class="category flex items-center mx-10 text-[#0079c2]" data-tooltip-target="category-tooltip" data-tooltip-placement="bottom">
+                <div class="category flex items-center mx-10 text-[#0079c2]" data-tooltip-target="category-tooltip" data-tooltip-placement="bottom" onclick="headerCategory()">
                     <span class="icon mt-0.5"><i class="ri-dashboard-fill"></i></span>
                     <span class="mx-1.5">Kategori</span>
                     <span class="icon mt-0.5"><i class="ri-arrow-drop-down-line"></i></span>
