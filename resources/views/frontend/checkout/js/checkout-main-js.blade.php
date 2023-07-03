@@ -1,42 +1,38 @@
 <script>
-    function toggleModal(btn, dataAtribute) { 
-        const modalDataTarget = btn.getAttribute(dataAtribute);
+    function toggleModal(element, dataAtribute) {
+        const modalDataTarget = element.getAttribute(dataAtribute);
         const modalTarget = document.querySelector(modalDataTarget);
 
         modalTarget.classList.toggle('show');
         modalOverlay.classList.toggle('hidden');
     }
-
-    let modalShowing;
-    const modalOverlay = document.querySelector('.modal-overlay');
-    const btnFreeShipping = document.querySelector('.btn-free-shipping');
     
-    btnFreeShipping.addEventListener('click', function () {
-        modalShowing = btnFreeShipping;
+    let modalShowing;
+    
+    function openModal(element) {
+        let modalElementAttribute;
+        const dataButtonRole = element.getAttribute('data-button-role');
         
-        toggleModal(btnFreeShipping, 'data-modal-target');
-    });
+        modalShowing = element;
+        
+        if (dataButtonRole == 'open-modal' || dataButtonRole == 'delete-product' ) {
+            if (dataButtonRole == 'delete-product') {
+                const dataProductName = element.getAttribute('data-product-name');
+                const modalProductName = document.querySelector('.item-modal .product-name span');
+                
+                modalProductName.innerText = dataProductName;
+            };
+            
+            modalElementAttribute = 'data-modal-target';
 
-    const btnDeleteProduct = document.querySelectorAll('.button-delete-product button');
+        } else if (dataButtonRole == 'hide-modal') {
+            modalElementAttribute = 'data-modal-hide';
+        } 
 
-    btnDeleteProduct.forEach(btnDelete => {
-        btnDelete.addEventListener('click', function () {
-            const dataProductName = btnDelete.getAttribute('data-product-name');
-            const modalProductName = document.querySelector('.item-modal .product-name span');
-            modalShowing = btnDelete;
+        toggleModal(modalShowing, modalElementAttribute);
+    };
 
-            modalProductName.innerText = dataProductName;
-            toggleModal(btnDelete, 'data-modal-target');
-        });
-    });
-
-    const btnCloseModal = document.querySelectorAll('.button-close-modal button');
-
-    btnCloseModal.forEach(btnClose => {
-        btnClose.addEventListener('click', function () {
-            toggleModal(btnClose, 'data-modal-hide');
-        });
-    });
+    const modalOverlay = document.querySelector('.modal-overlay');
 
     modalOverlay.addEventListener('click', function () {
         toggleModal(modalShowing, 'data-modal-target');

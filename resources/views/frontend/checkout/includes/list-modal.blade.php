@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="button-close-modal">
-                <button class="1 w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" data-modal-hide="#popupFreeShipping">Tutup</button>
+                <button class="w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" onclick="openModal(this)" data-button-role="hide-modal" data-modal-hide="#popupFreeShipping">Tutup</button>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="list-action flex gap-4">
                 <div class="button-close-modal flex-1">
-                    <button class="2 w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" data-modal-hide="#popupDeleteProductItem">Batal</button>
+                    <button class="w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" onclick="openModal(this)" data-button-role="hide-modal" data-modal-hide="#popupDeleteProductItem">Batal</button>
                 </div>
                 <div class="button-delete-product flex-1">
                     <button class="w-full bg-[#C33] border border-[#C33] text-white text-sm font-bold rounded py-2" data-modal-hide="#popupDeleteProductItem">Hapus Produk</button>
