@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="button-delete-product absolute top-0 right-0">
-                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" onclick="openModal(this)" data-cart-id="" data-product-id="" data-product-name="Baby Happy ! Baby Diapers Pants 30'S Large" data-button-role="delete-product" data-modal-target="#popupDeleteProductItem" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" onclick="openModal(this)" data-cart-id="" data-product-id="" data-product-name="Baby Happy ! Baby Diapers Pants 30'S Large" data-button-role="delete-product" data-modal-target="#popup-delete-product" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
                         <i class="ri-delete-bin-6-line"></i>
                     </button>
                 </div>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="button-delete-product absolute top-0 right-0">
-                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" onclick="openModal(this)" data-cart-id="" data-product-id="" data-product-name="Chilgo 3+ Susu Pertumbuhan Vanila 700G" data-button-role="delete-product" data-modal-target="#popupDeleteProductItem" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" onclick="openModal(this)" data-cart-id="" data-product-id="" data-product-name="Chilgo 3+ Susu Pertumbuhan Vanila 700G" data-button-role="delete-product" data-modal-target="#popup-delete-product" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
                         <i class="ri-delete-bin-6-line"></i>
                     </button>
                 </div>
