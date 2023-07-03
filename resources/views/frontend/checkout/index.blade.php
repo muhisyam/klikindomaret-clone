@@ -17,7 +17,7 @@
             <section class="free-shipping flex items-center bg-white text-sm rounded-lg py-3 px-4 mb-4">
                 <span class="icon text-[#0079C2] leading-none mr-2"><i class="ri-takeaway-fill"></i></span>
                 Yuk, tambah belanjaan kamu supaya dapat gratis ongkos kirim!
-                <button class="btn-free-shipping text-[#0079C2] ml-1" onclick="openModal(this)" data-button-role="open-modal"  data-modal-target="#popup-free-shipping">
+                <button class="btn-free-shipping text-[#0079C2] ml-1" data-button-role="open-modal"  data-modal-target="#popup-free-shipping">
                     Lihat Selengkapnya
                 </button>
             </section>
