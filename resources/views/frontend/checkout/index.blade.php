@@ -32,11 +32,11 @@
                         <div class="list-product-wrapper">
                             <div class="item-product-1 relative flex p-4" id="cart-id214124" data-cart-id="id214124" data-product-id="" data-plu="" data-price="">
                                 <div class="media w-1/12 mr-2">
-                                    <img src="https://assets.klikindomaret.com/products/20122571/20122571_thumb.jpg?Version.20.03.1.01" alt="Product Image">
+                                    <img src="https://assets.klikindomaret.com/products//20072925/20072925_thumb.jpg?Version.20.03.1.01" alt="Product Image">
                                 </div>
                                 <div class="info w-11/12 flex text-sm">
                                     <div class="name w-1/2 mr-4">
-                                        <a class="hover:text-[#0079C2]" href="#">Chilgo 3+ Susu Pertumbuhan Vanila 700G Chilgo 3+ Susu Pertumbuhan Vanila 700G Chilgo 3+ Susu Pertumbuhan Vanila 700G Chilgo 3+ Susu Pertumbuhan Vanila 700G Chilgo 3+ Susu Pertumbuhan Vanila 700G Chilgo 3+ Susu Pertumbuhan Vanila 700G Chilgo 3+ Susu Pertumbuhan Vanila 700G Chilgo 3+ Susu Pertumbuhan Vanila 700G</a>
+                                        <a class="hover:text-[#0079C2]" href="#">Baby Happy ! Baby Diapers Pants 30'S Large</a>
                                     </div>
                                     <div class="summary w-1/2 flex items-center">
                                         <div class="price w-1/3">
@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                                 <div class="button-delete-product absolute top-0 right-0">
-                                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-cart-id="" data-product-id="" data-product-name="Baby Happy ! Baby Diapers Pants 30'S Large" data-button-name="hapus" data-modal-target="#popupDeleteProductItem" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
                                         <i class="ri-delete-bin-6-line"></i>
                                     </button>
                                 </div>
@@ -109,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="button-delete-product absolute top-0 right-0">
-                                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-cart-id="" data-product-id="" data-product-name="Chilgo 3+ Susu Pertumbuhan Vanila 700G" data-button-name="hapus" data-modal-target="#popupDeleteProductItem" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
                                         <i class="ri-delete-bin-6-line"></i>
                                     </button>
                                 </div>
@@ -200,7 +200,30 @@
                             </div>
                         </div>
                         <div class="button-close-modal">
-                            <button class="w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" data-modal-hide="#popupFreeShipping">Tutup</button>
+                            <button class="1 w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" data-modal-hide="#popupFreeShipping">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item-modal modal" id="popupDeleteProductItem">
+                <div class="modal-wrapper w-96 bg-white rounded-lg p-5">
+                    <div class="modal-content text-center">
+                        <div class="media w-32 mx-auto mb-4">
+                            <img src="{{ asset('img/checkout/image-delete-product.png') }}" alt="Delete Product Image">
+                        </div>
+                        <div class="desc font-bold mb-4">
+                            Apakah anda yakin ingin menghapus produk ini dari keranjang?
+                        </div>
+                        <div class="product-name text-[#95989A] text-sm mb-6">
+                            "<span>Chilgo 3+ Susu Pertumbuhan Vanila 700G</span>"
+                        </div>
+                        <div class="list-action flex gap-4">
+                            <div class="button-close-modal flex-1">
+                                <button class="2 w-full border border-[#0079C2] text-[#0079C2] text-sm font-bold rounded py-2" data-modal-hide="#popupDeleteProductItem">Batal</button>
+                            </div>
+                            <div class="button-delete-product flex-1">
+                                <button class="w-full bg-[#C33] border border-[#C33] text-white text-sm font-bold rounded py-2" data-modal-hide="#popupDeleteProductItem">Hapus Produk</button>
+                            </div>
                         </div>
                     </div>
                 </div>
