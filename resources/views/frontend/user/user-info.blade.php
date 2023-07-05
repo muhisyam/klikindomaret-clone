@@ -18,7 +18,7 @@
     </ol>
 </nav>
 
-<main class="user-info">
+<main class="user-info mb-6">
     <div class="user-info-wrapper flex">
         <section class="left-side w-1/6 me-4">
             <aside class="sidebar-wrapper text-sm">
@@ -51,7 +51,7 @@
                 </ul>
             </aside>
         </section>
-        <section class="right-side w-5/6 bg-white rounded-lg p-5">
+        <section class="right-side w-5/6 bg-white rounded-lg pt-5 pb-14 px-6">
             <div class="user-info-content">
                 <h1 class="title font-bold mb-8">Informasi Akun</h1>
                 <div class="form-info-wrapper">
@@ -62,6 +62,8 @@
     </div>
 </main>
 
-<div class="h-[1000px]"></div>
+@endsection
 
+@section('scripts')
+    @include('frontend.user.js.user-main-js')
 @endsection
