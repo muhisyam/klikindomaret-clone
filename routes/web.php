@@ -15,7 +15,7 @@ use App\Http\Controllers\FrontendController;
 */
 
 Route::get('/', function () {
-    return view('frontend.user.user-info');
+    return view('admin.index');
 });
 
 // Route::get('/', [FrontendController::class, 'index'])->name('frontendHome');
