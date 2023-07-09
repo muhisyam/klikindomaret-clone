@@ -17,32 +17,13 @@
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 </head>
 <body>
-    <aside class="sidebar w-1/6 h-screen pt-4 px-6">
-        <header class="logo mb-6">
-            <a href="https://www.klikindomaret.com/">
-                <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="logo">
-            </a>
-        </header>
-        <section class="search mb-6">
-            <div class="search-input-wrapper relative bg-white/40 rounded py-2 px-4">
-                <input type="text" placeholder="Search..." class="w-5/6 bg-transparent border-none focus:ring-transparent">
-                <span class="icon absolute top-1 right-2 bg-[#f9c828] text-white text-sm rounded py-1 px-2">
-                    <i class="ri-search-line"></i>
-                </span>
-            </div>
-        </section>
-        <section class="menu">
-            <div class="title uppercase text-xs">Main menu</div>
-            <ul>
-                <li class="py-2">Dashboard</li>
-                <li class="py-2">Category</li>
-                <li class="py-2">Produk</li>
-                <li class="py-2">Setting</li>
-            </ul>
-        </section>
+    <aside class="sidebar w-1/6 h-screen p-4">
+        @include('admin.components.sidebar')
     </aside>
-    <div class="container w-5/6 rounded-3xl bg-white h-screen">
-
+    <div class="w-5/6 rounded-s-3xl bg-white h-screen p-8">
+        <header class="header mb-6">
+            @include('admin.components.header')
+        </header>
     </div>
 </body>
 </html>

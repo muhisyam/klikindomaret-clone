@@ -4,3 +4,42 @@ body {
     background-color: #f9c828;
     color: #414141;
 }
+
+/* 
+--------------------================---------------------
+==================== Global Section ====================
+--------------------================--------------------- 
+*/
+
+input:focus {
+    outline: none;
+}
+
+/* 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+########################################################
+---------============    SIDEBAR    ===========---------
+########################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+.sidebar .menu ul .item-menu .active {
+    background-color: #0079c2;
+    color: white;
+}
+
+.sidebar .menu ul .item-submenu .active {
+    background-color: #fbde7e;
+    color: #0079c2;
+}
+
+.sidebar .menu ul .item-submenu .active::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -12px;
+    width: 6px;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #0079c2;
+}
