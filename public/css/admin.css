@@ -44,3 +44,26 @@ select:focus {
     border-radius: 4px;
     background-color: #0079c2;
 }
+
+/* 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+########################################################
+---------===========    CATEGORY    ===========---------
+########################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+.category-input .accordion-category-content {
+    max-height: 300px;
+    overflow: auto;
+    margin-bottom: 16px;
+    transition: all 0.5s ease-out;
+}
+
+.category-input .accordion-category-content.hide {
+    max-height: 0;
+    border: none;
+    overflow: hidden;
+    margin-bottom: 0;
+    opacity: 0;
+}
