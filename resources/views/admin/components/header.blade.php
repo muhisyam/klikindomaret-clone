@@ -10,13 +10,14 @@
     </div>
     <div class="right-side w-1/5">
         <div class="user flex items-center">
-            <div class="user-image me-2">
+            <div class="user-image me-3">
                 <img class="h-10 w-10 border-2 border-[#414141] rounded-full p-1" src="https://www.shutterstock.com/image-vector/young-man-beard-character-260nw-1374216479.jpg" alt="">
             </div>
             <div class="user-info">
                 <div class="name font-bold">Michael Jordan</div>
                 <div class="role text-sm">Admin</div>
             </div>
+            <div class="icon h-6 w-6 text-center rounded scale-125 cursor-pointer pt-0.5 ms-auto me-4 hover:bg-[#fbde7e]"><i class="ri-arrow-down-s-line"></i></div>
         </div>
     </div>
 </div>

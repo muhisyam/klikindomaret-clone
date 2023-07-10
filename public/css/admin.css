@@ -54,9 +54,9 @@ select:focus {
 */
 
 .category-input .accordion-category-content {
-    max-height: 300px;
+    max-height: 210px;
     overflow: auto;
-    margin-bottom: 16px;
+    margin-bottom: 6px;
     transition: all 0.5s ease-out;
 }
 
@@ -64,6 +64,19 @@ select:focus {
     max-height: 0;
     border: none;
     overflow: hidden;
-    margin-bottom: 0;
+    margin-bottom: 16px;
     opacity: 0;
+}
+
+.category-input .accordion-category-content::-webkit-scrollbar {
+    width: 5px;
+}
+
+.category-input .accordion-category-content::-webkit-scrollbar-thumb {
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.category-input .accordion-category-content:hover::-webkit-scrollbar-thumb {
+    background-color: #ccc;
 }
