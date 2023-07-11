@@ -4,16 +4,16 @@
     accordListBtn.forEach (accordBtn => {
         accordBtn.addEventListener('click', function () {
             const allAccordContent = document.querySelectorAll('.accordion-category-content');
-
-            allAccordContent.forEach (accordList => {
-                accordList.classList.add('hide');
-            });
-
             const accordDataTarget = accordBtn.getAttribute('data-accordion-target');
             const accordTarget = document.querySelector(`#${accordDataTarget}`);
             const isTargetHide = accordTarget.classList.contains('hide');
-
             
+            allAccordContent.forEach (accordList => {
+                const thisAccordContent = accordList.id;
+
+                return accordDataTarget != thisAccordContent ? accordList.classList.add('hide') : '';
+            });
+
             if (isTargetHide) {
                 accordTarget.classList.remove('hide');
                 accordBtn.classList.add('active');

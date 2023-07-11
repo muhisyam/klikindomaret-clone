@@ -15,7 +15,7 @@ use App\Http\Controllers\FrontendController;
 */
 
 Route::get('/', function () {
-    return view('admin.category.input');
+    return view('admin.category.index');
 });
 
 // Route::get('/', [FrontendController::class, 'index'])->name('frontendHome');
