@@ -16,6 +16,16 @@ select:focus {
     outline: none;
 }
 
+.main-content {
+    height: calc(100% - 95px);
+}
+
+.product-input,
+.product-input-wrapper {
+    height: 100%;
+    overflow: auto;
+}
+
 /* 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ########################################################
