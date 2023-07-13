@@ -11,7 +11,7 @@ Input Produk
         <form action="">
             <div class="item-input-group flex items-center gap-4 mb-4">
                 <label for="form-input-product-name" class="w-1/6 text-[#959595]">Nama Produk</label>
-                <input id="form-input-product-name" type="text" name="product-name"" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
+                <input id="form-input-product-name" type="text" name="product-name" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
             </div>
             <div class="item-input-group flex items-center gap-4 mb-4">
                 <label for="form-input-slug" class="w-1/6 text-[#959595]">Slug</label>
