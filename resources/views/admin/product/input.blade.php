@@ -28,15 +28,15 @@ Input Produk
             <div class="item-input-group flex gap-4 mb-4">
                 <label for="form-input-desc" class="w-1/6 text-[#959595] pt-2">Deskripsi</label>
                 <div id="form-input-desc" class="w-5/6">
-                    <input id="desc-label" type="text" name="label" placeholder="Label Deskripsi..." class="w-full h-10 border !border-[#ccc] rounded py-2 px-3 mb-4 focus:ring-transparent">
-                    <textarea id="desc-info" name="info" cols="30" rows="5" placeholder="Deskripsi..." class="w-full border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent"></textarea>
+                    <input id="desc-label" type="desc-text" name="label" placeholder="Label Deskripsi..." class="w-full h-10 border !border-[#ccc] rounded py-2 px-3 mb-4 focus:ring-transparent">
+                    <textarea id="desc-info" name="desc-info" cols="30" rows="5" placeholder="Deskripsi..." class="w-full border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent"></textarea>
                 </div>
             </div>
             <div class="item-input-group flex gap-4 mb-4">
                 <label for="form-input-desc" class="w-1/6 text-[#959595] pt-2">Deskripsi Tambahan</label>
                 <div id="form-input-desc" class="w-5/6">
-                    <input id="desc-label" type="text" name="label" placeholder="Label Deskripsi..." class="w-full h-10 border !border-[#ccc] rounded py-2 px-3 mb-4 focus:ring-transparent">
-                    <textarea id="desc-info" name="info" cols="30" rows="5" placeholder="Deskripsi..." class="w-full border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent"></textarea>
+                    <input id="desc-label" type="addon-desc-text" name="label" placeholder="Label Deskripsi..." class="w-full h-10 border !border-[#ccc] rounded py-2 px-3 mb-4 focus:ring-transparent">
+                    <textarea id="desc-info" name="addon-desc-info" cols="30" rows="5" placeholder="Deskripsi..." class="w-full border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent"></textarea>
                 </div>
             </div>
             <div class="item-input-group flex gap-4 mb-4">
@@ -48,32 +48,32 @@ Input Produk
                     </button>
                 </div>
             </div>
-            <div class="item-input-group flex items-center gap-4 mb-4">
+            <div class="item-input-group relative flex items-center gap-4 mb-4">
                 <label for="form-input-price" class="w-1/6 text-[#959595]">Harga</label>
                 <input id="form-input-price" type="number" name="price" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
             </div>
             <div class="item-input-group relative flex items-center gap-4 mb-4">
                 <label for="form-input-discount" class="w-1/6 text-[#959595]">Harga Diskon</label>
                 <input id="form-input-discount" type="number" name="discount" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
-                <div class="discout-preview absolute top-0 right-0 bg-red-400 rounded-r py-2 px-4">
-                    <div><span>10</span>%</div>
+                <div class="discout-preview absolute top-0 right-0 bg-red-400 text-white rounded-r py-2 px-4">
+                    <div>Persentase Diskon: <span>10</span>%</div>
                 </div>
             </div>
             <div class="item-input-group flex items-center gap-4 mb-4">
-                <label for="form-select-category" class="w-1/6 text-[#959595]">Toko</label>
-                <select id="form-select-category" name="category" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
+                <label for="form-select-store" class="w-1/6 text-[#959595]">Toko</label>
+                <select id="form-select-store" name="store" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
                     <option value="" selected>Pilih Toko...</option>
                     <option value="">Toko Indomaret</option>
                     <option value="">Warehouse 1 Jakarta</option>
                 </select>
             </div>
             <div class="item-input-group flex items-center gap-4 mb-4">
-                <label for="form-input-price" class="w-1/6 text-[#959595]">Stok</label>
-                <input id="form-input-price" type="number" name="price" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
+                <label for="form-input-stock" class="w-1/6 text-[#959595]">Stok</label>
+                <input id="form-input-stock" type="number" name="stock" class="h-10 w-5/6 border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
             </div>
             <div class="item-input-group flex items-center gap-4 mb-4">
-                <label for="form-input-first-name" class="w-1/6 text-[#959595]">Gambar Icon Kategori</label>
-                <input type="file" name="" id="" class="h-10 py-2">
+                <label for="form-input-product-image" class="w-1/6 text-[#959595]">Gambar Produk</label>
+                <input type="file" name="product-image" id="form-input-product-image" class="h-10 py-2">
             </div>
             <div class="form-button flex gap-4">
                 <div class="w-1/6"></div>
