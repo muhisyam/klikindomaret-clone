@@ -38,6 +38,35 @@ List Produk
                 </a>
             </div>
         </section>
+        <section class="product-list-wrapper border border-[#eee] rounded-xl p-4">
+            <table class="w-full">
+                <thead>
+                    <tr>
+                        <td>No.</td>
+                        <td>Nama Produk</td>
+                        <td>Kategori</td>
+                        <td>Harga</td>
+                        <td>Toko</td>
+                        <td>Stok</td>
+                        <td>Terjual</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Sunlight</td>
+                        <td>Makanan Kaleng</td>
+                        <td>Rp 15.000</td>
+                        <td>Toko Indomaret</td>
+                        <td>509</td>
+                        <td>2206</td>
+                        <td><i class="ri-more-2-line"></i></td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </section>
     </div>
 </div>
 @endsection
