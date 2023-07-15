@@ -16,6 +16,16 @@ select:focus {
     outline: none;
 }
 
+.blink {
+    animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
 .main-content {
     height: calc(100% - 95px);
 }

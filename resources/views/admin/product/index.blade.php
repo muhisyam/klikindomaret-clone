@@ -40,28 +40,85 @@ List Produk
         </section>
         <section class="product-list-wrapper border border-[#eee] rounded-xl p-4">
             <table class="w-full">
-                <thead>
+                <thead class="bg-[#fbde7e] text-[#0079c2] text-sm text-left rounded-t font-bold">
                     <tr>
-                        <td>No.</td>
-                        <td>Nama Produk</td>
-                        <td>Kategori</td>
-                        <td>Harga</td>
-                        <td>Toko</td>
-                        <td>Stok</td>
-                        <td>Terjual</td>
-                        <td></td>
+                        <th class="rounded-tl py-2 px-4">No.</th>
+                        <th class="py-2 px-4">Nama Produk</th>
+                        <th class="py-2 px-4">Kategori</th>
+                        <th class="py-2 px-4">Toko</th>
+                        <th class="py-2 px-4">Stok</th>
+                        <th class="py-2 px-4">Harga</th>
+                        <th class="py-2 px-4">Terjual</th>
+                        <th class="rounded-tr py-2 px-4"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Sunlight</td>
-                        <td>Makanan Kaleng</td>
-                        <td>Rp 15.000</td>
-                        <td>Toko Indomaret</td>
-                        <td>509</td>
-                        <td>2206</td>
-                        <td><i class="ri-more-2-line"></i></td>
+                <tbody class="text-sm">
+                    <tr class="border-b">
+                        <td class="py-2 px-4">1</td>
+                        <td class="w-96 py-2 px-4">
+                            <div class="product-info-wrapper flex items-center">
+                                <div class="media w-10 me-3">
+                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
+                                </div>
+                                <div class="name line-clamp-1 text-ellipsis">
+                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
+                                </div>
+                            </div>
+                        </td>
+                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
+                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
+                        <td class="text-right font-light py-2 px-4">509</td>
+                        <td class="text-right font-light py-2 px-4">
+                            <div class="price">
+                                Rp <span>1.500.00</span>
+                            </div>
+                        </td>
+                        <td class="text-right font-light py-2 px-4">2206</td>
+                        <td class="text-right py-2 p-4">
+                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
+                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="py-2 px-4">2</td>
+                        <td class="w-96 py-2 px-4">
+                            <div class="product-info-wrapper relative flex items-center">
+                                <div class="media w-10 me-3">
+                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
+                                </div>
+                                <div class="name line-clamp-1 text-ellipsis">
+                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
+                                </div>
+                                <div class="banner-info absolute -top-1 left-12 flex items-center gap-1 blink">
+                                    <div class="stock-info text-[#c33] rounded-full">
+                                        <span class="icon h-3 block -mt-2"><i class="ri-error-warning-fill"></i></span>
+                                    </div>
+                                    <div class="discount-info h-3 bg-[#fae7d4] text-[#f28418] text-[8px] rounded-full px-0.5">
+                                        <span class="icon block -mt-1"><i class="ri-percent-fill"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
+                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
+                        <td class="text-right font-light py-2 px-4">509</td>
+                        <td class="text-right font-light py-2 px-4">
+                            <div class="price-wrapper">
+                                <div class="normal-price text-[#95989A] text-xs line-through">
+                                    Rp <span>1.500.000</span>
+                                </div>
+                                <div class="discout-price">
+                                    Rp <span>150.000</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-right font-light py-2 px-4">2206</td>
+                        <td class="text-right py-2 p-4">
+                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
+                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
                 
