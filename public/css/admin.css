@@ -102,3 +102,16 @@ select:focus {
 .category-input .accordion-category-content:hover::-webkit-scrollbar-thumb {
     background-color: #ccc;
 }
+
+/* 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+########################################################
+---------===========    PRODUCT    ============---------
+########################################################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+*/
+
+.product-list-wrapper {
+    max-height: calc(100vh - 290px);
+    overflow: auto;
+}
