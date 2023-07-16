@@ -18,7 +18,7 @@ List Produk
             <div class="product-filter-wrapper text-sm flex gap-4">
                 <div class="product-search-group flex items-center bg-[#f5f5f5] rounded py-2 px-4">
                     <label for="product-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
-                    <input id="product-search" type="text" name="product-search" placeholder="Cari Produk..." class="bg-transparent">
+                    <input id="product-search" type="text" name="product-search" placeholder="Cari Produk..." class="bg-transparent w-64">
                 </div>
                 <button class="flex items-center bg-[#f5f5f5] rounded py-2 px-4">
                     <div class="label pe-2">Urutkan</div>
@@ -123,10 +123,10 @@ List Produk
                                 </div>
                                 <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
                                     <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4 block"><i class="ri-error-warning-fill"></i></span>
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
-                                    <div class="discount-info h-3 bg-[#fae7d4] text-[#f28418] text-[8px] rounded-full px-0.5">
-                                        <span class="icon block -mt-[3px]"><i class="ri-percent-fill"></i></span>
+                                    <div class="discount-info text-[#f28418]">
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">3</td>
+                        <td class="py-2 px-4">1</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper flex items-center">
                                 <div class="media w-10 me-3">
@@ -179,7 +179,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">4</td>
+                        <td class="py-2 px-4">2</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper relative flex items-center">
                                 <div class="media w-10 me-3">
@@ -190,10 +190,10 @@ List Produk
                                 </div>
                                 <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
                                     <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4 block"><i class="ri-error-warning-fill"></i></span>
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
-                                    <div class="discount-info h-3 bg-[#fae7d4] text-[#f28418] text-[8px] rounded-full px-0.5">
-                                        <span class="icon block -mt-[3px]"><i class="ri-percent-fill"></i></span>
+                                    <div class="discount-info text-[#f28418]">
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +219,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">5</td>
+                        <td class="py-2 px-4">1</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper flex items-center">
                                 <div class="media w-10 me-3">
@@ -246,7 +246,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">6</td>
+                        <td class="py-2 px-4">2</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper relative flex items-center">
                                 <div class="media w-10 me-3">
@@ -257,10 +257,10 @@ List Produk
                                 </div>
                                 <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
                                     <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4 block"><i class="ri-error-warning-fill"></i></span>
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
-                                    <div class="discount-info h-3 bg-[#fae7d4] text-[#f28418] text-[8px] rounded-full px-0.5">
-                                        <span class="icon block -mt-[3px]"><i class="ri-percent-fill"></i></span>
+                                    <div class="discount-info text-[#f28418]">
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -286,7 +286,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">7</td>
+                        <td class="py-2 px-4">1</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper flex items-center">
                                 <div class="media w-10 me-3">
@@ -313,7 +313,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">8</td>
+                        <td class="py-2 px-4">2</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper relative flex items-center">
                                 <div class="media w-10 me-3">
@@ -324,10 +324,10 @@ List Produk
                                 </div>
                                 <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
                                     <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4 block"><i class="ri-error-warning-fill"></i></span>
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
-                                    <div class="discount-info h-3 bg-[#fae7d4] text-[#f28418] text-[8px] rounded-full px-0.5">
-                                        <span class="icon block -mt-[3px]"><i class="ri-percent-fill"></i></span>
+                                    <div class="discount-info text-[#f28418]">
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +353,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">9</td>
+                        <td class="py-2 px-4">1</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper flex items-center">
                                 <div class="media w-10 me-3">
@@ -380,7 +380,7 @@ List Produk
                         </td>
                     </tr>
                     <tr class="border-b">
-                        <td class="py-2 px-4">10</td>
+                        <td class="py-2 px-4">2</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper relative flex items-center">
                                 <div class="media w-10 me-3">
@@ -391,10 +391,10 @@ List Produk
                                 </div>
                                 <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
                                     <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4 block"><i class="ri-error-warning-fill"></i></span>
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
-                                    <div class="discount-info h-3 bg-[#fae7d4] text-[#f28418] text-[8px] rounded-full px-0.5">
-                                        <span class="icon block -mt-[3px]"><i class="ri-percent-fill"></i></span>
+                                    <div class="discount-info text-[#f28418]">
+                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
                                     </div>
                                 </div>
                             </div>
