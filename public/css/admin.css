@@ -20,9 +20,19 @@ select:focus {
     animation: blinker 2s linear infinite;
 }
 
+.jump {
+    animation: jumping 2s linear infinite;
+}
+
 @keyframes blinker {
     50% {
         opacity: 0;
+    }
+}
+
+@keyframes jumping {
+    50% {
+        transform: translateY(-4px);
     }
 }
 
@@ -34,6 +44,13 @@ select:focus {
 .product-input-wrapper {
     height: 100%;
     overflow: auto;
+}
+
+.upload-progress,
+.upload-progress-bar {
+    display: flex;
+    overflow: hidden;
+    border-radius: 3px;
 }
 
 /* 
@@ -114,4 +131,13 @@ select:focus {
 .product-list-wrapper {
     max-height: calc(100vh - 290px);
     overflow: auto;
+}
+
+.list-image-uploaded {
+    max-height: calc(100vh - 573px);
+    overflow: auto;
+}
+
+.list-image-uploaded::-webkit-scrollbar {
+    width: 0;
 }

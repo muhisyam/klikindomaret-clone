@@ -15,7 +15,7 @@ use App\Http\Controllers\FrontendController;
 */
 
 Route::get('/', function () {
-    return view('admin.product.index');
+    return view('admin.product.input');
 });
 
 // Route::get('/', [FrontendController::class, 'index'])->name('frontendHome');
