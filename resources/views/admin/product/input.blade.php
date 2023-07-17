@@ -10,7 +10,7 @@ Input Produk
         <h1 class="title text-[#0079c2] text-xl font-bold mb-4">Tambah Produk</h1>
         <form action="">
             <div class="product-input-wrapper flex gap-4 pb-5">
-                <div class="left-side w-2/5 border border-[#eee] rounded-xl p-4">
+                <div class="left-side relative w-2/5 border border-[#eee] rounded-xl p-4">
                     <div class="label text-sm mb-1">Tambah Gambar</div>
                     <div class="input-image-wrapper w-full h-56 flex flex-col justify-center bg-[#fbf0d0] border-4 border-[#f9c828] border-dashed rounded-lg mb-6">
                         <div class="icon h-24 text-[#aca595] text-8xl text-center mb-5"><i class="ri-image-add-fill"></i></div>
@@ -107,8 +107,17 @@ Input Produk
                             </div>
                         </div>
                     </div>
+                    <div id="alert" class="image-alert-info absolute top-2 left-1/2 -translate-x-1/2 flex p-4 mb-6 text-red-800 rounded-lg bg-red-50" role="alert">
+                        <span class="icon text-[#c33] text-2xl me-2"><i class="ri-information-fill"></i></span>
+                        <div class="text-sm font-medium">
+                            Ukuran Gambar > 500 KB.
+                        </div>
+                        <button type="button" class="h-8 w-8 grid place-content-center ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200" data-dismiss-target="#alert" aria-label="Close">
+                            <span class="icon h-8 text-[#c33] text-2xl"><i class="ri-close-line"></i></span>
+                        </button>
+                    </div>
                 </div>
-                <div class="right-side w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">        
+                <div class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">        
                     <div class="item-input-group mb-4">
                         <label for="form-input-product-name" class="block text-sm mb-1">Nama Produk</label>
                         <input id="form-input-product-name" type="text" name="product-name" class="h-10 w-full border !border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
@@ -166,6 +175,15 @@ Input Produk
                                 <span class="text">Hapus Deskripsi</span>
                             </button>
                         </div>
+                    </div>
+                    <div id="alert" class="desc-alert-info absolute top-2 left-1/2 -translate-x-1/2 flex p-4 mb-6 text-red-800 rounded-lg bg-red-50" role="alert">
+                        <span class="icon text-[#c33] text-2xl me-2"><i class="ri-information-fill"></i></span>
+                        <div class="text-sm font-medium">
+                            Pastikan kamu sudah menandai titik lokasi dengan benar pada alamat yang dipilih untuk pengantaran pesanan.
+                        </div>
+                        <button type="button" class="h-8 w-8 grid place-content-center ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200" data-dismiss-target="#alert" aria-label="Close">
+                            <span class="icon h-8 text-[#c33] text-2xl"><i class="ri-close-line"></i></span>
+                        </button>
                     </div>
                 </div>
             </div>
