@@ -15,7 +15,7 @@ use App\Http\Controllers\FrontendController;
 */
 
 Route::get('/', function () {
-    return view('admin.category.input');
+    return view('admin.category.input-nonparent');
 });
 Route::get('/2', function () {
     return view('admin.product.input');
