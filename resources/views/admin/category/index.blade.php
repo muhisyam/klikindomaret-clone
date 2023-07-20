@@ -16,7 +16,7 @@ Input Kategori
                         <i class="ri-arrow-down-s-line text-[#0079C2] duration-300"></i>
                     </button>
                 </div>
-                <div id="makanan" class="accordion-category-content overflow-hidden mb-5" aria-labelledby="accordion-category-heading">
+                <div id="makanan" class="accordion-category-content overflow-hidden" aria-labelledby="accordion-category-heading">
                     <ul class="list-category-level-2 grid grid-cols-6 gap-4 text-sm">
                         <li class="item-category-level-2">
                             <a href="#" class="flex items-center py-1.5 ms-4 hover:text-[#0079c2]">
@@ -66,7 +66,7 @@ Input Kategori
                         <i class="ri-arrow-down-s-line text-[#0079C2] duration-300"></i>
                     </button>
                 </div>
-                <div id="minuman" class="accordion-category-content hide overflow-hidden mb-5" aria-labelledby="accordion-category-heading">
+                <div id="minuman" class="accordion-category-content hide overflow-hidden" aria-labelledby="accordion-category-heading">
                     <ul class="list-subcategory text-sm">
                         <li class="item-subcategory">
                             <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
@@ -102,7 +102,7 @@ Input Kategori
                         <i class="ri-arrow-down-s-line text-[#0079C2] duration-300"></i>
                     </button>
                 </div>
-                <div id="pakaian" class="accordion-category-content hide overflow-hidden mb-5" aria-labelledby="accordion-category-heading">
+                <div id="pakaian" class="accordion-category-content hide overflow-hidden" aria-labelledby="accordion-category-heading">
                     <ul class="list-subcategory text-sm">
                         <li class="item-subcategory">
                             <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
