@@ -14,8 +14,8 @@ Input Kategori
             </div>
         </section>
         <section class="right-side w-3/5">
+            <h1 class="title text-[#0079c2] text-xl font-bold mb-4">Input Kategori</h1>
             <form action="">
-                <h1 class="title text-[#0079c2] text-xl font-bold mb-4">Input Kategori</h1>
                 <div class="category-input-wrapper border border-[#eee] rounded-xl p-4 mb-5">
                     @include('admin.category.includes.input.form-input')
                 </div>
