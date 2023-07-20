@@ -123,11 +123,11 @@ input::-webkit-inner-spin-button {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 .category-input .list-category-wrapper {
-    max-height: calc(100vh - 263px);
+    max-height: calc(100vh - 243px);
 }
 
 .category-input .category-input-wrapper {
-    height: calc(100vh - 263px);
+    height: calc(100vh - 243px);
 }
 
 .category-list .accordion-category-content,
