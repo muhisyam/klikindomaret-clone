@@ -5,8 +5,8 @@ List Produk
 @endsection
 
 @section('content')
-<div class="product-list">
-    <div class="product-list-content">
+<div class="order-list">
+    <div class="order-list-content">
         <header class="header flex items-center justify-between mb-4">
             <h1 class="title text-[#0079c2] text-2xl font-bold">Pemesanan</h1>
             <a href="#" class="flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
@@ -14,107 +14,128 @@ List Produk
                 <div class="text">Cetak</div>
             </a>
         </header>
-        <section class="product-list-header flex justify-between border border-[#eee] rounded-xl py-2 px-4 mb-4">
-            <div class="product-filter-wrapper text-sm flex gap-4">
-                {{-- <div class="product-search-group flex items-center bg-[#f5f5f5] rounded py-2 px-4">
-                    <label for="product-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
-                    <input id="product-search" type="text" name="product-search" placeholder="Cari Produk..." class="bg-transparent w-64">
-                </div> --}}
-                <button class="flex items-center px-4 border-e border-[#ccc] hover:bg-[#0079c2] py-2">
-                    <div class="icon h-5 me-1"><i class="ri-calendar-2-fill"></i></div>
-                    <div class="label me-1">Tanggal</div>
-                </button>
-                {{-- <button class="flex items-center bg-[#fbde7e] text-[#0079c2] rounded py-2 px-4">
-                    <div class="icon h-5 me-1"><i class="ri-filter-2-fill"></i></div>
-                    <div class="label me-1">Urutkan</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button>
-                <button class="flex items-center bg-[#fbde7e] text-[#0079c2] rounded py-2 px-4">
-                    <div class="icon h-5 me-1"><i class="ri-calendar-2-fill"></i></div>
-                    <div class="label me-1">Tanggal</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button>
-                <button class="flex items-center bg-[#fbde7e] text-[#0079c2] rounded py-2 px-4">
-                    <div class="icon h-5 me-1"><i class="ri-file-info-fill"></i></div>
-                    <div class="label me-1">Status</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button>
-                <button class="flex items-center bg-[#fbde7e] text-[#0079c2] rounded py-2 px-4">
-                    <div class="icon h-5 me-1"><i class="ri-takeaway-fill"></i></div>
-                    <div class="label pe-2">Pengambilan</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button> --}}
+        <section class="order-list-header flex gap-2 border border-[#eee] rounded-xl text-sm py-2 px-4 mb-4">
+            <div class="order-search-group flex flex-1 items-center rounded py-2 px-4">
+                <label for="order-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
+                <input id="order-search" type="text" name="order-search" placeholder="Cari Produk..." class="w-full bg-transparent">
             </div>
-            {{-- <div class="product-input-wrapper">
-                <nav aria-label="Page navigation example">
-                    <ul class="inline-flex -space-x-px text-sm">
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
-                            <i class="ri-arrow-left-s-line"></i>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
+                <div class="icon h-5 me-1"><i class="ri-filter-3-fill"></i></div>
+                <div class="label">Urutkan</div>
+            </button>
+            <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
+                <div class="icon h-5 me-1"><i class="ri-calendar-2-fill"></i></div>
+                <div class="label">Tanggal</div>
+            </button>
+            <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
+                <div class="icon h-5 me-1"><i class="ri-information-fill"></i></div>
+                <div class="label">Status</div>
+            </button>   
+            <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
+                <div class="icon h-5 me-1"><i class="ri-takeaway-fill"></i></div>
+                <div class="label">Pengambilan</div>
+            </button>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <button class="layout-setting rounded py-2 px-3 hover:bg-[#f5f5f5]">
+                <div class="icon h-5"><i class="ri-list-settings-line"></i></div>
+            </button>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <nav class="header-pagination" aria-label="Page navigation example">
+                <ul class="inline-flex">
+                    <li>
+                        <a href="#" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]">
+                            <div class="icon h-5"><i class="ri-arrow-left-s-line"></i></div>
                         </a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                      </li>
-                      <li>
-                        <a href="#" aria-current="page" class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
-                            <i class="ri-arrow-right-s-line"></i>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">2</a>
+                    </li>
+                    <li>
+                        <a href="#" class="active block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]" aria-current="page" >3</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">4</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">5</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]">
+                            <div class="icon h-5"><i class="ri-arrow-right-s-line"></i></div>
                         </a>
-                      </li>
-                    </ul>
-                  </nav>
-            </div> --}}
+                    </li>
+                </ul>
+            </nav>
         </section>
-        {{-- <section class="product-list-wrapper border border-[#eee] rounded-xl p-4">
+        <section class="product-list-wrapper border border-[#eee] rounded-xl p-4">
             <table class="w-full">
-                <thead class="bg-[#fbde7e] text-[#0079c2] text-sm text-left uppercase rounded-t font-bold">
+                <thead class="bg-[#f5f5f5] text-[#888] text-sm text-left uppercase rounded-t">
                     <tr>
-                        <th class="rounded-tl py-3 px-4">Ref.</th>
+                        <th class="py-3 px-4 rounded-tl">Ref.</th>
                         <th class="py-3 px-4">Dibuat</th>
                         <th class="py-3 px-4">Kostumer</th>
-                        <th class="py-3 px-4">Banyak Produk</th>
-                        <th class="py-3 px-4">Tgl Pengambilan</th>
-                        <th class="py-3 px-4">Tmpt Pengambilan</th>
+                        <th class="py-3 px-4">List Produk</th>
+                        <th class="py-3 px-4 text-[#414141]">Pengambilan</th>
+                        <th class="py-3 px-4">Lokasi</th>
                         <th class="py-3 px-4">Status</th>
-                        <th class="text-right py-3 px-4">Harga</th>
-                        <th class="rounded-tr py-3 px-4"></th>
+                        <th class="py-3 px-4">Pengantaran</th>
+                        <th class="py-3 px-4">Harga</th>
+                        <th class="py-3 px-4 rounded-tr"></th>
                     </tr>
                 </thead>
                 <tbody class="text-sm">
                     <tr class="border-b">
-                        <td class="py-2 px-4">1</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
+                        <td class="py-2 px-4 font-bold">#1445</td>
+                        <td class="py-2 px-4">
+                            <div class="order-created-date">
+                                <div class="date">15 Jul 2023</div>
+                                <div class="time text-xs font-light">16.00</div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4">Linguistiq Joe</td>
+                        <td class="py-2 px-4">
+                            <div class="list-products flex">
+                                <div class="info me-1"><span>1</span> Produk</div>
+                                <button class="icon h-5 hover:text-[#0079c2]"><i class="ri-eye-fill"></i></button>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4">
+                            <div class="order-take-date">
+                                <div class="date">17 Jul 2023</div>
+                                <div class="time text-xs font-light">10.00</div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4">
+                            <div class="order-take-place">
+                                <div class="info">Ambil Ditoko</div>
+                                <div class="address flex text-xs font-light">
+                                    <div class="address-info me-1">Lokasi</div>
+                                    <button class="icon h-4 hover:text-[#0079c2]"><i class="ri-eye-fill"></i></button>
                                 </div>
                             </div>
                         </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price">
-                                Rp <span>1.500.00</span>
+                        <td class="py-2 px-4">
+                            <div class="status bg-green-100 text-green-700 font-bold text-center rounded-lg p-1">
+                                <div class="info">Dalam Perjalanan</div>
                             </div>
                         </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
+                        <td class="py-2 px-4">
+                            <div class="status flex">
+                                <div class="icon h-5 text-green-600 scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                <div class="info">Selesai</div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4">
+                            <div class="price flex justify-between">
+                                <div class="left-side">Rp</div>
+                                <div class="right-side">3.600.000</div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4 text-center">
                             <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
                                 <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
                             </button>
@@ -122,7 +143,7 @@ List Produk
                     </tr>
                 </tbody>
             </table>
-        </section> --}}
+        </section>
     </div>
 </div>
 @endsection
