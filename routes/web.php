@@ -15,10 +15,19 @@ use App\Http\Controllers\FrontendController;
 */
 
 Route::get('/', function () {
-    return view('admin.category.input-parent');
+    return view('admin.order.index');
 });
 Route::get('/2', function () {
+    return view('admin.product.index');
+});
+Route::get('/3', function () {
     return view('admin.product.input');
+});
+Route::get('/4', function () {
+    return view('admin.category.input-parent');
+});
+Route::get('/5', function () {
+    return view('admin.category.input-subcategory');
 });
 
 // Route::get('/', [FrontendController::class, 'index'])->name('frontendHome');
