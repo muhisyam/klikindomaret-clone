@@ -192,7 +192,7 @@ input::-webkit-inner-spin-button {
 */
 
 .order-list-wrapper {
-    max-height: calc(100vh - 290px);
+    max-height: calc(100vh - 274px);
     overflow: auto;
 }
 

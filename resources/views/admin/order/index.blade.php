@@ -7,12 +7,50 @@ List Produk
 @section('content')
 <div class="order-list">
     <div class="order-list-content">
-        <header class="header flex items-center justify-between mb-4">
-            <h1 class="title text-[#0079c2] text-2xl font-bold">Pemesanan</h1>
-            <a href="#" class="flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
-                <div class="icon h-6 me-2"><i class="ri-printer-fill"></i></div>
-                <div class="text">Cetak</div>
-            </a>
+        <header class="header mb-6">
+            <div class="top-section flex items-center justify-between">
+                <div class="left-side min-w-[180px]"><h1 class="title text-2xl font-bold">Pemesanan</h1></div>
+                <div class="center-side relative">
+                    <div class="greeting bg-[#fbde7e] text-[#0079c2] text-center rounded-lg py-1.5 px-6">
+                        <div class="text-lg tracking-wide">Selamat <span class="time">Pagi</span>, <span class="name italic font-bold">Jordan!</span></div>
+                        <div class="datetime absolute -bottom-5 w-full flex justify-center text-xs font-bold pt-1 -ms-6">Jum'at, 12 Agustus 2023</div>
+                    </div>
+                </div>
+                <div class="right-side min-w-[180px]">
+                    <div class="flex items-center float-right">
+                        <button class="icon text-lg me-4"><i class="ri-notification-3-line"></i></button>
+                        <button class="icon text-lg"><i class="ri-question-line"></i></button>
+                        <div class="separator h-7 w-[1px] bg-[#ccc] mx-3"></div>
+                        <a href="#" class="w-fit flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
+                            <div class="icon h-6 me-2"><i class="ri-printer-fill"></i></div>
+                            <div class="text">Cetak</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-section">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center text-sm">
+                        <li class="inline-flex items-center text-[#95989A]">
+                            <a href="#" class="inline-flex items-center hover:text-[#0079C2]">
+                            Pemesanan
+                            </a>
+                        </li>
+                        <li>
+                            <div class="flex items-center text-[#95989A]">
+                                <i class="ri-arrow-right-s-line mx-2"></i>
+                                <a href="#" class="hover:text-[#0079C2]">Makanan</a>
+                            </div>
+                        </li>
+                        <li aria-current="page">
+                            <div class="flex items-center">
+                                <i class="ri-arrow-right-s-line text-[#95989A] mx-2"></i>
+                                <span class="text-black">List Pemesanan</span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
         </header>
         <section class="order-list-header border border-[#eee] rounded-xl text-sm py-2 px-4 mb-4">
             <div class="top-section flex gap-2">
@@ -51,7 +89,7 @@ List Produk
             <div class="bottom-section flex gap-2">
                 <div class="order-search-group flex flex-1 items-center rounded py-2 px-4">
                     <label for="order-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
-                    <input id="order-search" type="text" name="order-search" placeholder="Cari Produk..." class="w-full bg-transparent">
+                    <input id="order-search" type="text" name="order-search" placeholder="Cari Pesanan..." class="w-full bg-transparent">
                 </div>
                 <div class="separator w-[1px] bg-[#eee] my-2"></div>
                 <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">

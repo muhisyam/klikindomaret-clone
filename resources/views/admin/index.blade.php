@@ -23,9 +23,9 @@
         @include('admin.components.sidebar')
     </aside>
     <div class="w-5/6 rounded-s-3xl bg-white h-screen p-8">
-        <header class="header mb-6">
+        {{-- <header class="header mb-6">
             @include('admin.components.header')
-        </header>
+        </header> --}}
         <main class="main-content">
             @yield('content')
         </main>
