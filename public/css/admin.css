@@ -101,17 +101,38 @@ input::-webkit-inner-spin-button {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
-.sidebar .menu ul .item-menu .active {
+.sidebar .menu ul .item-menu .link.active, 
+.sidebar .menu ul .item-menu button.active {
     background-color: #0079c2;
     color: white;
 }
 
-.sidebar .menu ul .item-submenu .active {
+.sidebar .menu ul .item-submenu .icon {
+    color: #d3ab2d;
+}
+
+.sidebar .menu ul .list-submenu::after {
+    content: '';
+    position: absolute;
+    height: calc(100% - 30%);
+    width: 3px;
+    left: 19px;
+    background-color: #d3ab2d;
+    margin-top: 17px;
+    z-index: -1;
+}
+
+.sidebar .menu ul .item-submenu.active .icon {
+    color: #0079c2;
+}
+
+.sidebar .menu ul .item-submenu.active .link {
     background-color: #fbde7e;
     color: #0079c2;
 }
 
-.sidebar .menu ul .item-submenu .active::before {
+
+/* .sidebar .menu ul .item-submenu .active::before {
     content: "";
     position: absolute;
     top: 0;
@@ -120,7 +141,7 @@ input::-webkit-inner-spin-button {
     height: 100%;
     border-radius: 4px;
     background-color: #0079c2;
-}
+} */
 
 /* 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

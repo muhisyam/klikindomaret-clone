@@ -24,7 +24,7 @@ Route::get('/3', function () {
     return view('admin.product.input');
 });
 Route::get('/4', function () {
-    return view('admin.category.input-parent');
+    return view('admin.category.index');
 });
 Route::get('/5', function () {
     return view('admin.category.input-subcategory');
