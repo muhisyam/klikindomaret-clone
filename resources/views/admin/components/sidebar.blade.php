@@ -16,24 +16,32 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="dashboard">
                         <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                            <div class="icon h-6 me-3"><i class="ri-bar-chart-fill"></i></div>
-                            <div class="title">Dashboard</div>
+                            <div class="icon h-6 me-3"><i class="ri-home-3-fill"></i></div>
+                            <div class="title">Beranda</div>
                         </a>
                     </div>
                 </li>
                 <li class="item-menu">
                     <div class="menu-wrapper" id="dashboard">
+                        <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                            <div class="icon h-6 me-3"><i class="ri-numbers-fill"></i></div>
+                            <div class="title">Analisis</div>
+                        </a>
+                    </div>
+                </li>
+                <li class="item-menu">
+                    <div class="menu-wrapper" id="activity">
                         <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
                             <div class="icon h-6 me-3"><i class="ri-file-text-fill"></i></div>
-                            <div class="title">Activity</div>
+                            <div class="title">Aktifitas</div>
                         </a>
                     </div>
                 </li>
                 <li class="item-menu">
-                    <div class="menu-wrapper" id="dashboard">
+                    <div class="menu-wrapper" id="report">
                         <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
                             <div class="icon h-6 me-3"><i class="ri-booklet-fill"></i></div>
-                            <div class="title">Report</div>
+                            <div class="title">Laporan</div>
                         </a>
                     </div>
                 </li>
@@ -44,15 +52,153 @@
             <ul class="list-menu flex flex-col gap-1">
                 <li class="item-menu">
                     <div class="menu-wrapper" id="category">
-                        <div class="accordion-menu-heading mb-2">
-                            <button class="active w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                        <div class="accordion-menu-heading mb-1">
+                            <button class="w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
                                 <div class="icon h-6 me-3"><i class="ri-dashboard-fill"></i></div>
                                 <div class="title">Kategori</div>
                                 <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
-                        <div class="accordion-menu-content relative show">
+                        <div class="accordion-menu-content relative">
                             <ul class="list-submenu flex flex-col gap-1 ps-3">
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">List Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu active relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">Tambah Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">List Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu active relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">Tambah Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">Tambah Sub Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="list-menu flex flex-col gap-1">
+                <li class="item-menu">
+                    <div class="menu-wrapper" id="product">
+                        <div class="accordion-menu-heading mb-1">
+                            <button class="w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                <div class="icon h-6 me-3"><i class="ri-stack-fill"></i></div>
+                                <div class="title">Produk</div>
+                                <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
+                            </button>
+                        </div>
+                        <div class="accordion-menu-content relative">
+                            <ul class="list-submenu flex flex-col gap-1 ps-3">
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">List Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu active relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">Tambah Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">Tambah Sub Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">Tambah Sub Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="list-menu flex flex-col gap-1">
+                <li class="item-menu">
+                    <div class="menu-wrapper" id="product">
+                        <div class="accordion-menu-heading mb-1">
+                            <button class="w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                <div class="icon h-6 me-3"><i class="ri-shopping-basket-fill"></i></div>
+                                <div class="title">Pemesanan</div>
+                                <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
+                            </button>
+                        </div>
+                        <div class="accordion-menu-content relative">
+                            <ul class="list-submenu flex flex-col gap-1 ps-3">
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">List Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">List Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">List Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="#">
+                                            <div class="title">List Kategori</div>
+                                        </a>
+                                    </div>
+                                </li>
                                 <li class="item-submenu relative flex items-center">
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
                                     <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
@@ -84,60 +230,15 @@
             </ul>
         </div>
     </div>
-        {{-- <div class="title uppercase text-xs ps-3 mb-2">Main menu</div>
-        <ul class="list-menu flex flex-col gap-1">
-            <li class="item-menu">
-                <div class="menu-wrapper" id="dashboard">
-                    <a href="#" class="flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                        <div class="icon h-6 me-2"><i class="ri-home-3-fill"></i></div>
-                        <div class="title">Dashboard</div>
-                    </a>
-                </div>
-            </li>
-            <li class="item-menu">
-                <div class="menu-wrapper" id="category">
-                    <div class="accordion-menu-heading mb-2">
-                        <button class="active w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                            <div class="icon h-6 me-2"><i class="ri-dashboard-fill"></i></div>
-                            <div class="title">Category</div>
-                            <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
-                        </button>
-                    </div>
-                    <div class="accordion-menu-content show">
-                        <ul class="list-submenu flex flex-col gap-1 ps-3">
-                            <li class="item-submenu relative">
-                                <a href="#" class="flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                                    <div class="title">List Category</div>
-                                </a>
-                            </li>
-                            <li class="item-submenu relative">
-                                <a href="#" class="flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                                    <div class="title">Input Category</div>
-                                </a>
-                            </li>
-                            <li class="item-submenu relative">
-                                <a href="#" class="active flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                                    <div class="title">Update Category</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-        </ul> --}}
-    {{-- </div> --}}
-    {{-- <div class="setting-menu">
+    <div class="setting-menu">
         <div class="title uppercase text-xs ps-3 mb-2">Settings</div>
         <ul>
             <li>
                 <a href="#" class="flex rounded duration-300 py-2 ps-3 mb-1 hover:bg-[#0079c2] hover:text-white">
                     <div class="icon h-6 me-2"><i class="ri-settings-fill"></i></div>
-                    <div class="title">Settings</div>
+                    <div class="title">Pengaturan</div>
                 </a>
             </li>
         </ul>
-    </div> --}}
+    </div>
 </section>

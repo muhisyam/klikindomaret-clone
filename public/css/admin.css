@@ -78,7 +78,7 @@ input::-webkit-inner-spin-button {
 .product-input .list-image-uploaded::-webkit-scrollbar-thumb,
 .product-input .right-side::-webkit-scrollbar-thumb,
 .order-list .order-list-wrapper::-webkit-scrollbar-thumb {
-    background-color: #fff;
+    background-color: transparent;
 }
 
 .category-input .list-category-wrapper:hover::-webkit-scrollbar-thumb,
@@ -101,6 +101,23 @@ input::-webkit-inner-spin-button {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
+.sidebar .menu {
+    max-height: calc(100vh - 152px);
+    overflow: auto;
+}
+
+.sidebar .menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar .menu::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.sidebar .menu:hover::-webkit-scrollbar-thumb {
+    background-color: #fbde7e;
+}
+
 .sidebar .menu ul .item-menu .link.active, 
 .sidebar .menu ul .item-menu button.active {
     background-color: #0079c2;
@@ -108,16 +125,16 @@ input::-webkit-inner-spin-button {
 }
 
 .sidebar .menu ul .item-submenu .icon {
-    color: #d3ab2d;
+    color: #d1a823;
 }
 
 .sidebar .menu ul .list-submenu::after {
     content: '';
     position: absolute;
-    height: calc(100% - 30%);
+    height: calc(100% - 35px);
     width: 3px;
     left: 19px;
-    background-color: #d3ab2d;
+    background-color: #d1a823;
     margin-top: 17px;
     z-index: -1;
 }
@@ -129,6 +146,22 @@ input::-webkit-inner-spin-button {
 .sidebar .menu ul .item-submenu.active .link {
     background-color: #fbde7e;
     color: #0079c2;
+}
+
+.sidebar .menu .accordion-menu-content {
+    overflow: auto;
+    margin-bottom: 4px;
+    transition: all 0.5s ease-out;
+}
+
+.sidebar .menu .accordion-menu-content.hide {
+    max-height: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.sidebar .menu .accordion-menu-content::-webkit-scrollbar {
+    width: 0;
 }
 
 
