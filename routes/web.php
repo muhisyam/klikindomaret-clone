@@ -17,17 +17,23 @@ use App\Http\Controllers\FrontendController;
 Route::get('/', function () {
     return view('admin.order.index');
 });
-Route::get('/2', function () {
-    return view('admin.product.index');
-});
-Route::get('/3', function () {
-    return view('admin.product.input');
-});
-Route::get('/4', function () {
+Route::get('/category', function () {
     return view('admin.category.index');
 });
-Route::get('/5', function () {
+Route::get('/category/input', function () {
+    return view('admin.category.input-parent');
+});
+Route::get('/category/input-sub', function () {
     return view('admin.category.input-subcategory');
+});
+Route::get('/product', function () {
+    return view('admin.product.index');
+});
+Route::get('/product/input', function () {
+    return view('admin.product.input');
+});
+Route::get('/order', function () {
+    return view('admin.order.index');
 });
 
 // Route::get('/', [FrontendController::class, 'index'])->name('frontendHome');
