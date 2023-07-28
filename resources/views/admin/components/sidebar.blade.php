@@ -3,10 +3,24 @@
         <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="logo">
     </a>
 </header>
-<section class="accountS mb-4">
-    <div class="w-full h-14 rounded bg-[#fbde7e]">
-
+<section class="account relative mb-4">
+    <div class="account-wrapper flex items-center w-full rounded bg-[#fbde7e] p-2">
+        <div class="media me-2">
+            <img class="h-10 w-10 border-2 border-[#0079c2] rounded-full p-1" src="https://www.shutterstock.com/image-vector/young-man-beard-character-260nw-1374216479.jpg" alt="">
+        </div>
+        <div class="info me-2">
+            <div class="name font-bold">Michael Jordan</div>
+            <div class="role text-xs line-clamp-1 text-ellipsis">Admin Frontend Javascript</div>
+        </div>
+        <button class="account-dropdown bg-[#0079c2] text-white rounded py-1 px-0.5">
+            <div class="icon h-6">
+                <i class="ri-arrow-right-s-line"></i>
+            </div>
+        </button>
     </div>
+    {{-- <div class="account-dropdown-wrapper absolute top-0 left-[103%]">
+        <div class="h-48 w-32 bg-red-600 rounded"></div>
+    </div> --}}
 </section>
 <section class="menu">
     <div class="list-menu-section">
@@ -15,32 +29,32 @@
             <ul class="list-menu flex flex-col gap-1">
                 <li class="item-menu">
                     <div class="menu-wrapper" id="dashboard">
-                        <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                            <div class="icon h-6 me-3"><i class="ri-home-3-fill"></i></div>
+                        <a href="#" class="link group flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                            <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-home-3-fill"></i></div>
                             <div class="title">Beranda</div>
                         </a>
                     </div>
                 </li>
                 <li class="item-menu">
                     <div class="menu-wrapper" id="dashboard">
-                        <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                            <div class="icon h-6 me-3"><i class="ri-numbers-fill"></i></div>
+                        <a href="#" class="link group flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                            <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-numbers-fill"></i></div>
                             <div class="title">Analisis</div>
                         </a>
                     </div>
                 </li>
                 <li class="item-menu">
                     <div class="menu-wrapper" id="activity">
-                        <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                            <div class="icon h-6 me-3"><i class="ri-file-text-fill"></i></div>
+                        <a href="#" class="link group flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                            <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-file-text-fill"></i></div>
                             <div class="title">Aktifitas</div>
                         </a>
                     </div>
                 </li>
                 <li class="item-menu">
                     <div class="menu-wrapper" id="report">
-                        <a href="#" class="link flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                            <div class="icon h-6 me-3"><i class="ri-booklet-fill"></i></div>
+                        <a href="#" class="link group flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                            <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-booklet-fill"></i></div>
                             <div class="title">Laporan</div>
                         </a>
                     </div>
@@ -53,8 +67,8 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="category">
                         <div class="accordion-menu-heading mb-1">
-                            <button class="w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                                <div class="icon h-6 me-3"><i class="ri-dashboard-fill"></i></div>
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-dashboard-fill"></i></div>
                                 <div class="title">Kategori</div>
                                 <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
@@ -94,8 +108,8 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="product">
                         <div class="accordion-menu-heading mb-1">
-                            <button class="w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                                <div class="icon h-6 me-3"><i class="ri-stack-fill"></i></div>
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-stack-fill"></i></div>
                                 <div class="title">Produk</div>
                                 <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
@@ -126,8 +140,8 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="product">
                         <div class="accordion-menu-heading mb-1">
-                            <button class="w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                                <div class="icon h-6 me-3"><i class="ri-shopping-basket-fill"></i></div>
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-shopping-basket-fill"></i></div>
                                 <div class="title">Pemesanan</div>
                                 <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
@@ -153,8 +167,8 @@
         <div class="title uppercase text-xs ps-3 mb-2">Settings</div>
         <ul>
             <li>
-                <a href="#" class="flex rounded duration-300 py-2 ps-3 mb-1 hover:bg-[#0079c2] hover:text-white">
-                    <div class="icon h-6 me-2"><i class="ri-settings-fill"></i></div>
+                <a href="#" class="link group flex rounded duration-300 py-2 ps-3 mb-1 hover:bg-[#0079c2] hover:text-white">
+                    <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-settings-fill"></i></div>
                     <div class="title">Pengaturan</div>
                 </a>
             </li>
