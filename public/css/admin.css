@@ -65,6 +65,10 @@ input::-webkit-inner-spin-button {
     border-radius: 3px;
 }
 
+.top-section .list-tabs-section::-webkit-scrollbar {
+    height: 0;
+}
+
 .category-input .list-category-wrapper::-webkit-scrollbar,
 .category-input .accordion-category-content::-webkit-scrollbar,
 .product-input .list-image-uploaded::-webkit-scrollbar,
@@ -164,18 +168,6 @@ input::-webkit-inner-spin-button {
     width: 0;
 }
 
-
-/* .sidebar .menu ul .item-submenu .active::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -12px;
-    width: 6px;
-    height: 100%;
-    border-radius: 4px;
-    background-color: #0079c2;
-} */
-
 /* 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ########################################################
@@ -183,6 +175,39 @@ input::-webkit-inner-spin-button {
 ########################################################
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
+
+.category-list .category-list-header .top-section .item-tabs-section.active {
+    position: relative;
+    color: #0079c2;
+    font-weight: 600;
+}
+
+.category-list  .category-list-header .top-section .item-tabs-section.active::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: #0079c2;
+}
+
+.category-list .category-list-header .bottom-section .header-pagination ul li a.active {
+    position: relative;
+    color: #0079c2;
+    font-weight: 600;
+}
+
+.category-list  .category-list-header .bottom-section .header-pagination ul li a.active::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: #0079c2;
+}
+
 .category-input .list-category-wrapper {
     max-height: calc(100vh - 243px);
 }
@@ -250,13 +275,13 @@ input::-webkit-inner-spin-button {
     overflow: auto;
 }
 
-.order-list .order-list-header .top-section .list-tabs-section .item-tabs-section.active {
+.order-list .order-list-header .top-section .item-tabs-section.active {
     position: relative;
     color: #0079c2;
     font-weight: 600;
 }
 
-.order-list  .order-list-header .top-section .list-tabs-section .item-tabs-section.active::after {
+.order-list  .order-list-header .top-section .item-tabs-section.active::after {
     content: '';
     position: absolute;
     height: 3px;
