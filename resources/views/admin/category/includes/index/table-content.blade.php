@@ -1,9 +1,11 @@
-<tr class="relative">
+<tr class="border-b">
     <td class="py-2">
         <div class="accordion-category-button">
-            <button class="block bg-[#eee] border border-[#ccc] text-[#0079c2] rounded-full mx-auto">
-                <div class="icon h-5 w-5"><i class="ri-arrow-down-s-line"></i></div>
-            </button>
+            <a href="{{ route('subcategory') }}">
+                <div class="h-5 w-5 bg-[#eee] border border-[#ccc] text-[#0079c2] rounded-full mx-auto">
+                    <div class="icon h-5 w-5 text-center"><i class="ri-arrow-right-s-line"></i></div>
+                </div>
+            </a>
         </div>
     </td>
     <td class="py-2 px-4">
@@ -24,5 +26,5 @@
             <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
         </button>
     </td>
-    <td class="border-b-custom absolute right-0 bottom-0 border-b h-3 w-[98%] rounded-bl-2xl border-[#e5e7eb]"></td>
+    {{-- <td class="border-b-custom absolute right-0 bottom-0 border-b h-3 w-[98%] rounded-bl-2xl border-[#e5e7eb]"></td> --}}
 </tr>

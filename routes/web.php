@@ -18,8 +18,11 @@ Route::get('/', function () {
     return view('admin.order.index');
 });
 Route::get('/category', function () {
-    return view('admin.category.index');
+    return view('admin.category.index-category');
 });
+Route::get('/category/makanan', function () {
+    return view('admin.category.index-subcategory');
+})->name('subcategory');
 Route::get('/category/input', function () {
     return view('admin.category.input-parent');
 });
