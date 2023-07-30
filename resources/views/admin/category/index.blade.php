@@ -20,7 +20,7 @@ Input Kategori
                     <div class="flex items-center float-right">
                         <button class="icon text-lg me-4"><i class="ri-notification-3-line"></i></button>
                         <button class="icon text-lg"><i class="ri-question-line"></i></button>
-                        <div class="separator h-7 w-[1px] bg-[#ccc] mx-3"></div>
+                        <div class="separator h-7 w-[1px] bg-[#eee] mx-3"></div>
                         <a href="#" class="w-fit flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
                             <div class="icon h-6 me-2"><i class="ri-add-fill"></i></div>
                             <div class="text">Kategori</div>
@@ -36,10 +36,16 @@ Input Kategori
                             Kategori
                             </a>
                         </li>
+                        <li>
+                            <div class="flex items-center text-[#95989A]">
+                                <i class="ri-arrow-right-s-line mx-2"></i>
+                                <span>List Kategori</span>
+                            </div>
+                        </li>
                         <li aria-current="page">
                             <div class="flex items-center">
                                 <i class="ri-arrow-right-s-line text-[#95989A] mx-2"></i>
-                                <span class="text-black">List Kategori</span>
+                                <span class="text-black">Sub Kategori</span>
                             </div>
                         </li>
                     </ol>
@@ -142,141 +148,87 @@ Input Kategori
                 </nav>
             </div>
         </section>
-        <div class="category-list-wrapper border border-[#eee] rounded-xl p-4">
+        <section class="category-list-wrapper border border-[#eee] rounded-xl p-4">
             <table class="w-full">
                 <thead class="bg-[#f5f5f5] text-[#999] text-sm text-left uppercase rounded-t">
                     @include('admin.category.includes.index.table-header')
                 </thead>
                 <tbody class="text-sm">
-                    @include('admin.category.includes.index.table-content')
+                    <tr class="accordion-category-item relative">
+                        @include('admin.category.includes.index.nested-table-content-level-2')
+                    </tr>
+                    <tr class="accordion-category-content">
+                        <td colspan="5">
+                            <div id="sarapan" class="accordion-category-wrapper duration-500 ease-out hide" aria-labelledby="accordion-category-button" style="max-height: 0">
+                                <table class="w-full">
+                                    <tbody class="relative">
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        <tr class="border-l-custom absolute left-[25px] top-0 border-l border-[#e5e7eb]"></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="accordion-category-item relative">
+                        <td class="py-2 w-[50px]">
+                            <div class="accordion-category-button">
+                                <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="minuman"  aria-expanded="true" aria-controls="minuman">
+                                    <div class="icon h-5 w-5 duration-500"><i class="ri-arrow-down-s-line"></i></div>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4 w-auto">
+                            <div class="accordion-category-info flex items-center">
+                                <div class="label me-1">minuman</div>
+                                <div class="product-count">(<span>30</span>)</div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4 w-[210px]">154 Produk</td>
+                        <td class="py-2 px-4 w-[210px]">
+                            <div class="status flex">
+                                <div class="icon h-5 text-gray-600 scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                <div class="info">Tidak Aktif</div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4 w-[50px]">
+                            <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]">
+                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
+                            </button>
+                        </td>
+                        <td class="border-b-custom absolute right-0 bottom-0 h-3 border-b border-[#e5e7eb]"></td>
+                    </tr>
+                    <tr class="accordion-category-content">
+                        <td colspan="5">
+                            <div id="minuman" class="accordion-category-wrapper duration-500 ease-out hide" aria-labelledby="accordion-category-button" style="max-height: 0">
+                                <table class="w-full">
+                                    <tbody class="relative">
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        @include('admin.category.includes.index.nested-table-content-level-3')
+                                        <tr class="border-l-custom absolute left-[25px] top-0 border-l border-[#e5e7eb]"></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-        </div>
+        </section>
     </div>
 </div>
 @endsection
-{{-- <div class="item-category">
-    <div class="accordion-category-heading">
-        <button class="h-10 w-full flex items-center justify-between border border-[#CCC] rounded text-[#313131] py-2 px-3" type="button" data-accordion-target="makanan" aria-expanded="true" aria-controls="accordion-body">
-            <span>Makanan</span>
-            <i class="ri-arrow-down-s-line text-[#0079C2] duration-300"></i>
-        </button>
-    </div>
-    <div id="makanan" class="accordion-category-content overflow-hidden" aria-labelledby="accordion-category-heading">
-        <ul class="list-category-level-2 grid grid-cols-6 gap-4 text-sm">
-            <li class="item-category-level-2">
-                <a href="#" class="flex items-center py-1.5 ms-4 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Sarapan</div>
-                </a>
-                <ul class="list-category-level-3 ms-6">
-                    <li class="item-category-level-3">
-                        <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                            <div class="icon scale-125 me-2"><i class="ri-arrow-right-s-fill"></i></div>
-                            <div class="text-sm">Sarapan</div>
-                        </a>
-                    </li>
-                    <li class="item-category-level-3">
-                        <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                            <div class="icon scale-125 me-2"><i class="ri-arrow-right-s-fill"></i></div>
-                            <div class="text-sm">Sarapan</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Makanan Kaleng</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Masakan Instan</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Makan Siang</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="item-category">
-    <div class="accordion-category-heading">
-        <button class="h-10 w-full flex items-center justify-between border border-[#CCC] rounded text-[#313131] py-2 px-3" type="button" data-accordion-target="minuman" aria-expanded="true" aria-controls="accordion-body">
-            <span>Minuman</span>
-            <i class="ri-arrow-down-s-line text-[#0079C2] duration-300"></i>
-        </button>
-    </div>
-    <div id="minuman" class="accordion-category-content hide overflow-hidden" aria-labelledby="accordion-category-heading">
-        <ul class="list-subcategory text-sm">
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Sarapan</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Makanan Kaleng</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Masakan Instan</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Makan Siang</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="item-category">
-    <div class="accordion-category-heading">
-        <button class="h-10 w-full flex items-center justify-between border border-[#CCC] rounded text-[#313131] py-2 px-3" type="button" data-accordion-target="pakaian" aria-expanded="true" aria-controls="accordion-body">
-            <span>Pakaian</span>
-            <i class="ri-arrow-down-s-line text-[#0079C2] duration-300"></i>
-        </button>
-    </div>
-    <div id="pakaian" class="accordion-category-content hide overflow-hidden" aria-labelledby="accordion-category-heading">
-        <ul class="list-subcategory text-sm">
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Sarapan</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Makanan Kaleng</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Masakan Instan</div>
-                </a>
-            </li>
-            <li class="item-subcategory">
-                <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
-                    <div class="icon scale-50 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                    <div class="text-sm">Makan Siang</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-</div> --}}
 
 @section('scripts')
     @include('admin.category.js.admin-category-main-js')
