@@ -54,18 +54,18 @@ List Produk
         </header>
         <section class="order-list-header border border-[#eee] rounded-xl text-sm py-2 px-4 mb-4">
             <div class="top-section flex gap-2">
-                <div class="list-tabs-section flex flex-1 gap-2">
+                <div class="list-tabs-section flex flex-1 gap-2 me-2">
                     <button class="item-tabs-section rounded py-2 px-4 hover:bg-[#f5f5f5]">Semua</button>
                     <button class="item-tabs-section flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5] active">
-                        <div class="label me-1">Tertunda</div>
+                        <div class="label whitespace-nowrap me-1">Tertunda</div>
                         <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">10</div>
                     </button>
                     <button class="item-tabs-section flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
-                        <div class="label me-1">Diterima</div>
+                        <div class="label whitespace-nowrap me-1">Diterima</div>
                         <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">1.258</div>
                     </button>
                     <button class="item-tabs-section flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
-                        <div class="label me-1">Dibatalkan</div>
+                        <div class="label whitespace-nowrap me-1">Dibatalkan</div>
                         <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">40</div>
                     </button>
                 </div>
