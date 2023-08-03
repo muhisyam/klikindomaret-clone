@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Frontend\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,11 +13,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = User::all();
+        $client = new Client();
+        // this port for backend, so run another port server
+        $url = 'http://127.0.0.1:8000/api/users';
+        $response = $client->request('GET', $url);
+        $content = $response->getBody()->getContents();
+        $data = json_decode($content, true);
+        return view('admin.product.index', ['data' => $data['data']]);
+    }
 
-        return response()->json([
-            'data' => $data
-        ], 200);
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -32,6 +42,14 @@ class UserController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         //
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
 
@@ -17,6 +18,8 @@ use App\Http\Controllers\FrontendController;
 Route::get('/', function () {
     return view('admin.order.index');
 });
+Route::get('users', [UserController::class, 'index']);
+
 Route::get('/category', function () {
     return view('admin.category.index-category');
 });

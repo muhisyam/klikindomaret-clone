@@ -84,6 +84,8 @@ List Produk
                     </tr>
                 </thead>
                 <tbody class="text-sm">
+                    
+                    @foreach ($data as $item)
                     <tr class="border-b">
                         <td class="py-2 px-4">1</td>
                         <td class="w-96 py-2 px-4">
@@ -92,12 +94,12 @@ List Produk
                                     <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
                                 </div>
                                 <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
+                                    {{ $item['name'] }}
                                 </div>
                             </div>
                         </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
+                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">{{ $item['email'] }}</td>
+                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">{{ $item['created_at'] }}</td>
                         <td class="text-right font-light py-2 px-4">509</td>
                         <td class="text-right font-light py-2 px-4">
                             <div class="price">
@@ -111,7 +113,9 @@ List Produk
                             </button>
                         </td>
                     </tr>
-                    <tr class="border-b">
+                    @endforeach
+                    
+                    {{-- <tr class="border-b">
                         <td class="py-2 px-4">2</td>
                         <td class="w-96 py-2 px-4">
                             <div class="product-info-wrapper relative flex items-center">
@@ -418,7 +422,7 @@ List Produk
                                 <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
                             </button>
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
                 
             </table>
