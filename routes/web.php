@@ -18,7 +18,7 @@ use App\Http\Controllers\FrontendController;
 Route::get('/', function () {
     return view('admin.order.index');
 });
-Route::get('users', [UserController::class, 'index']);
+Route::get('test/backend', [UserController::class, 'index']);
 
 Route::get('/category', function () {
     return view('admin.category.index-category');
@@ -38,8 +38,11 @@ Route::get('/product', function () {
 Route::get('/product/input', function () {
     return view('admin.product.input');
 });
-Route::get('/order', function () {
+Route::get('/orders', function () {
     return view('admin.order.index');
+});
+Route::get('/users', function () {
+    return view('admin.users.index');
 });
 
 // Route::get('/', [FrontendController::class, 'index'])->name('frontendHome');
