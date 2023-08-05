@@ -14,8 +14,8 @@ class UserController extends Controller
     public function index()
     {
         $client = new Client();
-        // this port for backend, so run another port server
-        $url = 'http://127.0.0.1:8000/api/users';
+        // run server with port 8080 for running backend server
+        $url = 'http://127.0.0.1:8080/api/users';
         $response = $client->request('GET', $url);
         $content = $response->getBody()->getContents();
         $data = json_decode($content, true);

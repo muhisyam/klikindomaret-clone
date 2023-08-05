@@ -57,6 +57,11 @@ List Produk
                         <div class="label whitespace-nowrap me-1">Non Member</div>
                         <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">1.258</div>
                     </button>
+                    <button class="item-tabs-section flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
+                        <div class="icon me-1"><i class="ri-admin-fill"></i></div>
+                        <div class="label whitespace-nowrap me-1">Admin</div>
+                        <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">10</div>
+                    </button>
                 </div>
                 <div class="separator w-[1px] bg-[#eee] my-2"></div>
                 <div class="count-page-show flex items-center ms-2">
@@ -139,8 +144,8 @@ List Produk
                     @include('admin.users.includes.table-header')
                 </thead>
                 <tbody class="text-sm">
+                    @include('admin.users.includes.table-content')
                     {{-- @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
                     @include('admin.order.includes.table-content')
                     @include('admin.order.includes.table-content')
                     @include('admin.order.includes.table-content')
