@@ -5,8 +5,8 @@ List Produk
 @endsection
 
 @section('content')
-<div class="order-list">
-    <div class="order-list-content">
+<div class="user-list">
+    <div class="user-list-content">
         <header class="header mb-6">
             <div class="top-section flex items-center justify-between">
                 <div class="left-side min-w-[180px]"><h1 class="title text-2xl font-bold">Pengguna</h1></div>
@@ -44,7 +44,7 @@ List Produk
                 </nav>
             </div>
         </header>
-        <section class="order-list-header border border-[#eee] rounded-xl text-sm py-2 px-4 mb-4">
+        <section class="data-filter-wrapper border border-[#eee] rounded-xl text-sm py-2 px-4 mb-4">
             <div class="top-section flex gap-2">
                 <div class="list-tabs-section flex flex-1 gap-2 me-2">
                     <button class="item-tabs-section rounded py-2 px-4 hover:bg-[#f5f5f5]">Semua</button>
@@ -58,7 +58,6 @@ List Produk
                         <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">1.258</div>
                     </button>
                     <button class="item-tabs-section flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
-                        <div class="icon me-1"><i class="ri-admin-fill"></i></div>
                         <div class="label whitespace-nowrap me-1">Admin</div>
                         <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">10</div>
                     </button>
@@ -81,9 +80,9 @@ List Produk
             </div>
             <div class="separator h-[1px] bg-[#eee] my-2"></div>
             <div class="bottom-section flex gap-2">
-                <div class="order-search-group flex flex-1 items-center rounded py-2 px-4">
-                    <label for="order-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
-                    <input id="order-search" type="text" name="order-search" placeholder="Cari Pesanan..." class="w-full bg-transparent">
+                <div class="user-search-group flex flex-1 items-center rounded py-2 px-4">
+                    <label for="user-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
+                    <input id="user-search" type="text" name="user-search" placeholder="Cari Pengguna..." class="w-full bg-transparent">
                 </div>
                 <div class="separator w-[1px] bg-[#eee] my-2"></div>
                 <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
@@ -91,16 +90,16 @@ List Produk
                     <div class="label">Filter</div>
                 </button>
                 <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
-                    <div class="icon h-5 me-1"><i class="ri-calendar-2-fill"></i></div>
-                    <div class="label">Tanggal</div>
-                </button>
-                <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
-                    <div class="icon h-5 me-1"><i class="ri-information-fill"></i></div>
-                    <div class="label">Status</div>
+                    <div class="icon h-5 me-1"><i class="ri-checkbox-circle-fill"></i></div>
+                    <div class="label">Verifikasi</div>
                 </button>   
                 <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
-                    <div class="icon h-5 me-1"><i class="ri-takeaway-fill"></i></div>
-                    <div class="label">Pengambilan</div>
+                    <div class="icon h-5 me-1"><i class="ri-time-fill"></i></div>
+                    <div class="label">Terakhir Login</div>
+                </button>   
+                <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]">
+                    <div class="icon h-5 me-1"><i class="ri-hand-coin-fill"></i></div>
+                    <div class="label">Poinku</div>
                 </button>
                 <div class="separator w-[1px] bg-[#eee] my-2"></div>
                 <button class="layout-setting rounded py-2 px-3 hover:bg-[#f5f5f5]">
@@ -138,22 +137,51 @@ List Produk
                 </nav>
             </div>
         </section>
-        <section class="order-list-wrapper border border-[#eee] rounded-xl p-4">
+        <section class="data-table-wrapper border border-[#eee] rounded-xl p-4">
             <table class="w-full">
                 <thead class="bg-[#f5f5f5] text-[#999] text-sm text-left uppercase rounded-t">
                     @include('admin.users.includes.table-header')
                 </thead>
                 <tbody class="text-sm">
                     @include('admin.users.includes.table-content')
-                    {{-- @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content')
-                    @include('admin.order.includes.table-content') --}}
+                    <tr class="border-b">
+                        <td class="py-2 px-3"><input type="checkbox" class="block m-auto"></td>
+                        <td class="py-2 px-4">
+                            <div class="user-info-wrapper flex">
+                                <div class="media me-2">
+                                    <img class="h-10 w-10 rounded-full" src="https://www.shutterstock.com/image-vector/young-man-beard-character-260nw-1374216479.jpg" alt="">
+                                </div>
+                                <div class="info">
+                                    <div class="date">Jonathan Yesck</div>
+                                    <div class="time text-xs font-light">-</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4">joeyesck241</td>
+                        <td class="py-2 px-4">0896 2141 4141</td>
+                        <td class="py-2 px-4">-</td>
+                        <td class="py-2 px-4">-</td>
+                        <td class="py-2 px-4">
+                            <div class="order-take-date">
+                                <div class="date">22 Jun 2023,</div>
+                                <div class="time text-xs font-light">23.00</div>
+                            </div>
+                        </td>
+                        <td class="py-2 px-4">21</td>
+                        <td class="py-2 px-4 text-center">
+                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
+                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
+                            </button>
+                        </td>
+                    </tr>
+                    @include('admin.users.includes.table-content')
+                    @include('admin.users.includes.table-content')
+                    @include('admin.users.includes.table-content')
+                    @include('admin.users.includes.table-content')
+                    @include('admin.users.includes.table-content')
+                    @include('admin.users.includes.table-content')
+                    @include('admin.users.includes.table-content')
+                    @include('admin.users.includes.table-content')
                 </tbody>
             </table>
         </section>
