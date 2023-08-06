@@ -47,6 +47,44 @@ input::-webkit-inner-spin-button {
     height: calc(100% - 95px);
 }
 
+
+.data-filter-wrapper .item-tabs-section.active {
+    position: relative;
+    color: #0079c2;
+    font-weight: 600;
+}
+
+.data-filter-wrapper .item-tabs-section.active::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: #0079c2;
+}
+
+.data-filter-wrapper .header-pagination ul li a.active {
+    position: relative;
+    color: #0079c2;
+    font-weight: 600;
+}
+
+.data-filter-wrapper .header-pagination ul li a.active::after {
+    content: '';
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: #0079c2;
+}
+
+.data-table-wrapper {
+    max-height: calc(100vh - 274px);
+    overflow: auto;
+}
+
 .header-col-wrapper.active-asc .label,
 .header-col-wrapper.active-asc .asc {
     color: #414141;
@@ -65,10 +103,15 @@ input::-webkit-inner-spin-button {
     border-radius: 3px;
 }
 
+.form-button button.disabled {
+    opacity: 0.4;
+}
+
 .top-section .list-tabs-section::-webkit-scrollbar {
     height: 0;
 }
 
+.data-table-wrapper::-webkit-scrollbar,
 .category-list .category-list-wrapper::-webkit-scrollbar,
 .category-input .list-category-wrapper::-webkit-scrollbar,
 .category-input .accordion-category-content::-webkit-scrollbar,
@@ -78,6 +121,7 @@ input::-webkit-inner-spin-button {
     width: 5px;
 }
 
+.data-table-wrapper::-webkit-scrollbar-thumb,
 .category-list .category-list-wrapper::-webkit-scrollbar-thumb,
 .category-input .list-category-wrapper::-webkit-slider-thumb,
 .category-input .accordion-category-content::-webkit-scrollbar-thumb,
@@ -87,6 +131,7 @@ input::-webkit-inner-spin-button {
     background-color: transparent;
 }
 
+.data-table-wrapper:hover::-webkit-scrollbar-thumb,
 .category-list .category-list-wrapper:hover::-webkit-scrollbar-thumb,
 .category-input .list-category-wrapper:hover::-webkit-scrollbar-thumb,
 .category-input .accordion-category-content:hover::-webkit-scrollbar-thumb,
@@ -95,12 +140,6 @@ input::-webkit-inner-spin-button {
 .order-list .order-list-wrapper:hover::-webkit-scrollbar-thumb {
     background-color: #eee;
 }
-
-.form-button button.disabled {
-    opacity: 0.4;
-}
-
-/* calc(100% - 520px) */
 
 /* 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
