@@ -7,8 +7,40 @@ Input Kategori
 @section('content')
 <div class="category-input">
     <div class="category-input-content">
-        <h1 class="title text-[#0079c2] text-xl font-bold mb-4">Input Kategori</h1>
-        <form action="">
+        @php
+            $data = [
+                'pagename' => 'Input Kategori',
+                'breadcrumb_pages' => [
+                    [
+                        'info' => 'first',
+                        'label' => 'Kategori', 
+                        'link' => 'category'
+                    ],
+                    [
+                        'info' => 'next',
+                        'label' => 'Kategori Induk', 
+                        'link' => 'category/input'
+                    ],
+                    [
+                        'info' => 'last',
+                        'label' => 'Input Kategori'
+                    ],
+                ],
+                'navigation' => [
+                    'info' => 'back',
+                    'url' => 'javascript:history.go(-1)',
+                    'icon' => 'ri-arrow-go-back-line',
+                    'label' => 'Kembali'
+                ]
+            ]
+        @endphp 
+        @include('admin.components.header', ['data' => $data])
+        <section class="progress-info-wrapper">
+            <div class="w-full bg-gray-200 rounded-full h-1 dark:bg-gray-700">
+                <div class="bg-[#f9c828] h-1 rounded-full" style="width: 45%"></div>
+            </div>
+        </section>
+        {{-- <form action="">
             <div class="category-input-wrapper flex gap-4 mb-5">
                 <section class="left-side relative h-full w-2/5 border border-[#eee] rounded-xl overflow-auto p-4">
                     @include('admin.category.includes.input.image-input')
@@ -20,7 +52,7 @@ Input Kategori
             <div class="form-button text-right">
                 <button class="h-10 w-full max-w-[20%] bg-[#0079c2] text-white rounded py-2 px-4 disabled">Submit</button>
             </div>
-        </form>
+        </form> --}}
     </div>
 </div>
 @endsection
