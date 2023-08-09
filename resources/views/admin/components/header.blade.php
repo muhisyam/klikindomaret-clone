@@ -14,7 +14,7 @@
                 <button class="icon text-lg me-4"><i class="ri-notification-3-line"></i></button>
                 <button class="icon text-lg"><i class="ri-question-line"></i></button>
                 <div class="separator h-7 w-[1px] bg-[#ccc] mx-3"></div>
-                <a href="#" class="w-fit flex items-center {{ $data['navigation']['info'] != 'back' ? "bg-[#0079c2]" : "bg-[#c33]" }}  text-white rounded py-2 px-4">
+                <a href={{ $data['navigation']['url'] }} class="w-fit flex items-center {{ $data['navigation']['info'] != 'back' ? "bg-[#0079c2]" : "bg-[#c33]" }}  text-white rounded py-2 px-4">
                     <div class="icon h-6 me-2"><i class="{{ $data['navigation']['icon'] }}"></i></div>
                     <div class="text">{{ $data['navigation']['label'] }}</div>
                 </a>
