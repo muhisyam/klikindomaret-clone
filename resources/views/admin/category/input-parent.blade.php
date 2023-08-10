@@ -37,32 +37,26 @@ Tambah Kategori
         @include('admin.components.header', ['data' => $data])
         <section class="progress-info-wrapper border border-[#eee] rounded-xl overflow-hidden mb-4">
             <div class="progress-bar-wrapper flex gap-[2px]">
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#f9c828]"></div>
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#f9c828]"></div>
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#f9c828]"></div>
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#eee]"></div>
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#eee]"></div>
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#eee]"></div>
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#eee]"></div>
-                <div class="h-1.5 -skew-x-[24deg] w-full bg-[#eee]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#f9c828]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#f9c828]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#f9c828]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#eee]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#eee]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#eee]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#eee]"></div>
+                <div class="h-2 -skew-x-[24deg] w-full bg-[#eee]"></div>
             </div>
             <div class="progress-info-content flex items-center justify-between p-4">
-                <h1 class="font-bold">Tambah Kategori Induk Baru</h1>
+                <div class="flex items-center">
+                    <h1 class="font-bold">Tambah Kategori Induk Baru</h1>
+                    <div class="error-info-wrapper flex text-red-600 text-sm ms-3">
+                        <div class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></div>
+                        <div class="message">Form tidak valid!</div>
+                    </div>
+                </div>
                 <div class="text-sm form-info">5 Form belum terisi</div>
             </div>
-            <div class="error-info bg-red-200 flex py-2 px-4">
-                <div class="icon h-6 text-[#c33] text-xl me-3"><i class="ri-error-warning-fill"></i></div>
-                <div class="info">
-                    <div class="label font-bold pt-0.5">Error !</div>
-                    {{-- <ul class="list-disc text-sm ms-5">
-                        <li>Input masih kosong</li>
-                        <li>Password tidak sama</li>
-                    </ul> --}}
-                </div>
-                <button class="h-6 ms-auto">
-                    <div class="icon text-xl"><i class="ri-arrow-up-s-line"></i></div>
-                </button>
-            </div>
+            
         </section>
         <form action="">
             <div class="category-input-wrapper flex gap-4 mb-5">
