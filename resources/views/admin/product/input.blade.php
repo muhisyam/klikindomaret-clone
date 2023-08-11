@@ -24,3 +24,7 @@ Input Produk
     </div>
 </div>
 @endsection
+
+@section('scripts')
+@include('admin.product.js.admin-product-main-js')
+@endsection

@@ -32,6 +32,7 @@
     </div>
 
     <script src="{{ asset('js/admin/app.js') }}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     @yield('scripts')
 </body>
 </html>

@@ -46,11 +46,11 @@
 </div>
 <div class="item-input-group ">
     <div id="form-input-desc" class="flex gap-4">
-        <button class="h-10 flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
+        <button type="button" id="btnAddDesc" class="h-10 flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
             <span class="icon h-6 me-1"><i class="ri-add-fill"></i></span>
             <span class="text">Tambah Deskripsi</span>
         </button>
-        <button class="h-10 flex items-center bg-[#c33] text-white rounded py-2 px-4">
+        <button type="button" id="btnDelDesc" class="h-10 flex items-center bg-[#c33] text-white rounded py-2 px-4">
             <span class="icon h-6 me-1"><i class="ri-delete-bin-6-line"></i></span>
             <span class="text">Hapus Deskripsi</span>
         </button>
