@@ -58,7 +58,7 @@ Tambah Kategori
             </div>
             
         </section>
-        <form action="">
+        <form class="form-input-wrapper" action="">
             <div class="category-input-wrapper flex gap-4 mb-5">
                 <section class="left-side relative h-full w-2/5 border border-[#eee] rounded-xl overflow-auto p-4">
                     @include('admin.category.includes.input.image-input')
