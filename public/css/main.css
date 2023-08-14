@@ -230,7 +230,7 @@ input::-webkit-inner-spin-button {
 }
 
 .modal {
-    position: absolute;
+    position: fixed;
     top: -50%;
     left: 50%;
     opacity: 0;
@@ -367,6 +367,16 @@ input::-webkit-inner-spin-button {
 .bottom-header .bottom-section .left-side ul li.active {
     background-color: #e1eeff;
     color: #0079c2;
+}
+
+/* 
+--------------------=================--------------------
+==================== Header Section =====================
+--------------------=================-------------------- 
+*/
+
+.login-wrapper .body-section {
+    min-height: calc(100vh - 380px);
 }
 
 /* 

@@ -112,8 +112,8 @@
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
                 <div class="guest-button text-sm">
-                    <button type="button" class="rounded-lg border border-[#0079c2] me-2.5 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
-                    <button type="button" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
+                    <button type="button" id="btn-login" class="rounded-lg border border-[#0079c2] me-2.5 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
+                    <button type="button" id="btn-register" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
                 </div>
             </div>
         </div>

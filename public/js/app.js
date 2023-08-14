@@ -1,4 +1,17 @@
 // headerCategory();
+openLoginRegis();
+
+function openLoginRegis() {
+    const btnLogin = document.querySelector('#btn-login');
+
+    btnLogin.addEventListener('click', (e) => {
+        const loginElement = document.querySelector('.login');
+        const overlay = document.querySelector('#bg-overlay');
+        
+        loginElement.classList.toggle('show');
+        overlay.classList.toggle('hidden');
+    });
+}
 
 function headerCategory() {
     const btnCategory = document.querySelector('.bottom-section .category');
