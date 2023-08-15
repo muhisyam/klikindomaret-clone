@@ -1,5 +1,33 @@
 <script>
-    function openSubCateWrapper(el) { 
+    document.addEventListener('DOMContentLoaded', function() {
+        // Jquery just for convert purpose(✌ ͡• ₃ ͡•)✌
+        $('#form-select-level').select2({
+            width: '100%',
+            placeholder: 'Pilih Level...',
+        });
+
+        $('#form-select-parent').select2({
+            width: '100%',
+            placeholder: 'Pilih Induk...',
+        });
+
+        $('#form-select-status').select2({
+            width: '100%',
+        });
+        // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
+
+
+        const errorSelect = document.querySelectorAll('select[id^=form-select].is-invalid');
+    
+        errorSelect.forEach(el => {
+            const s2Target = el.nextSibling;
+            const s2wrapper = s2Target.querySelector('.select2-selection');
+
+            s2wrapper.style.borderColor = '#dc2626';
+        });
+    });
+
+    function openSubcategoryWrapper(el) { 
         const dataElement = el.querySelectorAll('tbody tr');
         const dataLength = dataElement.length;
 
@@ -21,7 +49,7 @@
             if (isTargetHide) {
                 accordTarget.classList.remove('hide');
                 subItem.classList.add('active');
-                openSubCateWrapper(accordTarget);
+                openSubcategoryWrapper(accordTarget);
             } else {
                 accordTarget.classList.add('hide');
                 subItem.classList.remove('active');

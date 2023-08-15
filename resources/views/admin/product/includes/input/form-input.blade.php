@@ -8,10 +8,10 @@
 </div>
 <div class="item-input-group mb-4">
     <label for="form-select-category" class="block text-sm mb-1">Kategori</label>
-    <select id="form-select-category" name="category" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent is-invalid">
-        <option value="" selected>Pilih induk...</option>
-        <option value="">Makanan</option>
-        <option value="">Minuman</option>
+    <select id="form-select-category" name="category" class="is-invalid">
+        <option></option>
+        <option value="w">Makanan</option>
+        <option value="e">Minuman</option>
     </select>
     <div class="invalid-feedback flex text-red-600 text-sm mt-1">
         <div class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></div>
@@ -24,10 +24,10 @@
 </div>
 <div class="item-input-group mb-4">
     <label for="form-select-store" class="block text-sm mb-1">Toko</label>
-    <select id="form-select-store" name="store" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
-        <option value="" selected>Pilih Toko...</option>
-        <option value="">Toko Indomaret</option>
-        <option value="">Warehouse 1 Jakarta</option>
+    <select id="form-select-store" name="store">
+        <option></option>
+        <option value="x">Toko Indomaret</option>
+        <option value="c">Warehouse 1 Jakarta</option>
     </select>
 </div>
 <div class="item-input-group mb-4">

@@ -54,7 +54,7 @@ Input Produk
         </section>
         <form class="form-input-wrapper" action="">
             <div class="product-input-wrapper flex gap-4 mb-5">
-                <section class="left-side relative w-2/5 border border-[#eee] rounded-xl overflow-auto p-4">
+                <section class="left-side relative w-2/5 border border-[#eee] rounded-xl p-4">
                     @include('admin.product.includes.input.image-input')
                 </section>
                 <section class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">        

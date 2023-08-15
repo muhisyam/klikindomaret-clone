@@ -63,7 +63,7 @@ Tambah Kategori
                 <section class="left-side relative h-full w-2/5 border border-[#eee] rounded-xl overflow-auto p-4">
                     @include('admin.category.includes.input.image-input')
                 </section>
-                <section class="right-side relative w-3/5 border border-[#eee] rounded-xl p-4">
+                <section class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">
                     @include('admin.category.includes.input.form-input')
                 </section>
             </div>

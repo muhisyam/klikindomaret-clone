@@ -11,6 +11,30 @@ body {
 ----------------------==============---------------------- 
 */
 
+.select2-container .select2-selection--single {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    border-color: #ccc;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #fbde7e;
+    color: #0079c2;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    position: relative;
+    top: 0;
+    right: 0;
+}
+
 .ck.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar {
     border-radius: 4px;
     border-bottom-left-radius: 0;
@@ -139,6 +163,8 @@ input::-webkit-inner-spin-button {
 .category-list .category-list-wrapper::-webkit-scrollbar,
 .category-input .list-category-wrapper::-webkit-scrollbar,
 .category-input .accordion-category-content::-webkit-scrollbar,
+.category-input .left-side::-webkit-scrollbar,
+.category-input .right-side::-webkit-scrollbar,
 .product-input .list-image-uploaded::-webkit-scrollbar,
 .product-input .left-side::-webkit-scrollbar,
 .product-input .right-side::-webkit-scrollbar,
@@ -150,6 +176,8 @@ input::-webkit-inner-spin-button {
 .category-list .category-list-wrapper::-webkit-scrollbar-thumb,
 .category-input .list-category-wrapper::-webkit-slider-thumb,
 .category-input .accordion-category-content::-webkit-scrollbar-thumb,
+.category-input .left-side::-webkit-scrollbar-thumb,
+.category-input .right-side::-webkit-scrollbar-thumb,
 .product-input .list-image-uploaded::-webkit-scrollbar-thumb,
 .product-input .left-side::-webkit-scrollbar-thumb,
 .product-input .right-side::-webkit-scrollbar-thumb,
@@ -161,6 +189,8 @@ input::-webkit-inner-spin-button {
 .category-list .category-list-wrapper:hover::-webkit-scrollbar-thumb,
 .category-input .list-category-wrapper:hover::-webkit-scrollbar-thumb,
 .category-input .accordion-category-content:hover::-webkit-scrollbar-thumb,
+.category-input .left-side:hover::-webkit-scrollbar-thumb,
+.category-input .right-side:hover::-webkit-scrollbar-thumb,
 .product-input .list-image-uploaded:hover::-webkit-scrollbar-thumb,
 .product-input .left-side:hover::-webkit-scrollbar-thumb,
 .product-input .right-side:hover::-webkit-scrollbar-thumb,
@@ -360,6 +390,10 @@ input::-webkit-inner-spin-button {
 
 .product-input .product-input-wrapper {
     height: calc(100vh - 290px);
+}
+
+.product-input .list-image-uploaded {
+    height: calc(100% - 240px);
 }
 
 /* 
