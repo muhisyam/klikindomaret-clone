@@ -1,6 +1,6 @@
 <td class="py-2 w-[50px]">
     <div class="accordion-category-button">
-        <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="sarapan"  aria-expanded="true" aria-controls="sarapan">
+        <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="sarapan" aria-labelledby="sarapan" aria-expanded="false" aria-controls="sarapan">
             <div class="icon h-5 w-5 duration-500"><i class="ri-arrow-down-s-line"></i></div>
         </button>
     </div>
@@ -19,7 +19,7 @@
     </div>
 </td>
 <td class="py-2 px-4 w-[50px]">
-    <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]">
+    <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" aria-label="Data action">
         <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
     </button>
 </td>

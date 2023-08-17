@@ -1,9 +1,9 @@
 <tr class="border-b">
-    <td class="py-2 px-3"><input type="checkbox" class="block m-auto"></td>
+    <td class="py-2 px-3"><input type="checkbox" class="block m-auto" aria-label="Checkbox select data"></td>
     <td class="py-2 px-4">
         <div class="user-info-wrapper flex">
             <div class="media me-2">
-                <img class="h-10 w-10 rounded-full" src="https://www.shutterstock.com/image-vector/young-man-beard-character-260nw-1374216479.jpg" alt="">
+                <img class="h-10 w-10 object-cover rounded-full" src="https://images.unsplash.com/photo-1546961329-78bef0414d7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" alt="">
             </div>
             <div class="info">
                 <div class="date">Linguistiq Joe</div>
@@ -38,7 +38,7 @@
     </td>
     <td class="py-2 px-4">50.418</td>
     <td class="py-2 px-4 text-center">
-        <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
+        <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2" aria-label="Data action">
             <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
         </button>
     </td>

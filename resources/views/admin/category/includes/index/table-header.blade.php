@@ -4,8 +4,8 @@
         <div class="header-col-wrapper flex active-asc">
             <div class="label me-1">Nama Kategori</div>
             <div class="flex flex-col text-[12px]">
-                <button class="asc h-2 leading-none"><i class="ri-arrow-up-s-fill block h-2"></i></button>
-                <button class="desc h-2 leading-none"><i class="ri-arrow-down-s-fill block h-2 -mt-1"></i></button>
+                <button class="asc h-2 leading-none" aria-label="Sort data ascending"><i class="ri-arrow-up-s-fill block h-2"></i></button>
+                <button class="desc h-2 leading-none" aria-label="Sort data descending"><i class="ri-arrow-down-s-fill block h-2 -mt-1"></i></button>
             </div>
         </div>
     </th>
@@ -13,8 +13,8 @@
         <div class="header-col-wrapper flex">
             <div class="label me-1">Jumlah Produk</div>
             <div class="flex flex-col text-[12px]">
-                <button class="asc h-2 leading-none"><i class="ri-arrow-up-s-fill block h-2"></i></button>
-                <button class="desc h-2 leading-none"><i class="ri-arrow-down-s-fill block h-2 -mt-1"></i></button>
+                <button class="asc h-2 leading-none" aria-label="Sort data ascending"><i class="ri-arrow-up-s-fill block h-2"></i></button>
+                <button class="desc h-2 leading-none" aria-label="Sort data descending"><i class="ri-arrow-down-s-fill block h-2 -mt-1"></i></button>
             </div>
         </div>
     </th>
@@ -22,8 +22,8 @@
         <div class="header-col-wrapper flex">
             <div class="label me-1">Status</div>
             <div class="flex flex-col text-[12px]">
-                <button class="asc h-2 leading-none"><i class="ri-arrow-up-s-fill block h-2"></i></button>
-                <button class="desc h-2 leading-none"><i class="ri-arrow-down-s-fill block h-2 -mt-1"></i></button>
+                <button class="asc h-2 leading-none" aria-label="Sort data ascending"><i class="ri-arrow-up-s-fill block h-2"></i></button>
+                <button class="desc h-2 leading-none" aria-label="Sort data descending"><i class="ri-arrow-down-s-fill block h-2 -mt-1"></i></button>
             </div>
         </div>
     </th>

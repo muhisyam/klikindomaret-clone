@@ -20,27 +20,34 @@ Route::get('/', function () {
 });
 Route::get('test/backend', [UserController::class, 'index']);
 
-Route::get('/category', function () {
+Route::get('/categories', function () {
     return view('admin.category.index-category');
 });
-Route::get('/category/makanan', function () {
+
+Route::get('/categories/makanan', function () {
     return view('admin.category.index-subcategory');
-})->name('subcategory');
-Route::get('/category/input', function () {
+})->name('subcategories');
+
+Route::get('/categories/create', function () {
     return view('admin.category.input-parent');
 });
-Route::get('/category/input-sub', function () {
+
+Route::get('/categories/create/sub', function () {
     return view('admin.category.input-subcategory');
 });
-Route::get('/product', function () {
+
+Route::get('/products', function () {
     return view('admin.product.index');
 });
-Route::get('/product/input', function () {
+
+Route::get('/products/create', function () {
     return view('admin.product.input');
 });
+
 Route::get('/orders', function () {
     return view('admin.order.index');
 });
+
 Route::get('/users', function () {
     return view('admin.users.index');
 });
