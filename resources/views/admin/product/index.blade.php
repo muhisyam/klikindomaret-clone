@@ -6,427 +6,238 @@ List Produk
 
 @section('content')
 <div class="product-list">
-    <div class="product-list-content">
-        <header class="header flex items-center justify-between mb-4">
-            <h1 class="title text-[#0079c2] text-xl font-bold">List Produk</h1>
-            <a href="#" class="flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
-                <div class="icon h-6 me-2"><i class="ri-add-line"></i></div>
-                <div class="text">Tambah Produk</div>
-            </a>
-        </header>
-        <section class="product-list-header flex justify-between border border-[#eee] rounded-xl p-4 mb-4">
-            <div class="product-filter-wrapper text-sm flex gap-4">
-                <div class="product-search-group flex items-center bg-[#f5f5f5] rounded py-2 px-4">
-                    <label for="product-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
-                    <input id="product-search" type="text" name="product-search" placeholder="Cari Produk..." class="bg-transparent w-64">
+    @php
+        $dataHeader = [
+            'pagename' => 'Data Produk',
+            'breadcrumb_pages' => [
+                [
+                    'info' => 'first',
+                    'label' => 'Produk', 
+                    'link' => 'products'
+                ],
+                [
+                    'info' => 'last',
+                    'label' => 'Data Produk'
+                ],
+            ],
+            'navigation' => [
+                'info' => 'add',
+                'url' => '/products/create',
+                'icon' => 'ri-add-fill',
+                'label' => 'Produk'
+            ]
+        ]
+    @endphp
+    <section class="data-filter-wrapper border border-[#eee] rounded-xl text-sm py-2 px-4 mb-4">
+        <section class="top-section flex gap-2">
+            <ul class="list-tabs-section flex flex-1 overflow-auto gap-2 me-2">
+                <li class="item-tabs-section">
+                    <button class="rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Tab filter data table">Semua</button>
+                </li>
+                <li class="item-tabs-section">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5] active" aria-label="Tab filter data table">
+                        <h2 class="label whitespace-nowrap me-1">Makanan</h2>
+                        <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">10</div>
+                    </button>
+                </li>
+                <li class="item-tabs-section">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Tab filter data table">
+                        <h2 class="label whitespace-nowrap me-1">Produk Segar</h2>
+                        <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">1.258</div>
+                    </button>
+                </li>
+                <li class="item-tabs-section">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Tab filter data table">
+                        <h2 class="label whitespace-nowrap me-1">Ibu & Anak</h2>
+                        <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">40</div>
+                    </button>
+                </li>
+                <li class="item-tabs-section">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5] active" aria-label="Tab filter data table">
+                        <h2 class="label whitespace-nowrap me-1">Kesehatan & Kecantikan</h2>
+                        <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">40</div>
+                    </button>
+                </li>
+                <li class="item-tabs-section">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Tab filter data table">
+                        <h2 class="label whitespace-nowrap me-1">Home & Living</h2>
+                        <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">40</div>
+                    </button>
+                </li>
+                <li class="item-tabs-section">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Tab filter data table">
+                        <h2 class="label whitespace-nowrap me-1">Kebutuhan Idul Adha</h2>
+                        <div class="count bg-[#fbde7e] text-[#0079c2] text-xs font-normal rounded py-0.5 px-1.5">40</div>
+                    </button>
+                </li>
+            </ul>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <div class="count-page-show flex items-center ms-2">
+                <h2 class="label me-2">Tampilkan per Halaman</h2>
+                <div class="input-count-page w-14 rounded p-2 hover:bg-[#f5f5f5]">
+                    <select name="" id="" class="w-full bg-transparent">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
                 </div>
-                <button class="flex items-center bg-[#f5f5f5] rounded py-2 px-4">
-                    <div class="label pe-2">Urutkan</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button>
-                <button class="flex items-center bg-[#f5f5f5] rounded py-2 px-4">
-                    <div class="label pe-2">Kategori</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button>
-                <button class="flex items-center bg-[#f5f5f5] rounded py-2 px-4">
-                    <div class="label pe-2">Harga</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button>
-                <button class="flex items-center bg-[#f5f5f5] rounded py-2 px-4">
-                    <div class="label pe-2">Toko</div>
-                    <div class="icon h-5"><i class="ri-arrow-down-s-line"></i></div>
-                </button>
             </div>
-            <div class="product-input-wrapper">
-                <nav aria-label="Page navigation example">
-                    <ul class="inline-flex -space-x-px text-sm">
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
-                            <i class="ri-arrow-left-s-line"></i>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
-                      </li>
-                      <li>
-                        <a href="#" aria-current="page" class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
-                            <i class="ri-arrow-right-s-line"></i>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <div class="count-page-show w-[268.5px] flex items-center ms-2">
+                <p class="info">Menampilkan <span>1 - 10</span> dari <span>15052</span> Hasil</p>
             </div>
         </section>
-        <section class="product-list-wrapper border border-[#eee] rounded-xl p-4">
-            <table class="w-full">
-                <thead class="bg-[#fbde7e] text-[#0079c2] text-sm text-left rounded-t font-bold">
-                    <tr>
-                        <th class="rounded-tl py-3 px-4">No.</th>
-                        <th class="py-3 px-4">Nama Produk</th>
-                        <th class="py-3 px-4">Kategori</th>
-                        <th class="py-3 px-4">Toko</th>
-                        <th class="text-right py-3 px-4">Stok</th>
-                        <th class="text-right py-3 px-4">Harga</th>
-                        <th class="text-right py-3 px-4">Terjual</th>
-                        <th class="rounded-tr py-3 px-4"></th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm">
-                    
-                    @foreach ($data as $item)
-                    <tr class="border-b">
-                        <td class="py-2 px-4">1</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    {{ $item['name'] }}
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">{{ $item['email'] }}</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">{{ $item['created_at'] }}</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price">
-                                Rp <span>1.500.00</span>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    @endforeach
-                    
-                    {{-- <tr class="border-b">
-                        <td class="py-2 px-4">2</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper relative flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                                <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
-                                    <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                    <div class="discount-info text-[#f28418]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price-wrapper">
-                                <div class="normal-price text-[#95989A] text-xs line-through">
-                                    Rp <span>1.500.000</span>
-                                </div>
-                                <div class="discout-price">
-                                    Rp <span>150.000</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">1</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price">
-                                Rp <span>1.500.00</span>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">2</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper relative flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                                <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
-                                    <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                    <div class="discount-info text-[#f28418]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price-wrapper">
-                                <div class="normal-price text-[#95989A] text-xs line-through">
-                                    Rp <span>1.500.000</span>
-                                </div>
-                                <div class="discout-price">
-                                    Rp <span>150.000</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">1</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price">
-                                Rp <span>1.500.00</span>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">2</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper relative flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                                <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
-                                    <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                    <div class="discount-info text-[#f28418]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price-wrapper">
-                                <div class="normal-price text-[#95989A] text-xs line-through">
-                                    Rp <span>1.500.000</span>
-                                </div>
-                                <div class="discout-price">
-                                    Rp <span>150.000</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">1</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price">
-                                Rp <span>1.500.00</span>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">2</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper relative flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                                <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
-                                    <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                    <div class="discount-info text-[#f28418]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price-wrapper">
-                                <div class="normal-price text-[#95989A] text-xs line-through">
-                                    Rp <span>1.500.000</span>
-                                </div>
-                                <div class="discout-price">
-                                    Rp <span>150.000</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">1</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price">
-                                Rp <span>1.500.00</span>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4">2</td>
-                        <td class="w-96 py-2 px-4">
-                            <div class="product-info-wrapper relative flex items-center">
-                                <div class="media w-10 me-3">
-                                    <img src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
-                                </div>
-                                <div class="name line-clamp-1 text-ellipsis">
-                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
-                                </div>
-                                <div class="banner-info absolute -top-2 left-12 flex items-center gap-1 blink">
-                                    <div class="stock-info text-[#c33]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                    <div class="discount-info text-[#f28418]">
-                                        <span class="icon h-4"><i class="ri-checkbox-blank-circle-fill"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Bahan Puding & Agar Agar</td>
-                        <td class="font-light cursor-pointer py-2 px-4 hover:text-[#0079c2]">Warehouse 1 Jakarta</td>
-                        <td class="text-right font-light py-2 px-4">509</td>
-                        <td class="text-right font-light py-2 px-4">
-                            <div class="price-wrapper">
-                                <div class="normal-price text-[#95989A] text-xs line-through">
-                                    Rp <span>1.500.000</span>
-                                </div>
-                                <div class="discout-price">
-                                    Rp <span>150.000</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-right font-light py-2 px-4">2206</td>
-                        <td class="text-right py-2 p-4">
-                            <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2">
-                                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                            </button>
-                        </td>
-                    </tr> --}}
-                </tbody>
-                
-            </table>
+        <div class="separator h-[1px] bg-[#eee] my-2"></div>
+        <section class="bottom-section flex gap-2">
+            <div class="order-search-group flex flex-1 items-center rounded py-2 px-4">
+                <label for="order-search" class="h-5 me-4"><i class="ri-search-line"></i></label>
+                <input id="order-search" type="text" name="order-search" placeholder="Cari Produk..." class="w-full bg-transparent">
+            </div>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <ul class="list-filter-table flex gap-2">
+                <li class="item-filter-table">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Table filter">
+                        <div class="icon h-5 me-1"><i class="ri-filter-3-fill"></i></div>
+                        <h2 class="label">Filter</h2>
+                    </button>
+                </li>
+                <li class="item-filter-table">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Table filter">
+                        <div class="icon h-5 me-1"><i class="ri-dashboard-fill"></i></div>
+                        <h2 class="label">Kategori</h2>
+                    </button>
+                </li>
+                <li class="item-filter-table">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Table filter">
+                        <div class="icon h-5 me-1"><i class="ri-store-3-fill"></i></div>
+                        <h2 class="label">Toko</h2>
+                    </button>
+                </li>
+                <li class="item-filter-table">
+                    <button class="flex items-center rounded py-2 px-4 hover:bg-[#f5f5f5]" aria-label="Table filter">
+                        <div class="icon h-5 me-1"><i class="ri-price-tag-3-fill"></i></div>
+                        <h2 class="label">Harga</h2>
+                    </button>
+                </li>
+            </ul>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <button class="layout-setting rounded py-2 px-3 hover:bg-[#f5f5f5]" aria-label="Setting layout table">
+                <div class="icon h-5"><i class="ri-list-settings-line"></i></div>
+            </button>
+            <div class="separator w-[1px] bg-[#eee] my-2"></div>
+            <nav class="header-pagination" aria-label="Page navigation">
+                <ul class="inline-flex">
+                    <li>
+                        <a href="#" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Previous page">
+                            <div class="icon h-5"><i class="ri-arrow-left-s-line"></i></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">1</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">2</a>
+                    </li>
+                    <li>
+                        <a href="#" class="active block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]" aria-current="page" >3</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">4</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">5</a>
+                    </li>
+                    <li>
+                        <a href="#" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Next page">
+                            <div class="icon h-5"><i class="ri-arrow-right-s-line"></i></div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </section>
-    </div>
+    </section>
+    <section class="data-table-wrapper border border-[#eee] rounded-xl p-4">
+        <table class="w-full">
+            <thead class="bg-[#f5f5f5] text-[#999] text-sm text-left uppercase rounded-t">
+                @include('admin.product.includes.index.table-header')
+            </thead>
+            <tbody class="text-sm">
+                @include('admin.product.includes.index.table-content')
+                <tr class="border-b">
+                    <td class="py-2 px-4">1</td>
+                    <td class="py-2 px-4">
+                        <div class="product-info flex items-center">
+                            <figure class="media w-10 me-3">
+                                <img class="rounded-md" src="https://assets.klikindomaret.com/products/20035630/20035630_thumb.jpg?Version.20.01.1.01" alt="">
+                            </figure>
+                            <div class="product-desc w-40 flex-1">
+                                <div class="name line-clamp-1 text-ellipsis">
+                                    Bebelac 3 Susu Pertumbuhan Fos & Gos Vanila 800G
+                                </div>
+                                <div class="plu text-xs font-light">
+                                    <p>PLU: <span>10003517</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-2 px-4">
+                        <div class="sort-categories">
+                            <button class="hover:text-[#0079c2]">Bahan Puding & Agar Agar</button>
+                        </div>
+                    </td>
+                    <td class="py-2 px-4">
+                        <div class="store-location">
+                            <div class="info">Toko Indomaret</div>
+                            <div class="address flex text-xs font-light">
+                                <div class="address-info me-1">Lokasi</div>
+                                <button class="icon h-4 hover:text-[#0079c2]" aria-label="See address data"><i class="ri-eye-fill"></i></button>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-2 px-4">
+                        <div class="product-status bg-gray-100 text-gray-700 font-bold text-center rounded-lg p-1">
+                            <div class="info">Draft</div>
+                        </div>
+                    </td>
+                    <td class="py-2 px-4">
+                        <div class="stock-info">
+                            <div class="empty flex">
+                                <div class="icon h-4 text-red-600 me-1"><i class="ri-error-warning-fill"></i></div>
+                                <p class="text">Habis</p>
+                            </div>
+                            <div class="stock-count text-xs font-light">
+                                0
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-2 px-4">
+                        <div class="discount-info">
+                            -
+                        </div>
+                    </td>
+                    <td class="py-2 px-4">
+                        <div class="price flex justify-between">
+                            <div class="left-side">Rp</div>
+                            <div class="right-side">
+                                152.052
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-2 px-4 text-center">
+                        <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2" aria-label="Data action">
+                            <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
+                        </button>
+                    </td>
+                </tr>
+                @include('admin.product.includes.index.table-content')
+                @include('admin.product.includes.index.table-content')
+                @include('admin.product.includes.index.table-content')
+                @include('admin.product.includes.index.table-content')
+                @include('admin.product.includes.index.table-content')
+                @include('admin.product.includes.index.table-content')
+                @include('admin.product.includes.index.table-content')
+            </tbody>
+        </table>
+    </section>
 </div>
 @endsection

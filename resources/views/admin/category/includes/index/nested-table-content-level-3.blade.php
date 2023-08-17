@@ -15,7 +15,7 @@
         </div>
     </td>
     <td class="py-2 px-4 w-[50px]">
-        <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]">
+        <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" aria-label="Data action">
             <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
         </button>
     </td>

@@ -7,8 +7,8 @@
         <option value="c">Level 3</option>
     </select>
     <div class="invalid-feedback flex text-red-600 text-sm mt-1">
-        <div class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></div>
-        <div class="message">Input salah!</div>
+        <p class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></p>
+        <p class="message">Input salah!</p>
     </div>
 </div>
 <div class="item-input-group mb-4">

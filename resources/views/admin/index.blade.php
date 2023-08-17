@@ -23,14 +23,14 @@
     <aside class="sidebar w-1/6 h-screen p-4">
         @include('admin.components.sidebar')
     </aside>
-    <div class="w-5/6 rounded-s-3xl bg-white h-screen p-8">
-        {{-- <header class="header mb-6">
-            @include('admin.components.header')
-        </header> --}}
-        <main class="main-content">
+    <section class="w-5/6 rounded-s-3xl bg-white h-screen p-8">
+        <header class="header-content-wrapper mb-6">
+            @include('admin.components.header', ['data' => $dataHeader])
+        </header>
+        <main class="main-content-wrapper">
             @yield('content')
         </main>
-    </div>
+    </section>
 
     {{-- Jquery just for select2 purpose only(✌ ͡• ₃ ͡•)✌ --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
