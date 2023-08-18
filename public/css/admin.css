@@ -97,7 +97,6 @@ input::-webkit-inner-spin-button {
     }
 }
 
-/* Temp */
 .data-filter-wrapper .item-tabs-section button.active {
     position: relative;
     color: #0079c2;
@@ -334,6 +333,10 @@ input::-webkit-inner-spin-button {
 .category-list .item-category:not(:last-child) .accordion-category-content.hide,
 .category-input .item-category:not(:last-child) .accordion-category-content.hide {
     margin-bottom: 16px;
+}
+
+.category-input .category-input-wrapper {
+    height: calc(100vh - 290px);
 }
 
 /* 
