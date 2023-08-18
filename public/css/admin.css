@@ -97,6 +97,7 @@ input::-webkit-inner-spin-button {
     }
 }
 
+/* Temp */
 .data-filter-wrapper .item-tabs-section button.active {
     position: relative;
     color: #0079c2;
