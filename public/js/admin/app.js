@@ -1,10 +1,11 @@
-function openAccordMenu(element) { 
-    const listSubmenu = element.querySelector('.list-submenu');
-    const itemSubmenu = listSubmenu.querySelectorAll('.item-submenu');
-    const itemLength = itemSubmenu.length;
-    const listHeight = (itemLength * 40) + ((itemLength - 1) * 4); // height each item + gap 4px
-   
-    element.style.maxHeight = listHeight + 'px';
+function findButton(el) {
+    const tagName = el.tagName.toLowerCase();
+    
+    if (tagName == 'button') {
+        return el;
+    } else {
+        return findButton(el.parentElement);
+    }
 }
 
 const menuWrapper = document.querySelectorAll('.sidebar .menu-wrapper');
@@ -13,18 +14,29 @@ menuWrapper.forEach(menu => {
     const accordButtonMenu = menu.querySelector('.accordion-menu-heading button');
     
     if (accordButtonMenu) {
-        accordButtonMenu.addEventListener('click', function() { 
-            const listAccordMenuContent = document.querySelectorAll('.sidebar .menu-wrapper .accordion-menu-content');
+        let dataOpenedMenu = '';
+        accordButtonMenu.addEventListener('click', function(e) {
+            const listAccordMenuContent = document.querySelectorAll('.sidebar .accordion-menu-content');
+            const accordionMenuContent = menu.querySelector('.accordion-menu-content');  
+            const accordButtonMenuList = document.querySelectorAll('.accordion-menu-heading button');
 
             listAccordMenuContent.forEach(list => {
-                list.classList.add('hide');
-                list.style.maxHeight = 0 + 'px';
+                const listId = list.id;
+
+                return listId !== dataOpenedMenu ? list.classList.add('hide') : '';
+            });
+            
+            accordButtonMenuList.forEach(btn => {
+                const btnAttribute = btn.getAttribute('data-menu-target');
+
+                return btnAttribute !== dataOpenedMenu ? btn.classList.remove('active') : '';
             });
 
-            const accordionMenuContent = menu.querySelector('.accordion-menu-content');   
+            accordionMenuContent.classList.toggle('hide');
+            findButton(e.target).classList.toggle('active');
             
-            accordionMenuContent.classList.remove('hide');
-            openAccordMenu(accordionMenuContent);
+            dataOpenedMenu = findButton(e.target).getAttribute('data-menu-target');
         }); 
     };
 });
+  

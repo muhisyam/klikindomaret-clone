@@ -160,8 +160,8 @@ Input Kategori
                 </tr>
                 <tr class="accordion-category-content">
                     <td colspan="5">
-                        <div id="sarapan" class="accordion-category-wrapper duration-500 ease-out hide" aria-labelledby="accordion-category-button" style="max-height: 0">
-                            <table class="w-full">
+                        <div id="sarapan" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button">
+                            <table class="w-full min-h-0">
                                 <tbody class="relative">
                                     @include('admin.category.includes.index.nested-table-content-level-3')
                                     @include('admin.category.includes.index.nested-table-content-level-3')
@@ -207,8 +207,8 @@ Input Kategori
                 </tr>
                 <tr class="accordion-category-content">
                     <td colspan="5">
-                        <div id="minuman" class="accordion-category-wrapper duration-500 ease-out hide" aria-labelledby="accordion-category-button" style="max-height: 0">
-                            <table class="w-full">
+                        <div id="minuman" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button">
+                            <table class="w-full min-h-0">
                                 <tbody class="relative">
                                     @include('admin.category.includes.index.nested-table-content-level-3')
                                     @include('admin.category.includes.index.nested-table-content-level-3')

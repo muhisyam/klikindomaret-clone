@@ -70,7 +70,7 @@
                             <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="category-menu">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-dashboard-fill"></i></div>
                                 <h3 class="title">Kategori</h3>
-                                <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
+                                <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
                         <div id="category-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
@@ -111,7 +111,7 @@
                             <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="product-menu">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-stack-fill"></i></div>
                                 <div class="title">Produk</div>
-                                <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
+                                <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
                         <div id="product-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
@@ -143,7 +143,7 @@
                             <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="order-menu">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-shopping-basket-fill"></i></div>
                                 <div class="title">Pemesanan</div>
-                                <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
+                                <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
                         <div id="order-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
@@ -168,7 +168,7 @@
                             <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="user-menu">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-user-3-fill"></i></div>
                                 <div class="title">Pengguna</div>
-                                <div class="icon h-6 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
+                                <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
                         <div id="user-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
