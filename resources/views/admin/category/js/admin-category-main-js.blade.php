@@ -27,52 +27,84 @@
         });
     });
 
+    function hideAccordContent(e, curr) { 
+        e.forEach(listContent => {
+            const listId = listContent.id;
+            return listId !== curr ? listContent.classList.add('hide') : '';
+        });
+    }
+
+    function activateButtonAccord(e, curr) { 
+        e.forEach(btnItem => {
+            const btnAttribute = btnItem.getAttribute('data-accordion-target');
+            return btnAttribute !== curr ? btnItem.classList.remove('active') : '';
+        });
+    }
+
+    function toogleAccordion(isHide, elContent, elBtn) { 
+        if (isHide) {
+            elContent.classList.remove('hide');
+            elBtn.classList.add('active');
+        } else {
+            elContent.classList.add('hide');
+            elBtn.classList.remove('active');
+        }
+    }
+
+    function ariaHiddenToogle(e) { 
+        e.forEach(element => {
+            const isActive = element.classList.contains('hide');
+            return element.setAttribute('aria-hidden', !isActive);
+        });
+    }
+
+    function ariaExpandedToogle(e) { 
+        e.forEach(element => {
+            const isActive = element.classList.contains('active');
+
+            if (element.tagName.toLowerCase() != 'button') {
+                const elementButton = element.querySelector('.accordion-category-button button');
+                return elementButton.setAttribute('aria-expanded', isActive);
+            }
+
+            return element.setAttribute('aria-expanded', isActive);
+        });
+    }
 
     // List subcategory page
-    const subCategoryItem = document.querySelectorAll('.accordion-category-item');
+    const listSubCategoryRow = document.querySelectorAll('.accordion-category-item');
 
-    subCategoryItem.forEach(subCategory => {
-        const subCategoryButton = subCategory.querySelector('.accordion-category-button button');
+    listSubCategoryRow.forEach(subCategory => {
+        const subCategoryBtn = subCategory.querySelector('.accordion-category-button button');
 
-        subCategoryButton.addEventListener('click', function () {
-            const accordDataTarget = subCategoryButton.getAttribute('data-accordion-target');
+        subCategoryBtn.addEventListener('click', function () {
+            const listAccordContent = document.querySelectorAll('.accordion-category-wrapper');
+            const accordDataTarget = subCategoryBtn.getAttribute('data-accordion-target');
             const accordTarget = document.querySelector(`#${accordDataTarget}`);
             const isTargetHide = accordTarget.classList.contains('hide');
 
-            if (isTargetHide) {
-                accordTarget.classList.remove('hide');
-                subCategory.classList.add('active');
-            } else {
-                accordTarget.classList.add('hide');
-                subCategory.classList.remove('active');
-            }
+            toogleAccordion(isTargetHide, accordTarget, subCategory);
+            ariaExpandedToogle(listSubCategoryRow);
+            ariaHiddenToogle(listAccordContent);
+
         });
     });
 
-
     // Input subcategory page
-    const subCategoryButton = document.querySelectorAll('.accordion-category-heading button');
+    const listSubCategoryBtn = document.querySelectorAll('.accordion-category-heading button');
 
-    subCategoryButton.forEach (subCategoryButton => {
-        subCategoryButton.addEventListener('click', function () {
-            const allAccordSubCategory = document.querySelectorAll('.accordion-category-content');
-            const accordDataTarget = subCategoryButton.getAttribute('data-accordion-target');
+    listSubCategoryBtn.forEach(subCategoryBtn => {
+        subCategoryBtn.addEventListener('click', function () {
+            const listAccordSubCategory = document.querySelectorAll('.accordion-category-content');
+            const accordDataTarget = subCategoryBtn.getAttribute('data-accordion-target');
             const accordTarget = document.querySelector(`#${accordDataTarget}`);
             const isTargetHide = accordTarget.classList.contains('hide');
-            
-            allAccordSubCategory.forEach (accordSubCategory => {
-                const thisAccordContent = accordSubCategory.id;
 
-                return accordDataTarget != thisAccordContent ? accordSubCategory.classList.add('hide') : '';
-            });
-
-            if (isTargetHide) {
-                accordTarget.classList.remove('hide');
-                subCategoryButton.classList.add('active');
-            } else {
-                accordTarget.classList.add('hide');
-                subCategoryButton.classList.remove('active');
-            }
+            hideAccordContent(listAccordSubCategory, accordDataTarget)
+            activateButtonAccord(listSubCategoryBtn, accordDataTarget);
+            toogleAccordion(isTargetHide, accordTarget, subCategoryBtn);
+            ariaExpandedToogle(listSubCategoryBtn);
+            ariaHiddenToogle(listAccordSubCategory);
         });
     });
 </script>

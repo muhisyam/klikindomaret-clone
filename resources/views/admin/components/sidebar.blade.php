@@ -25,13 +25,13 @@
 <section class="menu">
     <div class="list-menu-section">
         <div class="item-menu-section mb-4">
-            <h2 class="title uppercase text-xs ps-3 mb-1">Home</h2>
+            <div class="title uppercase text-xs ps-3 mb-1">Home</div>
             <ul class="list-menu flex flex-col gap-1">
                 <li class="item-menu">
                     <div class="menu-wrapper" id="dashboard">
                         <a href="#" class="link group flex rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
                             <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-home-3-fill"></i></div>
-                            <h3 class="title">Beranda</h3>
+                            <div class="title">Beranda</div>
                         </a>
                     </div>
                 </li>
@@ -62,24 +62,24 @@
             </ul>
         </div>
         <div class="item-menu-section mb-4">
-            <h2 class="title uppercase text-xs ps-3 mb-1">Main Menu</h2>
+            <div class="title uppercase text-xs ps-3 mb-1">Main Menu</div>
             <ul class="list-menu flex flex-col gap-1">
                 <li class="item-menu">
                     <div class="menu-wrapper" id="category">
                         <div class="accordion-menu-heading mb-1">
-                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="category-menu">
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="category-menu" aria-expanded="false">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-dashboard-fill"></i></div>
-                                <h3 class="title">Kategori</h3>
+                                <div class="title">Kategori</div>
                                 <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
-                        <div id="category-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
+                        <div id="category-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide" aria-hidden="true">
                             <ul class="list-submenu min-h-0 flex flex-col gap-1 ps-3">
                                 <li class="item-submenu relative flex items-center">
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
                                     <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
                                         <a href="{{ url('categories') }}">
-                                            <h3 class="title">Data Kategori</h3>
+                                            <div class="title">Data Kategori</div>
                                         </a>
                                     </div>
                                 </li>
@@ -87,7 +87,7 @@
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
                                     <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
                                         <a href="{{ url('categories/create') }}">
-                                            <h3 class="title">Tambah Kategori</h3>
+                                            <div class="title">Tambah Kategori</div>
                                         </a>
                                     </div>
                                 </li>
@@ -95,7 +95,7 @@
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
                                     <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
                                         <a href="{{ url('categories/create/sub') }}">
-                                            <h3 class="title">Tambah Sub Kategori</h3>
+                                            <div class="title">Tambah Sub Kategori</div>
                                         </a>
                                     </div>
                                 </li>
@@ -108,13 +108,13 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="product">
                         <div class="accordion-menu-heading mb-1">
-                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="product-menu">
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="product-menu" aria-expanded="false">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-stack-fill"></i></div>
                                 <div class="title">Produk</div>
                                 <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
-                        <div id="product-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
+                        <div id="product-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide" aria-hidden="false">
                             <ul class="list-submenu min-h-0 flex flex-col gap-1 ps-3">
                                 <li class="item-submenu relative flex items-center">
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
@@ -140,13 +140,13 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="product">
                         <div class="accordion-menu-heading mb-1">
-                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="order-menu">
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="order-menu" aria-expanded="false">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-shopping-basket-fill"></i></div>
                                 <div class="title">Pemesanan</div>
                                 <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
-                        <div id="order-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
+                        <div id="order-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide" aria-hidden="false">
                             <ul class="list-submenu min-h-0 flex flex-col gap-1 ps-3">
                                 <li class="item-submenu relative flex items-center">
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
@@ -165,13 +165,13 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="product">
                         <div class="accordion-menu-heading mb-1">
-                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="user-menu">
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="user-menu" aria-expanded="false">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-user-3-fill"></i></div>
                                 <div class="title">Pengguna</div>
                                 <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
                             </button>
                         </div>
-                        <div id="user-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide">
+                        <div id="user-menu" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide" aria-hidden="false">
                             <ul class="list-submenu min-h-0 flex flex-col gap-1 ps-3">
                                 <li class="item-submenu relative flex items-center">
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>

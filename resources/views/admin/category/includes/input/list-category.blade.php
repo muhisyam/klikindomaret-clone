@@ -5,7 +5,7 @@
             <div class="icon duration-300"><i class="ri-arrow-down-s-line"></i></div>
         </button>
     </div>
-    <div id="makanan" class="accordion-category-content accordion overflow-hidden duration-500 ease-out" aria-labelledby="accordion-makanan-heading">
+    <div id="makanan" class="accordion-category-content accordion overflow-hidden duration-500 ease-out" aria-labelledby="accordion-makanan-heading" aria-hidden="true">
         <ul class="list-subcategory min-h-0 text-sm">
             <li class="item-subcategory">
                 <a href="#" class="flex items-center py-1.5 ms-3 hover:text-[#0079c2]">
