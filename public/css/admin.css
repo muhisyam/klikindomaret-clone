@@ -157,7 +157,7 @@ input::-webkit-inner-spin-button {
     border-radius: 3px;
 }
 
-.list-image-uploaded .is-invalid {
+.item-image-uploaded.is-invalid .image-item-wrapper {
     border-color: #dc2626;
 }
 
@@ -210,6 +210,14 @@ input::-webkit-inner-spin-button {
 .product-input .right-side:hover::-webkit-scrollbar-thumb,
 .order-list .order-list-wrapper:hover::-webkit-scrollbar-thumb {
     background-color: #eee;
+}
+
+#drop-area-image {
+    opacity: 0;
+
+    &.dragover {
+        opacity: .8;
+    }
 }
 
 /* 
