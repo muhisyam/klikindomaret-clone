@@ -53,6 +53,39 @@ body {
 --------------------================--------------------- 
 */
 
+.timer-notification {
+    width: 100%;
+    transition: width 1.01s linear;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes jumping {
+    40% {
+        transform: translateY(-2px);
+    }
+    60% {
+        transform: translateY(2px);
+    }
+}
+
+@keyframes running-text {
+    0% {
+        right: -100%;
+    }
+    100% {
+        right: 230%;
+    }
+}
+
+.animation-running {
+    animation: running-text 7s linear infinite;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
@@ -80,21 +113,6 @@ input::-webkit-inner-spin-button {
 
 .jump {
     animation: jumping 2s linear infinite;
-}
-
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
-
-@keyframes jumping {
-    40% {
-        transform: translateY(-2px);
-    }
-    60% {
-        transform: translateY(2px);
-    }
 }
 
 .data-filter-wrapper .item-tabs-section button.active {

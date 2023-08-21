@@ -4,8 +4,21 @@
             <h1 class="title text-2xl font-bold">{{ $data['pagename'] }}</h1>
         </div>
         <div class="center-side relative">
-            <div class="greeting bg-[#fbde7e] text-[#0079c2] text-center rounded-lg py-1.5 px-6">
-                <p class="text-lg tracking-wide">Selamat <span class="time">Pagi</span>, <span class="name italic font-bold">Jordan!</span></p>
+            <div class="greeting min-w-[135px] h-10 flex items-center bg-[#fbde7e] text-[#0079c2] rounded-lg overflow-hidden py-1.5 px-6">
+                <div class="body">
+                    {{-- <div class="action-notification flex items-center animate__animated animate__bounceInRight">
+                        <div class="icon h-6 -ms-2 me-2"><i class="ri-delete-bin-6-fill"></i></div>
+                        <div class="info flex items-center text-sm">
+                            <h5 class="title me-1">Berhasil hapus gambar:</h5>
+                            <div class="desc max-w-[175px] whitespace-nowrap overflow-hidden text-xs">
+                                <p class="text relative animation-running">idyllic-shot-huge-mountain-covered-vegetation-with-body-water-its-base.jpg</p>
+                            </div>
+                        </div>
+                        <button type="button" class="close h-6 rounded-md px-1 ms-2 -me-4 hover:bg-[#0079c2] hover:text-[#fbde7e]"><i class="ri-close-line"></i></button>
+                    </div>
+                    <div class="absolute left-0 bottom-0 timer-notification w-full h-1 bg-[#0079c2]"></div> --}}
+                    <p class="greet-text text-lg tracking-wide">Selamat <span class="time">Pagi</span>, <span class="name italic font-bold">Jordan!</span></p>
+                </div>
                 <p class="datetime absolute -bottom-5 w-full flex justify-center text-xs font-bold pt-1 -ms-6">Jum'at, 12 Agustus 2023</p>
             </div>
         </div>

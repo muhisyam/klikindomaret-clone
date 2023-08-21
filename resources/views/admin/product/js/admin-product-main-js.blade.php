@@ -67,7 +67,7 @@
                                             <img class="h-12" src="${imageUrl}" alt="">
                                         </figure>
                                         <div class="info">
-                                            <p class="text font-bold line-clamp-1 text-ellipsis">${imageName}</p>
+                                            <p class="text font-bold line-clamp-1 text-ellipsis" title="${imageName}">${imageName}</p>
                                             <p class="size text-xs font-light">${imageSize} KB</p>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
         const noImageUploaded = `<div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
                                     <div class="image-info-wrapper w-11/12 flex items-center">
                                         <div class="media h-12 w-12 grid place-items-center shrink-0 bg-[#fbf0d0] text-[#0079c2] text-2xl text-center rounded me-2">
-                                            <div class="icon jump"><i class="ri-upload-cloud-line"></i></div>
+                                            <div class="icon animate-bounce mt-2.5"><i class="ri-upload-cloud-line"></i></div>
                                         </div>
                                         <div class="info">
                                             <p class="text font-bold line-clamp-1 text-ellipsis">Tidak ada gambar.</p>
@@ -97,9 +97,76 @@
         return uploadedImgWrapper.innerHTML = noImageUploaded;
     };
 
+    let greetingText;
+    const greetingBodyWrapper = document.querySelector('.greeting .body');
+
+    function showNotification() { 
+        if (!greetingText) {
+            greetingText = document.querySelector('.greeting .greet-text');
+            greetingText.classList.add('animate__animated', 'animate__bounceIn');
+        }
+
+        console.log(greetingText);
+        
+        greetingText ? greetingText.remove() : '';
+
+        let notificationElement = `<div class="action-notification flex items-center animate__animated animate__bounceInRight">
+                                        <div class="icon h-6 -ms-2 me-2"><i class="ri-delete-bin-6-fill"></i></div>
+                                        <div class="info flex items-center text-sm">
+                                            <h5 class="title me-1">Berhasil hapus gambar:</h5>
+                                            <div class="desc max-w-[175px] whitespace-nowrap overflow-hidden text-xs">
+                                                <p class="text relative animation-running" title="idyllic-shot-huge-mountain-covered-vegetation-with-body-water-its-base.jpg">idyllic-shot-huge-mountain-covered-vegetation-with-body-water-its-base.jpg</p>
+                                            </div>
+                                        </div>
+                                        <button type="button" onclick="closeNotification()" class="close h-6 rounded-md px-1 ms-2 -me-4 hover:bg-[#0079c2] hover:text-[#fbde7e]"><i class="ri-close-line"></i></button>
+                                    </div>
+                                    <div class="timer-notification absolute left-0 bottom-0 w-full h-1 bg-[#0079c2]"></div>`
+
+            
+        greetingBodyWrapper.innerHTML = notificationElement;
+        
+        return interval = setInterval(updateCountdown, 1000);
+    };
+
+    let timerNotificationBar, interval;
+    let totalTime = 10;
+    let timeLeft = totalTime-1;
+
+    function closeNotification() { 
+        const notificationElement = document.querySelector('.greeting .action-notification');
+
+        notificationElement ? notificationElement.remove() : '';
+    
+        clearInterval(interval);
+        timerNotificationBar.style.width = '100%';
+
+        return greetingBodyWrapper.appendChild(greetingText);
+    };
+
+    function updateProgressBar() {
+        console.log((timeLeft / totalTime) * 100);
+        const percentage = (timeLeft / totalTime) * 100;
+        timerNotificationBar.style.width = percentage + '%';
+    };
+
+    function updateCountdown() {
+        timerNotificationBar = document.querySelector('.timer-notification');
+
+        updateProgressBar();
+
+        timeLeft--;
+
+        // Until the bar touch the end
+        if (timeLeft < -1) {
+            clearInterval(interval);
+            timerNotificationBar.style.width = '100%';
+        }
+    };
+
     function deleteImage(i) { 
         imageFiles.splice(i, 1);
         
+        showNotification();
         uploadImg();
     };
 
@@ -195,4 +262,5 @@
 
         uploadImg();
     });
+
 </script>
