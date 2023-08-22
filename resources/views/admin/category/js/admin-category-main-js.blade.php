@@ -54,7 +54,7 @@
     function ariaHiddenToogle(e) { 
         e.forEach(element => {
             const isActive = element.classList.contains('hide');
-            return element.setAttribute('aria-hidden', !isActive);
+            return element.setAttribute('aria-hidden', isActive);
         });
     };
 
