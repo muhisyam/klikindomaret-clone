@@ -19,7 +19,7 @@
     <div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
         <div class="image-info-wrapper w-11/12 flex items-center">
             <div class="media h-12 w-12 grid place-items-center shrink-0 bg-[#fbf0d0] text-[#0079c2] text-2xl text-center rounded me-2">
-                <div class="icon animate-bounce mt-2.5"><i class="ri-upload-cloud-line"></i></div>
+                <div class="icon animate__animated animate__rubberBand animate__infinite"><i class="ri-upload-cloud-line"></i></div>
             </div>
             <div class="info">
                 <p class="text font-bold line-clamp-1 text-ellipsis">Tidak ada gambar.</p>

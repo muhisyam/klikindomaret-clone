@@ -136,6 +136,7 @@
     function deleteImage() { 
         formInputImg.value = '';
         
+        showNotification();
         uploadImg();
     };
 

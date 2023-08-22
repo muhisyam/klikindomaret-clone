@@ -53,11 +53,6 @@ body {
 --------------------================--------------------- 
 */
 
-.timer-notification {
-    width: 100%;
-    transition: width 1.01s linear;
-}
-
 @keyframes blinker {
     50% {
         opacity: 0;
