@@ -3,28 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): JsonResponse
+    public function index(): JsonResource
     {
-        $data = Category::all();
+        $categories = Category::all();
 
-        return (CategoryResource::collection($data))->response();
+        return CategoryResource::collection($categories);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CategoryRequest $request): CategoryResource
     {
         $data = $request->validated();
@@ -34,9 +28,6 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id): CategoryResource
     {
         $category = Category::find($id);
@@ -46,9 +37,6 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(CategoryRequest $request, int $id): CategoryResource
     {
         $category = Category::find($id);
@@ -62,10 +50,7 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $category = Category::find($id);
 
