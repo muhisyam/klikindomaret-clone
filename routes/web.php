@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\Admin\CategoryController;
 use App\Http\Controllers\Frontend\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;
@@ -19,6 +20,7 @@ Route::get('/', function () {
     return view('admin.order.index');
 });
 Route::get('test/backend', [UserController::class, 'index']);
+Route::get('test/cat', [CategoryController::class, 'index']);
 
 Route::get('/categories', function () {
     return view('admin.category.index-category');
