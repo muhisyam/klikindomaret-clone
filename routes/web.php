@@ -20,11 +20,11 @@ Route::get('/', function () {
     return view('admin.order.index');
 });
 Route::get('test/backend', [UserController::class, 'index']);
-Route::get('test/cat', [CategoryController::class, 'index']);
+Route::get('categories', [CategoryController::class, 'index']);
 
-Route::get('/categories', function () {
-    return view('admin.category.index-category');
-});
+// Route::get('/categories', function () {
+//     return view('admin.category.index-category', [CategoryController::class, 'index']);
+// });
 
 Route::get('/categories/makanan', function () {
     return view('admin.category.index-subcategory');

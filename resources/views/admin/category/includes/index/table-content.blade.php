@@ -10,7 +10,7 @@
     </td>
     <td class="py-2 px-4">
         <div class="accordion-category-info flex items-center">
-            <div class="label me-1">Makanan</div>
+            <div class="label me-1">{{ $category['name'] }}</div>
             <div class="product-count">(<span>30</span>)</div>
         </div>
     </td>
@@ -18,7 +18,7 @@
     <td class="py-2 px-4">
         <div class="status flex">
             <div class="icon h-5 text-gray-600 scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-            <div class="info">Tidak Aktif</div>
+            <div class="info">{{ $category['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
         </div>
     </td>
     <td class="py-2 px-4">

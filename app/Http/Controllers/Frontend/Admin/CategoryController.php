@@ -14,6 +14,6 @@ class CategoryController extends Controller
         $response = $client->request('GET', $url);
         $content = $response->getBody()->getContents();
         $data = json_decode($content, true);
-        return view('admin.product.index', ['data' => $data['data']]);
+        return view('admin.category.index-category', ['data' => $data['data']]);
     }
 }

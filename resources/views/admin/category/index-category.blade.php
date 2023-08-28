@@ -155,11 +155,18 @@ Input Kategori Induk
                 @include('admin.category.includes.index.table-header')
             </thead>
             <tbody class="text-sm">
+                
+                @foreach ($data as $category)
+                    @include('admin.category.includes.index.table-content')    
+                @endforeach
+
+
+            {{-- 
                 @include('admin.category.includes.index.table-content')
                 @include('admin.category.includes.index.table-content')
                 @include('admin.category.includes.index.table-content')
                 @include('admin.category.includes.index.table-content')
-                @include('admin.category.includes.index.table-content')
+             --}}
             </tbody>
         </table>
     </section>
