@@ -14,7 +14,9 @@ class CategoryController extends Controller
 {
     public function index(): JsonResource
     {
-        $categories = Category::all();
+        $categories = Category::withCount('childs')
+            ->where('parent_id', '=', '0')
+            ->paginate(10);
 
         return CategoryResource::collection($categories);
     }
@@ -61,7 +63,7 @@ class CategoryController extends Controller
         return response()->json(['data' => true], 200);
     }
 
-    protected function isDataFound($data) 
+    protected function isDataFound(object $data) 
     {
         if(!$data) {
             throw new HttpResponseException(response()->json([

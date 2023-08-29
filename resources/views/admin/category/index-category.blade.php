@@ -120,31 +120,26 @@ Input Kategori Induk
             <div class="separator w-[1px] bg-[#eee] my-2"></div>
             <nav class="header-pagination" aria-label="Page navigation">
                 <ul class="inline-flex">
+                    @foreach ($data['meta']['links'] as $links)
+                    @if ($loop->first)
                     <li>
-                        <a href="#" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Previous page">
+                        <a href="{{ $links['url'] }}" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Previous page">
                             <div class="icon h-5"><i class="ri-arrow-left-s-line"></i></div>
                         </a>
                     </li>
+                    @continue
+                    @elseif ($loop->last)
                     <li>
-                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">1</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">2</a>
-                    </li>
-                    <li>
-                        <a href="#" class="active block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]" aria-current="page" >3</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">4</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]">5</a>
-                    </li>
-                    <li>
-                        <a href="#" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Next page">
+                        <a href="{{ $links['url'] }}" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Next page">
                             <div class="icon h-5"><i class="ri-arrow-right-s-line"></i></div>
                         </a>
                     </li>
+                    @continue
+                    @endif
+                    <li>
+                        <a href="{{ $links['url'] }}" class="{{ $links['active'] ? 'active' : '' }} block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]" aria-current="page" >{{ $links['label'] }}</a>
+                    </li>
+                    @endforeach
                 </ul>
             </nav>
         </section>
@@ -156,7 +151,7 @@ Input Kategori Induk
             </thead>
             <tbody class="text-sm">
                 
-                @foreach ($data as $category)
+                @foreach ($data['data'] as $category)
                     @include('admin.category.includes.index.table-content')    
                 @endforeach
 
@@ -167,6 +162,7 @@ Input Kategori Induk
                 @include('admin.category.includes.index.table-content')
                 @include('admin.category.includes.index.table-content')
              --}}
+
             </tbody>
         </table>
     </section>

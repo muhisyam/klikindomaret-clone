@@ -17,5 +17,14 @@ class Category extends Model
         'slug',
         'status',
     ];
+    
+    public function parents()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
 
+    public function childs()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 }

@@ -11,7 +11,7 @@
     <td class="py-2 px-4">
         <div class="accordion-category-info flex items-center">
             <div class="label me-1">{{ $category['name'] }}</div>
-            <div class="product-count">(<span>30</span>)</div>
+            <div class="product-count">(<span>{{ $category['childs_count'] }}</span>)</div>
         </div>
     </td>
     <td class="py-2 px-4">154 Produk</td>
