@@ -1,21 +1,21 @@
 <td class="py-2 w-[50px]">
     <div class="accordion-category-button">
-        <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="sarapan" aria-labelledby="sarapan" aria-expanded="false" aria-controls="sarapan">
+        <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="{{ $categoryLvl2['slug'] }}" aria-labelledby="{{ $categoryLvl2['slug'] }}" aria-expanded="false" aria-controls="{{ $categoryLvl2['slug'] }}">
             <div class="icon h-5 w-5 duration-500"><i class="ri-arrow-down-s-line"></i></div>
         </button>
     </div>
 </td>
 <td class="py-2 px-4 w-auto">
     <div class="accordion-category-info flex items-center">
-        <div class="label me-1">Sarapan</div>
-        <div class="product-count">(<span>30</span>)</div>
+        <div class="label me-1">{{ $categoryLvl2['name'] }}</div>
+        <div class="product-count">(<span>{{ $categoryLvl2['childs_count'] }}</span>)</div>
     </div>
 </td>
 <td class="py-2 px-4 w-[210px]">154 Produk</td>
 <td class="py-2 px-4 w-[210px]">
     <div class="status flex">
-        <div class="icon h-5 text-gray-600 scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-        <div class="info">Tidak Aktif</div>
+        <div class="icon h-5 {{ $categoryLvl2['status'] ? 'text-green-600' : 'text-gray-600' }} scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
+        <div class="info">{{ $categoryLvl2['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
     </div>
 </td>
 <td class="py-2 px-4 w-[50px]">

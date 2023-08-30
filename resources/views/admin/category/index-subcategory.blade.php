@@ -13,12 +13,12 @@ Input Kategori
                 [
                     'info' => 'first',
                     'label' => 'Kategori', 
-                    'link' => 'category'
+                    'link' => 'categories'
                 ],
                 [
                     'info' => 'next',
                     'label' => 'List Kategori', 
-                    'link' => 'category'
+                    'link' => 'categories'
                 ],
                 [
                     'info' => 'last',
@@ -155,75 +155,25 @@ Input Kategori
                 @include('admin.category.includes.index.table-header')
             </thead>
             <tbody class="text-sm">
+                @foreach ($data['data'][0]['childs'] as $categoryLvl2)
                 <tr class="accordion-category-item relative">
                     @include('admin.category.includes.index.nested-table-content-level-2')
                 </tr>
                 <tr class="accordion-category-content">
                     <td colspan="5">
-                        <div id="sarapan" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button" aria-hidden="true">
+                        <div id="{{ $categoryLvl2['slug'] }}" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button" aria-hidden="true">
                             <table class="w-full min-h-0">
                                 <tbody class="relative">
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
+                                    @foreach ($categoryLvl2['childs'] as $categoryLvl3)
+                                    @include('admin.category.includes.index.nested-table-content-level-3')   
+                                    @endforeach
                                     <tr class="border-l-custom absolute left-[25px] top-0 border-l border-[#e5e7eb]"></tr>
                                 </tbody>
                             </table>
                         </div>
                     </td>
                 </tr>
-                <tr class="accordion-category-item relative">
-                    <td class="py-2 w-[50px]">
-                        <div class="accordion-category-button">
-                            <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="minuman" aria-labelledby="minuman" aria-expanded="true" aria-controls="minuman">
-                                <div class="icon h-5 w-5 duration-500"><i class="ri-arrow-down-s-line"></i></div>
-                            </button>
-                        </div>
-                    </td>
-                    <td class="py-2 px-4 w-auto">
-                        <div class="accordion-category-info flex items-center">
-                            <div class="label me-1">minuman</div>
-                            <div class="product-count">(<span>30</span>)</div>
-                        </div>
-                    </td>
-                    <td class="py-2 px-4 w-[210px]">154 Produk</td>
-                    <td class="py-2 px-4 w-[210px]">
-                        <div class="status flex">
-                            <div class="icon h-5 text-gray-600 scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-                            <div class="info">Tidak Aktif</div>
-                        </div>
-                    </td>
-                    <td class="py-2 px-4 w-[50px]">
-                        <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" aria-label="data-action">
-                            <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                        </button>
-                    </td>
-                    <td class="border-b-custom absolute right-0 bottom-0 h-3 border-b border-[#e5e7eb]"></td>
-                </tr>
-                <tr class="accordion-category-content">
-                    <td colspan="5">
-                        <div id="minuman" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button" aria-hidden="true">
-                            <table class="w-full min-h-0">
-                                <tbody class="relative">
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    @include('admin.category.includes.index.nested-table-content-level-3')
-                                    <tr class="border-l-custom absolute left-[25px] top-0 border-l border-[#e5e7eb]"></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </section>

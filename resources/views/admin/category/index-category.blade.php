@@ -13,12 +13,12 @@ Input Kategori Induk
                 [
                     'info' => 'first',
                     'label' => 'Kategori', 
-                    'link' => 'category'
+                    'link' => 'categories'
                 ],
                 [
                     'info' => 'next',
                     'label' => 'List Kategori', 
-                    'link' => 'category'
+                    'link' => 'categories'
                 ],
                 [
                     'info' => 'last',
@@ -150,19 +150,9 @@ Input Kategori Induk
                 @include('admin.category.includes.index.table-header')
             </thead>
             <tbody class="text-sm">
-                
                 @foreach ($data['data'] as $category)
                     @include('admin.category.includes.index.table-content')    
                 @endforeach
-
-
-            {{-- 
-                @include('admin.category.includes.index.table-content')
-                @include('admin.category.includes.index.table-content')
-                @include('admin.category.includes.index.table-content')
-                @include('admin.category.includes.index.table-content')
-             --}}
-
             </tbody>
         </table>
     </section>

@@ -6,12 +6,12 @@
             </div>
         </div>
     </td>
-    <td class="py-2 px-4 w-auto">Sereal</td>
+    <td class="py-2 px-4 w-auto">{{ $categoryLvl3['name'] }}</td>
     <td class="py-2 px-4 w-[210px]">154 Produk</td>
     <td class="py-2 px-4 w-[210px]">
         <div class="status flex">
-            <div class="icon h-5 text-gray-600 scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-            <div class="info">Tidak Aktif</div>
+            <div class="icon h-5 {{ $categoryLvl2['status'] ? 'text-green-600' : 'text-gray-600' }} scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
+            <div class="info">{{ $categoryLvl2['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
         </div>
     </td>
     <td class="py-2 px-4 w-[50px]">
