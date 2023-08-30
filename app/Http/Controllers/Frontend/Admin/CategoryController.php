@@ -23,7 +23,7 @@ class CategoryController extends Controller
         $data = json_decode($content, true);
         $data['meta'] = $this->changeLinksUrl($data['meta'], $url);
 
-        return view('admin.category.index-category', ['data' => $data]);
+        return view('admin.category.index-parent', ['data' => $data]);
     }
 
     public function subIndex(Request $request, string $slug) {
