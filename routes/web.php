@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 Route::get('test/backend', [UserController::class, 'index']);
 Route::get('categories', [CategoryController::class, 'index']);
-Route::get('categories/{slug}', [CategoryController::class, 'subIndex']);
+Route::get('categories/sub/{slug}', [CategoryController::class, 'subIndex'])->name('subcategories');
 
 // Route::get('/categories', function () {
 //     return view('admin.category.index-category', [CategoryController::class, 'index']);

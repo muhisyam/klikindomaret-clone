@@ -1,7 +1,7 @@
 <tr class="border-b">
     <td class="py-2">
         <div class="accordion-category-button">
-            <a href="{{ url('categories/' . $category['slug']) }}" aria-label="List subcategories">
+            <a href="{{ route('subcategories', ['slug' => $category['slug']]) }}" aria-label="List subcategories">
                 <div class="h-5 w-5 bg-[#eee] border border-[#ccc] text-[#0079c2] rounded-full mx-auto">
                     <div class="icon h-5 w-5 text-center"><i class="ri-arrow-right-s-line"></i></div>
                 </div>

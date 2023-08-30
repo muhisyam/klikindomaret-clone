@@ -21,26 +21,32 @@ class CategoryController extends Controller
         $response = $client->request('GET', $url);
         $content = $response->getBody()->getContents();
         $data = json_decode($content, true);
-        $data['meta'] = $this->changeLinksUrl($data['meta']);
+        $data['meta'] = $this->changeLinksUrl($data['meta'], $url);
 
         return view('admin.category.index-category', ['data' => $data]);
     }
 
-    public function subIndex(string $slug) {
+    public function subIndex(Request $request, string $slug) {
         $client = new Client();
-        $url = static::apiUrl . '/sub/' . $slug;
+        $url = $search = static::apiUrl . '/sub/' . $slug;
+
+        if ($request->input('page')) {
+            $url .= '?page=' . $request->input('page');
+        }
+
         $response = $client->request('GET', $url);
         $content = $response->getBody()->getContents();
         $data = json_decode($content, true);
+        $data['meta'] = $this->changeLinksUrl($data['meta'], $search);
 
         return view('admin.category.index-subcategory', ['data' => $data]);
     }
 
-    public function changeLinksUrl(array $data) {
+    public function changeLinksUrl(array $data, string $search) {
         $curentUrl = url()->current();
-
+        
         foreach ($data['links'] as $key => $value) {
-            $data['links'][$key]['url'] = str_replace(static::apiUrl, $curentUrl, $value['url']);
+            $data['links'][$key]['url'] = str_replace($search, $curentUrl, $value['url']);
         } 
 
         return $data;
