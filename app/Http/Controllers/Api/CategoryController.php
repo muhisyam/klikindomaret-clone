@@ -14,10 +14,23 @@ class CategoryController extends Controller
 {
     public function index(): JsonResource
     {
-        $categories = Category::withCount('childs')
-            ->where('parent_id', '=', '0')
+        $categories = Category::where('parent_id', '=', '0')
+            ->withCount('childs')
             ->paginate(10);
 
+        return CategoryResource::collection($categories);
+    }
+
+    public function subIndex(string $slug): JsonResource
+    {
+        $categories = Category::where('slug', '=', $slug)
+            ->with([
+                'childs' => fn ($query) => $query->withCount('childs'), 
+                'childs.childs'
+            ])
+            ->withCount('childs')
+            ->get();
+            
         return CategoryResource::collection($categories);
     }
 

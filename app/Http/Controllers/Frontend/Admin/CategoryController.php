@@ -26,6 +26,16 @@ class CategoryController extends Controller
         return view('admin.category.index-category', ['data' => $data]);
     }
 
+    public function subIndex(string $slug) {
+        $client = new Client();
+        $url = static::apiUrl . '/sub/' . $slug;
+        $response = $client->request('GET', $url);
+        $content = $response->getBody()->getContents();
+        $data = json_decode($content, true);
+
+        return view('admin.category.index-subcategory', ['data' => $data]);
+    }
+
     public function changeLinksUrl(array $data) {
         $curentUrl = url()->current();
 
