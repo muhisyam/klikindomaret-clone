@@ -22,15 +22,7 @@ class CategoryController extends Controller
     }
 
     public function subIndex(string $slug): JsonResource
-    {
-        // $categories = Category::where('slug', $slug)
-        //     ->with([
-        //         'childs' => fn ($query) => $query->withCount('childs'), 
-        //         'childs.childs'
-        //     ])
-        //     ->withCount('childs')
-        //     ->get();
-        
+    {   
         $sad = Category::where('slug', $slug)->first();
         $categories = Category::where('parent_id', $sad->id)
             ->with('childs')
