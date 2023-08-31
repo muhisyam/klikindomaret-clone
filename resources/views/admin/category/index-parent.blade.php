@@ -89,7 +89,7 @@ Input Kategori Induk
             </div>
             <div class="separator w-[1px] bg-[#eee] my-2"></div>
             <div class="count-page-show w-[268.5px] flex items-center ms-2">
-                <p class="info">Menampilkan <span>1 - 10</span> dari <span>15052</span> Hasil</p>
+                <p class="info">Menampilkan <span>{{ $data['meta']['from'] }} - {{ $data['meta']['to'] }}</span> dari <span>{{ $data['meta']['total'] }}</span> Hasil</p>
             </div>
         </section>
         <div class="separator h-[1px] bg-[#eee] my-2"></div>
@@ -119,25 +119,31 @@ Input Kategori Induk
             </button>
             <div class="separator w-[1px] bg-[#eee] my-2"></div>
             <nav class="header-pagination" aria-label="Page navigation">
-                <ul class="inline-flex">
-                    @foreach ($data['meta']['links'] as $links)
+                <ul class="inline-flex w-full">
+                    @foreach ($data['meta']['custom_links'] as $links)
                     @if ($loop->first)
                     <li>
-                        <a href="{{ $links['url'] }}" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Previous page">
+                        <a href="{{ $links['url'] ? $links['url'] : '#' }}" class="block w-[40px] h-10 text-center py-2 rounded {{ $links['url'] ? 'hover:bg-[#f5f5f5]' : 'disabled' }}" aria-label="Previous page">
                             <div class="icon h-5"><i class="ri-arrow-left-s-line"></i></div>
                         </a>
                     </li>
                     @continue
                     @elseif ($loop->last)
                     <li>
-                        <a href="{{ $links['url'] }}" class="block h-10 px-3 py-2 rounded hover:bg-[#f5f5f5]" aria-label="Next page">
+                        <a href="{{ $links['url'] ? $links['url'] : '#' }}" class="block w-[40px] h-10 text-center py-2 rounded {{ $links['url'] ? 'hover:bg-[#f5f5f5]' : 'disabled' }}" aria-label="Next page">
                             <div class="icon h-5"><i class="ri-arrow-right-s-line"></i></div>
                         </a>
                     </li>
                     @continue
                     @endif
+                    @if ($links['label'] == 'separator')
                     <li>
-                        <a href="{{ $links['url'] }}" class="{{ $links['active'] ? 'active' : '' }} block h-10 py-2 px-4 rounded hover:bg-[#f5f5f5]" aria-current="page" >{{ $links['label'] }}</a>
+                        <button type="button" class="block w-[40px] h-10 text-center py-2 rounded cursor-default">...</button>
+                    </li>
+                    @continue    
+                    @endif
+                    <li>
+                        <a href="{{ $links['active'] ? '#' : $links['url'] }}" class="{{ $links['active'] ? 'active' : '' }} block w-[40px] h-10 text-center py-2 rounded hover:bg-[#f5f5f5]" aria-current="page" >{{ $links['label'] }}</a>
                     </li>
                     @endforeach
                 </ul>
