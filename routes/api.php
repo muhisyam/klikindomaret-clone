@@ -22,4 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('categories', CategoryController::class);
-Route::get('categories/sub/{slug}', [CategoryController::class, 'subIndex']);
+Route::get('categories/sub/{category}', [CategoryController::class, 'subIndex'])->name('category.subIndex');

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Frontend\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Services\PaginationService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Services\PaginationService;
+use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\ClientException;
 
 class CategoryController extends Controller
 {
@@ -42,5 +43,49 @@ class CategoryController extends Controller
         $data['meta'] = $paginateService->changeLinksUrl($data['meta'], $search);
 
         return view('admin.category.index-subcategory', ['data' => $data]);
+    }
+
+    public function create()
+    {
+        return view('admin.category.input-parent');
+    }
+
+    
+    protected $variable;
+
+    public function store(Request $request)
+    {
+        // $param = [
+        //     'parent_id' => $request->parent_id,
+        //     'name' => $request->name,
+        //     'slug' => $request->slug,
+        //     'status' => $request->status,
+        //     'image' => $request->image,
+        // ];
+
+        $param = $request->all();
+
+
+        $client = new Client();
+        $url = static::apiUrl;
+        
+        try {
+            $response = $client->request('POST', $url, [
+                'header' => ['Content-Type', 'application/json'],
+                'form_params' => $param,
+            ]);
+
+            $data = json_decode($response->getBody()->getContents(), true);
+
+            dd($data['data']);
+
+            return redirect()->route('categories.index')->with(['success' => 'Berhasil Tambah Kategori "' . $data['data']['name'] . '".']);
+
+        } catch (ClientException $exception) {
+            $response = $exception->getResponse()->getBody()->getContents();
+            $error = json_decode($response, true);
+            
+            return redirect()->route('categories.create')->with([ 'inputError' => $error ])->withInput();
+        }
     }
 }

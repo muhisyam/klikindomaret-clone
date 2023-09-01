@@ -19,22 +19,9 @@ use App\Http\Controllers\FrontendController;
 Route::get('/', function () {
     return view('admin.order.index');
 });
-Route::get('test/backend', [UserController::class, 'index']);
-Route::get('categories', [CategoryController::class, 'index']);
-Route::get('categories/sub/{slug}', [CategoryController::class, 'subIndex'])->name('subcategories');
 
-// Route::get('/categories', function () {
-//     return view('admin.category.index-category', [CategoryController::class, 'index']);
-// });
-
-// Route::get('categories/{slug}', function () {
-//     return view('admin.category.index-subcategory');
-// })->name('subcategories');
-
-Route::get('/categories/create', function () {
-    return view('admin.category.input-parent');
-});
-
+Route::resource('categories', CategoryController::class);
+Route::get('categories/sub/{category}', [CategoryController::class, 'subIndex'])->name('categories.subIndex');
 Route::get('/categories/create/sub', function () {
     return view('admin.category.input-subcategory');
 });
@@ -54,5 +41,3 @@ Route::get('/orders', function () {
 Route::get('/users', function () {
     return view('admin.users.index');
 });
-
-// Route::get('/', [FrontendController::class, 'index'])->name('frontendHome');

@@ -56,7 +56,9 @@ Tambah Kategori
         </div>
     </section>
     <section class="form-input-wrapper">
-        <form action="">
+        <form action="{{ route('categories.store') }}" method="POST">
+            @csrf
+            @php $error = session()->get('inputError') != null ? session()->get('inputError') : ['errors' => []] @endphp
             <div class="category-input-wrapper flex gap-4 mb-5">
                 <section class="left-side relative h-full w-2/5 border border-[#eee] rounded-xl overflow-auto p-4">
                     @include('admin.category.includes.input.image-input')
@@ -66,7 +68,7 @@ Tambah Kategori
                 </section>
             </div>
             <div class="form-button text-right">
-                <button class="h-10 w-full max-w-[20%] bg-[#0079c2] text-white rounded py-2 px-4 disabled">Submit</button>
+                <button class="h-10 w-full max-w-[20%] bg-[#0079c2] text-white rounded py-2 px-4">Submit</button>
             </div>
         </form>
     </section>

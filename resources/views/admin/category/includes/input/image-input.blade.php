@@ -1,6 +1,6 @@
 <div class="item-input-group mb-4">
     <label for="form-input-image" class="label text-sm mb-1">Tambah Gambar</label>
-    <input id="form-input-image" type="file" accept="image/" class="hidden">
+    <input id="form-input-image" type="file" accept="image/" class="hidden" name="image">
     <div class="input-image-wrapper relative w-full h-48 flex flex-col justify-center bg-[#fbf0d0] border-4 border-[#f9c828] border-dashed rounded-lg mb-6">
         <div id="drop-area-image" class="absolute top-0 left-0 w-full h-full grid place-content-center bg-black text-white text-2xl rounded-lg z-10">Drop it like it's hot.</div>
         <div class="icon h-24 text-[#aca595] text-8xl text-center mb-3"><i class="ri-image-add-fill"></i></div>
