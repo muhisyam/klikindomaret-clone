@@ -6,7 +6,14 @@
         <div class="center-side relative text-[#0079c2]">
             <div class="greeting relative min-w-[135px] h-10 flex items-center bg-[#fbde7e] rounded-lg overflow-hidden py-1.5 px-6">
                 <div class="body">
+                    @if (session()->has('success'))
+                    @php $message = session()->get('success') @endphp
+                    <script>
+                        showNotification($message['title'], $message['message'])
+                    </script>
+                    @else
                     <p class="greet-text text-lg tracking-wide">Selamat <span class="time">Pagi</span>, <span class="name italic font-bold">Jordan!</span></p>
+                    @endif
                 </div>
             </div>
             <p class="datetime absolute left-6 -bottom-5 w-full flex justify-center text-xs font-bold pt-1 -ms-6">Jum'at, 12 Agustus 2023</p>

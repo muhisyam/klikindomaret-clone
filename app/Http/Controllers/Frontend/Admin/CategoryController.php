@@ -77,9 +77,12 @@ class CategoryController extends Controller
 
             $data = json_decode($response->getBody()->getContents(), true);
 
-            dd($data['data']);
-
-            return redirect()->route('categories.index')->with(['success' => 'Berhasil Tambah Kategori "' . $data['data']['name'] . '".']);
+            return redirect()->route('categories.index')->with([
+                'success' => [
+                    'title' => 'Berhasil Tambah Kategori',
+                    'message' => $data['data']['name'],
+                ]
+            ]);
 
         } catch (ClientException $exception) {
             $response = $exception->getResponse()->getBody()->getContents();
