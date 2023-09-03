@@ -160,53 +160,55 @@
     });
 
     // Input subcategory page
-    const listSubCategoryBtn = document.querySelectorAll('.accordion-category-heading button');
+    if (window.location.href.indexOf("create") > -1) {
+        const listSubCategoryBtn = document.querySelectorAll('.accordion-category-heading button');
 
-    listSubCategoryBtn.forEach(subCategoryBtn => {
-        subCategoryBtn.addEventListener('click', function () {
-            const listAccordSubCategory = document.querySelectorAll('.accordion-category-content');
-            const accordDataTarget = subCategoryBtn.getAttribute('data-accordion-target');
-            const accordTarget = document.querySelector(`#${accordDataTarget}`);
-            const isTargetHide = accordTarget.classList.contains('hide');
+        listSubCategoryBtn.forEach(subCategoryBtn => {
+            subCategoryBtn.addEventListener('click', function () {
+                const listAccordSubCategory = document.querySelectorAll('.accordion-category-content');
+                const accordDataTarget = subCategoryBtn.getAttribute('data-accordion-target');
+                const accordTarget = document.querySelector(`#${accordDataTarget}`);
+                const isTargetHide = accordTarget.classList.contains('hide');
 
-            hideAccordContent(listAccordSubCategory, accordDataTarget)
-            activateButtonAccord(listSubCategoryBtn, accordDataTarget);
-            toogleAccordion(isTargetHide, accordTarget, subCategoryBtn);
-            ariaExpandedToogle(listSubCategoryBtn);
-            ariaHiddenToogle(listAccordSubCategory);
+                hideAccordContent(listAccordSubCategory, accordDataTarget)
+                activateButtonAccord(listSubCategoryBtn, accordDataTarget);
+                toogleAccordion(isTargetHide, accordTarget, subCategoryBtn);
+                ariaExpandedToogle(listSubCategoryBtn);
+                ariaHiddenToogle(listAccordSubCategory);
+            });
         });
-    });
-    
-    const formInputImg = document.querySelector('#form-input-image');
-    const dropAreaImg = document.querySelector('#drop-area-image');
-    const browseImgBtn = document.querySelector('#browse-img');
-    const uploadedImgWrapper = document.querySelector('.list-image-uploaded');
-    const uploadedImgItem = document.querySelector('.item-image-uploaded');
-    const noImageUploaded = document.querySelector('.item-no-image');
-    const invalidFeedback = document.querySelector('.invalid-feedback');
-    
-    browseImgBtn.addEventListener('click', () => formInputImg.click());
-    formInputImg.addEventListener('change', uploadImg);
-    
-    dropAreaImg.addEventListener('dragover', function(e) {
-        e.preventDefault();
-
-        dropAreaImg.classList.add('dragover');
-        browseImgBtn.classList.remove('z-20');
-    });
-
-    dropAreaImg.addEventListener('dragleave', function() {
-        dropAreaImg.classList.remove('dragover');
-        browseImgBtn.classList.add('z-20');
-    });
-
-    dropAreaImg.addEventListener('drop', function(e) {
-        e.preventDefault();
-
-        dropAreaImg.classList.remove('dragover');
-        browseImgBtn.classList.add('z-20');
         
-        formInputImg.files = e.dataTransfer.files;
-        uploadImg();
-    });
+        const formInputImg = document.querySelector('#form-input-image');
+        const dropAreaImg = document.querySelector('#drop-area-image');
+        const browseImgBtn = document.querySelector('#browse-img');
+        const uploadedImgWrapper = document.querySelector('.list-image-uploaded');
+        const uploadedImgItem = document.querySelector('.item-image-uploaded');
+        const noImageUploaded = document.querySelector('.item-no-image');
+        const invalidFeedback = document.querySelector('.invalid-feedback');
+        
+        browseImgBtn.addEventListener('click', () => formInputImg.click());
+        formInputImg.addEventListener('change', uploadImg);
+        
+        dropAreaImg.addEventListener('dragover', function(e) {
+            e.preventDefault();
+
+            dropAreaImg.classList.add('dragover');
+            browseImgBtn.classList.remove('z-20');
+        });
+
+        dropAreaImg.addEventListener('dragleave', function() {
+            dropAreaImg.classList.remove('dragover');
+            browseImgBtn.classList.add('z-20');
+        });
+
+        dropAreaImg.addEventListener('drop', function(e) {
+            e.preventDefault();
+
+            dropAreaImg.classList.remove('dragover');
+            browseImgBtn.classList.add('z-20');
+            
+            formInputImg.files = e.dataTransfer.files;
+            uploadImg();
+        });
+    }
 </script>
