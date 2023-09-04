@@ -74,7 +74,7 @@ class CategoryController extends Controller
         return response()->json(['data' => true], 200);
     }
 
-    protected function isDataFound(object $data) 
+    protected function isDataFound($data) 
     {
         if(!$data) {
             throw new HttpResponseException(response()->json([
