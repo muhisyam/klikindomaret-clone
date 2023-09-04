@@ -44,8 +44,8 @@
 <div class="item-input-group mb-4">
     <label for="form-select-status" class="block text-sm mb-1">Status</label>
     <select id="form-select-status" name="status" class="{{ array_key_exists('status', $error['errors']) ? 'is-invalid' : '' }}">
-        <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Tidak Aktif</option>
-        <option value="2" {{ old('status') == 2 ? 'selected' : '' }}>Aktif</option>
+        <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Tidak Aktif</option>
+        <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Aktif</option>
     </select>
     @if (array_key_exists('status', $error['errors']))
     <div class="invalid-feedback flex text-red-600 text-sm mt-1">
