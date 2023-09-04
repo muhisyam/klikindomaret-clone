@@ -6,13 +6,17 @@
         <div class="center-side relative text-[#0079c2]">
             <div class="greeting relative min-w-[135px] h-10 flex items-center bg-[#fbde7e] rounded-lg overflow-hidden py-1.5 px-6">
                 <div class="body">
+                    <p class="greet-text text-lg tracking-wide">Selamat <span class="time">Pagi</span>, <span class="name italic font-bold">Jordan!</span></p>
                     @if (session()->has('success'))
                     @php $message = session()->get('success') @endphp
                     <script>
-                        showNotification($message['title'], $message['message'])
+                        const title = "<?php echo $message['title']; ?>"
+                        const message = "<?php echo $message['message']; ?>"
+                        
+                        document.addEventListener('DOMContentLoaded', function() {
+                            showNotification(title, message)
+                        })
                     </script>
-                    @else
-                    <p class="greet-text text-lg tracking-wide">Selamat <span class="time">Pagi</span>, <span class="name italic font-bold">Jordan!</span></p>
                     @endif
                 </div>
             </div>
