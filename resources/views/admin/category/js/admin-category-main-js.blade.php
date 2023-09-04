@@ -107,7 +107,7 @@
                                     </div>
                                 </div>
                                 <div class="action">
-                                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage()" aria-label="Delete data image">
+                                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage(this)" aria-label="Delete data image" data-image-name="${imageName}">
                                         <i class="ri-delete-bin-6-line"></i>
                                     </button>
                                 </div>
@@ -133,10 +133,13 @@
         return uploadedImgWrapper.innerHTML = noImageUploaded;
     };
 
-    function deleteImage() { 
+    function deleteImage(e) { 
+        const title = "Berhasil Hapus Gambar"
+        const message = e.getAttribute('data-image-name');
+
         formInputImg.value = '';
         
-        showNotification();
+        showNotification(title, message);
         uploadImg();
     };
 
@@ -178,10 +181,10 @@
             });
         });
         
-        const formInputImg = document.querySelector('#form-input-image');
+        var formInputImg = document.querySelector('#form-input-image');
+        var uploadedImgWrapper = document.querySelector('.list-image-uploaded');
         const dropAreaImg = document.querySelector('#drop-area-image');
         const browseImgBtn = document.querySelector('#browse-img');
-        const uploadedImgWrapper = document.querySelector('.list-image-uploaded');
         const uploadedImgItem = document.querySelector('.item-image-uploaded');
         const noImageUploaded = document.querySelector('.item-no-image');
         const invalidFeedback = document.querySelector('.invalid-feedback');
