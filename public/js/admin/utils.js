@@ -16,15 +16,15 @@ let totalTime = 5;
 
 
 function showNotification(title, message) {
-    const isLongText = message.length > 27 ? ' animation-running' : '';
+    const isLongText = message.length > 25 ? ' animation-running' : '';
     const notificationParentClass = ['action-notification', 'flex', 'items-center', 'animate__animated', 'animate__bounceInRight'];
-    const timerClass = ['timer-notification', 'absolute', 'left-0', 'bottom-0', 'w-full', 'h-1', 'bg-[#0079c2]', 'transition-all', 'duration-[1001ms]', 'ease-linear'];
+    const timerClass = ['timer-notification', 'absolute', 'left-0', 'bottom-0', 'w-full', 'h-1', 'bg-[#0079c2]'];
 
     let notificationInner = `<div class="icon h-6 -ms-2 me-2"><i class="ri-delete-bin-6-fill"></i></div>
                                 <div class="info flex items-center text-sm">
                                     <h5 class="title capitalize me-1">${title}</h5>
                                     <div class="desc max-w-[175px] whitespace-nowrap overflow-hidden text-xs">
-                                        <p class="text relative${isLongText}" title="${message}">${message}</p>
+                                        <p class="text relative${isLongText}" title="${message}">"${message}"</p>
                                     </div>
                                 </div>
                                 <button type="button" onclick="closeNotification()" class="close h-6 rounded-md px-1 ms-2 -me-4 hover:bg-[#0079c2] hover:text-[#fbde7e]"><i class="ri-close-line"></i></button>`

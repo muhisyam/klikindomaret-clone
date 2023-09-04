@@ -86,6 +86,12 @@ body {
     cursor: default;
 }
 
+.timer-notification {
+    transition-property: all;
+    transition-timing-function: linear;
+    transition-duration: 1001ms;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
