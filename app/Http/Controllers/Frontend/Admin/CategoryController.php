@@ -50,22 +50,10 @@ class CategoryController extends Controller
         return view('admin.category.input-parent');
     }
 
-    
-    protected $variable;
-
     public function store(Request $request)
     {
-        // $param = [
-        //     'parent_id' => $request->parent_id,
-        //     'name' => $request->name,
-        //     'slug' => $request->slug,
-        //     'status' => $request->status,
-        //     'image' => $request->image,
-        // ];
-
         $param = $request->all();
-
-
+        
         $client = new Client();
         $url = static::apiUrl;
         
@@ -89,6 +77,56 @@ class CategoryController extends Controller
             $error = json_decode($response, true);
             
             return redirect()->route('categories.create')->with([ 'inputError' => $error ])->withInput();
+        }
+    }
+
+    public function edit(string $id)
+    {
+        $client = new Client();
+        $url = static::apiUrl . '/' . $id;
+
+        try {
+            $response = $client->request('GET', $url);
+            $content = $response->getBody()->getContents();
+            $data = json_decode($content, true);
+
+            return view('admin.category.input-parent', ['data' => $data['data']]);
+
+        } catch (ClientException $exception) {
+            $response = $exception->getResponse()->getBody()->getContents();
+            $error = json_decode($response, true);
+
+            // TODO: redirect to 404 not found
+        }
+    }
+
+    public function update(Request $request, string $id) 
+    {
+        $param = $request->all();
+        
+        $client = new Client();
+        $url = static::apiUrl . '/' . $id;
+        
+        try {
+            $response = $client->request('PUT', $url, [
+                'header' => ['Content-Type', 'application/json'],
+                'form_params' => $param,
+            ]);
+
+            $data = json_decode($response->getBody()->getContents(), true);
+            
+            return redirect()->route('categories.index')->with([
+                'success' => [
+                    'title' => 'Berhasil Update Kategori',
+                    'message' => $data['data']['name'],
+                ]
+            ]);
+
+        } catch (ClientException $exception) {
+            $response = $exception->getResponse()->getBody()->getContents();
+            $error = json_decode($response, true);
+            
+            return redirect()->route('categories.edit', ['category' => $id])->with([ 'inputError' => $error ])->withInput();
         }
     }
 }

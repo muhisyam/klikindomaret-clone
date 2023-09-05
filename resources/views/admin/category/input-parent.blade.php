@@ -56,9 +56,14 @@ Tambah Kategori
         </div>
     </section>
     <section class="form-input-wrapper">
-        <form action="{{ route('categories.store') }}" method="POST">
+        @php 
+            $route = Route::current()->uri == 'categories/{category}/edit' ? route('categories.update', ['category' => $data['id']]) : route('categories.store');
+            $error = session()->has('inputError') ? session()->get('inputError') : ['errors' => []];
+        @endphp
+        <form action="{{ $route }}" method="POST">
             @csrf
-            @php $error = session()->get('inputError') != null ? session()->get('inputError') : ['errors' => []] @endphp
+            @if (Route::current()->uri == 'categories/{category}/edit') @method('PUT') @endif
+            
             <div class="category-input-wrapper flex gap-4 mb-5">
                 <section class="left-side relative h-full w-2/5 border border-[#eee] rounded-xl overflow-auto p-4">
                     @include('admin.category.includes.input.image-input')
