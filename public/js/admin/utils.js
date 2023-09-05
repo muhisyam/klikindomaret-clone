@@ -23,7 +23,7 @@ function showNotification(title, message) {
     let notificationInner = `<div class="icon h-6 -ms-2 me-2"><i class="ri-delete-bin-6-fill"></i></div>
                                 <div class="info flex items-center text-sm">
                                     <h5 class="title capitalize me-1">${title}</h5>
-                                    <div class="desc max-w-[175px] whitespace-nowrap overflow-hidden text-xs">
+                                    <div class="desc max-w-[175px] font-bold whitespace-nowrap overflow-hidden">
                                         <p class="text relative${isLongText}" title="${message}">"${message}"</p>
                                     </div>
                                 </div>
