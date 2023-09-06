@@ -20,12 +20,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"  rel="stylesheet" />
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin/utils.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/components.css') }}" rel="stylesheet">
 </head>
 <body>
     <aside class="sidebar w-1/6 h-screen p-4">
         @include('admin.components.sidebar')
     </aside>
-    <section class="w-5/6 rounded-s-3xl bg-white h-screen p-8">
+    <section class="relative w-5/6 rounded-s-3xl bg-white h-screen p-8">
+        @include('admin.components.modal-delete')
+        @include('admin.components.overlay')
+
         <header class="header-content-wrapper mb-6">
             @include('admin.components.header', ['data' => $dataHeader])
         </header>
@@ -42,6 +46,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script src="{{ asset('js/admin/app.js') }}"></script>
     <script src="{{ asset('js/admin/utils.js') }}"></script>
+    <script src="{{ asset('js/components.js') }}"></script>
     @yield('scripts')
 </body>
 </html>
