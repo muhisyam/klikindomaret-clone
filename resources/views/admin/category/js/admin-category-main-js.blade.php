@@ -162,6 +162,24 @@
         });
     });
 
+    const modalTarget = document.querySelector('.modal-delete');
+    const btnCloseTop = modalTarget.querySelector('#header-button-close');
+    const btnCloseBottom = modalTarget.querySelector('#footer-button-close');
+    const btnDeleteCategory = document.querySelectorAll('button.action-del');
+    const overlay = document.querySelector('#bg-overlay');
+
+    btnDeleteCategory.forEach(elBtn => {
+        elBtn.addEventListener('click', function () {
+            const cobat = elBtn.getAttribute('data-category-name');
+            
+            openModal(modalTarget, overlay);
+        });
+    });
+
+    [btnCloseTop, btnCloseBottom, overlay].forEach(el => {
+        el.addEventListener('click', () => closeModal(modalTarget, overlay));
+    });
+
     // Input subcategory page
     if (window.location.href.indexOf("create") > -1) {
         const listSubCategoryBtn = document.querySelectorAll('.accordion-category-heading button');

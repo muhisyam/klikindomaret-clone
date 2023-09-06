@@ -129,4 +129,39 @@ class CategoryController extends Controller
             return redirect()->route('categories.edit', ['category' => $id])->with([ 'inputError' => $error ])->withInput();
         }
     }
+
+    public function destroy(string $id)
+    {
+        $client = new Client();
+        $url = static::apiUrl . '/' . $id;
+        
+        try {
+            $categoryName = $this->getSpesificData($id, 'name');
+            $response = $client->request('delete', $url);
+            
+            return redirect()->route('categories.index')->with([
+                'success' => [
+                    'title' => 'Berhasil Hapus Kategori',
+                    'message' => $categoryName,
+                ]
+            ]);
+
+        } catch (ClientException $exception) {
+            $response = $exception->getResponse()->getBody()->getContents();
+            $error = json_decode($response, true);
+            
+            // TODO: redirect to 404 not found
+        }
+    }
+
+    public function getSpesificData(string $id, string $key) 
+    {
+        $client = new Client();
+        $url = static::apiUrl . '/' . $id;
+
+        $response = $client->request('GET', $url);
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        return $data['data'][$key];
+    }
 }

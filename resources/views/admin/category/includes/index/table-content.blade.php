@@ -31,9 +31,14 @@
                     <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="action-edit bg-[#f5f5f5] text-[#999] rounded p-1 px-2 hover:text-[#0079c2] animation animation-bounceInRight animation-delay-200">
                         <div class="icon h-6 pt-0.5"><i class="ri-edit-box-fill"></i></div>
                     </a>
-                    <button class="action-del bg-[#f5f5f5] text-[#999] rounded p-1 px-2 hover:text-[#0079c2] animation animation-bounceInRight">
-                        <div class="icon h-6 pt-0.5"><i class="ri-delete-bin-6-fill"></i></div>
-                    </button>
+                    <form action="{{ route('categories.destroy', ['category' => $category['id']]) }}" method="POST">
+                        @csrf
+                        @method('delete')
+
+                        <button type="submit" class="bg-[#f5f5f5] text-[#999] rounded p-1 px-2 hover:text-[#0079c2] animation animation-bounceInRight" data-category-name="{{ $category['name'] }}">
+                            <div class="icon h-6 pt-0.5"><i class="ri-delete-bin-6-fill"></i></div>
+                        </button>
+                    </form>
                 </div>
             </div>
             {{-- TODO: Add tooltip --}}
