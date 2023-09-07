@@ -26,21 +26,8 @@
             <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $category['slug'] }}">
                 <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
             </button>
-            <div id="{{ $category['slug'] }}" class="absolute top-0 right-9 hidden">
-                <div class="w-24 flex justify-end gap-1 overflow-hidden">
-                    <a href="{{ route('categories.edit', ['category' => $category['id']]) }}" class="action-edit bg-[#f5f5f5] text-[#999] rounded p-1 px-2 hover:text-[#0079c2] animation animation-bounceInRight animation-delay-200">
-                        <div class="icon h-6 pt-0.5"><i class="ri-edit-box-fill"></i></div>
-                    </a>
-                    <form action="{{ route('categories.destroy', ['category' => $category['id']]) }}" method="POST">
-                        @csrf
-                        @method('delete')
-
-                        <button type="submit" class="bg-[#f5f5f5] text-[#999] rounded p-1 px-2 hover:text-[#0079c2] animation animation-bounceInRight" data-category-name="{{ $category['name'] }}">
-                            <div class="icon h-6 pt-0.5"><i class="ri-delete-bin-6-fill"></i></div>
-                        </button>
-                    </form>
-                </div>
-            </div>
+            @livewire('admin.category.table-button-action', ['category' => $category])
+            
             {{-- TODO: Add tooltip --}}
         </div>
     </td>

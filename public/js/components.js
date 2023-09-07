@@ -1,9 +1,9 @@
 function openModal(modal, overlay) {
-    modal.classList.add('show');
+    modal.classList.contains('show') ? '' : modal.classList.add('show');
     overlay.classList.remove('hidden');
 }
 
 function closeModal(modal) {
-    modal.classList.remove('show');
+    modal.classList.contains('show') ? modal.classList.remove('show') :'';
     overlay.classList.add('hidden');
 }

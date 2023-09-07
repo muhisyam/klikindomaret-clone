@@ -21,13 +21,13 @@
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin/utils.css') }}" rel="stylesheet">
     <link href="{{ asset('css/components.css') }}" rel="stylesheet">
+    @livewireStyles
 </head>
 <body>
     <aside class="sidebar w-1/6 h-screen p-4">
         @include('admin.components.sidebar')
     </aside>
     <section class="relative w-5/6 rounded-s-3xl bg-white h-screen p-8">
-        @include('admin.components.modal-delete')
         @include('admin.components.overlay')
 
         <header class="header-content-wrapper mb-6">
@@ -48,5 +48,6 @@
     <script src="{{ asset('js/admin/utils.js') }}"></script>
     <script src="{{ asset('js/components.js') }}"></script>
     @yield('scripts')
+    @livewireScripts
 </body>
 </html>

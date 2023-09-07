@@ -157,11 +157,12 @@ Input Kategori Induk
             </thead>
             <tbody class="text-sm">
                 @foreach ($data['data'] as $category)
-                    @include('admin.category.includes.index.table-content')    
+                @include('admin.category.includes.index.table-content')    
                 @endforeach
             </tbody>
         </table>
     </section>
+    @livewire('admin.components.modal-delete')
 </div>
 @endsection
 
