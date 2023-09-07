@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Frontend\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Frontend\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontendController;

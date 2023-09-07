@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Frontend\Admin;
+namespace App\Http\Controllers\Admin;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
