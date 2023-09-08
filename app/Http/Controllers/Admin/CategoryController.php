@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\PaginationService;
 use App\Http\Controllers\Controller;
@@ -52,7 +53,23 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $param = $request->all();
+        $request = $request->all();
+
+        // pindah ke action / service / job
+        foreach ($request as $key => $value) {
+            if (!(Str::contains($key, 'token') || Str::contains($key, 'image'))) {
+                $param[] = [
+                    'name' => $key,
+                    'contents' => $value,
+                ];
+            }
+        }
+
+        $param[] = [
+            'name'  => 'image',
+            'contents' => fopen($request['image']->path(), 'r'),
+            'filename' => $request['image']->getClientOriginalName(), 
+        ];
         
         $client = new Client();
         $url = static::apiUrl;
@@ -60,11 +77,12 @@ class CategoryController extends Controller
         try {
             $response = $client->request('POST', $url, [
                 'header' => ['Content-Type', 'application/json'],
-                'form_params' => $param,
+                'multipart' => $param,
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);
 
+            dd($data);
             return redirect()->route('categories.index')->with([
                 'success' => [
                     'title' => 'Berhasil Tambah Kategori',
@@ -75,6 +93,8 @@ class CategoryController extends Controller
         } catch (ClientException $exception) {
             $response = $exception->getResponse()->getBody()->getContents();
             $error = json_decode($response, true);
+
+            dd($response);
             
             return redirect()->route('categories.create')->with([ 'inputError' => $error ])->withInput();
         }

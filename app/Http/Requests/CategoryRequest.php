@@ -23,12 +23,14 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        // TODO: foreach validation rules
         if ($this->isMethod('post')) {
             return [
                 'parent_id' => ['required', 'numeric'],
                 'name' => ['required', 'max:100'],
                 'slug' => ['required', 'unique:categories', 'max:200'],
                 'status' => ['required'],
+                'image' => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
             ];
         }
 
@@ -38,6 +40,7 @@ class CategoryRequest extends FormRequest
                 'name' => ['required', 'max:100'],
                 'slug' => ['required', 'max:200'],
                 'status' => ['required'],
+                'image' => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
             ];
         }
     }

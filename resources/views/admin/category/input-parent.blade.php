@@ -60,7 +60,7 @@ Tambah Kategori
             $route = Route::current()->uri == 'categories/{category}/edit' ? route('categories.update', ['category' => $data['id']]) : route('categories.store');
             $error = session()->has('inputError') ? session()->get('inputError') : ['errors' => []];
         @endphp
-        <form action="{{ $route }}" method="POST">
+        <form action="{{ $route }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if (Route::current()->uri == 'categories/{category}/edit') @method('PUT') @endif
             

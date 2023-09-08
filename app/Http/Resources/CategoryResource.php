@@ -20,6 +20,8 @@ class CategoryResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'status' => $this->status,
+            // diganti time ext
+            'image' => $this->image->getClientOriginalName(),
             'childs_count' => $this->childs_count,
             'childs' => CategoryResource::collection($this->whenLoaded('childs')),
         ];
