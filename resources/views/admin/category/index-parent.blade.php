@@ -162,7 +162,6 @@ Input Kategori Induk
             </tbody>
         </table>
     </section>
-    @livewire('admin.components.modal-delete')
 </div>
 @endsection
 

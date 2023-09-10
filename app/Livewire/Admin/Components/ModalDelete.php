@@ -7,11 +7,8 @@ use Livewire\Attributes\On;
 
 class ModalDelete extends Component
 {
-    public $category = [
-        'id' => 0, 
-        'name' => '',
-    ];
-
+    public $category = [];
+    
     public $showModal = '';
 
     #[On('modal-info')] 

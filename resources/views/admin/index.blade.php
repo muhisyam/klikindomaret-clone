@@ -29,6 +29,7 @@
     </aside>
     <section class="relative w-5/6 rounded-s-3xl bg-white h-screen p-8">
         @include('admin.components.overlay')
+        @livewire('admin.components.modal-delete')
 
         <header class="header-content-wrapper mb-6">
             @include('admin.components.header', ['data' => $dataHeader])
