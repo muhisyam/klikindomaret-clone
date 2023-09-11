@@ -23,7 +23,6 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        // TODO: foreach validation rules
         if ($this->isMethod('post')) {
             return [
                 'parent_id' => ['required', 'numeric'],

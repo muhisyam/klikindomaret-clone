@@ -15,6 +15,7 @@
         </p>
     </div>
 </div>
+@include('admin.components.validation-message', ['field' => 'image', 'validation' => 'image'])
 <div class="list-image-uploaded flex flex-col gap-2">
     <div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
         <div class="image-info-wrapper w-11/12 flex items-center">
