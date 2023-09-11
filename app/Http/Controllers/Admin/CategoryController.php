@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\CreateMultipartAction;
 use GuzzleHttp\Client;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -51,28 +52,11 @@ class CategoryController extends Controller
         return view('admin.category.input-parent');
     }
 
-    public function store(Request $request)
-    {
-        $request = $request->all();
-
-        // pindah ke action / service / job
-        foreach ($request as $key => $value) {
-            if (!(Str::contains($key, 'token') || Str::contains($key, 'image'))) {
-                $param[] = [
-                    'name' => $key,
-                    'contents' => $value,
-                ];
-            }
-        }
-
-        $param[] = [
-            'name'  => 'image',
-            'contents' => fopen($request['image']->path(), 'r'),
-            'filename' => $request['image']->getClientOriginalName(), 
-        ];
-        
+    public function store(CreateMultipartAction $action, Request $request)
+    {   
         $client = new Client();
         $url = static::apiUrl;
+        $param = $action->handle($request->all());
         
         try {
             $response = $client->request('POST', $url, [
@@ -82,7 +66,6 @@ class CategoryController extends Controller
 
             $data = json_decode($response->getBody()->getContents(), true);
 
-            dd($data);
             return redirect()->route('categories.index')->with([
                 'success' => [
                     'title' => 'Berhasil Tambah Kategori',
@@ -93,8 +76,6 @@ class CategoryController extends Controller
         } catch (ClientException $exception) {
             $response = $exception->getResponse()->getBody()->getContents();
             $error = json_decode($response, true);
-
-            dd($response);
             
             return redirect()->route('categories.create')->with([ 'inputError' => $error ])->withInput();
         }
