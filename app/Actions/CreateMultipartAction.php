@@ -11,7 +11,7 @@ class CreateMultipartAction
         $param = [];
 
         foreach ($formRequest as $key => $value) {
-            if (!(Str::contains($key, 'token') || Str::contains($key, 'method') || Str::contains($key, 'image'))) {
+            if (!(Str::contains($key, 'token') || Str::contains($key, 'image'))) {
                 $param[] = [
                     'name' => $key,
                     'contents' => $value,

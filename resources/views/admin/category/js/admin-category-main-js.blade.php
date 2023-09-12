@@ -181,7 +181,7 @@
     });
 
     // Input subcategory page
-    if (window.location.href.indexOf("create") > -1) {
+    if (window.location.href.indexOf("create") || window.location.href.indexOf("edit")) {
         const listSubCategoryBtn = document.querySelectorAll('.accordion-category-heading button');
 
         listSubCategoryBtn.forEach(subCategoryBtn => {

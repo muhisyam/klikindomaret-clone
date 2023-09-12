@@ -101,17 +101,17 @@ class CategoryController extends Controller
         }
     }
 
-    public function update(Request $request, string $id) 
+    // TODO: error update function cant update
+    public function update(CreateMultipartAction $action, Request $request, string $id) 
     {
-        $param = $request->all();
-        
         $client = new Client();
         $url = static::apiUrl . '/' . $id;
+        $param = $action->handle($request->all());
         
         try {
-            $response = $client->request('PUT', $url, [
+            $response = $client->request('POST', $url, [
                 'header' => ['Content-Type', 'application/json'],
-                'form_params' => $param,
+                'multipart' => $param,
             ]);
 
             $data = json_decode($response->getBody()->getContents(), true);
