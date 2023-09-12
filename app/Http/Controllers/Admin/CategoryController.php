@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Actions\CreateMultipartAction;
+use App\Actions\GetSpesificFieldAction;
 use GuzzleHttp\Client;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\PaginationService;
 use App\Http\Controllers\Controller;
@@ -131,13 +131,13 @@ class CategoryController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(GetSpesificFieldAction $action, string $id)
     {
         $client = new Client();
         $url = static::apiUrl . '/' . $id;
         
         try {
-            $categoryName = $this->getSpesificData($id, 'name');
+            $categoryName = $action->handle(static::apiUrl, $id, 'name');
             $response = $client->request('delete', $url);
             
             return redirect()->route('categories.index')->with([
@@ -153,16 +153,5 @@ class CategoryController extends Controller
             
             // TODO: redirect to 404 not found
         }
-    }
-
-    public function getSpesificData(string $id, string $key) 
-    {
-        $client = new Client();
-        $url = static::apiUrl . '/' . $id;
-
-        $response = $client->request('GET', $url);
-        $data = json_decode($response->getBody()->getContents(), true);
-
-        return $data['data'][$key];
     }
 }
