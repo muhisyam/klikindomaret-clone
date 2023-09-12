@@ -10,10 +10,12 @@ class ModalDelete extends Component
     public $category = [];
     
     public $showModal = '';
+    public $checkbox = false;
 
     #[On('modal-info')] 
     public function addModalInfo($category)
     {
+        $this->reset('checkbox');
         $this->category = $category;
         $this->showModal = 'show';
     }
@@ -21,6 +23,7 @@ class ModalDelete extends Component
     public function closeModal()
     {
         $this->showModal = '';
+        $this->checkbox = false;
     }
     
     public function render()

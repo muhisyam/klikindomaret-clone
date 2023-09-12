@@ -16,24 +16,30 @@
             <figure class="media w-52">
                 <img src="{{ url('https://img.freepik.com/premium-vector/flat-design-no-data-illustration_23-2150527115.jpg?w=740') }}" alt="">
             </figure>
-            <h2 class="text-lg font-bold mb-2">Delete Category?</h2>
+            <h2 class="text-lg font-bold mb-2">Delete <span class="text-red-700">"{{ !empty($category) ? $category['name'] : '' }}"</span> Category?</h2>
             <div class="text-sm text-center">
-                <p>Are you sure want to delete <strong>"{{ !empty($category) ? $category['name'] : '' }}"</strong>?</p>
-                <p>You can't undo this action.</p>
+                <p>Are you sure want to delete? You can't undo this action.</p>
+                <div class="input-group flex items-center justify-center gap-1">
+                    <input id="form-input-delete-checkbox" type="checkbox" wire:model.live="checkbox">
+                    <label for="form-input-delete-checkbox">Sure, i want to delete this.</label>
+                </div>
             </div>
         </section>
         <section class="footer-section pt-2 pb-6">
             <div class="flex justify-center gap-2">
-                <button id="footer-button-close" class="w-40 border border-[#0079C2] text-[#0079C2] rounded py-2 hover:bg-[#0079c2] hover:text-white" wire:click="closeModal">Close</button>
-                <div class="w-40 bg-[#C33] border border-[#C3] rounded py-1.5" wire:loading>
-                    <div class="loader-spin mx-auto"></div>
-                </div>
-                <form action="{{ route('categories.destroy', ['category' => !empty($category) ? $category['id'] : 0]) }}" method="POST" wire:loading.remove>
+                @if ($checkbox)
+                <form action="{{ route('categories.destroy', ['category' => !empty($category) ? $category['id'] : 0]) }}" method="POST">
                     @csrf
                     @method('delete')
-
+    
                     <button type="submit" class="w-40 bg-[#C33] border border-[#C33] text-white rounded py-2">Delete</button>
                 </form>
+                @else
+                <div class="w-40 bg-[#c93636] border border-[#C3] rounded opacity-40 py-1.5">
+                    <div class="loader-spin mx-auto"></div>
+                </div>
+                @endif
+                <button id="footer-button-close" class="w-40 border border-[#0079C2] text-[#0079C2] rounded py-2 hover:bg-[#0079c2] hover:text-white" wire:click="closeModal">Close</button>
             </div>
         </section>
     </div>
