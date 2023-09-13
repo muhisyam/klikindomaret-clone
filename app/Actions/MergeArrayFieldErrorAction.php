@@ -12,6 +12,8 @@ class MergeArrayFieldErrorAction
      */
     public function execute(Array $dataErrors, string $searchNeedle): Array
     {
+        $newDataError = null;
+        
         foreach ($dataErrors as $key => $value) {
             $newDataMessage = [];
 
