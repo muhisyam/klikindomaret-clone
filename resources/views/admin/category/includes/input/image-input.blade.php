@@ -15,8 +15,28 @@
         </p>
     </div>
 </div>
-@include('admin.components.validation-message', ['field' => 'image', 'validation' => 'image'])
 <div class="list-image-uploaded flex flex-col gap-2">
+    @include('admin.components.validation-message', ['field' => 'image', 'validation' => 'image'])
+    @isset($data['image'])
+    <div class="item-image-uploaded">
+        <div class="item-image-wrapper flex items-center justify-between border border-[#eee] rounded p-2">
+            <div class="image-info-wrapper w-11/12 flex items-center">
+                <figure class="media shrink-0 me-2">
+                    <img class="h-12" src="{{ asset('img/uploads/categories/' . $data['image']) }}" alt="Category Image">
+                </figure>
+                <div class="info">
+                    <p class="text font-bold line-clamp-1 text-ellipsis">{{ $data['image'] }}</p>
+                    <p class="size text-xs font-light">142 KB</p>
+                </div>
+            </div>
+            <div class="action">
+                <button class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" aria-label="Delete data image">
+                    <i class="ri-delete-bin-6-line"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    @else
     <div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
         <div class="image-info-wrapper w-11/12 flex items-center">
             <div class="media h-12 w-12 grid place-items-center shrink-0 bg-[#fbf0d0] text-[#0079c2] text-2xl text-center rounded me-2">
@@ -27,4 +47,5 @@
             </div>
         </div>
     </div>
+    @endisset
 </div>
