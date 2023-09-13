@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 class CreateMultipartAction
 {
-    public function handle(Array $formRequest): Array
+    public function execute(Array $formRequest): Array
     {
         $param = [];
 
