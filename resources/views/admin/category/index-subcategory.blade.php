@@ -159,7 +159,7 @@ Input Kategori
                         <div id="{{ $categoryLvl2['slug'] }}" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button" aria-hidden="true">
                             <table class="w-full min-h-0">
                                 <tbody class="relative">
-                                    @foreach ($categoryLvl2['childs'] as $categoryLvl3)
+                                    @foreach ($categoryLvl2['children'] as $categoryLvl3)
                                     @include('admin.category.includes.index.nested-table-content-level-3')   
                                     @endforeach
                                     <tr class="border-l-custom absolute left-[25px] top-0 border-l border-[#e5e7eb]"></tr>

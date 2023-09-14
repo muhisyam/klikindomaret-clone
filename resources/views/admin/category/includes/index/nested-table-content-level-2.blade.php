@@ -8,7 +8,7 @@
 <td class="py-2 px-4 w-auto">
     <div class="accordion-category-info flex items-center">
         <div class="label me-1">{{ $categoryLvl2['name'] }}</div>
-        <div class="product-count">(<span>{{ $categoryLvl2['childs_count'] }}</span>)</div>
+        <div class="product-count">(<span>{{ $categoryLvl2['children_count'] }}</span>)</div>
     </div>
 </td>
 <td class="py-2 px-4 w-[210px]">154 Produk</td>

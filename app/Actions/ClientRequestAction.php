@@ -25,7 +25,7 @@ class ClientRequestAction
     {
         $options = [];
 
-        if (!empty($param)) {
+        if (!is_null($param)) {
             $options = [
                 'header' => ['Content-Type', 'application/json'],
                 'multipart' => $param,

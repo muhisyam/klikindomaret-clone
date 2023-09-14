@@ -19,12 +19,12 @@ class Category extends Model
         'image',
     ];
     
-    public function parents()
+    public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function childs()
+    public function children()
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
