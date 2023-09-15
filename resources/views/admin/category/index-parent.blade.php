@@ -165,6 +165,6 @@ Input Kategori Induk
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     @include('admin.category.js.admin-category-main-js')
-@endsection
+@endpush

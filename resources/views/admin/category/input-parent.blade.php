@@ -13,12 +13,12 @@ Tambah Kategori
                 [
                     'info' => 'first',
                     'label' => 'Kategori', 
-                    'link' => 'category'
+                    'link' => 'categories'
                 ],
                 [
                     'info' => 'next',
                     'label' => 'Kategori Induk', 
-                    'link' => 'category/input'
+                    'link' => 'categories/create'
                 ],
                 [
                     'info' => 'last',
@@ -32,7 +32,7 @@ Tambah Kategori
                 'label' => 'Kembali'
             ]
         ]
-    @endphp 
+    @endphp
     <section class="progress-info-wrapper border border-[#eee] rounded-xl overflow-hidden mb-4">
         <div class="progress-bar-wrapper flex gap-0.5">
             <div class="h-2 -skew-x-[24deg] w-full bg-[#f9c828]"></div>
@@ -59,6 +59,7 @@ Tambah Kategori
         @php 
             $route = Route::current()->uri == 'categories/{category}/edit' ? route('categories.update', ['category' => $data['id']]) : route('categories.store');
             $error = session()->has('inputError') ? session()->get('inputError') : ['errors' => []];
+            $options = isset($data) ? array_merge(['error' => $error], ['data' => $data]) : ['error' => $error];
         @endphp
         <form action="{{ $route }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -69,7 +70,7 @@ Tambah Kategori
                     @include('admin.category.includes.input.image-input')
                 </section>
                 <section class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">
-                    @include('admin.category.includes.input.form-input')
+                    @livewire('admin.category.form-input', $options)
                 </section>
             </div>
             <div class="form-button text-right">

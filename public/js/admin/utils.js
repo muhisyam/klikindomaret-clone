@@ -1,4 +1,4 @@
-function toObjectHtml(elClass, elInner = null) {
+function toObjectHTML(elClass, elInner = null) {
     const newHtmlObject = document.createElement('div');
 
     newHtmlObject.classList.add(...elClass);
@@ -38,8 +38,8 @@ function showNotification(title, message) {
     notificationElement ? notificationElement.remove() : '';
     timerNotificationBar ? timerNotificationBar.remove() : '';
     
-    notificationElement = toObjectHtml(notificationParentClass, notificationInner);
-    timerNotificationBar = toObjectHtml(timerClass);
+    notificationElement = toObjectHTML(notificationParentClass, notificationInner);
+    timerNotificationBar = toObjectHTML(timerClass);
 
     greetingBodyWrapper.appendChild(notificationElement);
     greetingBodyWrapper.insertAdjacentElement("afterend", timerNotificationBar);

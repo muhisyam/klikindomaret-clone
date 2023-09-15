@@ -21,7 +21,6 @@
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin/utils.css') }}" rel="stylesheet">
     <link href="{{ asset('css/components.css') }}" rel="stylesheet">
-    @livewireStyles
 </head>
 <body>
     <aside class="sidebar w-1/6 h-screen p-4">
@@ -49,6 +48,6 @@
     <script src="{{ asset('js/admin/utils.js') }}"></script>
     <script src="{{ asset('js/components.js') }}"></script>
     @yield('scripts')
-    @livewireScripts
+    @stack('scripts')
 </body>
 </html>

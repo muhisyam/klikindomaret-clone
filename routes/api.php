@@ -23,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('users', UserController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::get('categories/sub/{category}', [CategoryController::class, 'subIndex'])->name('category.subIndex');
+Route::get('categories/query/{category}', [CategoryController::class, 'selectQuery'])->name('category.selectQuery');

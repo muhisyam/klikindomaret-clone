@@ -21,7 +21,7 @@ class CategoryController extends Controller
     public function index(): JsonResource
     {
         $categories = Category::where('parent_id', '0')
-            ->withCount('childs')
+            ->withCount('children')
             ->paginate(10);
 
         return CategoryResource::collection($categories);
@@ -29,10 +29,10 @@ class CategoryController extends Controller
 
     public function subIndex(string $slug): JsonResource
     {   
-        $sad = Category::where('slug', $slug)->first();
-        $categories = Category::where('parent_id', $sad->id)
-            ->with('childs')
-            ->withCount('childs')
+        $parent = Category::where('slug', $slug)->first();
+        $categories = Category::where('parent_id', $parent->id)
+            ->with('children')
+            ->withCount('children')
             ->paginate(5);
 
         return CategoryResource::collection($categories);
@@ -42,7 +42,11 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
         $category = new Category($data);
-        $category->image = $this->imageService->storeImage($request, 'categories');
+        
+        if ($request->hasFile('image')) {
+            $category->image = $this->imageService->storeImage($request, 'categories');
+        }
+
         $category->save();
 
         return new CategoryResource($category);
@@ -61,7 +65,10 @@ class CategoryController extends Controller
         $data = $request->validated();
         $this->imageService->findImage($category, 'categories');
         $category->fill($data);
-        $category->image = $this->imageService->storeImage($request, 'categories');
+
+        if ($request->hasFile('image')) {
+            $category->image = $this->imageService->storeImage($request, 'categories');
+        }
         
         $category->save();
 
@@ -77,6 +84,17 @@ class CategoryController extends Controller
         $category->delete();
 
         return response()->json(['data' => $categoryName], 200);
+    }
+
+    public function selectQuery(bool $isChildren)
+    {
+        $categories = Category::where('parent_id', '0')
+            ->when($isChildren, function ($query) {
+                $query->with('children');
+            })
+            ->get();
+
+        return CategoryResource::collection($categories);
     }
     
     /**
