@@ -12,20 +12,26 @@
         <label for="form-select-parent" class="text-sm mb-1">Induk Kategori</label>
         <span class="!absolute -top-1 inline-flex loader-spin ms-1" wire:loading></span>
         <select id="form-select-parent" name="parent_id" class="{{ array_key_exists('parent_id', $error['errors']) ? 'is-invalid' : '' }}" value="{{ isset($data) ? $data['parent_id'] : old('parent_id') }}" wire:loading.attr="disabled">
-            {{-- TODO: display data parent id --}}
+            @isset ($data)
+            @if (is_null($data['parent']))
+                <option value="0">Kategori Induk</option>
+            @else
+                <option value="{{ $data['parent_id'] }}">{{ $data['parent']['name'] }}</option>
+            @endif
+            @endisset
             <option></option>
         </select>
         @include('admin.components.validation-message', ['field' => 'parent_id', 'validation' => 'form'])
     </div>
     <div class="item-input-group mb-4">
         <label for="form-input-first-name" class="block text-sm mb-1">Nama Kategori</label>
-        <input id="form-input-first-name" type="text" name="name" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('name', $error['errors']) ? 'is-invalid' : '' }}" value="{{ isset($data) ? $data['name'] : old('name') }}">
+        <input id="form-input-first-name" type="text" name="name" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('name', $error['errors']) ? 'is-invalid' : '' }}" wire:model.live="inputName">
         @include('admin.components.validation-message', ['field' => 'name', 'validation' => 'form'])
     </div>
     {{-- TODO: auto slug generate --}}
     <div class="item-input-group mb-4">
         <label for="form-input-slug" class="block text-sm mb-1">Slug</label>
-        <input id="form-input-slug" type="text" name="slug" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('slug', $error['errors']) ? 'is-invalid' : '' }}" value="{{ isset($data) ? $data['slug'] : old('slug') }}">
+        <input id="form-input-slug" type="text" name="slug" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('slug', $error['errors']) ? 'is-invalid' : '' }}" wire:model="inputSlug">
         @include('admin.components.validation-message', ['field' => 'slug', 'validation' => 'form'])
     </div>
     <div class="item-input-group mb-4" wire:ignore>

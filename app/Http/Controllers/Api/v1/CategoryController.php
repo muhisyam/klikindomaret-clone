@@ -28,8 +28,8 @@ class CategoryController extends Controller
     }
 
     public function subIndex(string $slug): JsonResource
-    {   
-        $parent = Category::where('slug', $slug)->first();
+    {  
+        $parent = $this->findData('slug', $slug);
         $categories = Category::where('parent_id', $parent->id)
             ->with('children')
             ->withCount('children')
@@ -54,14 +54,14 @@ class CategoryController extends Controller
 
     public function show(string $id): CategoryResource
     {
-        $category = $this->findData($id);
+        $category = $this->findData('id', $id, true);
 
         return new CategoryResource($category);
     }
 
     public function update(CategoryRequest $request, int $id): CategoryResource
     {
-        $category = $this->findData($id);
+        $category = $this->findData('id', $id);
         $data = $request->validated();
         $this->imageService->findImage($category, 'categories');
         $category->fill($data);
@@ -77,7 +77,7 @@ class CategoryController extends Controller
 
     public function destroy(int $id): JsonResponse
     {
-        $category = $this->findData($id);
+        $category = $this->findData('id', $id);
         $categoryName = ['name' => $category->name];
         $this->imageService->findImage($category, 'categories');
 
@@ -98,12 +98,16 @@ class CategoryController extends Controller
     }
     
     /**
-     * Find data in db and return data if exists or throw exception if not found
+     * Find data by spesific column in db and return data if exists or throw exception if not found
      */
-    public function findData(string $id): Category
+    public function findData(string $column, mixed $value, bool $withParent = false, string $operation = '='): Category
     {
         try {
-            return Category::findOrFail($id);
+            return Category::when($withParent, function ($query) {
+                $query->with('parent');
+            })
+            ->where($column, $operation, $value)
+            ->firstOrFail();
 
         } catch (ModelNotFoundException $th) {
             throw new HttpResponseException(response()->json([

@@ -59,7 +59,14 @@ Tambah Kategori
         @php 
             $route = Route::current()->uri == 'categories/{category}/edit' ? route('categories.update', ['category' => $data['id']]) : route('categories.store');
             $error = session()->has('inputError') ? session()->get('inputError') : ['errors' => []];
-            $options = isset($data) ? array_merge(['error' => $error], ['data' => $data]) : ['error' => $error];
+            $options = [
+                'error' => $error, 
+                'old' => old(),
+            ];
+
+            if (isset($data)) {
+                $options = array_merge($options, ['data' => $data]);
+            }
         @endphp
         <form action="{{ $route }}" method="POST" enctype="multipart/form-data">
             @csrf
