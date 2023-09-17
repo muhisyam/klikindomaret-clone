@@ -20,7 +20,7 @@ class CategoryController extends Controller
 
     public function index(): JsonResource
     {
-        $categories = Category::where('parent_id', '0')
+        $categories = Category::where('parent_id', null)
             ->withCount('children')
             ->paginate(10);
 
@@ -68,6 +68,8 @@ class CategoryController extends Controller
 
         if ($request->hasFile('image')) {
             $category->image = $this->imageService->storeImage($request, 'categories');
+            // TODO: add to original name
+            $category->image = $this->imageService->storeImage($request, 'categories');
         }
         
         $category->save();
@@ -88,7 +90,7 @@ class CategoryController extends Controller
 
     public function selectQuery(bool $isChildren)
     {
-        $categories = Category::where('parent_id', '0')
+        $categories = Category::where('parent_id', null)
             ->when($isChildren, function ($query) {
                 $query->with('children');
             })
