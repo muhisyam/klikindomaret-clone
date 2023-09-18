@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Actions\IsCategoryParentAction;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
@@ -16,6 +17,7 @@ class CategoryController extends Controller
 {
     public function __construct(
         protected ImageService $imageService,
+        protected IsCategoryParentAction $isParentAction,
     ) {}
 
     public function index(): JsonResource
@@ -45,6 +47,7 @@ class CategoryController extends Controller
         
         if ($request->hasFile('image')) {
             $category->image = $this->imageService->storeImage($request, 'categories');
+            $category->original_image_name = $this->imageService->storeImageName($request);
         }
 
         $category->save();
@@ -63,13 +66,14 @@ class CategoryController extends Controller
     {
         $category = $this->findData('id', $id);
         $data = $request->validated();
+        $data['parent_id'] = $this->isParentAction->handle($data['parent_id']);
+        
         $this->imageService->findImage($category, 'categories');
         $category->fill($data);
 
         if ($request->hasFile('image')) {
             $category->image = $this->imageService->storeImage($request, 'categories');
-            // TODO: add to original name
-            $category->image = $this->imageService->storeImage($request, 'categories');
+            $category->original_image_name = $this->imageService->storeImageName($request);
         }
         
         $category->save();

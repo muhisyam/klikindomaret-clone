@@ -21,11 +21,11 @@ class ClientRequestAction
      * @param string|UriInterface $uri     URI object or string.
      * @param array               $param   Parameter from Request. See \GuzzleHttp\RequestOptions.
      */
-    public function execute(string $method, string $uri, array $param = null): array
+    public function execute(string $method, string $uri, array $param = []): array
     {
         $options = [];
 
-        if (!is_null($param)) {
+        if (!empty($param)) {
             $options = [
                 'header' => ['Content-Type', 'application/json'],
                 'multipart' => $param,
