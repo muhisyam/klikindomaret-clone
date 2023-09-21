@@ -22,6 +22,7 @@ class CategoryResource extends JsonResource
             'slug' => $this->slug,
             'status' => $this->status,
             'image' => $this->image,
+            'original_image_name' => $this->original_image_name,
             'children_count' => $this->children_count,
             'children' => CategoryResource::collection($this->whenLoaded('children')),
         ];

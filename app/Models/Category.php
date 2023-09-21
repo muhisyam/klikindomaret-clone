@@ -17,6 +17,7 @@ class Category extends Model
         'slug',
         'status',
         'image',
+        'original_image_name',
     ];
     
     public function parent()
