@@ -45,11 +45,9 @@ class CategoryController extends Controller
         $data = $request->validated();
         $category = new Category($data);
         
-        if ($request->hasFile('image')) {
-            $category->image = $this->imageService->storeImage($request, 'categories');
-            $category->original_image_name = $this->imageService->storeImageName($request);
-        }
-
+        $category->image = $this->imageService->storeImage($request, 'categories');
+        $category->original_image_name = $this->imageService->storeImageName($request);
+        
         $category->save();
 
         return new CategoryResource($category);
@@ -71,10 +69,8 @@ class CategoryController extends Controller
         $this->imageService->findImage($category, 'categories');
         $category->fill($data);
 
-        if ($request->hasFile('image')) {
-            $category->image = $this->imageService->storeImage($request, 'categories');
-            $category->original_image_name = $this->imageService->storeImageName($request);
-        }
+        $category->image = $this->imageService->storeImage($request, 'categories');
+        $category->original_image_name = $this->imageService->storeImageName($request);
         
         $category->save();
 

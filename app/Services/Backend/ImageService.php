@@ -24,12 +24,32 @@ class ImageService
     /**
      * Store image to db and public directory
      */
-    public function storeImage(Request $request, string $section): string
+    public function storeImage(Request $request, string $section)
     {
-        $file = $request->file('image');
-        $filename = time() . '.' . strtolower($file->getClientOriginalExtension());
-        $file->move('img/uploads/' . $section . '/', $filename);
+        $randFileName = null;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $randFileName = time() . '.' . strtolower($file->getClientOriginalExtension());
+            $file->move('img/uploads/' . $section . '/', $randFileName);
+        }
+
+        return $randFileName; 
+    }
+
+    /**
+     * Store image name to db
+     */
+    public function storeImageName(Request $request)
+    {
+        $fileName = null;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $originalName = explode('.', $file->getClientOriginalName());
+            $fileName = $originalName[0]  . '.' . strtolower($file->getClientOriginalExtension());
+        }
         
-        return $filename; 
+        return $fileName; 
     }
 }
