@@ -25,12 +25,12 @@
                     <img class="h-12" src="{{ asset('img/uploads/categories/' . $data['image']) }}" alt="Category Image">
                 </figure>
                 <div class="info">
-                    <p class="text font-bold line-clamp-1 text-ellipsis">{{ $data['image'] }}</p>
+                    <p class="text font-bold line-clamp-1 text-ellipsis">{{ $data['original_image_name'] }}</p>
                     <p class="size text-xs font-light">142 KB</p>
                 </div>
             </div>
             <div class="action">
-                <button class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" aria-label="Delete data image">
+                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]"  onclick="deleteImage(this)" aria-label="Delete data image" data-image-name="{{ $data['original_image_name'] }}">
                     <i class="ri-delete-bin-6-line"></i>
                 </button>
             </div>
