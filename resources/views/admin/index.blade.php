@@ -45,8 +45,7 @@
     
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script src="{{ asset('js/admin/app.js') }}"></script>
-    <script src="{{ asset('js/admin/utils.js') }}"></script>
-    <script src="{{ asset('js/components.js') }}"></script>
+    <script src="{{ asset('js/admin/components.js') }}"></script>
     @yield('scripts')
     @stack('scripts')
 </body>
