@@ -79,3 +79,21 @@ function updateCountdown() {
         return greetingBodyWrapper.appendChild(greetingText);
     }
 };
+    
+function btnDataAction(e) {
+    const actionTarget = e.getAttribute('data-target-action');
+    const actionWrapper = document.querySelector(`#${actionTarget}-action`);
+
+    return actionWrapper.classList.toggle('hidden');
+    // TODO: ADD ACTIVE CLASS TO CHANGE ICON TO CLOSE ICON
+}
+
+function openModal(modal, overlay) {
+    modal.classList.contains('show') ? '' : modal.classList.add('show');
+    overlay.classList.remove('hidden');
+}
+
+function closeModal(modal) {
+    modal.classList.contains('show') ? modal.classList.remove('show') :'';
+    overlay.classList.add('hidden');
+}

@@ -63,11 +63,3 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
 });
-    
-function btnDataAction(e) {
-    const actionTarget = e.getAttribute('data-target-action');
-    const actionWrapper = document.querySelector(`#${actionTarget}`);
-
-    return actionWrapper.classList.toggle('hidden');
-    // TODO: ADD ACTIVE CLASS TO CHANGE ICON TO CLOSE ICON
-}

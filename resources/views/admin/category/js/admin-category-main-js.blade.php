@@ -158,7 +158,6 @@
             toogleAccordion(isTargetHide, accordTarget, subCategory);
             ariaExpandedToogle(listSubCategoryRow);
             ariaHiddenToogle(listAccordContent);
-
         });
     });
 
@@ -170,8 +169,6 @@
 
     btnDeleteCategory.forEach(elBtn => {
         elBtn.addEventListener('click', function () {
-            const cobat = elBtn.getAttribute('data-category-name');
-            
             openModal(modalTarget, overlay);
         });
     });
