@@ -17,8 +17,8 @@
     <td class="py-2 px-4">154 Produk</td>
     <td class="py-2 px-4">
         <div class="status flex">
-            <div class="icon h-5 text-gray-600 scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-            <div class="info">{{ $category['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
+            <div class="icon h-5 {{ $category['status'] ? 'text-green-600' : 'text-gray-400' }} scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
+            <div class="info {{ $category['status'] ? '' : 'text-gray-400' }}">{{ $category['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
         </div>
     </td>
     <td class="py-2 px-4">

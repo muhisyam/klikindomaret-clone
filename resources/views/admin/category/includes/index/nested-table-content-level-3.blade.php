@@ -10,14 +10,17 @@
     <td class="py-2 px-4 w-[210px]">154 Produk</td>
     <td class="py-2 px-4 w-[210px]">
         <div class="status flex">
-            <div class="icon h-5 {{ $categoryLvl2['status'] ? 'text-green-600' : 'text-gray-600' }} scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-            <div class="info">{{ $categoryLvl2['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
+            <div class="icon h-5 {{ $categoryLvl3['status'] ? 'text-green-600' : 'text-gray-400' }} scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
+            <div class="info {{ $categoryLvl3['status'] ? '' : 'text-gray-400' }}">{{ $categoryLvl3['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
         </div>
     </td>
     <td class="py-2 px-4 w-[50px]">
-        <button class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" aria-label="Data action">
-            <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-        </button>
+        <div class="relative">
+            <button type="button" class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $categoryLvl3['slug'] }}">
+                <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
+            </button>
+            @livewire('admin.category.table-button-action', ['category' => $categoryLvl3])
+        </div>
     </td>
     <td class="border-b-custom absolute right-0 bottom-0 h-4 border-b border-[#e5e7eb] rounded-l-2xl"></td>
 </tr>
