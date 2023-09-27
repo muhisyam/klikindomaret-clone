@@ -150,6 +150,14 @@ Input Kategori
                 @include('admin.category.includes.index.table-header')
             </thead>
             <tbody class="text-sm">
+            @empty($data['data'])
+                <tr>
+                    <td colspan="5" class="text-center text-[#999] pt-6 pb-4">
+                        <div class="icon text-4xl"><i class="ri-folder-5-line"></i></div>    
+                        <p class="text-sm mt-1">No data to display</p>
+                    </td>    
+                </tr>   
+            @else
                 @foreach ($data['data'] as $categoryLvl2)
                 <tr class="accordion-category-item relative">
                     @include('admin.category.includes.index.nested-table-content-level-2')
@@ -169,12 +177,13 @@ Input Kategori
                     </td>
                 </tr>
                 @endforeach
+            @endempty
             </tbody>
         </table>
     </section>
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
     @include('admin.category.js.admin-category-main-js')
-@endsection
+@endpush
