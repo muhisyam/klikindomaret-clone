@@ -27,8 +27,6 @@
                 <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
             </button>
             @livewire('admin.category.table-button-action', ['category' => $category])
-            
-            {{-- TODO: Add tooltip --}}
         </div>
     </td>
 </tr>

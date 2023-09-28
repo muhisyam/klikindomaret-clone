@@ -87,7 +87,7 @@
                     <span class="mx-1.5">Kategori</span>
                     <span class="icon mt-0.5"><i class="ri-arrow-drop-down-line"></i></span>
                 </div>
-                <div id="category-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                <div id="category-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Lihat Kategori
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
@@ -107,7 +107,7 @@
                 <button class="shopping-basket drop-shadow-sm mt-1 me-7 text-xl text-[#0079c2]"  data-tooltip-target="shopping-basket-tooltip" data-tooltip-placement="bottom">
                     <span><i class="ri-shopping-basket-fill"></i></span>
                 </button>
-                <div id="shopping-basket-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                <div id="shopping-basket-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     Lihat Keranjang
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>

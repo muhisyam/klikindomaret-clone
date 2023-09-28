@@ -47,9 +47,13 @@
                     </div>
                 </div>
                 <div class="button-delete-product absolute top-0 right-0">
-                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-cart-id="" data-product-id="" data-product-name="Baby Happy ! Baby Diapers Pants 30'S Large" data-button-role="delete-product" data-modal-target="#popup-delete-product" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-cart-id="" data-product-id="" data-product-name="Baby Happy ! Baby Diapers Pants 30'S Large" data-button-role="delete-product" data-modal-target="#popup-delete-product" data-tooltip-target="delete-product-tooltip1" data-tooltip-placement="bottom">
                         <i class="ri-delete-bin-6-line"></i>
                     </button>
+                    <div id="delete-product-tooltip1" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Hapus produk ini
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </div>
             </div>
             <div class="item-product-2 relative flex p-4" id="cart-id79879" data-cart-id="id79879" data-product-id="" data-plu="" data-price="">
@@ -85,9 +89,13 @@
                     </div>
                 </div>
                 <div class="button-delete-product absolute top-0 right-0">
-                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-cart-id="" data-product-id="" data-product-name="Chilgo 3+ Susu Pertumbuhan Vanila 700G" data-button-role="delete-product" data-modal-target="#popup-delete-product" data-tooltip-target="delete-product-tooltip" data-tooltip-placement="bottom">
+                    <button class="h-8 bg-red-600 text-white rounded-bl-full py-1 ps-8 pe-6" data-cart-id="" data-product-id="" data-product-name="Chilgo 3+ Susu Pertumbuhan Vanila 700G" data-button-role="delete-product" data-modal-target="#popup-delete-product" data-tooltip-target="delete-product-tooltip2" data-tooltip-placement="bottom">
                         <i class="ri-delete-bin-6-line"></i>
                     </button>
+                    <div id="delete-product-tooltip2" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Hapus produk ini
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </div>
             </div>
         </div>
