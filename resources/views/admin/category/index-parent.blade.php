@@ -156,7 +156,7 @@ Input Kategori Induk
                 @include('admin.category.includes.index.table-header')
             </thead>
             <tbody class="text-sm">
-                @foreach ($data['data'] as $category)
+                @foreach ($data['data'] as $key => $category)
                 @include('admin.category.includes.index.table-content')    
                 @endforeach
             </tbody>

@@ -19,8 +19,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"  rel="stylesheet" />
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/admin/utils.css') }}" rel="stylesheet">
     <link href="{{ asset('css/components.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/utils.css') }}" rel="stylesheet">
 </head>
 <body>
     <aside class="sidebar w-1/6 h-screen p-4">
@@ -46,7 +46,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script src="{{ asset('js/admin/app.js') }}"></script>
     <script src="{{ asset('js/admin/components.js') }}"></script>
-    <script src="{{ asset('js/component.js') }}"></script>
+    <script src="{{ asset('js/components.js') }}"></script>
     @yield('scripts')
     @stack('scripts')
 </body>

@@ -158,8 +158,10 @@ Input Kategori
                     </td>    
                 </tr>   
             @else
+                @php $key = 0; @endphp
                 @foreach ($data['data'] as $categoryLvl2)
                 <tr class="accordion-category-item relative">
+                    @php $key++; @endphp
                     @include('admin.category.includes.index.nested-table-content-level-2')
                 </tr>
                 <tr class="accordion-category-content">
@@ -168,6 +170,7 @@ Input Kategori
                             <table class="w-full min-h-0">
                                 <tbody class="relative">
                                     @foreach ($categoryLvl2['children'] as $categoryLvl3)
+                                    @php $key++; @endphp
                                     @include('admin.category.includes.index.nested-table-content-level-3')   
                                     @endforeach
                                     <tr class="border-l-custom absolute left-[25px] top-0 border-l border-[#e5e7eb]"></tr>

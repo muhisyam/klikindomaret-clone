@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    initTooltips();
+    
     function findButton(e) {
         const tagName = e.tagName.toLowerCase();
         

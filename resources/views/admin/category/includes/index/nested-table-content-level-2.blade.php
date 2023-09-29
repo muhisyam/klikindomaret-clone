@@ -20,9 +20,13 @@
 </td>
 <td class="py-2 px-4 w-[50px]">
     <div class="relative">
-        <button type="button" class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $categoryLvl2['slug'] }}">
+        <button type="button" class="block rounded p-1 px-2 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $categoryLvl2['slug'] }}" data-tooltip-target="action-tooltip-{{ $key }}" data-tooltip-placement="bottom">
             <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
         </button>
+        <div id="action-tooltip-{{ $key }}" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Action
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
         @livewire('admin.category.table-button-action', ['category' => $categoryLvl2])
     </div>
 </td>
