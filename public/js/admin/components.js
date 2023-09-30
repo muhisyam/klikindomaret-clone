@@ -80,12 +80,25 @@ function updateCountdown() {
     }
 };
     
-function btnDataAction(e) {
-    const actionTarget = e.getAttribute('data-target-action');
-    const actionWrapper = document.querySelector(`#${actionTarget}-action`);
+function btnDataAction(triggerEl) {
+    const actionId = triggerEl.getAttribute('data-target-action');
+    const actionEl = document.querySelector(`#${actionId}-action`);
+    const isOpened = triggerEl.classList.contains('bg-[#fbde7e]', 'text-[#0079c2]');
+    const triggerAction = triggerEl.querySelector('.icon-action');
+    const triggerClose = triggerEl.querySelector('.icon-close');
 
-    actionWrapper.classList.toggle('hidden');
-    // TODO: ADD ACTIVE CLASS TO CHANGE ICON TO CLOSE ICON
+    actionEl.classList.toggle('hidden');
+    
+    if (isOpened) {
+        triggerEl.classList.remove('bg-[#fbde7e]', 'text-[#0079c2]')
+    } else {
+        triggerEl.classList.add('bg-[#fbde7e]', 'text-[#0079c2]')
+    };
+
+    triggerAction.classList.toggle('hidden');
+    triggerClose.classList.toggle('hidden');
+
+    initTooltips();
 }
 
 function openModal(modal, overlay) {
