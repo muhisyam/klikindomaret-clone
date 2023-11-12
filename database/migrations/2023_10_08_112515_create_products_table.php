@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             $table->foreignId('store_id')
+                ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
@@ -25,12 +27,9 @@ return new class extends Migration
             $table->string('slug', 200)->unique();
             $table->integer('normal_price');
             $table->integer('discount_price')->nullable();
-            $table->longText('description');
-            $table->integer('plu');
-            $table->enum('status', ['0', '1'])->default('1');
+            $table->enum('status', ['Publish', 'Draft'])->default('Publish');
             $table->integer('stock');
-            // !ARRAY IMAGE EXPECTED
-            $table->string('image', 200)->nullable();
+            $table->integer('plu');
             $table->timestamps();
         });
     }
