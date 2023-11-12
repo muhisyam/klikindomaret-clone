@@ -25,7 +25,7 @@
     </div>
     <div class="item-input-group mb-4">
         <label for="form-input-first-name" class="block text-sm mb-1">Nama Kategori</label>
-        <input id="form-input-first-name" type="text" name="name" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('name', $error['errors']) ? 'is-invalid' : '' }}" wire:model.live="inputName">
+        <input id="form-input-first-name" type="text" name="name" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('name', $error['errors']) ? 'is-invalid' : '' }}" wire:model.blur="inputName">
         @include('admin.components.validation-message', ['field' => 'name', 'validation' => 'form'])
     </div>
     {{-- TODO: auto slug generate --}}
