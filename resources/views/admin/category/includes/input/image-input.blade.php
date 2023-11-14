@@ -17,12 +17,12 @@
 </div>
 <div class="list-image-uploaded flex flex-col gap-2">
     @include('admin.components.validation-message', ['field' => 'image', 'validation' => 'image'])
-    @isset($data['image'])
+    @isset($data['image_name'])
     <div class="item-image-uploaded">
         <div class="item-image-wrapper flex items-center justify-between border border-[#eee] rounded p-2">
             <div class="image-info-wrapper w-11/12 flex items-center">
                 <figure class="media shrink-0 me-2">
-                    <img class="h-12" src="{{ asset('img/uploads/categories/' . $data['image']) }}" alt="Category Image">
+                    <img class="h-12" src="{{ asset('img/uploads/categories/' . $data['image_name']) }}" alt="Category Image">
                 </figure>
                 <div class="info">
                     <p class="text font-bold line-clamp-1 text-ellipsis">{{ $data['original_image_name'] }}</p>

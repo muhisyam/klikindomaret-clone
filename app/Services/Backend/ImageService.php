@@ -12,8 +12,8 @@ class ImageService
      */
     public function findImage(object $data, string $section) 
     {
-        if(!is_null($data->image)) {
-            $path = 'img/uploads/' . $section . '/' . $data->image;
+        if(!is_null($data->image_name)) {
+            $path = 'img/uploads/' . $section . '/' . $data->image_name;
             
             if (File::exists($path)) {
                 File::delete($path);
