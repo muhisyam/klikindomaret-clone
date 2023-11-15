@@ -6,15 +6,15 @@
             <div class="sortable" data-sort></div>
         </div>
     </th>
-    <th class="relative py-3 px-4 w-[210px]">
+    <th class="relative py-3 px-4 w-32">
         <div class="header-col-wrapper relative flex cursor-pointer">
-            <div class="label me-1">Jumlah Produk</div>
+            <div class="label me-1">Status</div>
             <div class="sortable" data-sort></div>
         </div>
     </th>
-    <th class="relative py-3 px-4 w-[210px]">
+    <th class="relative py-3 px-4 w-52">
         <div class="header-col-wrapper relative flex cursor-pointer">
-            <div class="label me-1">Status</div>
+            <div class="label me-1">Jumlah Produk</div>
             <div class="sortable" data-sort></div>
         </div>
     </th>

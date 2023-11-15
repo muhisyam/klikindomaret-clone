@@ -6,17 +6,16 @@
             </div>
         </div>
     </td>
-    <td class="py-2 px-4 w-auto">{{ $categoryLvl3['name'] }}</td>
-    <td class="py-2 px-4 w-[210px]">154 Produk</td>
-    <td class="py-2 px-4 w-[210px]">
-        <div class="status flex">
-            <div class="icon h-5 {{ $categoryLvl3['status'] ? 'text-green-600' : 'text-gray-400' }} scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-            <div class="info {{ $categoryLvl3['status'] ? '' : 'text-gray-400' }}">{{ $categoryLvl3['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
+    <td class="py-2 px-4 w-auto">{{ $categoryLvl3['category_name'] }}</td>
+    <td class="py-2 px-4 w-32">
+        <div class="product-status w-20 {{ $categoryLvl3['category_status'] == 'Draft' ? 'bg-gray-100 text-gray-700' : 'bg-green-100 text-green-700' }} font-bold text-center rounded-lg p-1">
+            <div class="info">{{ $categoryLvl3['category_status'] }}</div>
         </div>
     </td>
+    <td class="py-2 px-4 w-52">154 Produk</td>
     <td class="py-2 px-4 w-[50px]">
         <div class="relative">
-            <button type="button" class="block rounded overflow-hidden p-1 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $categoryLvl3['slug'] }}">
+            <button type="button" class="block rounded overflow-hidden p-1 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $categoryLvl3['category_slug'] }}">
                 <div class="icon-action h-6 pt-0.5 px-1" data-tooltip-target="action-tooltip-{{ $key }}" data-tooltip-placement="bottom"><i class="ri-more-2-line"></i></div>
                 <div class="icon-close h-6 pt-0.5 px-1 animation animation-bounceInRight hidden" data-tooltip-target="action-close-tooltip-{{ $key }}" data-tooltip-placement="bottom"><i class="ri-close-line"></i></div>
             </button>

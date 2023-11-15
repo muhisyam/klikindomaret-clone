@@ -166,7 +166,7 @@ Input Kategori
                 </tr>
                 <tr class="accordion-category-content">
                     <td colspan="5">
-                        <div id="{{ $categoryLvl2['slug'] }}" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button" aria-hidden="true">
+                        <div id="{{ $categoryLvl2['category_slug'] }}" class="accordion-category-wrapper accordion duration-500 ease-out hide" aria-labelledby="accordion-category-button" aria-hidden="true">
                             <table class="w-full min-h-0">
                                 <tbody class="relative">
                                     @foreach ($categoryLvl2['children'] as $categoryLvl3)

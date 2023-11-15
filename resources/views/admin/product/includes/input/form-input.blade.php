@@ -1,10 +1,10 @@
 <div class="item-input-group mb-4">
     <label for="form-input-product-name" class="block text-sm mb-1">Nama Produk</label>
-    <input id="form-input-product-name" type="text" name="product-name" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
+    <input id="form-input-product-name" type="text" name="product_name" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
 </div>
 <div class="item-input-group mb-4">
     <label for="form-input-product-slug" class="block text-sm mb-1">Slug</label>
-    <input id="form-input-product-slug" type="text" name="product-slug" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
+    <input id="form-input-product-slug" type="text" name="product_slug" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
 </div>
 <div class="item-input-group mb-4">
     <label for="form-select-category" class="block text-sm mb-1">Kategori</label>

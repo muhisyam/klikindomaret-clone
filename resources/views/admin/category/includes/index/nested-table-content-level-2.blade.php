@@ -1,26 +1,25 @@
 <td class="py-2 w-[50px]">
     <div class="accordion-category-button">
-        <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="{{ $categoryLvl2['slug'] }}" aria-labelledby="{{ $categoryLvl2['slug'] }}" aria-expanded="false" aria-controls="{{ $categoryLvl2['slug'] }}">
+        <button class="block bg-[#eee] border border-[#ccc] text-[#aaa] rounded-full mx-auto" data-accordion-target="{{ $categoryLvl2['category_slug'] }}" aria-labelledby="{{ $categoryLvl2['category_slug'] }}" aria-expanded="false" aria-controls="{{ $categoryLvl2['category_slug'] }}">
             <div class="icon h-5 w-5 duration-500"><i class="ri-arrow-down-s-line"></i></div>
         </button>
     </div>
 </td>
 <td class="py-2 px-4 w-auto">
     <div class="accordion-category-info flex items-center">
-        <div class="label me-1">{{ $categoryLvl2['name'] }}</div>
+        <div class="label me-1">{{ $categoryLvl2['category_name'] }}</div>
         <div class="product-count">(<span>{{ $categoryLvl2['children_count'] }}</span>)</div>
     </div>
 </td>
-<td class="py-2 px-4 w-[210px]">154 Produk</td>
-<td class="py-2 px-4 w-[210px]">
-    <div class="status flex">
-        <div class="icon h-5 {{ $categoryLvl2['status'] ? 'text-green-600' : 'text-gray-400' }} scale-[0.6] me-1"><i class="ri-checkbox-blank-circle-fill"></i></div>
-        <div class="info {{ $categoryLvl2['status'] ? '' : 'text-gray-400' }}">{{ $categoryLvl2['status'] ? 'Aktif' : 'Tidak Aktif' }}</div>
+<td class="py-2 px-4">
+    <div class="product-status w-20 {{ $categoryLvl2['category_status'] == 'Draft' ? 'bg-gray-100 text-gray-700' : 'bg-green-100 text-green-700' }} font-bold text-center rounded-lg p-1">
+        <div class="info">{{ $categoryLvl2['category_status'] }}</div>
     </div>
 </td>
+<td class="py-2 px-4 w-52">154 Produk</td>
 <td class="py-2 px-4 w-[50px]">
     <div class="relative">
-        <button type="button" class="block rounded overflow-hidden p-1 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $categoryLvl2['slug'] }}">
+        <button type="button" class="block rounded overflow-hidden p-1 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $categoryLvl2['category_slug'] }}">
             <div class="icon-action h-6 pt-0.5 px-1" data-tooltip-target="action-tooltip-{{ $key }}" data-tooltip-placement="bottom"><i class="ri-more-2-line"></i></div>
             <div class="icon-close h-6 pt-0.5 px-1 animation animation-bounceInRight hidden" data-tooltip-target="action-close-tooltip-{{ $key }}" data-tooltip-placement="bottom"><i class="ri-close-line"></i></div>
         </button>
