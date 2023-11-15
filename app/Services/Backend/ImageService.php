@@ -12,8 +12,8 @@ class ImageService
      */
     public function findImage(object $data, string $section) 
     {
-        if(!is_null($data->image_name)) {
-            $path = 'img/uploads/' . $section . '/' . $data->image_name;
+        if(!is_null($data->category_image_name)) {
+            $path = 'img/uploads/' . $section . '/' . $data->category_image_name;
             
             if (File::exists($path)) {
                 File::delete($path);
@@ -28,8 +28,8 @@ class ImageService
     {
         $randFileName = null;
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
+        if ($request->hasFile('category_image')) {
+            $file = $request->file('category_image');
             $randFileName = time() . '.' . strtolower($file->getClientOriginalExtension());
             $file->move('img/uploads/' . $section . '/', $randFileName);
         }
@@ -44,8 +44,8 @@ class ImageService
     {
         $fileName = null;
 
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
+        if ($request->hasFile('category_image')) {
+            $file = $request->file('category_image');
             $originalName = explode('.', $file->getClientOriginalName());
             $fileName = $originalName[0]  . '.' . strtolower($file->getClientOriginalExtension());
         }

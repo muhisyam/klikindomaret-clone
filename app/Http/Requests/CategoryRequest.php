@@ -26,20 +26,20 @@ class CategoryRequest extends FormRequest
         if ($this->isMethod('post')) {
             return [
                 'parent_id' => ['required', 'numeric'],
-                'name' => ['required', 'max:100'],
-                'slug' => ['required', 'unique:categories', 'max:200'],
-                'status' => ['required'],
-                'image' => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
+                'category_name' => ['required', 'max:100'],
+                'category_slug' => ['required', 'unique:categories', 'max:200'],
+                'category_status' => ['required'],
+                'category_image' => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
             ];
         }
 
         if ($this->isMethod('put')) {
             return [
                 'parent_id' => ['required', 'numeric'],
-                'name' => ['required', 'max:100'],
-                'slug' => ['required', 'max:200'],
-                'status' => ['required'],
-                'image' => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
+                'category_name' => ['required', 'max:100'],
+                'category_slug' => ['required', 'max:200'],
+                'category_status' => ['required'],
+                'category_image' => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
             ];
         }
     }

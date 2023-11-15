@@ -28,13 +28,13 @@ class FormInput extends Component
         $this->old = $old;
 
         if (!is_null($this->data)) {
-            $this->inputName = $this->data['name'];
-            $this->inputSlug = $this->data['slug'];
+            $this->inputName = $this->data['category_name'];
+            $this->inputSlug = $this->data['category_slug'];
         }
 
         if (!empty($this->old)) {
-            $this->inputName = $this->old['name'];
-            $this->inputSlug = $this->old['slug'];
+            $this->inputName = $this->old['category_name'];
+            $this->inputSlug = $this->old['category_slug'];
         }
     }
 
@@ -43,7 +43,7 @@ class FormInput extends Component
         $this->category = NULL;
 
         if (!is_null($this->data)) {
-            $this->inputSlug = $this->data['slug'];
+            $this->inputSlug = $this->data['category_slug'];
         }
     }
 

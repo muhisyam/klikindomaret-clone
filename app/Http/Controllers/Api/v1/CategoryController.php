@@ -29,9 +29,9 @@ class CategoryController extends Controller
         return CategoryResource::collection($categories);
     }
 
-    public function subIndex(string $slug): JsonResource
+    public function subIndex(string $category_slug): JsonResource
     {  
-        $parent = $this->findData('slug', $slug);
+        $parent = $this->findData('category_slug', $category_slug);
         $categories = Category::where('parent_id', $parent->id)
             ->with('children')
             ->withCount('children')
@@ -45,8 +45,8 @@ class CategoryController extends Controller
         $data = $request->validated();
         $category = new Category($data);
         
-        $category->image_name = $this->imageService->storeImage($request, 'categories');
-        $category->original_image_name = $this->imageService->storeImageName($request);
+        $category->category_image_name = $this->imageService->storeImage($request, 'categories');
+        $category->original_category_image_name = $this->imageService->storeImageName($request);
         
         $category->save();
 
@@ -69,8 +69,8 @@ class CategoryController extends Controller
         $this->imageService->findImage($category, 'categories');
         $category->fill($data);
 
-        $category->image_name = $this->imageService->storeImage($request, 'categories');
-        $category->original_image_name = $this->imageService->storeImageName($request);
+        $category->category_image_name = $this->imageService->storeImage($request, 'categories');
+        $category->original_category_image_name = $this->imageService->storeImageName($request);
         
         $category->save();
 
@@ -80,7 +80,7 @@ class CategoryController extends Controller
     public function destroy(int $id): JsonResponse
     {
         $category = $this->findData('id', $id);
-        $categoryName = ['name' => $category->name];
+        $categoryName = ['category_name' => $category->category_name];
         $this->imageService->findImage($category, 'categories');
 
         $category->delete();

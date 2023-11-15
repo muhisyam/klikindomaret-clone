@@ -59,7 +59,7 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with([
             'success' => [
                 'title' => 'Berhasil Tambah Kategori',
-                'message' => $data['data']['name'],
+                'message' => $data['data']['category_name'],
             ],
         ]);
     }
@@ -87,13 +87,13 @@ class CategoryController extends Controller
         $data = $this->categoryService->postData($url, $param);
 
         if (isset($data['errors'])) {
-            return redirect()->route('categories.edit', ['category' => $id])->with([ 'inputError' => $data ])->withInput();
+            return redirect()->route('categories.edit', ['category' => $id])->with(['inputError' => $data])->withInput();
         }
 
         return redirect()->route('categories.index')->with([
             'success' => [
                 'title' => 'Berhasil Update Kategori',
-                'message' => $data['data']['name'],
+                'message' => $data['data']['category_name'],
             ]
         ]);
     }
@@ -112,7 +112,7 @@ class CategoryController extends Controller
         return redirect()->route('categories.index')->with([
             'success' => [
                 'title' => 'Berhasil Hapus Kategori',
-                'message' => $data['data']['name'],
+                'message' => $data['data']['category_name'],
             ]
         ]);
     }
