@@ -17,8 +17,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('image_name', 50);
-            $table->string('original_image_name', 200);
+            $table->string('product_image_name', 50);
+            $table->string('original_product_image_name', 200);
             $table->timestamps();
         });
     }

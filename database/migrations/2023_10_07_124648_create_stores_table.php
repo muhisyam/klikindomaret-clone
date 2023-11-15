@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('flag', 20);
             $table->string('store_code', 5)->nullable();
             $table->string('warehouse_code', 5)->nullable();
-            $table->string('name', 200);
+            $table->string('store_name', 200);
             $table->timestamps();
         });
     }

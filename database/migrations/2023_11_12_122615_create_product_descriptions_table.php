@@ -17,8 +17,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('title_description', 50);
-            $table->text('description');
+            $table->string('title_product_description', 50);
+            $table->text('product_description');
             $table->timestamps();
         });
     }

@@ -18,11 +18,11 @@ return new class extends Migration
                 ->constrained('categories')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->string('name', 100);
-            $table->string('slug', 200)->unique();
-            $table->enum('status', ['0', '1'])->default('1');
-            $table->string('image_name')->nullable();
-            $table->string('original_image_name')->nullable();
+            $table->string('category_name', 100);
+            $table->string('category_slug', 200)->unique();
+            $table->enum('status', ['Publish', 'Draft'])->default('Publish');
+            $table->string('category_image_name')->nullable();
+            $table->string('original_category_image_name')->nullable();
             $table->timestamps();
         });
     }
