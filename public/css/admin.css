@@ -408,6 +408,12 @@ input::-webkit-inner-spin-button {
     height: calc(100% - 240px);
 }
 
+.product-input .form-input-wrapper .form-button {
+    position: relative;
+    left: calc(40% + 8px);
+    width: calc(100% - (40% + 8px));
+}
+
 /* 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ########################################################

@@ -62,15 +62,25 @@ Input Produk
                         @include('admin.product.includes.input.image-input')
                     </section>
                     <section class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">        
-                        @include('admin.product.includes.input.form-input')
+                        {{-- @include('admin.product.includes.input.form-input') --}}
+                        @include('admin.product.includes.input.form-input-description')
                     </section>
                 </div>
-                <div class="form-button flex justify-end">
+                <div class="form-button flex">
+                    <button type="button" class="btn-product-form w-full h-10 flex items-center justify-center bg-[#fadd7b] text-[#0079c2] rounded py-2" data-target-form="form-details">
+                        <div class="icon h-6 me-1"><i class="ri-file-info-line"></i></div>
+                        <div class="text">Product Details</div>
+                    </button>
+                    <button type="button" class="btn-product-form w-full h-10 items-center justify-center bg-[#fadd7b] text-[#0079c2] rounded py-2 hidden" data-target-form="form-descriptions">
+                        <div class="icon h-6 me-1"><i class="ri-file-text-line"></i></div>
+                        <div class="text">Product Descriptions</div>
+                    </button>
+                    <div class="separator h-10 w-[1px] bg-[#ccc] mx-4"></div>
                     <button type="button" class="h-10 flex items-center border border-[#0079c2] bg-white text-[#0079c2] rounded py-2 px-4 me-2">
                         <div class="icon h-6 me-1"><i class="ri-eye-fill"></i></div>
                         <div class="text">Preview</div>
                     </button>
-                    <button class="h-10 w-full max-w-[20%] bg-[#0079c2] text-white rounded py-2 px-4 disabled">Submit</button>
+                    <button class="h-10 w-full max-w-[33.7%] bg-[#0079c2] text-white rounded py-2 px-4 disabled">Submit</button>
                 </div>
             </form>
         </section>
