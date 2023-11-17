@@ -108,20 +108,22 @@
 //  Switcher class for product detail form to description form
 //  ========================================================== 
     let formSwitcher = (function () {
-        function formSwitcher(targetEl, triggerEl) {
-            this._targetEl = targetEl;
+        function formSwitcher(triggerEl, switcherButtons) {
             this._triggerEl = triggerEl;
+            this._btnFormDetail = switcherButtons[0];
+            this._btnFormDescription = switcherButtons[1];
             this._init();
         }
 
         formSwitcher.prototype._init = function () {
-            this._switchForm();
-            this._switchButtonForm();
+            this._handleSwitchForm();
+            this._handleSwitchButtonForm();
         };
 
-        formSwitcher.prototype._switchForm = function () {
+        formSwitcher.prototype._handleSwitchForm = function () {
             // Using _this variable for call function or variable where not on constructor
             let _this = this;
+
             const targetFormType = this._triggerEl.getAttribute('data-target-form');
             const formDetail = document.querySelector('#form-detail');
             const formDescription = document.querySelector('#form-description');
@@ -130,41 +132,35 @@
             const showForm = targetFormType === 'form-detail' ? formDetail : formDescription;
             const hideForm = targetFormType === 'form-description' ? formDetail : formDescription;
         
-            _this._toggleClass(showForm, hideForm, 'hidden', 'block')
+            _this._toggleClass(showForm, hideForm, 'hidden', 'block');
         };
 
-        formSwitcher.prototype._switchButtonForm = function () {
+        formSwitcher.prototype._handleSwitchButtonForm = function () {
             let _this = this;
 
-            _this._toggleClass(this._targetEl, this._triggerEl, 'hidden', 'flex')
+            // Handle which button want to show
+            const showButton = this._triggerEl.id === 'btn-form-detail' ? this._btnFormDescription : this._btnFormDetail;
+            const hideButton = this._triggerEl.id === 'btn-form-description' ? this._btnFormDescription : this._btnFormDetail;
+
+            _this._toggleClass(showButton, hideButton, 'hidden', 'flex');
         };
 
         formSwitcher.prototype._toggleClass = function (targetEl, triggerEl, classToHide, classToShow) {
-            triggerEl.classList.add(classToHide);
-            triggerEl.classList.remove(classToShow);
-
             targetEl.classList.remove(classToHide);
             targetEl.classList.add(classToShow);
+            
+            triggerEl.classList.add(classToHide);
+            triggerEl.classList.remove(classToShow);
         };
 
         return formSwitcher;
     }());
-
-    function handleFormSwitchButtonClick(buttonElement) {
-        const buttonId = buttonElement.id;
-        
-        // Handle which form want to show | btnForm[1] is the Description form and btnForm[0] is the Detail form
-        const showForm = buttonId === 'btn-form-detail' ? btnFormSwitcher[1] : btnFormSwitcher[0];
-        const hideForm = buttonId === 'btn-form-description' ? btnFormSwitcher[1] : btnFormSwitcher[0];
-
-        new formSwitcher(showForm, hideForm);
-     }
      
     const formSwitchButtons = document.querySelectorAll('.btn-form-switcher');
 
     formSwitchButtons.forEach(buttonElement => {
         buttonElement.addEventListener('click', function () { 
-            handleFormSwitchButtonClick(buttonElement);
+            new formSwitcher(buttonElement, formSwitchButtons);
         });
     });
 
