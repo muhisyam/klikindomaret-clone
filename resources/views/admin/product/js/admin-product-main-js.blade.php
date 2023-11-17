@@ -104,6 +104,70 @@
         uploadImg();
     };
 
+//  ==========================================================
+//  Switcher class for product detail form to description form
+//  ========================================================== 
+    let formSwitcher = (function () {
+        function formSwitcher(targetEl, triggerEl) {
+            this._targetEl = targetEl;
+            this._triggerEl = triggerEl;
+            this._init();
+        }
+
+        formSwitcher.prototype._init = function () {
+            this._switchForm();
+            this._switchButtonForm();
+        };
+
+        formSwitcher.prototype._switchForm = function () {
+            // Using _this variable for call function or variable where not on constructor
+            let _this = this;
+            const targetFormType = this._triggerEl.getAttribute('data-target-form');
+            const formDetail = document.querySelector('#form-detail');
+            const formDescription = document.querySelector('#form-description');
+
+            // Handle which form want to show
+            const showForm = targetFormType === 'form-detail' ? formDetail : formDescription;
+            const hideForm = targetFormType === 'form-description' ? formDetail : formDescription;
+        
+            _this._toggleClass(showForm, hideForm, 'hidden', 'block')
+        };
+
+        formSwitcher.prototype._switchButtonForm = function () {
+            let _this = this;
+
+            _this._toggleClass(this._targetEl, this._triggerEl, 'hidden', 'flex')
+        };
+
+        formSwitcher.prototype._toggleClass = function (targetEl, triggerEl, classToHide, classToShow) {
+            triggerEl.classList.add(classToHide);
+            triggerEl.classList.remove(classToShow);
+
+            targetEl.classList.remove(classToHide);
+            targetEl.classList.add(classToShow);
+        };
+
+        return formSwitcher;
+    }());
+
+    function handleFormSwitchButtonClick(buttonElement) {
+        const buttonId = buttonElement.id;
+        
+        // Handle which form want to show | btnForm[1] is the Description form and btnForm[0] is the Detail form
+        const showForm = buttonId === 'btn-form-detail' ? btnFormSwitcher[1] : btnFormSwitcher[0];
+        const hideForm = buttonId === 'btn-form-description' ? btnFormSwitcher[1] : btnFormSwitcher[0];
+
+        new formSwitcher(showForm, hideForm);
+     }
+     
+    const formSwitchButtons = document.querySelectorAll('.btn-form-switcher');
+
+    formSwitchButtons.forEach(buttonElement => {
+        buttonElement.addEventListener('click', function () { 
+            handleFormSwitchButtonClick(buttonElement);
+        });
+    });
+
     var currentTextareaId;
 
     function currTextarea() { 

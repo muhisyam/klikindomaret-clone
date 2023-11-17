@@ -61,18 +61,22 @@ Input Produk
                     <section class="left-side relative w-2/5 border border-[#eee] rounded-xl p-4">
                         @include('admin.product.includes.input.image-input')
                     </section>
-                    <section class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">        
-                        {{-- @include('admin.product.includes.input.form-input') --}}
-                        @include('admin.product.includes.input.form-input-description')
+                    <section class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">
+                        <div id="form-detail" class="hidden">        
+                            @include('admin.product.includes.input.form-input-detail')
+                        </div>
+                        <div id="form-description" class="block"> 
+                            @include('admin.product.includes.input.form-input-description')
+                        </div>
                     </section>
                 </div>
                 <div class="form-button flex">
-                    <button type="button" class="btn-product-form w-full h-10 flex items-center justify-center bg-[#fadd7b] text-[#0079c2] rounded py-2" data-target-form="form-details">
-                        <div class="icon h-6 me-1"><i class="ri-file-info-line"></i></div>
+                    <button type="button" id="btn-form-detail" class="btn-form-switcher w-full h-10 flex items-center justify-center bg-[#fadd7b] text-[#0079c2] rounded py-2" data-target-form="form-detail">
+                        <div class="icon h-6 me-1"><i class="ri-arrow-left-line"></i></div>
                         <div class="text">Product Details</div>
                     </button>
-                    <button type="button" class="btn-product-form w-full h-10 items-center justify-center bg-[#fadd7b] text-[#0079c2] rounded py-2 hidden" data-target-form="form-descriptions">
-                        <div class="icon h-6 me-1"><i class="ri-file-text-line"></i></div>
+                    <button type="button" id="btn-form-description" class="btn-form-switcher w-full h-10 items-center justify-center bg-[#fadd7b] text-[#0079c2] rounded py-2 hidden" data-target-form="form-description">
+                        <div class="icon h-6 me-1"><i class="ri-arrow-right-line"></i></div>
                         <div class="text">Product Descriptions</div>
                     </button>
                     <div class="separator h-10 w-[1px] bg-[#ccc] mx-4"></div>
