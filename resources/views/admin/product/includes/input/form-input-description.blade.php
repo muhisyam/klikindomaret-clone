@@ -42,11 +42,11 @@
 </div>
 <div class="item-input-group">
     <div id="btn-addon-desc" class="flex gap-4">
-        <button type="button" id="btnAddDesc" class="h-10 flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
+        <button type="button" id="btn-add-desc" class="btn-desc-adjuster h-10 flex items-center bg-[#0079c2] text-white rounded py-2 px-4">
             <div class="icon h-6 me-1"><i class="ri-add-fill"></i></div>
             <div class="text">Tambah Deskripsi</div>
         </button>
-        <button type="button" id="btnDelDesc" class="h-10 flex items-center bg-[#c33] text-white rounded py-2 px-4 hidden">
+        <button type="button" id="btn-del-desc" class="btn-desc-adjuster h-10 items-center bg-[#c33] text-white rounded py-2 px-4 hidden">
             <div class="icon h-6 me-1"><i class="ri-delete-bin-6-line"></i></div>
             <div class="text">Hapus Deskripsi</div>
         </button>
