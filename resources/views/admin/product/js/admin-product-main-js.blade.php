@@ -10,6 +10,11 @@
             width: '100%',
             placeholder: 'Pilih Toko...',
         });
+
+        $('#form-select-product-status').select2({
+            width: '100%',
+            placeholder: 'Pilih Status...',
+        });
         // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
         
         // Change border color if invalid validation 
@@ -42,34 +47,37 @@
                     </div>`;
         };
 
-        // TODO: Tooltip name image
         imageUploader.prototype.imageItemWrapper = function (isInvalid, imageUrl, imageName, imageSize, index) {
-            return `<div class="item-image-uploaded${isInvalid}">
-                        <div class="image-item-wrapper flex items-center justify-between border border-[#eee] rounded p-2">
+            return `<div class="item-image-uploaded${isInvalid} relative">
+                        <div class="image-item-wrapper flex items-center justify-between border border-light-grey rounded p-2">
                             <div class="image-info-wrapper w-11/12 flex items-center">
                                 <figure class="media shrink-0 me-2">
                                     <img class="h-12" src="${imageUrl}" alt="Product Image">
                                 </figure>
                                 <div class="info">
-                                    <p class="text font-bold line-clamp-1 text-ellipsis" title="${imageName}">${imageName}</p>
+                                    <p class="text font-bold line-clamp-1 text-ellipsis" data-tooltip-target="image-${index}-tooltip" data-tooltip-placement="bottom">${imageName}</p>
                                     <p class="size text-xs font-light">${imageSize} KB</p>
                                 </div>
                             </div>
                             <div class="action">
-                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage(${index})" aria-label="Delete data image" data-image-name="${imageName}">
+                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="deleteImage(${index})" aria-label="Delete data image" data-image-name="${imageName}">
                                     <i class="ri-delete-bin-6-line"></i>
                                 </button>
                             </div>
                         </div>
                         ${isInvalid ? this.invalidFeedback() : ''}
+                        <div id="image-${index}-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                            ${imageName}
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
                     </div>`;
         };
 
         imageUploader.prototype.noImageUploaded = function () {
-            return `<div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
+            return `<div class="item-no-image flex items-center justify-between border border-light-grey rounded p-2">
                         <div class="image-info-wrapper w-11/12 flex items-center">
-                            <div class="media h-12 w-12 grid place-items-center shrink-0 bg-[#fbf0d0] text-[#0079c2] text-2xl text-center rounded me-2">
-                                <div class="icon animate-bounce mt-2.5"><i class="ri-upload-cloud-line"></i></div>
+                            <div class="media h-12 w-12 grid place-items-center shrink-0 bg-accent text-secondary text-2xl text-center rounded me-2">
+                                <div class="icon animate__animated animate__rubberBand animate__infinite"><i class="ri-upload-cloud-line"></i></div>
                             </div>
                             <div class="info">
                                 <p class="text font-bold line-clamp-1 text-ellipsis">Tidak ada gambar.</p>
@@ -81,20 +89,21 @@
         imageUploader.prototype.imageUploadHandler = function () {
             if (imageFiles.length == 0) {
                 return uploadedImgWrapper.innerHTML = this.noImageUploaded();
-            }
-            
-            let showImage = '';
-            
-            imageFiles.forEach((element, index) => {
-                let imageUrl = URL.createObjectURL(element);
-                let imageName = element.name;
-                let imageSize = Math.floor(element.size / 1024);
-                let isInvalid = imageSize > 500 ? ' is-invalid' : '';
-
-                showImage += this.imageItemWrapper(isInvalid, imageUrl, imageName, imageSize, index);
-            });
-
-            return uploadedImgWrapper.innerHTML = showImage;
+            } else {
+                let showImage = '';
+                
+                imageFiles.forEach((element, index) => {
+                    let imageUrl = URL.createObjectURL(element);
+                    let imageName = element.name;
+                    let imageSize = Math.floor(element.size / 1024);
+                    let isInvalid = imageSize > 500 ? ' is-invalid' : '';
+    
+                    showImage += this.imageItemWrapper(isInvalid, imageUrl, imageName, imageSize, index);
+                });
+    
+                uploadedImgWrapper.innerHTML = showImage;
+                initTooltips();
+            };
         };
 
         return imageUploader;
