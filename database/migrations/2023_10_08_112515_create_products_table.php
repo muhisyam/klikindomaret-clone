@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('product_slug', 200)->unique();
             $table->integer('normal_price');
             $table->integer('discount_price')->nullable();
-            $table->enum('status', ['Publish', 'Draft'])->default('Publish');
+            $table->enum('product_status', ['Publish', 'Draft'])->default('Publish');
             $table->integer('stock');
             $table->integer('plu');
             $table->timestamps();
