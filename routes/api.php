@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\v1\CategoryController;
-use App\Http\Controllers\Backend\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Api\v1\ProductController;
+use App\Http\Controllers\Api\v1\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,4 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::get('categories/sub/{category}', [CategoryController::class, 'subIndex'])->name('category.subIndex');
 Route::get('categories/query/{category}', [CategoryController::class, 'selectQuery'])->name('category.selectQuery');
+Route::apiResource('products', ProductController::class);
