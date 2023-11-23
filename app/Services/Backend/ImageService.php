@@ -23,15 +23,19 @@ class ImageService
 
     /**
      * Store image to db and public directory
+     * 
+     * @param Request    $request          
+     * @param string     $dataName          name data section (category, product, etc)
+     * @param string     $folderDataName    folder name (categories, products, etc)
      */
-    public function storeImage(Request $request, string $section)
+    public function storeImage(Request $request, string $dataName, string $folderDataName)
     {
         $randFileName = null;
 
-        if ($request->hasFile('category_image')) {
-            $file = $request->file('category_image');
+        if ($request->hasFile($dataName . '_image')) {
+            $file = $request->file($dataName . '_image');
             $randFileName = time() . '.' . strtolower($file->getClientOriginalExtension());
-            $file->move('img/uploads/' . $section . '/', $randFileName);
+            // $file->move('img/uploads/' . $folderDataName . '/', $randFileName);
         }
 
         return $randFileName; 
