@@ -15,6 +15,6 @@ class Store extends Model
         'flag',
         'store_code',
         'warehouse_code',
-        'name',
+        'store_name',
     ];
 }
