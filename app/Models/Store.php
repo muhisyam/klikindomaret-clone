@@ -14,7 +14,6 @@ class Store extends Model
     protected $fillable = [
         'flag',
         'store_code',
-        'warehouse_code',
         'store_name',
     ];
 }

@@ -14,12 +14,7 @@ return new class extends Migration
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
             $table->string('flag', 20);
-            $table->string('store_code', 5)
-                ->unique()
-                ->nullable();
-            $table->string('warehouse_code', 5)
-                ->unique()
-                ->nullable();
+            $table->string('store_code', 5)->unique();
             $table->string('store_name', 200);
             $table->timestamps();
         });
