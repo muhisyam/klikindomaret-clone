@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\ProductImageController;
+use App\Http\Controllers\Api\v1\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('users', UserController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::get('categories/sub/{category}', [CategoryController::class, 'subIndex'])->name('category.subIndex');
-Route::get('categories/query/{category}', [CategoryController::class, 'selectQuery'])->name('category.selectQuery');
+// Route::get('categories/query/{category}', [CategoryController::class, 'selectQuery'])->name('category.selectQuery');
+Route::apiResource('stores', StoreController::class);
 Route::apiResource('products', ProductController::class);
