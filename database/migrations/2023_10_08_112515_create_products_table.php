@@ -23,13 +23,13 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
+            $table->integer('plu');
             $table->string('product_name', 100);
             $table->string('product_slug', 200)->unique();
             $table->integer('normal_price');
             $table->integer('discount_price')->nullable();
+            $table->integer('product_stock');
             $table->enum('product_status', ['Publish', 'Draft'])->default('Publish');
-            $table->integer('stock');
-            $table->integer('plu');
             $table->timestamps();
         });
     }
