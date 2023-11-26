@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function index(): JsonResource
     {
-        $products = Product::sortBy('category_id', 'asc')
+        $products = Product::orderBy('category_id', 'asc')
             ->paginate(10);
 
         return ProductResource::collection($products);
@@ -24,21 +24,21 @@ class ProductController extends Controller
         $data = $request->validated();
         $product = new Product($data);
         
-        // $product->save();
+        $product->save();
 
         return new ProductResource($product);
     }
 
-    public function show(string $id): ProductResource
+    public function show(string $productSlug): ProductResource
     {
-        $product = Product::find($id);
+        $product = Product::where('product_slug', $productSlug)->first();
 
         return new ProductResource($product);
     }
 
-    public function update(ProductRequest $request, int $id): ProductResource
+    public function update(ProductRequest $request, string $productSlug): ProductResource
     {
-        $product = Product::find($id);
+        $product = Product::where('product_slug', $productSlug)->first();
         $data = $request->validated();
         
         $product->fill($data);
@@ -47,9 +47,9 @@ class ProductController extends Controller
         return new ProductResource($product);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(string $productSlug): JsonResponse
     {
-        $product = Product::find($id);
+        $product = Product::where('product_slug', $productSlug)->first();
         $productName = ['product_name' => $product->product_name];
 
         $product->delete();
