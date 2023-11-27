@@ -34,6 +34,19 @@ class ImageService
     }
 
     /**
+     * Store multiple image to db and public directory
+     */
+    public function storeMultipleImage(Object $dataImage, string $index, string $folderSaveName)
+    {
+        $randomImageName = null;
+        
+        $randomImageName = time() . $index . '.' . strtolower($dataImage->getClientOriginalExtension());
+        $dataImage->move('img/uploads/' . $folderSaveName . '/', $randomImageName);
+
+        return $randomImageName; 
+    }
+
+    /**
      * Store image name to db
      */
     public function storeImageName(Object $dataImage)
