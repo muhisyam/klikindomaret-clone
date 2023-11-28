@@ -28,3 +28,4 @@ Route::get('categories/sub/{category}', [CategoryController::class, 'subIndex'])
 // Route::get('categories/query/{category}', [CategoryController::class, 'selectQuery'])->name('category.selectQuery');
 Route::apiResource('stores', StoreController::class);
 Route::apiResource('products', ProductController::class);
+Route::apiResource('product-images', ProductImageController::class);
