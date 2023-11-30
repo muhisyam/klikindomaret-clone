@@ -13,7 +13,7 @@ class ProductDescription extends Model
 
     protected $fillable = [
         'product_id',
-        'title_description',
-        'description',
+        'title_product_description',
+        'product_description',
     ];
 }
