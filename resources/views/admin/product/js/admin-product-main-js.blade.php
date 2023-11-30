@@ -129,7 +129,7 @@
             return `<label for="form-input-desc-${index}" class="block text-sm mb-1">Deskripsi</label>
                     <div id="form-input-desc-${index}" class="w-full">
                         <div class="flex gap-2 mb-4">
-                            <input type="text" name="title_description[]" placeholder="Label Deskripsi..." class="w-full h-10 border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
+                            <input type="text" name="title_product_description[]" placeholder="Label Deskripsi..." class="w-full h-10 border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
                             <button type="button" id="btn-del-desc" class="btn-desc-adjuster bg-[#c33] text-white rounded py-2 px-3" data-target-description="form-input-desc-${index}">
                                 <div class="icon h-6"><i class="ri-delete-bin-6-line"></i></div>
                             </button>
