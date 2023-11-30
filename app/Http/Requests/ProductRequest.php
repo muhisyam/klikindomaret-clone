@@ -34,6 +34,9 @@ class ProductRequest extends FormRequest
                 'discount_price' => ['numeric'],
                 'product_stock' => ['required', 'numeric'],
                 'product_status' => ['required', 'in:Publish,Draft'],
+                'title_product_description' => ['required'],
+                'product_description' => ['required'],
+                'product_images.*' => ['required', 'mimes:jpg,png,jpeg', 'max:512'],
             ];
         } else if ($this->isMethod('put')) {
             return [
@@ -46,6 +49,9 @@ class ProductRequest extends FormRequest
                 'discount_price' => ['numeric'],
                 'product_stock' => ['required', 'numeric'],
                 'product_status' => ['required', 'in:Publish,Draft'],
+                'title_product_description' => ['required'],
+                'product_description' => ['required'],
+                'product_images.*' => ['required', 'mimes:jpg,png,jpeg', 'max:512'],
             ];
         }
     }
