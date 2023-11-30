@@ -112,59 +112,50 @@
 //  ==========================================================
 //  Adjuster class for description textarea amount (add / sub)
 //  ========================================================== 
-    let currentTextareaId;
+    let currentTextareaId = 1;
     
     let descriptionAreaAdjuster = (function () {
-        function descriptionAreaAdjuster(triggerEl, adjusterButtons) {
+        function descriptionAreaAdjuster(triggerEl) {
             this.triggerEl = triggerEl;
             this.triggerId = triggerEl.id;
-            this.btnAddDescription = adjusterButtons[0];
-            this.btnDelDescription = adjusterButtons[1];
             this.init();
         }
 
         descriptionAreaAdjuster.prototype.init = function () {
-            this.currTextarea();
-            this.handleButtonTextareaAdjuster();
             this.handleDescriptionArea();
         };
 
-        descriptionAreaAdjuster.prototype.currTextarea = function () {
-            const listTextarea = document.querySelectorAll('[id^="addon"]');
-            
-            [...listTextarea].every((el, index) => {
-                const isHidden = el.classList.contains('hidden');
-                
-                if (!isHidden) {
-                    currentTextareaId = 5;
-                    return true;
-                } else {
-                    currentTextareaId = index;
-                    return false;
-                }
-            });
-        };
-
-        descriptionAreaAdjuster.prototype.handleButtonTextareaAdjuster = function () {
-            if (this.triggerId === 'btn-add-desc') {
-                this.btnDelDescription.classList.remove('hidden');
-                this.btnDelDescription.classList.add('flex');
-            } else if (this.triggerId === 'btn-del-desc') {
-                this.btnAddDescription.classList.add('flex');
-                this.btnAddDescription.classList.remove('hidden');
-            }
+        descriptionAreaAdjuster.prototype.newTextarea = function (index) {
+            return `<label for="form-input-desc-${index}" class="block text-sm mb-1">Deskripsi</label>
+                    <div id="form-input-desc-${index}" class="w-full">
+                        <div class="flex gap-2 mb-4">
+                            <input type="text" name="title_description[]" placeholder="Label Deskripsi..." class="w-full h-10 border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
+                            <button type="button" id="btn-del-desc" class="btn-desc-adjuster bg-[#c33] text-white rounded py-2 px-3" data-target-description="form-input-desc-${index}">
+                                <div class="icon h-6"><i class="ri-delete-bin-6-line"></i></div>
+                            </button>
+                        </div>
+                        <textarea name="product_description[]" cols="30" rows="4" placeholder="Deskripsi..." class="w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent"></textarea>
+                    </div>`
         };
 
         descriptionAreaAdjuster.prototype.handleDescriptionArea = function () {
-            const indexTextarea = this.triggerId === 'btn-add-desc' ? currentTextareaId + 1 : currentTextareaId;
-            const textareaTarget = document.querySelector(`#addon-${indexTextarea}`);
-            
             if (this.triggerId === 'btn-add-desc') {
-                textareaTarget.classList.remove('hidden');
-                currentTextareaId == 4 ? this.triggerEl.classList.add('hidden') : null;
+                const descriptionInputWrapper = document.querySelector('#form-description');
+                const nextTextareaClass = ['item-input-group', 'mb-4'];
+
+                nextTextareaElement = toObjectHTML(nextTextareaClass, this.newTextarea(++currentTextareaId));
+                descriptionInputWrapper.insertAdjacentElement("beforeend", nextTextareaElement);
+
             } else if (this.triggerId === 'btn-del-desc') {
-                textareaTarget.classList.add('hidden');
-                currentTextareaId == 2 ? this.triggerEl.classList.add('hidden') : null;
+                const targetId = this.triggerEl.getAttribute('data-target-description');
+                const targetElement = document.querySelector(`#${targetId}`);
+
+                targetElement.parentNode.remove();
+
+                const title = "Berhasil Hapus Deskripsi"
+                const message = targetElement.id;
+
+                showNotification(title, message);
             }
         };
 
@@ -280,19 +271,18 @@
     dropAreaImg.addEventListener('dragleave', handleDragLeave);
     dropAreaImg.addEventListener('drop', handleDrop);
 
-    const descAdjusterButtons = document.querySelectorAll('.btn-desc-adjuster');
+    // Event delegation, so that there is no need to readjust dynamic elements 
+    // + No need use MutationObserver
+    // - But must be carefully of conflict with other element when clicked
+    document.addEventListener('click', function(event) {
+        let isDescAdjustButton = event.target.closest('.btn-desc-adjuster');
+        let isFormSwitchButton = event.target.closest('.btn-form-switcher');
+        const formSwitchButtons = document.querySelectorAll('.btn-form-switcher');
 
-    descAdjusterButtons.forEach(buttonElement => {
-        buttonElement.addEventListener('click', function () { 
-            new descriptionAreaAdjuster(buttonElement, descAdjusterButtons);
-        });
-    });
-     
-    const formSwitchButtons = document.querySelectorAll('.btn-form-switcher');
-
-    formSwitchButtons.forEach(buttonElement => {
-        buttonElement.addEventListener('click', function () { 
-            new formSwitcher(buttonElement, formSwitchButtons);
-        });
+        if (isDescAdjustButton) {
+            new descriptionAreaAdjuster(isDescAdjustButton);
+        }else if (isFormSwitchButton) {
+            new formSwitcher(isFormSwitchButton, formSwitchButtons);
+        }
     });
 </script>
