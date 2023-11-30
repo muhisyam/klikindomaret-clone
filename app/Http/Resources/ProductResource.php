@@ -17,7 +17,9 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'category_id' => $this->category_id,
+            'category' => new CategoryResource($this->whenLoaded('category')),
             'store_id' => $this->store_id,
+            'store' => new StoreResource($this->whenLoaded('store')),
             'plu' => $this->plu,
             'product_name' => $this->product_name,
             'product_slug' => $this->product_slug,
@@ -25,6 +27,10 @@ class ProductResource extends JsonResource
             'discount_price' => $this->discount_price,
             'product_stock' => $this->product_stock,
             'product_status' => $this->product_status,
+            'descriptions_count' => $this->descriptions_count,
+            'descriptions' => ProductDescriptionResource::collection($this->whenLoaded('descriptions')),
+            'images_count' => $this->images_count,
+            'images' => ProductImageResource::collection($this->whenLoaded('images')),
         ];
     }
 }
