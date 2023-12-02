@@ -6,31 +6,58 @@ use Illuminate\Support\Str;
 
 class CreateMultipartAction
 {
-    public function execute(Array $formRequest): Array
+    private array $param = [];
+
+    private function handleDataImage($key, $value): Array 
     {
-        $param = [];
-
-        foreach ($formRequest as $key => $value) {
-            if (!(Str::contains($key, 'image'))) {
-                $param[] = [
-                    'name' => $key,
-                    'contents' => $value,
+        if (is_array($value)) {
+            foreach ($value as $index => $dataImage) {
+                $this->param[] = [
+                    'name'  => $key . '[' . $index . ']',
+                    'contents' => fopen($dataImage->path(), 'r'),
+                    'filename' => $dataImage->getClientOriginalName(), 
                 ];
-
-                continue;
             }
+        } else {
+            $this->param[] =[
+                'name'  => $key,
+                'contents' => fopen($value->path(), 'r'),
+                'filename' => $value->getClientOriginalName(), 
+            ];
+        }
 
-            if (Str::contains($key, 'image')) {
-                $param[] = [
-                    'name'  => $key,
-                    'contents' => fopen($value->path(), 'r'),
-                    'filename' => $value->getClientOriginalName(), 
+        return $this->param;
+    }
+
+    private function handleDataNonImage($key, $value): Array 
+    {
+        if (is_array($value)) {
+            foreach ($value as $index => $dataForm) {
+                $this->param[] = [
+                    'name' => $key . '[' . $index . ']',
+                    'contents' => $dataForm,
                 ];
+            }
+        } else {
+            $this->param[] = [
+                'name' => $key,
+                'contents' => $value,
+            ];
+        }
 
-                continue;
+        return $this->param;
+    }
+
+    public function execute(Array $formRequest, String $imageFormName): Array
+    {
+        foreach ($formRequest as $key => $value) {
+            if (Str::contains($key, $imageFormName)) {
+                $this->handleDataImage($key, $value);
+            } else {
+                $this->handleDataNonImage($key, $value);
             }
         }
 
-        return $param;
+        return $this->param;
     }
 }
