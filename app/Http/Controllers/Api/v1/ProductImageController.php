@@ -33,8 +33,21 @@ class ProductImageController extends Controller
 
     public function update(Array $dataProduct, int $dataProductId): Array
     {
-        ProductImage::where('product_id', $dataProductId)->delete();
+        $this->delete($dataProduct['product_slug'], $dataProductId);
 
         return $this->store($dataProduct, $dataProductId);
+    }
+
+    public function delete(String $dataProductSlug, int $dataProductId)
+    {
+        $dataProductImage = ProductImage::where('product_id', $dataProductId)->get();
+
+        foreach ($dataProductImage as $dataImage) {
+            $dataImageName = $dataImage->product_image_name;
+            $folderName = 'products/' . $dataProductSlug;
+
+            $dataImage->delete();
+            $this->imageService->deleteExistsImage($dataImageName, $folderName);
+        }
     }
 }
