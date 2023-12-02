@@ -48,6 +48,10 @@ class ProductController extends Controller
                 'descriptions',
                 'images',
             ])
+            ->withCount([
+                'descriptions',
+                'images',
+            ])
             ->first();
 
         return new ProductResource($product);
@@ -61,10 +65,10 @@ class ProductController extends Controller
         $productImage = new ProductImageController($imageService);
         $productDescription = new ProductDescriptionController();
         
+        $productImage->update($data, $product->id);
         $product->fill($data);
         $product->save();
-        $productImage->store($data, $product->id);
-        $productDescription->store($data, $product->id);
+        $productDescription->update($data, $product->id);
 
         return new ProductResource($product);
     }
