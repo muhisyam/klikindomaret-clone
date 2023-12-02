@@ -5,7 +5,7 @@ namespace App\Services\Backend;
 use App\Actions\ClientRequestAction;
 use Illuminate\Http\Request;
 
-class CategoryService 
+class ApiCallService 
 {
     public function __construct(
         protected ClientRequestAction $clientRequestAction,
@@ -16,10 +16,8 @@ class CategoryService
      */
     public function getData(string $url, Request $request): array
     {
-        if ($request->input('page')) {
-            $url .= '?page=' . $request->input('page');
-        }
-
+        $request->input('page') && $url .= '?page=' . $request->input('page');
+        
         return $this->clientRequestAction->execute('GET', $url);
     }
 
