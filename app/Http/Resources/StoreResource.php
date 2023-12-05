@@ -15,6 +15,7 @@ class StoreResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'flag' => $this->flag,
             'store_code' => $this->store_code,
             'store_name' => $this->store_name,
