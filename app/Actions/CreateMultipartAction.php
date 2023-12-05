@@ -33,10 +33,12 @@ class CreateMultipartAction
     {
         if (is_array($value)) {
             foreach ($value as $index => $dataForm) {
-                $this->param[] = [
-                    'name' => $key . '[' . $index . ']',
-                    'contents' => $dataForm,
-                ];
+                if (!is_null($dataForm)) {
+                    $this->param[] = [
+                        'name' => $key . '[' . $index . ']',
+                        'contents' => $dataForm,
+                    ];
+                }
             }
         } else {
             $this->param[] = [
@@ -48,14 +50,35 @@ class CreateMultipartAction
         return $this->param;
     }
 
+    private function handleDidntHasImage($key, $value): Array 
+    {
+        if ($key === 'product_images') {
+            $key = 'product_images[]';
+        }
+        
+        $this->param[] = [
+            'name' => $key,
+            'contents' => $value,
+        ];
+
+        return $this->param;
+    }
+
     public function execute(Array $formRequest, String $imageFormName): Array
     {
+        $didntHasImage = true;
+
         foreach ($formRequest as $key => $value) {
             if (Str::contains($key, $imageFormName)) {
+                $didntHasImage = false;
                 $this->handleDataImage($key, $value);
             } else {
                 $this->handleDataNonImage($key, $value);
             }
+        }
+                
+        if ($didntHasImage) {
+            $this->handleDidntHasImage($imageFormName, NULL);
         }
 
         return $this->param;
