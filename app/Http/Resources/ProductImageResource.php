@@ -14,11 +14,15 @@ class ProductImageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $imagePath = 'img/uploads/products/coba-save-image/' . $this->product_image_name;
+        $imageSize = round(filesize($imagePath) / 1024);
+
         return [
             'id' => $this->id,
             'product_id' => $this->product_id,
             'product_image_name' => $this->product_image_name,
             'original_product_image_name' => $this->original_product_image_name,
+            'product_image_size' => $imageSize,
         ];
     }
 }
