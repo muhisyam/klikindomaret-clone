@@ -14,9 +14,11 @@ class ApiCallService
     /**
      * Get data category from database
      */
-    public function getData(string $url, Request $request): array
+    public function getData(string $url, Request $request = null): array
     {
-        $request->input('page') && $url .= '?page=' . $request->input('page');
+        if (!is_null($request)) {
+            $request->input('page') && $url .= '?page=' . $request->input('page');
+        }
         
         return $this->clientRequestAction->execute('GET', $url);
     }
