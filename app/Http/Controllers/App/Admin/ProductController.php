@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App\Admin;
 
+use App\Actions\CombineMultipleImageErrorAction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Actions\CreateMultipartAction;
@@ -16,6 +17,7 @@ class ProductController extends Controller
         protected ApiCallService $apiService,
         protected PaginationService $paginateService,
         protected CreateMultipartAction $createMultipartAction, 
+        protected CombineMultipleImageErrorAction $combineErrorAction, 
     ) {}
 
     public function index(Request $request) 
@@ -42,7 +44,8 @@ class ProductController extends Controller
         $data = $this->apiService->postData($url, $param);
 
         if (isset($data['errors'])) {
-            // TODO: Add service for multiple image error
+            $data['errors']['product_images'] = $this->combineErrorAction->execute($data['errors'], 'product_images');
+            
             return redirect()->route('products.create')->with(['inputError' => $data])->withInput();
         }
 
@@ -77,6 +80,7 @@ class ProductController extends Controller
         $data = $this->apiService->postData($url, $param);
 
         if (isset($data['errors'])) {
+            // TODO: Add service for multiple image error
             return redirect()->route('products.edit', ['product' => $slug])->with(['inputError' => $data])->withInput();
         }
 
