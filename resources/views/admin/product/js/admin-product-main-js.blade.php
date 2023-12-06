@@ -1,19 +1,24 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Jquery just for convert purpose(✌ ͡• ₃ ͡•)✌
-        $('#form-select-category').select2({
+        $('#form-select-category-parent').select2({
             width: '100%',
-            placeholder: 'Pilih Kategori...',
+            placeholder: 'Pilih kategori induk...',
+        });
+
+        $('#form-select-category-children').select2({
+            width: '100%',
+            placeholder: 'Pilih kategori...',
         });
 
         $('#form-select-store').select2({
             width: '100%',
-            placeholder: 'Pilih Toko...',
+            placeholder: 'Pilih toko...',
         });
 
         $('#form-select-product-status').select2({
             width: '100%',
-            placeholder: 'Pilih Status...',
+            placeholder: 'Pilih status...',
         });
         // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
         
@@ -112,7 +117,8 @@
 //  ==========================================================
 //  Adjuster class for description textarea amount (add / sub)
 //  ========================================================== 
-    let currentTextareaId = 1;
+    // get current total description
+    let currentTextareaId = document.querySelectorAll('.input-description').length;
     
     let descriptionAreaAdjuster = (function () {
         function descriptionAreaAdjuster(triggerEl) {
@@ -141,7 +147,7 @@
         descriptionAreaAdjuster.prototype.handleDescriptionArea = function () {
             if (this.triggerId === 'btn-add-desc') {
                 const descriptionInputWrapper = document.querySelector('#form-description');
-                const nextTextareaClass = ['item-input-group', 'mb-4'];
+                const nextTextareaClass = ['item-input-group','input-description', '|', 'mb-4'];
 
                 nextTextareaElement = toObjectHTML(nextTextareaClass, this.newTextarea(++currentTextareaId));
                 descriptionInputWrapper.insertAdjacentElement("beforeend", nextTextareaElement);
@@ -281,8 +287,17 @@
 
         if (isDescAdjustButton) {
             new descriptionAreaAdjuster(isDescAdjustButton);
-        }else if (isFormSwitchButton) {
+        } else if (isFormSwitchButton) {
             new formSwitcher(isFormSwitchButton, formSwitchButtons);
         }
+    });
+
+    const btnSubmit = document.querySelector('#btn-submit');
+
+    btnSubmit.addEventListener('click', function(event) {
+        // TODO: input title || body null, auto click switch button
+        const inputDescValue = document.querySelector('.input-description');
+
+
     });
 </script>
