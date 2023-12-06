@@ -27,10 +27,10 @@ class ProductResource extends JsonResource
             'discount_price' => $this->discount_price,
             'product_stock' => $this->product_stock,
             'product_status' => $this->product_status,
-            'descriptions_count' => $this->descriptions_count,
-            'descriptions' => ProductDescriptionResource::collection($this->whenLoaded('descriptions')),
-            'images_count' => $this->images_count,
-            'images' => ProductImageResource::collection($this->whenLoaded('images')),
+            'product_descriptions_count' => $this->descriptions_count,
+            'product_descriptions' => ProductDescriptionResource::collection($this->whenLoaded('descriptions')),
+            'product_images_count' => $this->images_count,
+            'product_images' => ProductImageResource::collection($this->whenLoaded('images')),
         ];
     }
 }
