@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\App\Admin;
 
+use App\Actions\CombineArrayErrorAction;
 use App\Actions\CombineMultipleImageErrorAction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Actions\CreateMultipartAction;
+use App\Actions\MergeArrayErrorAction;
 use App\Services\Backend\ApiCallService;
 use App\Services\Backend\PaginationService;
 
@@ -17,7 +19,7 @@ class ProductController extends Controller
         protected ApiCallService $apiService,
         protected PaginationService $paginateService,
         protected CreateMultipartAction $createMultipartAction, 
-        protected CombineMultipleImageErrorAction $combineErrorAction, 
+        protected MergeArrayErrorAction $mergeErrorAction, 
     ) {}
 
     public function index(Request $request) 
@@ -44,7 +46,7 @@ class ProductController extends Controller
         $data = $this->apiService->postData($url, $param);
 
         if (isset($data['errors'])) {
-            $data['errors']['product_images'] = $this->combineErrorAction->execute($data['errors'], 'product_images');
+            $data['errors']['product_images'] = $this->mergeErrorAction->execute($data['errors'], 'product_images');
             
             return redirect()->route('products.create')->with(['inputError' => $data])->withInput();
         }
