@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-class MergeArrayErrorAction
+class MergeArrayFieldErrorAction
 {
     /**
      * Create a new error data key that contain the list of images errors

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\App\Admin;
 
-use App\Actions\CombineArrayErrorAction;
-use App\Actions\CombineMultipleImageErrorAction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Actions\CreateMultipartAction;
-use App\Actions\MergeArrayErrorAction;
+use App\Actions\MergeArrayFieldErrorAction;
 use App\Services\Backend\ApiCallService;
 use App\Services\Backend\PaginationService;
 
@@ -19,7 +17,7 @@ class ProductController extends Controller
         protected ApiCallService $apiService,
         protected PaginationService $paginateService,
         protected CreateMultipartAction $createMultipartAction, 
-        protected MergeArrayErrorAction $mergeErrorAction, 
+        protected MergeArrayFieldErrorAction $mergeErrorAction, 
     ) {}
 
     public function index(Request $request) 
