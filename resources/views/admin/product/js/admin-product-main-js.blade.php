@@ -181,6 +181,7 @@
 
         formSwitcher.prototype.init = function () {
             this.handleSwitchForm();
+            this.handleReminderDot();
             this.handleSwitchButtonForm();
         };
 
@@ -193,6 +194,20 @@
             const hideForm = targetFormType === 'form-description' ? formDetail : formDescription;
         
             this.toggleClass(showForm, hideForm, 'hidden', 'block');
+        };
+
+        formSwitcher.prototype.handleReminderDot = function () {
+            if (this.triggerEl.id === 'btn-form-detail') {
+                const inputTitleDescValue = document.querySelector('.input-description input').value;
+                const inputBodyDescValue = document.querySelector('.input-description textarea').value;
+                const iconReminder = document.querySelector('.warning-field i');
+
+                if (inputTitleDescValue && inputBodyDescValue) {
+                    iconReminder.className = 'ri-check-double-fill';
+                } else {
+                    iconReminder.className = 'ri-error-warning-fill text-danger';
+                }
+            }
         };
 
         formSwitcher.prototype.handleSwitchButtonForm = function () {
@@ -265,6 +280,7 @@
         showNotification(title, message);
     };
 
+    // TODO: samain kaya input image, jadi yg ditampilin sesuai sama yg diklik input, kalo satu satu .. kalo langsung banyak ...
     let imageFiles = [];
     const formInputImg = document.querySelector('#form-input-image');
     const dropAreaImg = document.querySelector('#drop-area-image');
@@ -290,14 +306,5 @@
         } else if (isFormSwitchButton) {
             new formSwitcher(isFormSwitchButton, formSwitchButtons);
         }
-    });
-
-    const btnSubmit = document.querySelector('#btn-submit');
-
-    btnSubmit.addEventListener('click', function(event) {
-        // TODO: input title || body null, auto click switch button
-        const inputDescValue = document.querySelector('.input-description');
-
-
     });
 </script>
