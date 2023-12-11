@@ -15,6 +15,7 @@ module.exports = {
         'accent': '#fbf0d0',
         'grey': '#ccc',
         'light-grey': '#eee',
+        'danger': '#c33',
       },
     },
   },
