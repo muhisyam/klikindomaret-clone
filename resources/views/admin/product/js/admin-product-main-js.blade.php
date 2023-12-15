@@ -96,8 +96,9 @@
                 return uploadedImgWrapper.innerHTML = this.noImageUploaded();
             } else {
                 let showImage = '';
+                const currImageFilesList = Object.values(imageFiles);
                 
-                imageFiles.forEach((element, index) => {
+                currImageFilesList.forEach((element, index) => {
                     let imageUrl = URL.createObjectURL(element);
                     let imageName = element.name;
                     let imageSize = Math.floor(element.size / 1024);
@@ -230,31 +231,46 @@
     }());
 
     function addFilesToImageList(files) {
+        const dt = new DataTransfer();
+        const currImageFiles = Object.values(imageFiles);
+
+        // Add existing images
+        for (let i = 0; i < currImageFiles.length; i++) {
+            // Add exists image to data transfer list
+            dt.items.add(imageFiles[i]);
+        }
+
+        // Add new input image to files list
         for (let i = 0; i < files.length; i++) {
-            if (!imageFiles.some(e => e.name === files[i].name)) {
-                imageFiles.push(files[i]);
+            // Check if image exists
+            if (!currImageFiles.some(e => e.name === files[i].name)) {
+                // Add new image to data transfer list
+                dt.items.add(files[i]);
             }
         }
-    }
+
+        // Assign the updates list to Input Files List and imageFiles
+        formInputImg.files = imageFiles = dt.files;
+    };
 
     function handleFileInputChange() {
         let imageFilesTemp = formInputImg.files;
 
         addFilesToImageList(imageFilesTemp);
         new imageUploader();
-    }
+    };
 
     function handleDragOver(e) {
         e.preventDefault();
 
         dropAreaImg.classList.add('dragover');
         browseImgBtn.classList.remove('z-20');
-    }
+    };
 
     function handleDragLeave() {
         dropAreaImg.classList.remove('dragover');
         browseImgBtn.classList.add('z-20');
-    }
+    };
 
     function handleDrop(e) {
         e.preventDefault();
@@ -266,7 +282,7 @@
 
         addFilesToImageList(imageFilesTemp);
         new imageUploader();
-    }
+    };
     
     function deleteImage(elementIndex) {
         const listImage = document.querySelectorAll('.item-image-uploaded');
@@ -274,14 +290,28 @@
         
         const title = "Berhasil Hapus Gambar"
         const message = targetImage.getAttribute('data-image-name');
-
-        imageFiles.splice(elementIndex, 1);
-        new imageUploader();
+        
+        removeFileFromFileList(elementIndex);
         showNotification(title, message);
+        
+        new imageUploader();
     };
 
-    // TODO: samain kaya input image, jadi yg ditampilin sesuai sama yg diklik input, kalo satu satu .. kalo langsung banyak ...
-    let imageFiles = [];
+    function removeFileFromFileList(elementIndex) {
+        const dt = new DataTransfer();
+        
+        for (let i = 0; i < imageFiles.length; i++) {
+            // here you exclude the file. thus removing it.
+            if (elementIndex !== i) {
+                dt.items.add(imageFiles[i]);
+            }
+        }
+        
+        // Assign the updates list to Input Files List and imageFiles
+        formInputImg.files = imageFiles = dt.files;
+    };
+
+    let imageFiles = {};
     const formInputImg = document.querySelector('#form-input-image');
     const dropAreaImg = document.querySelector('#drop-area-image');
     const browseImgBtn = document.querySelector('#browse-img');
