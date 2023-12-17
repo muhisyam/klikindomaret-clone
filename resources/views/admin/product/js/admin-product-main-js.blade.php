@@ -230,85 +230,88 @@
         return formSwitcher;
     }());
 
-    function addFilesToImageList(files) {
-        const dt = new DataTransfer();
-        const currImageFiles = Object.values(imageFiles);
+    class ImageFilesList {
+        handleFileInputChange() {
+            const newImageFiles = formInputImg.files;
 
-        // Add existing images
-        for (let i = 0; i < currImageFiles.length; i++) {
-            // Add exists image to data transfer list
-            dt.items.add(imageFiles[i]);
-        }
+            this.addFilesToImageList(newImageFiles);
+            new imageUploader();
+        };
 
-        // Add new input image to files list
-        for (let i = 0; i < files.length; i++) {
-            // Check if image exists
-            if (!currImageFiles.some(e => e.name === files[i].name)) {
-                // Add new image to data transfer list
-                dt.items.add(files[i]);
+        addFilesToImageList(files) {
+            const dt = new DataTransfer();
+            const currImageFiles = Object.values(imageFiles);
+
+            // Add existing images
+            for (let i = 0; i < currImageFiles.length; i++) {
+                // Add exists image to data transfer list
+                dt.items.add(currImageFiles[i]);
             }
-        }
 
-        // Assign the updates list to Input Files List and imageFiles
-        formInputImg.files = imageFiles = dt.files;
+            // Add new input image to files list
+            for (let i = 0; i < files.length; i++) {
+                // Check if image exists
+                if (!currImageFiles.some(e => e.name === files[i].name)) {
+                    // Add new image to data transfer list
+                    dt.items.add(files[i]);
+                }
+            }
+
+            // Assign the updated list to Input Files List and imageFiles
+            formInputImg.files = imageFiles = dt.files;
+        };
+
+        removeFileFromFilesList(elementIndex) {
+            const dt = new DataTransfer();
+            
+            for (let i = 0; i < imageFiles.length; i++) {
+                // here you exclude the file. thus removing it.
+                if (elementIndex !== i) {
+                    dt.items.add(imageFiles[i]);
+                }
+            }
+            
+            // Assign the updates list to Input Files List and imageFiles
+            formInputImg.files = imageFiles = dt.files;
+        };
+
+        handleDragOver(e) {
+            e.preventDefault();
+
+            dropAreaImg.classList.add('dragover');
+            browseImgBtn.classList.remove('z-20');
+        };
+
+        handleDragLeave() {
+            dropAreaImg.classList.remove('dragover');
+            browseImgBtn.classList.add('z-20');
+        };
+
+        handleDrop(e) {
+            e.preventDefault();
+
+            dropAreaImg.classList.remove('dragover');
+            browseImgBtn.classList.add('z-20');
+
+            const newImageFiles = e.dataTransfer.files;
+
+            this.addFilesToImageList(newImageFiles);
+            new imageUploader();
+        };
     };
 
-    function handleFileInputChange() {
-        let imageFilesTemp = formInputImg.files;
-
-        addFilesToImageList(imageFilesTemp);
-        new imageUploader();
-    };
-
-    function handleDragOver(e) {
-        e.preventDefault();
-
-        dropAreaImg.classList.add('dragover');
-        browseImgBtn.classList.remove('z-20');
-    };
-
-    function handleDragLeave() {
-        dropAreaImg.classList.remove('dragover');
-        browseImgBtn.classList.add('z-20');
-    };
-
-    function handleDrop(e) {
-        e.preventDefault();
-
-        dropAreaImg.classList.remove('dragover');
-        browseImgBtn.classList.add('z-20');
-
-        let imageFilesTemp = e.dataTransfer.files;
-
-        addFilesToImageList(imageFilesTemp);
-        new imageUploader();
-    };
-    
     function deleteImage(elementIndex) {
+        const imageFilesList = new ImageFilesList();
         const listImage = document.querySelectorAll('.item-image-uploaded');
         const targetImage = listImage[elementIndex].querySelector('.action button');
         
         const title = "Berhasil Hapus Gambar"
         const message = targetImage.getAttribute('data-image-name');
         
-        removeFileFromFileList(elementIndex);
+        imageFilesList.removeFileFromFilesList(elementIndex);
         showNotification(title, message);
         
         new imageUploader();
-    };
-
-    function removeFileFromFileList(elementIndex) {
-        const dt = new DataTransfer();
-        
-        for (let i = 0; i < imageFiles.length; i++) {
-            // here you exclude the file. thus removing it.
-            if (elementIndex !== i) {
-                dt.items.add(imageFiles[i]);
-            }
-        }
-        
-        // Assign the updates list to Input Files List and imageFiles
-        formInputImg.files = imageFiles = dt.files;
     };
 
     let imageFiles = {};
@@ -317,11 +320,13 @@
     const browseImgBtn = document.querySelector('#browse-img');
     const uploadedImgWrapper = document.querySelector('.list-image-uploaded');
 
+    const imageFilesList = new ImageFilesList();
+
     browseImgBtn.addEventListener('click', () => formInputImg.click());
-    formInputImg.addEventListener('change', handleFileInputChange);
-    dropAreaImg.addEventListener('dragover', handleDragOver);
-    dropAreaImg.addEventListener('dragleave', handleDragLeave);
-    dropAreaImg.addEventListener('drop', handleDrop);
+    formInputImg.addEventListener('change', () => imageFilesList.handleFileInputChange());
+    dropAreaImg.addEventListener('dragover', (e) => imageFilesList.handleDragOver(e));
+    dropAreaImg.addEventListener('dragleave', () => imageFilesList.handleDragLeave());
+    dropAreaImg.addEventListener('drop', (e) => imageFilesList.handleDrop(e));
 
     // Event delegation, so that there is no need to readjust dynamic elements 
     // + No need use MutationObserver
