@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="action">
-                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="deleteImage(${index})" aria-label="Delete data image" data-image-name="${imageName}">
+                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="removeImage(${index})" aria-label="Delete data image" data-image-name="${imageName}">
                                     <i class="ri-delete-bin-6-line"></i>
                                 </button>
                             </div>
@@ -230,6 +230,10 @@
         return formSwitcher;
     }());
 
+//  =================================================================
+//                Dynamic image files list handler class
+//  Making the image input files will be the same as the preview list
+//  ================================================================= 
     class ImageFilesList {
         handleFileInputChange() {
             const newImageFiles = formInputImg.files;
@@ -240,22 +244,16 @@
 
         addFilesToImageList(files) {
             const dt = new DataTransfer();
+
+            // Object.values(object) => get object value in array, so that can use .foreach func
             const currImageFiles = Object.values(imageFiles);
+            const formImageFiles = Object.values(files);
 
-            // Add existing images
-            for (let i = 0; i < currImageFiles.length; i++) {
-                // Add exists image to data transfer list
-                dt.items.add(currImageFiles[i]);
-            }
+            // Add exists image to data transfer list
+            currImageFiles.forEach(file => dt.items.add(file));
 
-            // Add new input image to files list
-            for (let i = 0; i < files.length; i++) {
-                // Check if image exists
-                if (!currImageFiles.some(e => e.name === files[i].name)) {
-                    // Add new image to data transfer list
-                    dt.items.add(files[i]);
-                }
-            }
+            // Add new input image to data transfer list
+            formImageFiles.forEach(file => (!currImageFiles.some(e => e.name === file.name)) && dt.items.add(file));
 
             // Assign the updated list to Input Files List and imageFiles
             formInputImg.files = imageFiles = dt.files;
@@ -264,12 +262,11 @@
         removeFileFromFilesList(elementIndex) {
             const dt = new DataTransfer();
             
-            for (let i = 0; i < imageFiles.length; i++) {
-                // here you exclude the file. thus removing it.
-                if (elementIndex !== i) {
-                    dt.items.add(imageFiles[i]);
-                }
-            }
+            // Object.values(object) => get object value in array, so that can use .foreach func
+            const currImageFiles = Object.values(imageFiles);
+
+            // Exclude the selected file. Thus removing it.
+            currImageFiles.forEach((file, index) => (elementIndex !== index) && dt.items.add(file));
             
             // Assign the updates list to Input Files List and imageFiles
             formInputImg.files = imageFiles = dt.files;
@@ -300,7 +297,7 @@
         };
     };
 
-    function deleteImage(elementIndex) {
+    function removeImage(elementIndex) {
         const imageFilesList = new ImageFilesList();
         const listImage = document.querySelectorAll('.item-image-uploaded');
         const targetImage = listImage[elementIndex].querySelector('.action button');
