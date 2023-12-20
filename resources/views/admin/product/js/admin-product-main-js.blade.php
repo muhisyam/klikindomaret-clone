@@ -36,23 +36,38 @@
 //  ==========================================================
 //       Uploader class for multiple upload produk images
 //  ========================================================== 
-    let imageUploader = (function () {
-        function imageUploader() {
-            this.init();
-        }
-
-        imageUploader.prototype.init = function () {
+    class ImageUploader {
+        constructor() {
             this.imageUploadHandler();
         };
 
-        imageUploader.prototype.invalidFeedback = function () {
-            return `<div class="invalid-feedback flex text-red-600 text-sm mt-1">
-                        <p class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></p>
-                        <p class="message">Ukuran gambar >500kb</p>
-                    </div>`;
+        imageUploadHandler() {
+            if (imageFiles.length === 0) {
+                return uploadedImgWrapper.innerHTML = this.noImageUploaded();
+            }
+
+            let showImage, imageAttributes, imageSize;
+            const currImageList = Object.values(imageFiles);
+            
+            currImageList.forEach((element, index) => {
+                imageSize = Math.floor(element.size / 1024);
+
+                imageAttributes = {
+                    index: index,
+                    isInvalid: imageSize > 500 ? ' is-invalid' : '',
+                    imageUrl: URL.createObjectURL(element),
+                    imageName: element.name,
+                    imageSize: imageSize,
+                };
+
+                showImage += this.imageItemWrapper(imageAttributes);
+            });
+
+            uploadedImgWrapper.innerHTML = showImage;
+            initTooltips();
         };
 
-        imageUploader.prototype.imageItemWrapper = function (isInvalid, imageUrl, imageName, imageSize, index) {
+        imageItemWrapper ({isInvalid, imageUrl, imageName, imageSize, index}) {
             return `<div class="item-image-uploaded${isInvalid} relative">
                         <div class="image-item-wrapper flex items-center justify-between border border-light-grey rounded p-2">
                             <div class="image-info-wrapper w-11/12 flex items-center">
@@ -78,7 +93,14 @@
                     </div>`;
         };
 
-        imageUploader.prototype.noImageUploaded = function () {
+        invalidFeedback() {
+            return `<div class="invalid-feedback flex text-red-600 text-sm mt-1">
+                        <p class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></p>
+                        <p class="message">Ukuran gambar >500kb</p>
+                    </div>`;
+        };
+
+        noImageUploaded() {
             return `<div class="item-no-image flex items-center justify-between border border-light-grey rounded p-2">
                         <div class="image-info-wrapper w-11/12 flex items-center">
                             <div class="media h-12 w-12 grid place-items-center shrink-0 bg-accent text-secondary text-2xl text-center rounded me-2">
@@ -90,30 +112,7 @@
                         </div>
                     </div>`;
         };
-
-        imageUploader.prototype.imageUploadHandler = function () {
-            if (imageFiles.length == 0) {
-                return uploadedImgWrapper.innerHTML = this.noImageUploaded();
-            } else {
-                let showImage = '';
-                const currImageFilesList = Object.values(imageFiles);
-                
-                currImageFilesList.forEach((element, index) => {
-                    let imageUrl = URL.createObjectURL(element);
-                    let imageName = element.name;
-                    let imageSize = Math.floor(element.size / 1024);
-                    let isInvalid = imageSize > 500 ? ' is-invalid' : '';
-    
-                    showImage += this.imageItemWrapper(isInvalid, imageUrl, imageName, imageSize, index);
-                });
-    
-                uploadedImgWrapper.innerHTML = showImage;
-                initTooltips();
-            };
-        };
-
-        return imageUploader;
-    }());
+    };
 
 //  ==========================================================
 //  Adjuster class for description textarea amount (add / sub)
@@ -239,7 +238,7 @@
             const newImageFiles = formInputImg.files;
 
             this.addFilesToImageList(newImageFiles);
-            new imageUploader();
+            new ImageUploader();
         };
 
         addFilesToImageList(files) {
@@ -293,7 +292,7 @@
             const newImageFiles = e.dataTransfer.files;
 
             this.addFilesToImageList(newImageFiles);
-            new imageUploader();
+            new ImageUploader();
         };
     };
 
@@ -308,7 +307,7 @@
         imageFilesList.removeFileFromFilesList(elementIndex);
         showNotification(title, message);
         
-        new imageUploader();
+        new ImageUploader();
     };
 
     let imageFiles = {};
