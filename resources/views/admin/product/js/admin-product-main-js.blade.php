@@ -116,23 +116,41 @@
 
 //  ==========================================================
 //  Adjuster class for description textarea amount (add / sub)
-//  ========================================================== 
-    // get current total description
-    let currentTextareaId = document.querySelectorAll('.input-description').length;
-    
-    let descriptionAreaAdjuster = (function () {
-        function descriptionAreaAdjuster(triggerEl) {
+//  ==========================================================
+    class DescriptionAreaAdjuster {
+        constructor(triggerEl) {
             this.triggerEl = triggerEl;
             this.triggerId = triggerEl.id;
-            this.init();
-        }
-
-        descriptionAreaAdjuster.prototype.init = function () {
+            this.currTextareaId = document.querySelectorAll('.input-description').length;
             this.handleDescriptionArea();
         };
 
-        descriptionAreaAdjuster.prototype.newTextarea = function (index) {
-            return `<label for="form-input-desc-${index}" class="block text-sm mb-1">Deskripsi</label>
+        handleDescriptionArea() {
+            if (this.triggerId === 'btn-add-desc') {
+                const descriptionInputWrapper = document.querySelector('#form-description');
+                const nextTextareaClass = ['item-input-group','input-description', '|', 'mb-4'];
+
+                const nextTextareaElement = toObjectHTML(nextTextareaClass, this.newTextarea(++this.currTextareaId));
+                descriptionInputWrapper.insertAdjacentElement("beforeend", nextTextareaElement);
+
+            } else if (this.triggerId === 'btn-del-desc') {
+                const targetId = this.triggerEl.getAttribute('data-target-description');
+                const targetElement = this.triggerEl.closest(`#${targetId}`);
+                const targetDescTitle = targetElement.querySelector('input').value;
+
+                targetElement.parentNode.remove();
+
+                const title = "Berhasil Hapus Deskripsi";
+                
+                // If targetDescTitle has truthy value, that will be the value. If not then id will be. 
+                const message = targetDescTitle || targetElement.id;
+
+                showNotification(title, message);
+            }
+        };
+
+        newTextarea(index) {
+            return `<span class="block text-sm mb-1">Deskripsi</span>
                     <div id="form-input-desc-${index}" class="w-full">
                         <div class="flex gap-2 mb-4">
                             <input type="text" name="title_product_description[]" placeholder="Label Deskripsi..." class="w-full h-10 border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
@@ -143,30 +161,7 @@
                         <textarea name="product_description[]" cols="30" rows="4" placeholder="Deskripsi..." class="w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent"></textarea>
                     </div>`
         };
-
-        descriptionAreaAdjuster.prototype.handleDescriptionArea = function () {
-            if (this.triggerId === 'btn-add-desc') {
-                const descriptionInputWrapper = document.querySelector('#form-description');
-                const nextTextareaClass = ['item-input-group','input-description', '|', 'mb-4'];
-
-                nextTextareaElement = toObjectHTML(nextTextareaClass, this.newTextarea(++currentTextareaId));
-                descriptionInputWrapper.insertAdjacentElement("beforeend", nextTextareaElement);
-
-            } else if (this.triggerId === 'btn-del-desc') {
-                const targetId = this.triggerEl.getAttribute('data-target-description');
-                const targetElement = document.querySelector(`#${targetId}`);
-
-                targetElement.parentNode.remove();
-
-                const title = "Berhasil Hapus Deskripsi"
-                const message = targetElement.id;
-
-                showNotification(title, message);
-            }
-        };
-
-        return descriptionAreaAdjuster;
-    }());
+    }
 
 //  ==========================================================
 //  Switcher class for product detail form to description form
@@ -333,7 +328,7 @@
         const formSwitchButtons = document.querySelectorAll('.btn-form-switcher');
 
         if (isDescAdjustButton) {
-            new descriptionAreaAdjuster(isDescAdjustButton);
+            new DescriptionAreaAdjuster(isDescAdjustButton);
         } else if (isFormSwitchButton) {
             new formSwitcher(isFormSwitchButton, formSwitchButtons);
         }
