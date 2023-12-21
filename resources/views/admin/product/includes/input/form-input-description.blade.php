@@ -11,7 +11,7 @@
         @endphp
         @continue($isAfterFirstLoopNull)
         <div class="item-input-group input-description | mb-4">
-            <label for="form-input-desc-{{ $i+1 }}" class="block text-sm mb-1">Deskripsi{{ $firstLoop ? '*' : '' }}</label>
+            <span class="block text-sm mb-1">Deskripsi{{ $firstLoop ? '*' : '' }}</span>
             <div id="form-input-desc-{{ $i+1 }}" class="w-full">
                 <div class="flex gap-2 mb-4">
                     <input type="text" name="title_product_description[]" placeholder="Label deskripsi..."
@@ -57,7 +57,7 @@
     @forelse ($dataDescriptions as $index => $dataDescription)
         @php $firstLoop = $loop->first @endphp
         <div class="item-input-group input-description | mb-4">
-            <label for="form-input-desc-{{ $index+1 }}" class="block text-sm mb-1">Deskripsi {{ $firstLoop ? '*' : '' }}</label>
+            <span class="block text-sm mb-1">Deskripsi {{ $firstLoop ? '*' : '' }}</span>
             <div id="form-input-desc-{{ $index+1 }}" class="w-full">
                 <div class="flex gap-2 mb-4">
                     <input type="text" name="title_product_description[]" placeholder="Label deskripsi..." class="w-full h-10 border border-[#ccc] rounded py-2 px-3 focus:ring-transparent" value="{{ $dataDescription['title_product_description'] }}" @required($firstLoop)>
@@ -81,7 +81,7 @@
         </div>
     @empty
         <div class="item-input-group input-description | mb-4">
-            <label for="form-input-desc-1" class="block text-sm mb-1">Deskripsi*</label>
+            <span class="block text-sm mb-1">Deskripsi*</span>
             <div id="form-input-desc-1" class="w-full">
                 <div class="flex gap-2 mb-4">
                     <input type="text" name="title_product_description[]" placeholder="Label deskripsi..." class="w-full h-10 border border-[#ccc] rounded py-2 px-3 focus:ring-transparent">
