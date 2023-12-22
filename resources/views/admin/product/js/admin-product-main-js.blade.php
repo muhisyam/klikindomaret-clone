@@ -166,21 +166,21 @@
 //  ==========================================================
 //  Switcher class for product detail form to description form
 //  ========================================================== 
-    let formSwitcher = (function () {
-        function formSwitcher(triggerEl, switcherButtons) {
+    class FormSwitcher {
+        constructor(triggerEl, switcherButtons) {
             this.triggerEl = triggerEl;
             this.btnFormDetail = switcherButtons[0];
             this.btnFormDescription = switcherButtons[1];
             this.init();
-        }
+        };
 
-        formSwitcher.prototype.init = function () {
+        init() {
             this.handleSwitchForm();
             this.handleReminderDot();
             this.handleSwitchButtonForm();
         };
 
-        formSwitcher.prototype.handleSwitchForm = function () {
+        handleSwitchForm() {
             const targetFormType = this.triggerEl.getAttribute('data-target-form');
             const formDetail = document.querySelector('#form-detail');
             const formDescription = document.querySelector('#form-description');
@@ -188,10 +188,17 @@
             const showForm = targetFormType === 'form-detail' ? formDetail : formDescription;
             const hideForm = targetFormType === 'form-description' ? formDetail : formDescription;
         
-            this.toggleClass(showForm, hideForm, 'hidden', 'block');
+            const toggleForm = {
+                targetEl: showForm, 
+                triggerEl: hideForm, 
+                classToShow: 'block',
+                classToHide: 'hidden', 
+            };
+
+            this.toggleClass(toggleForm);
         };
 
-        formSwitcher.prototype.handleReminderDot = function () {
+        handleReminderDot() {
             if (this.triggerEl.id === 'btn-form-detail') {
                 const inputTitleDescValue = document.querySelector('.input-description input').value;
                 const inputBodyDescValue = document.querySelector('.input-description textarea').value;
@@ -201,28 +208,34 @@
                     iconReminder.className = 'ri-check-double-fill';
                 } else {
                     iconReminder.className = 'ri-error-warning-fill text-danger';
-                }
-            }
+                };
+            };
         };
 
-        formSwitcher.prototype.handleSwitchButtonForm = function () {
+        handleSwitchButtonForm() {
             const showButton = this.triggerEl.id === 'btn-form-detail' ? this.btnFormDescription : this.btnFormDetail;
             const hideButton = this.triggerEl.id === 'btn-form-description' ? this.btnFormDescription : this.btnFormDetail;
 
-            this.toggleClass(showButton, hideButton, 'hidden', 'flex');
+            const toggleButton = {
+                targetEl: showButton, 
+                triggerEl: hideButton, 
+                classToShow: 'flex',
+                classToHide: 'hidden', 
+            };
+
+            this.toggleClass(toggleButton);
         };
 
-        formSwitcher.prototype.toggleClass = function (targetEl, triggerEl, classToHide, classToShow) {
+        toggleClass({targetEl, triggerEl, classToShow, classToHide}) {
             // Show target element
             targetEl.classList.remove(classToHide);
             targetEl.classList.add(classToShow);
+            
             // Hide trigger element
             triggerEl.classList.add(classToHide);
             triggerEl.classList.remove(classToShow);
         };
-
-        return formSwitcher;
-    }());
+    };
 
 //  =================================================================
 //                Dynamic image files list handler class
@@ -330,7 +343,7 @@
         if (isDescAdjustButton) {
             new DescriptionAreaAdjuster(isDescAdjustButton);
         } else if (isFormSwitchButton) {
-            new formSwitcher(isFormSwitchButton, formSwitchButtons);
+            new FormSwitcher(isFormSwitchButton, formSwitchButtons);
         }
     });
 </script>
