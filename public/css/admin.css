@@ -59,6 +59,15 @@ body {
     }
 }
 
+@keyframes blinker-tertiary {
+    0%, 100% {
+        background-color: #fbde7e;
+    }
+    50% {
+        background-color: #f9c828;
+    }
+}
+
 @keyframes jumping {
     40% {
         transform: translateY(-2px);
@@ -115,6 +124,10 @@ input::-webkit-inner-spin-button {
 
 .blink {
     animation: blinker 2s linear infinite;
+}
+
+.blink-tertiary {
+    animation: blinker-tertiary 2s linear infinite;
 }
 
 .jump {

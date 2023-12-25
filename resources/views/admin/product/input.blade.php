@@ -89,10 +89,7 @@ Input Produk
                         <div class="icon h-6 me-1"><i class="ri-arrow-left-line"></i></div>
                         <div class="text">Product Details</div>
                     </button>
-                    @php
-                        // TODO: add dot circle if validation false / to reminder user to input
-                    @endphp
-                    <button type="button" id="btn-form-description" class="btn-form-switcher relative w-full h-10 items-center justify-center bg-tertiary text-secondary rounded py-2 flex" data-target-form="form-description">
+                    <button type="button" id="btn-form-description" class="btn-form-switcher relative w-full h-10 items-center justify-center blink-tertiary text-secondary rounded py-2 flex" data-target-form="form-description">
                         <div class="icon h-6 me-1"><i class="ri-arrow-right-line"></i></div>
                         <div class="text">Product Descriptions</div>
                         <div class="warning-field blink | absolute top-0 right-0 me-2 mt-1"><i class="ri-error-warning-fill text-danger"></i></div>
@@ -102,7 +99,10 @@ Input Produk
                         <div class="icon h-6 me-1"><i class="ri-eye-fill"></i></div>
                         <div class="text">Preview</div>
                     </button>
-                    <button type="submit" id="btn-submit" class="h-10 w-full max-w-[33.7%] bg-secondary text-white rounded py-2 px-4 disabled" disabled>Submit</button>
+                    @php
+                        //TODO: Dynamic disabled when has invalid form
+                    @endphp
+                    <button type="submit" id="btn-submit" class="h-10 w-full max-w-[33.7%] bg-secondary text-white rounded py-2 px-4 disabled">Submit</button>
                 </div>
             </form>
         </section>
