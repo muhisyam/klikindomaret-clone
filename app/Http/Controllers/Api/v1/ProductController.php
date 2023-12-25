@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Services\Backend\ImageService;
@@ -16,7 +17,11 @@ class ProductController extends Controller
     {
         $products = Product::orderBy('category_id', 'asc')
             ->withCount([
-                'descriptions',
+                'images',
+            ])
+            ->with([
+                'category', 
+                'store',
                 'images',
             ])
             ->paginate(10);
@@ -77,8 +82,10 @@ class ProductController extends Controller
     {
         $product = Product::where('product_slug', $productSlug)->first();
         $productName = ['product_name' => $product->product_name];
-
+        $productPath = 'img/uploads/products/' . $productSlug;
+        
         $product->delete();
+        File::exists($productPath) && File::deleteDirectory($productPath);
 
         return response()->json(['data' => $productName], 200);
     }
