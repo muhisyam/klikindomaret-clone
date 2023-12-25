@@ -29,7 +29,7 @@ class FormInputDetail extends Component
     
     public $categoryParentsList = NULL;
     public $categoryChildrenList = NULL;
-    public $categoryParentSelected = NULL;
+    public $categoryParent = NULL;
     
     public $storesList = NULL;
     
@@ -65,16 +65,16 @@ class FormInputDetail extends Component
         }
     }
 
-    public function updatedCategoryParentSelected()
+    public function updatedCategoryParent()
     {
         // Init api service class 
         $this->apiService = app(ApiCallService::class);
 
         // Get children top level category
-        $this->getParentChildrensListUrl .= $this->categoryParentSelected . '?withoutPagination=true';
+        $this->getParentChildrensListUrl .= $this->categoryParent . '?withoutPagination=true';
         $this->categoryChildrenList = $this->apiService->getData($this->getParentChildrensListUrl);
 
-        $this->dispatch('select2', category: $this->categoryChildrenList); 
+        $this->dispatch('select2', categoryChildren: $this->categoryChildrenList); 
     }
 
     public function updatedInputsName()
