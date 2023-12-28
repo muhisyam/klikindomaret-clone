@@ -158,12 +158,8 @@ List Produk
     </section>
     <section class="data-table-wrapper border border-[#eee] rounded-xl p-4">
         <table class="w-full">
-            <thead class="bg-[#f5f5f5] text-[#999] text-sm text-left uppercase rounded-t">
-                @include('admin.product.includes.index.table-header')
-            </thead>
-            <tbody class="text-sm">
-                @include('admin.product.includes.index.table-content')
-            </tbody>
+            @livewire('admin.product.includes.index.table-header')
+            @livewire('admin.product.includes.index.table-content', ['dataCategory' => $data])
         </table>
     </section>
 </div>
