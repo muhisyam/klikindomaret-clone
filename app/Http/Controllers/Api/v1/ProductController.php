@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Actions\ProductFilterAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
@@ -16,41 +17,14 @@ class ProductController extends Controller
 {
     public function index(Request $request): JsonResource
     {
-        $columnSortBy = $request->has('sortby') ? $request['sortby'] : false;
-        $columnOrderBy = $request->has('orderby') ? $request['orderby'] : false;
-
-        $query = Product::with(['category', 'store', 'images']);
-
-        // TODO: Move to service class
-        if (!$columnSortBy && !$columnOrderBy) {
-            $products = $query->paginate(10);
-
-            return ProductResource::collection($products);
-        }
-
-        // Sortby category handler
-        if ($columnSortBy === 'category_name') {
-            $query = $query
-                ->join('categories', 'products.category_id', '=', 'categories.id')
-                ->orderBy('categories.category_name', $columnOrderBy);
-                
-        // Sortby price handler
-        } elseif ($columnSortBy === 'product_price') {
-            $query = $query
-                ->orderByRaw(
-                    'CASE
-                        WHEN discount_price > 0 THEN discount_price
-                        ELSE normal_price
-                    END ' . $columnOrderBy
-                );
-
-        // Sortby product name, status, stock
-        } else {
-            $query = $query
-                ->orderBy($columnSortBy, $columnOrderBy);
-        }
+        $productFilter = new ProductFilterAction();
+        $query = count($request->all()) === 0 
+            ? Product::query() 
+            : $productFilter->execute($request);
         
-        $products = $query->paginate(10);
+        $products = $query
+            ->with(['category', 'store', 'images'])
+            ->paginate(10);
 
         return ProductResource::collection($products);
     }
