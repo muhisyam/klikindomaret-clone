@@ -1,6 +1,6 @@
 <thead class="bg-[#f5f5f5] text-[#999] text-sm text-left uppercase rounded-t">
     <tr>
-        <th class="py-3 px-4 rounded-tl">No.</th>
+        <th class="p-3 rounded-tl w-[50px]"><input type="checkbox" class="block m-auto" aria-label="Checkbox select all data"></th>
         <th class="py-3 px-4">
             <div @class([
                 'header-col-wrapper | relative flex cursor-pointer', 

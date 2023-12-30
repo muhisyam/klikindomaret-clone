@@ -8,7 +8,9 @@
             $discountPercent = round(($product['discount_price'] / $product['normal_price']) * 100);
         @endphp
         <tr class="border-b">
-            <td class="py-2 px-3">{{ $index+1 }}</td>
+            <td class="py-2 px-3">
+                <input type="checkbox" class="block m-auto" aria-label="Checkbox select data">
+            </td>
             <td class="py-2 px-4">
                 <div class="product-info | flex items-center">
                     <div class="product-media | relative">
