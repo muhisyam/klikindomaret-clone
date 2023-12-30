@@ -16,7 +16,7 @@
             <figure class="media w-52">
                 <img src="{{ url('https://img.freepik.com/premium-vector/flat-design-no-data-illustration_23-2150527115.jpg?w=740') }}" alt="">
             </figure>
-            <h2 class="text-lg font-bold mb-2">Delete <span class="text-red-700">"{{ !empty($category) ? $category['category_name'] : '' }}"</span> Category?</h2>
+            <h2 class="text-lg font-bold mb-2">Delete <span class="text-red-700">"{{ !empty($dataModal) ? $dataModal[$catalog . '_name'] : '' }}"</span> {{ $catalog }}?</h2>
             <div class="text-sm text-center">
                 <p>Are you sure want to delete? You can't undo this action.</p>
                 <div class="input-group flex items-center justify-center gap-1">
@@ -27,8 +27,9 @@
         </section>
         <section class="footer-section pt-2 pb-6">
             <div class="flex justify-center gap-2">
+                <button id="footer-button-close" class="w-40 border border-[#0079C2] text-[#0079C2] rounded py-2 hover:bg-[#0079c2] hover:text-white" wire:click="closeModal">Close</button>
                 @if ($checkbox)
-                <form action="{{ route('categories.destroy', ['category' => !empty($category) ? $category['id'] : 0]) }}" method="POST">
+                <form action="{{ route($deleteRoute, [$catalog => !empty($dataModal) ? $dataModal[$catalog . '_slug'] : '']) }}" method="POST">
                     @csrf
                     @method('delete')
     
@@ -39,8 +40,21 @@
                     <div class="loader-spin mx-auto"></div>
                 </div>
                 @endif
-                <button id="footer-button-close" class="w-40 border border-[#0079C2] text-[#0079C2] rounded py-2 hover:bg-[#0079c2] hover:text-white" wire:click="closeModal">Close</button>
             </div>
         </section>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        window.addEventListener('livewire:init', () => {
+            Livewire.on('modal-show', (event) => {
+                const modalTarget = document.querySelector('.modal-delete');
+                const overlay = document.querySelector('#bg-overlay');
+
+                // Show the overlay bg again
+                openModal(modalTarget, overlay);
+            });
+        });
+    </script>
+@endpush

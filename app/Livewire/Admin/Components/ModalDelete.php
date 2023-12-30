@@ -7,16 +7,36 @@ use Livewire\Attributes\On;
 
 class ModalDelete extends Component
 {
-    public $category = [];
+    public $dataModal = [];
     
     public $showModal = '';
     public $checkbox = false;
 
-    #[On('modal-info')] 
-    public function addModalInfo($category)
+    public $catalogLists = [
+        'category_name' => 'category',
+        'product_name' => 'product',
+    ];
+    
+    public $deleteRouteLists = [
+        'category' => 'categories.destroy',
+        'product' => 'products.destroy',
+    ]; 
+
+    public $catalog;
+    public $deleteRoute;
+
+    #[On('modal-show')] 
+    public function addModalInfo($data)
     {
+        foreach ($data as $key => $value) {
+            if (array_key_exists($key, $this->catalogLists)) {
+                $this->catalog = $this->catalogLists[$key];
+                $this->deleteRoute = $this->deleteRouteLists[$this->catalog];
+            } 
+        }
+
         $this->reset('checkbox');
-        $this->category = $category;
+        $this->dataModal = $data;
         $this->showModal = 'show';
     }
 
