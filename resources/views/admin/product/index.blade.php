@@ -159,7 +159,7 @@ List Produk
     <section class="data-table-wrapper border border-[#eee] rounded-xl p-4">
         <table class="w-full">
             @livewire('admin.product.includes.index.table-header')
-            @livewire('admin.product.includes.index.table-content', ['dataCategory' => $data])
+            @livewire('admin.product.includes.index.table-content', ['dataProduct' => $data])
         </table>
     </section>
 </div>
