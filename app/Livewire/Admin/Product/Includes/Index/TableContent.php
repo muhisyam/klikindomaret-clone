@@ -9,15 +9,20 @@ class TableContent extends Component
 {
     public $data;
 
-    public function mount($dataCategory)
+    public function mount($dataProduct)
     {
-        $this->data = $dataCategory;
+        $this->data = $dataProduct;
     }
     
     #[On('sort-data')]
     public function newSortData($sortData) 
     {
         $this->data = $sortData;
+    }
+
+    public function dispatchModal($dataProduct)
+    {
+        $this->dispatch('modal-show', data: $dataProduct);
     }
 
     public function render()

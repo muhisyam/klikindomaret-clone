@@ -1,24 +1,23 @@
-<tbody class="text-sm">
+<tbody class="text-sm" @saved="$refresh">
     @foreach ($data['data'] as $index => $product)
         @php
-            $productThumbnail = !empty($product['product_images']) ? $product['product_images'][0]['product_image_name'] : '';
+            $productThumbnail = $product['product_images'][0]['product_image_name'];
             $isDraft = $product['product_status'] === 'Draft' ? True : False;
-            $isHasStock = $product['product_stock'] && False;
+            $isHasStock = $product['product_stock'] ?: False;
             $isDiscount = $product['discount_price'] ?? 0;
             $discountPercent = round(($product['discount_price'] / $product['normal_price']) * 100);
         @endphp
         <tr class="border-b">
-            <td class="py-2 px-4">{{ $index+1 }}</td>
+            <td class="py-2 px-3">{{ $index+1 }}</td>
             <td class="py-2 px-4">
-                <div class="product-info flex items-center">
-                    <figure class="media w-10 me-3">
+                @php /*TODO: Add image count*/ @endphp
+                <div class="product-info | flex items-center">
+                    <figure class="media | w-10 me-3">
                         <img class="rounded-md" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $productThumbnail) }}" alt="">
                     </figure>
-                    <div class="product-desc w-40 flex-1">
-                        <div class="name line-clamp-1 text-ellipsis">
-                            {{ $product['product_name'] }}
-                        </div>
-                        <div class="plu text-xs font-light">
+                    <div class="product-desc | w-40 flex-1">
+                        <div class="name | line-clamp-1 text-ellipsis">{{ $product['product_name'] }}</div>
+                        <div class="plu | text-xs font-light">
                             <p>PLU: <span>{{ $product['plu'] }}</span></p>
                         </div>
                     </div>
@@ -26,17 +25,16 @@
             </td>
             <td class="py-2 px-4">
                 <div class="sort-categories">
-                    @php //TODO: Make detail category 
-                    @endphp
+                    @php /*TODO: If clicked sort by the category, after that the the filter is on not the header*/ @endphp
                     <button class="hover:text-[#0079c2]">{{ $product['category']['category_name'] }}</button>
                 </div>
             </td>
             <td class="py-2 px-4">
                 <div class="store-location">
                     <div class="info">{{ $product['store']['store_name'] }}</div>
-                    <div class="address flex text-xs font-light">
-                        <div class="address-info me-1">Lokasi</div>
-                        <button class="icon h-4 hover:text-[#0079c2]" aria-label="See address data"><i class="ri-eye-fill"></i></button>
+                    <div class="address | flex text-xs font-light">
+                        <div class="address-info | me-1">Lokasi</div>
+                        <button class="icon | h-4 hover:text-[#0079c2]" aria-label="See address data"><i class="ri-eye-fill"></i></button>
                     </div>
                 </div>
             </td>
@@ -51,18 +49,17 @@
             </td>
             <td class="py-2 px-4">
                 <div class="stock-info">
-                    <div class="ready flex">
-                        @php /*TODO: Masih rancu $isHasStock*/ @endphp
+                    <div class="info | flex">
                         <div @class([
                             'icon | h-4 me-1', 
-                            'text-green-600' => !$isHasStock,
-                            'text-red-600' => $isHasStock,
-                        ])><i class="ri-checkbox-circle-fill"></i></div>
-                        <p class="text">{{ !$isHasStock ? 'Tersedia' : 'Habis' }}</p>
+                            'text-green-600' => $isHasStock,
+                            'text-red-600' => !$isHasStock,
+                        ])>
+                            <i class="ri-checkbox-circle-fill"></i>
+                        </div>
+                        <p class="text">{{ $isHasStock ? 'Tersedia' : 'Habis' }}</p>
                     </div>
-                    <div class="stock-count text-xs font-light">
-                        {{ $product['product_stock'] }}
-                    </div>
+                    <div class="stock-count | text-xs font-light">{{ $product['product_stock'] }}</div>
                 </div>
             </td>
             <td class="py-2 px-4">
@@ -81,24 +78,47 @@
                 </div>
             </td>
             <td class="py-2 px-4">
-                <div class="price flex justify-between">
+                <div class="price | flex justify-between">
                     <div class="left-side">Rp</div>
-                    @php //TODO: Format currency
-                    @endphp
                     <div class="right-side">
-                        <div class="discount text-right">
+                        <div class="discount | text-right">
                             <div class="after">{{ $isDiscount ? formatCurrencyIDR($product['discount_price']) : formatCurrencyIDR($product['normal_price']) }}</div>
                             @if ($isDiscount)
-                                <div class="before text-xs font-light line-through">{{ formatCurrencyIDR($product['normal_price']) }}</div>
+                                <div class="before | text-xs font-light line-through">{{ formatCurrencyIDR($product['normal_price']) }}</div>
                             @endif
                         </div>
                     </div>
                 </div>
             </td>
-            <td class="py-2 px-4 text-center">
-                <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2" aria-label="Data action">
-                    <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                </button>
+            <td class="py-2 px-4">
+                <div class="relative">
+                    {{-- Product Action Button --}}
+                    <button class="block rounded overflow-hidden p-1 mx-auto hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="btnDataAction(this)" aria-label="Data action" data-target-action="{{ $product['product_slug'] }}">
+                        <div class="icon-action | h-6 pt-0.5 px-1" data-tooltip-target="action-tooltip-{{ $index }}" data-tooltip-placement="bottom"><i class="ri-more-2-line"></i></div>
+                        <div class="icon-close | h-6 pt-0.5 px-1 animation animation-bounceInRight animation-delay-200 hidden" data-tooltip-target="action-close-tooltip-{{ $index }}" data-tooltip-placement="bottom"><i class="ri-close-line"></i></div>
+                    </button>
+                    <div id="action-tooltip-{{ $index }}" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Action
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <div id="action-close-tooltip-{{ $index }}" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Hide
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+
+                    {{-- Product Action Wrapper --}}
+                    <div id="{{ $product['product_slug'] . '-action' }}" class="absolute top-0 right-11 hidden">
+                        <div class="w-24 flex justify-end gap-1 overflow-x-clip">
+                            <a href="{{ route('products.edit', ['product' => $product['product_slug']]) }}" class="action-edit | bg-[#f5f5f5] text-[#999] rounded animation animation-bounceInRight animation-delay-100 shadow-sm p-1 px-2 hover:text-[#0079c2]" title="Edit">
+                                <div class="icon-edit h-6 pt-0.5"><i class="ri-edit-box-fill"></i></div>
+                            </a>
+                            <button class="action-del | bg-[#f5f5f5] text-[#999] rounded animation animation-bounceInRight shadow-sm p-1 px-2 hover:text-[#0079c2]" data-category-name="{{ $product['product_name'] }}" wire:click="dispatchModal({{ json_encode($product) }})" title="Delete">
+                                <div class="icon-del h-6 pt-0.5"><i class="ri-delete-bin-6-fill"></i></div>
+                            </button>
+                        </div>
+                    </div>
+                    @php /*TODO: Add tooltip*/ @endphp
+                </div>
             </td>
         </tr>
     @endforeach
