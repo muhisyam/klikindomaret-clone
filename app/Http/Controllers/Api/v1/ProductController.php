@@ -24,6 +24,7 @@ class ProductController extends Controller
         
         $products = $query
             ->with(['category', 'store', 'images'])
+            ->withCount(['images'])
             ->paginate(10);
 
         return ProductResource::collection($products);

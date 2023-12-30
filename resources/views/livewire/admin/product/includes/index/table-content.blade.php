@@ -10,11 +10,13 @@
         <tr class="border-b">
             <td class="py-2 px-3">{{ $index+1 }}</td>
             <td class="py-2 px-4">
-                @php /*TODO: Add image count*/ @endphp
                 <div class="product-info | flex items-center">
-                    <figure class="media | w-10 me-3">
-                        <img class="rounded-md" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $productThumbnail) }}" alt="">
-                    </figure>
+                    <div class="product-media | relative">
+                        <figure class="media | w-10 me-3">
+                            <img class="rounded-md" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $productThumbnail) }}" alt="">
+                        </figure>
+                        <div class="media-count | absolute top-0 bg-secondary text-white text-xs font-bold rounded-tl-md px-1">{{ $product['product_images_count'] }}</div>
+                    </div>
                     <div class="product-desc | w-40 flex-1">
                         <div class="name | line-clamp-1 text-ellipsis">{{ $product['product_name'] }}</div>
                         <div class="plu | text-xs font-light">
