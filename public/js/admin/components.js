@@ -101,12 +101,18 @@ function btnDataAction(triggerEl) {
     initTooltips();
 }
 
-function openModal(modal, overlay) {
-    modal.classList.contains('show') ? '' : modal.classList.add('show');
-    overlay.classList.remove('hidden');
-}
+const modalTarget = document.querySelector('.modal-delete');
+const btnCloseTop = modalTarget.querySelector('#header-button-close');
+const btnCloseBottom = modalTarget.querySelector('#footer-button-close');
+const btnDeleteCategory = document.querySelectorAll('button.action-del');
+const overlay = document.querySelector('#bg-overlay');
 
-function closeModal(modal) {
-    modal.classList.contains('show') ? modal.classList.remove('show') :'';
-    overlay.classList.add('hidden');
-}
+btnDeleteCategory.forEach(elBtn => {
+    elBtn.addEventListener('click', function () {
+        openModal(modalTarget, overlay);
+    });
+});
+
+[btnCloseTop, btnCloseBottom, overlay].forEach(el => {
+    el.addEventListener('click', () => closeModal(modalTarget, overlay));
+});

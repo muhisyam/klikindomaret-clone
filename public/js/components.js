@@ -82,7 +82,7 @@ function openModal(modal, overlay) {
     overlay.classList.remove('hidden');
 };
 
-function closeModal(modal) {
+function closeModal(modal, overlay) {
     modal.classList.contains('show') ? modal.classList.remove('show') :'';
     overlay.classList.add('hidden');
 };
