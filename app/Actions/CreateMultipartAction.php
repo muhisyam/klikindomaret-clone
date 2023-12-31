@@ -52,24 +52,28 @@ class CreateMultipartAction
 
     private function handleDidntHasImage($key, $value): Array 
     {
-        if ($key === 'product_images') {
-            $key = 'product_images[]';
-        }
-        
-        $this->param[] = [
-            'name' => $key,
-            'contents' => $value,
+        $keyList = [
+            'product_images' => 'product_images[]'
         ];
+
+        if (array_key_exists($key, $keyList)) {
+            $key = $keyList[$key];
+            
+            $this->param[] = [
+                'name' => $key,
+                'contents' => $value,
+            ];
+        }
 
         return $this->param;
     }
 
-    public function execute(Array $formRequest, String $imageFormName): Array
+    public function execute(Array $formRequest, String $imageFormName = null): Array
     {
         $didntHasImage = true;
 
         foreach ($formRequest as $key => $value) {
-            if (Str::contains($key, $imageFormName)) {
+            if (Str::contains($key, $imageFormName) && !is_null($didntHasImage)) {
                 $didntHasImage = false;
                 $this->handleDataImage($key, $value);
             } else {
