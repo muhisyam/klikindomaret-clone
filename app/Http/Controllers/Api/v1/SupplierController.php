@@ -6,11 +6,17 @@ use App\Models\Supplier;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SupplierRequest;
+use App\DataTransferObjects\FindDataDto;
 use App\Http\Resources\SupplierResource;
+use App\Services\Backend\ApiCallService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SupplierController extends Controller
 {
+    public function __construct(
+        protected ApiCallService $apiService,
+    ) {}
+    
     public function index(): JsonResource
     {
         $suppliers = Supplier::paginate(10);
@@ -30,25 +36,14 @@ class SupplierController extends Controller
 
     public function show(string $supplierFlag): SupplierResource
     {
-        $supplierFlag = explode('-', $supplierFlag);
-
-        $supplier = Supplier::where([
-            ['flag_code', $supplierFlag[0]],
-            ['flag_name', $supplierFlag[1]]
-        ])->first();
+        $supplier = $this->getSpesificData($supplierFlag);
 
         return new SupplierResource($supplier);
     }
 
     public function update(SupplierRequest $request, string $supplierFlag): SupplierResource
     {
-        $supplierFlag = explode('-', $supplierFlag);
-
-        $supplier = Supplier::where([
-            ['flag_code', $supplierFlag[0]],
-            ['flag_name', $supplierFlag[1]]
-        ])->first();
-
+        $supplier = $this->getSpesificData($supplierFlag);
         $data = $request->validated();
         
         $supplier->fill($data);
@@ -59,17 +54,26 @@ class SupplierController extends Controller
 
     public function destroy(string $supplierFlag): JsonResponse
     {
-        $supplierFlag = explode('-', $supplierFlag);
-        
-        $supplier = Supplier::where([
-            ['flag_code', $supplierFlag[0]],
-            ['flag_name', $supplierFlag[1]]
-        ])->first();
-
+        $supplier = $this->getSpesificData($supplierFlag);
         $supplierName = ['supplier_name' => $supplier->supplier_name];
 
         $supplier->delete();
 
         return response()->json(['data' => $supplierName], 200);
+    }
+
+    private function getSpesificData(string $supplierFlag)
+    {
+        $supplierFlag = explode('-', $supplierFlag);
+
+        return $this->apiService->findData(
+            new FindDataDto(
+                model: new Supplier,
+                whereSchema: [
+                    ['flag_code', $supplierFlag[0]],
+                    ['flag_name', $supplierFlag[1]],
+                ],
+            )
+        );
     }
 }

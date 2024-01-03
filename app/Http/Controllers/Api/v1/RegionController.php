@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\DataTransferObjects\FindDataDto;
 use App\Models\Region;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegionRequest;
 use App\Http\Resources\RegionResource;
+use App\DataTransferObjects\FindDataDto;
 use App\Services\Backend\ApiCallService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -36,14 +36,15 @@ class RegionController extends Controller
 
     public function show(string $regionCode): RegionResource
     {
-        $region = Region::where('region_code', $regionCode)->first();
+        $region = $this->getSpesificData($regionCode);
 
         return new RegionResource($region);
     }
 
     public function update(RegionRequest $request, string $regionCode): RegionResource
     {
-        $region = Region::where('region_code', $regionCode)->first();
+        
+        $region = $this->getSpesificData($regionCode);
         $data = $request->validated();
         
         $region->fill($data);
@@ -54,11 +55,23 @@ class RegionController extends Controller
 
     public function destroy(string $regionCode): JsonResponse
     {
-        $region = Region::where('region_code', $regionCode)->first();
+        $region = $this->getSpesificData($regionCode);
         $regionName = ['region_name' => $region->region_name];
 
         $region->delete();
 
         return response()->json(['data' => $regionName], 200);
+    }
+
+    private function getSpesificData(string $regionCode)
+    {
+        return $this->apiService->findData(
+            new FindDataDto(
+                model: new Region,
+                whereSchema: [
+                    ['region_code', $regionCode],
+                ],
+            )
+        );
     }
 }
