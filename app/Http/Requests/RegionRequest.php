@@ -25,13 +25,13 @@ class RegionRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             return [
-                'region_code' => ['required', 'max:20', 'unique:regions'],
+                'region_code' => ['required', 'max:5', 'unique:regions'],
                 'region_name' => ['required', 'max:200'],
                 'region_postal_code' => ['required', 'numeric'],
             ];
         } else if ($this->isMethod('put')) {
             return [
-                'region_code' => ['required', 'max:20'],
+                'region_code' => ['required', 'max:5'],
                 'region_name' => ['required', 'max:200'],
                 'region_postal_code' => ['required', 'numeric'],
             ];
