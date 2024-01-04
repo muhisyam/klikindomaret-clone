@@ -12,8 +12,15 @@ class Store extends Model
     protected $table = 'stores';
 
     protected $fillable = [
-        'flag',
+        'region_id',
+        'supplier_id',
         'store_code',
         'store_name',
+        'store_address',
+        'store_open',
+        'opening_times',
+        'closing_times',
+        'longitude',
+        'latitude',
     ];
 }

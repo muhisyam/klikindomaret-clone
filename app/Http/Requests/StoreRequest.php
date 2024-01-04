@@ -25,15 +25,29 @@ class StoreRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             return [
-                'flag' => ['required', 'max:20'],
-                'store_code' => ['max:5', 'unique:stores'],
+                'region_id' => ['required', 'numeric'],
+                'supplier_id' => ['required', 'numeric'],
+                'store_code' => ['required', 'max:5', 'unique:stores'],
                 'store_name' => ['required', 'max:200'],
+                'store_address' => ['required', 'max:200'],
+                'store_open' => ['required', 'in:Open,Close'],
+                'opening_times' => ['required'],
+                'closing_times' => ['required'],
+                'longitude' => ['required', 'numeric'],
+                'latitude' => ['required', 'numeric'],
             ];
         } else if ($this->isMethod('put')) {
             return [
-                'flag' => ['required', 'max:20'],
-                'store_code' => ['max:5'],
+                'region_id' => ['required', 'numeric'],
+                'supplier_id' => ['required', 'numeric'],
+                'store_code' => ['required', 'max:5'],
                 'store_name' => ['required', 'max:200'],
+                'store_address' => ['required', 'max:200'],
+                'store_open' => ['required', 'in:Open,Close'],
+                'opening_times' => ['required'],
+                'closing_times' => ['required'],
+                'longitude' => ['required', 'numeric'],
+                'latitude' => ['required', 'numeric'],
             ];
         }
     }

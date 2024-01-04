@@ -13,9 +13,24 @@ return new class extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->string('flag', 20);
+            $table->foreignId('region_id')
+                ->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
+            $table->foreignId('supplier_id')
+                ->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
             $table->string('store_code', 5)->unique();
             $table->string('store_name', 200);
+            $table->string('store_address', 200);
+            $table->enum('store_open', ['Open', 'Close'])->default('Open');
+            $table->time('opening_times');
+            $table->time('closing_times');
+            $table->decimal('longitude', 10, 7);
+            $table->decimal('latitude', 10, 7);
             $table->timestamps();
         });
     }
