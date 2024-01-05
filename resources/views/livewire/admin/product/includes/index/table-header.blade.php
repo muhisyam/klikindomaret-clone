@@ -21,7 +21,7 @@
                 <div class="sortable" data-sort></div>
             </div>
         </th>
-        <th class="py-3 px-4">Toko</th>
+        <th class="py-3 px-4">Supplier</th>
         <th class="py-3 px-4">
             <div @class([
                 'header-col-wrapper | relative flex cursor-pointer', 

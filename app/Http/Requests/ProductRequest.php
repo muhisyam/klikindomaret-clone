@@ -25,8 +25,8 @@ class ProductRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             return [
-                'store_id' => ['required', 'numeric'],
                 'category_id' => ['required', 'numeric'],
+                'supplier_id' => ['required', 'numeric'],
                 'plu' => ['required', 'numeric'],
                 'product_name' => ['required', 'max:100'],
                 'product_slug' => ['required', 'unique:products', 'max:200'],
@@ -40,8 +40,8 @@ class ProductRequest extends FormRequest
             ];
         } else if ($this->isMethod('put')) {
             return [
-                'store_id' => ['required', 'numeric'],
                 'category_id' => ['required', 'numeric'],
+                'supplier_id' => ['required', 'numeric'],
                 'plu' => ['required', 'numeric'],
                 'product_name' => ['required', 'max:100'],
                 'product_slug' => ['required', 'max:200'],

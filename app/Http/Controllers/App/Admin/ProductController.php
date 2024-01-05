@@ -51,7 +51,7 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with([
             'success' => [
-                'title' => 'Berhasil Tambah Kategori',
+                'title' => 'Berhasil Tambah Produk',
                 'message' => $data['data']['product_name'],
             ],
         ]);
@@ -86,7 +86,7 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with([
             'success' => [
-                'title' => 'Berhasil Update Kategori',
+                'title' => 'Berhasil Update Produk',
                 'message' => $data['data']['product_name'],
             ]
         ]);
@@ -105,7 +105,7 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with([
             'success' => [
-                'title' => 'Berhasil Hapus Kategori',
+                'title' => 'Berhasil Hapus Produk',
                 'message' => $data['data']['product_name'],
             ]
         ]);

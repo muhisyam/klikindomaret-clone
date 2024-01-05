@@ -11,7 +11,7 @@
             placeholder: 'Pilih kategori...',
         });
 
-        $('#form-select-store').select2({
+        $('#form-select-supplier').select2({
             width: '100%',
             placeholder: 'Pilih toko...',
         });

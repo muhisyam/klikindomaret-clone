@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    public function __construct(
+        protected ProductImageController $productImageController,
+        protected ProductDescriptionController $productDescriptionController,
+    ){}
+
     public function index(Request $request): JsonResource
     {
         $productFilter = new ProductFilterAction();
@@ -23,7 +28,7 @@ class ProductController extends Controller
             : $productFilter->execute($request);
         
         $products = $query
-            ->with(['category', 'store', 'images'])
+            ->with(['category', 'supplier', 'images'])
             ->withCount(['images'])
             ->paginate(10);
 
@@ -34,13 +39,10 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $product = new Product($data);
-        $imageService = new ImageService();
-        $productImage = new ProductImageController($imageService);
-        $productDescription = new ProductDescriptionController();
         
         $product->save();
-        $productImage->store($data, $product->id);
-        $productDescription->store($data, $product->id);
+        $this->productImageController->store($data, $product->id);
+        $this->productDescriptionController->store($data, $product->id);
 
         return new ProductResource($product);
     }
@@ -50,12 +52,11 @@ class ProductController extends Controller
         $product = Product::where('product_slug', $productSlug)
             ->with([
                 'category', 
-                'store', 
+                'supplier', 
                 'descriptions',
                 'images',
             ])
             ->withCount([
-                'descriptions',
                 'images',
             ])
             ->first();
@@ -67,14 +68,11 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         $product = Product::where('product_slug', $productSlug)->first();
-        $imageService = new ImageService();
-        $productImage = new ProductImageController($imageService);
-        $productDescription = new ProductDescriptionController();
         
-        $productImage->update($data, $product->id);
+        $this->productImageController->update($data, $product->id);
         $product->fill($data);
         $product->save();
-        $productDescription->update($data, $product->id);
+        $this->productDescriptionController->update($data, $product->id);
 
         return new ProductResource($product);
     }

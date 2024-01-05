@@ -1,11 +1,11 @@
-<tbody class="text-sm" @saved="$refresh">
+<tbody class="text-sm">
     @foreach ($data['data'] as $index => $product)
         @php
             $productThumbnail = $product['product_images'][0]['product_image_name'];
             $isDraft = $product['product_status'] === 'Draft' ? True : False;
             $isHasStock = $product['product_stock'] ?: False;
             $isDiscount = $product['discount_price'] ?? 0;
-            $discountPercent = round(($product['discount_price'] / $product['normal_price']) * 100);
+            $discountPercent = round((($product['normal_price'] - $product['discount_price']) / $product['normal_price']) * 100);
         @endphp
         <tr class="border-b">
             <td class="py-2 px-3">
@@ -15,9 +15,9 @@
                 <div class="product-info | flex items-center">
                     <div class="product-media | relative">
                         <figure class="media | w-10 me-3">
-                            <img class="rounded-md" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $productThumbnail) }}" alt="">
+                            <img class="aspect-square object-fill rounded-md" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $productThumbnail) }}" alt="">
                         </figure>
-                        <div class="media-count | absolute top-0 bg-secondary text-white text-xs font-bold rounded-tl-md px-1">{{ $product['product_images_count'] }}</div>
+                        <div class="media-count | absolute top-0 right-3 bg-secondary text-white text-xs font-bold rounded-tr-md rounded-bl-md px-1">{{ $product['product_images_count'] }}</div>
                     </div>
                     <div class="product-desc | w-40 flex-1">
                         <div class="name | line-clamp-1 text-ellipsis">{{ $product['product_name'] }}</div>
@@ -34,8 +34,8 @@
                 </div>
             </td>
             <td class="py-2 px-4">
-                <div class="store-location">
-                    <div class="info">{{ $product['store']['store_name'] }}</div>
+                <div class="supplier-location">
+                    <div class="info">{{ $product['supplier']['supplier_name'] }}</div>
                     <div class="address | flex text-xs font-light">
                         <div class="address-info | me-1">Lokasi</div>
                         <button class="icon | h-4 hover:text-[#0079c2]" aria-label="See address data"><i class="ri-eye-fill"></i></button>
@@ -59,7 +59,10 @@
                             'text-green-600' => $isHasStock,
                             'text-red-600' => !$isHasStock,
                         ])>
-                            <i class="ri-checkbox-circle-fill"></i>
+                            <i @class([
+                                'ri-checkbox-circle-fill'=> $isHasStock,
+                                'ri-error-warning-fill' => !$isHasStock, 
+                            ])></i>
                         </div>
                         <p class="text">{{ $isHasStock ? 'Tersedia' : 'Habis' }}</p>
                     </div>

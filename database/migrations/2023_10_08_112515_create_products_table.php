@@ -18,7 +18,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->foreignId('store_id')
+            $table->foreignId('supplier_id')
                 ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
@@ -29,7 +29,8 @@ return new class extends Migration
             $table->integer('normal_price');
             $table->integer('discount_price')->nullable();
             $table->integer('product_stock');
-            $table->enum('product_status', ['Publish', 'Draft'])->default('Publish');
+            // Brand, keyword
+            $table->enum('product_status', ['Draft', 'Publish'])->default('Publish');
             $table->timestamps();
         });
     }

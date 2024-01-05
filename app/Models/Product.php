@@ -13,7 +13,7 @@ class Product extends Model
 
     protected $fillable = [
         'category_id',
-        'store_id',
+        'supplier_id',
         'plu',
         'product_name',
         'product_slug',
@@ -28,9 +28,9 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function store()
+    public function supplier()
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Supplier::class);
     }
 
     public function descriptions()
