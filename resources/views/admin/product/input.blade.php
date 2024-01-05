@@ -73,11 +73,12 @@ Input Produk
 
                 <div class="product-input-wrapper flex gap-4 mb-5">
                     <section class="left-side relative w-2/5 border border-[#eee] rounded-xl p-4">
+                        @php/*TODO: Fix update image not working with exist image*/@endphp
                         @include('admin.product.includes.input.image-input')
                     </section>
                     <section class="right-side relative w-3/5 border border-[#eee] rounded-xl overflow-auto p-4">
                         <div id="form-detail" class="block">
-                            @livewire('admin.product.form-input-detail', $options)
+                            @livewire('admin.product.includes.input.form-input-detail', $options)
                         </div>
                         <div id="form-description" class="hidden"> 
                             @include('admin.product.includes.input.form-input-description')

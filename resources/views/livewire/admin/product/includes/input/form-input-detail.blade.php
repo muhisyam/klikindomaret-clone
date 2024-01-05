@@ -67,15 +67,15 @@
         @include('admin.components.validation-message', ['field' => 'product_status', 'validation' => 'form'])
     </div>
     <div class="item-input-group mb-4" wire:ignore>
-        <label for="form-select-store" class="block text-sm mb-1">Toko</label>
-        <select id="form-select-store" name="store_id" class="{{ array_key_exists('store_id', $error['errors']) && 'is-invalid' }}">
+        <label for="form-select-supplier" class="block text-sm mb-1">Supplier</label>
+        <select id="form-select-supplier" name="supplier_id" class="{{ array_key_exists('supplier_id', $error['errors']) && 'is-invalid' }}">
             @unless (isset($data)) <option></option> @endunless
-            @php $selectedStore = isset($data) ? $data['store_id'] : old('store_id') @endphp
-            @foreach ($storesList as $storeData)
-                <option value="{{ $storeData['id'] }}" @selected($selectedStore === $storeData['id'])>{{ $storeData['store_name'] }}</option>
+            @php $selectedSupplier = isset($data) ? $data['supplier_id'] : old('supplier_id') @endphp
+            @foreach ($suppliersList as $supplierData)
+                <option value="{{ $supplierData['id'] }}" @selected($selectedSupplier === $supplierData['id'])>{{ $supplierData['supplier_name'] }}</option>
             @endforeach
         </select>
-        @include('admin.components.validation-message', ['field' => 'store_id', 'validation' => 'form'])
+        @include('admin.components.validation-message', ['field' => 'supplier_id', 'validation' => 'form'])
     </div>  
 </div>
 

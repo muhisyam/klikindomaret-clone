@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin\Product;
+namespace App\Livewire\Admin\Product\Includes\Input;
 
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -12,7 +12,7 @@ class FormInputDetail extends Component
     private $getParentsListUrl = 'http://127.0.0.1:8080/api/v1/categories?withoutPagination=true';
     private $getParentChildrensListUrl = 'http://127.0.0.1:8080/api/v1/categories/sub/';
 
-    private $getStoresListUrl = 'http://127.0.0.1:8080/api/v1/stores';
+    private $getSuppliersListUrl = 'http://127.0.0.1:8080/api/v1/suppliers';
 
     public $error;
     public $data;
@@ -31,7 +31,7 @@ class FormInputDetail extends Component
     public $categoryChildrenList = NULL;
     public $categoryParent = NULL;
     
-    public $storesList = NULL;
+    public $suppliersList = NULL;
     
     public function mount($error, $data = null, $old = null) 
     {
@@ -92,9 +92,9 @@ class FormInputDetail extends Component
         $this->categoryParentsList = $responseCategory['data'];
 
         // Get data store
-        $responseStore = $this->apiService->getData($this->getStoresListUrl);
-        $this->storesList = $responseStore['data'];
+        $responseSupplier = $this->apiService->getData($this->getSuppliersListUrl);
+        $this->suppliersList = $responseSupplier['data'];
 
-        return view('livewire.admin.product.form-input-detail');
+        return view('livewire.admin.product.includes.input.form-input-detail');
     }
 }
