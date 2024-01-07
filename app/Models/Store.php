@@ -23,4 +23,9 @@ class Store extends Model
         'longitude',
         'latitude',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

@@ -41,6 +41,7 @@ class ProductController extends Controller
         $product = new Product($data);
         
         $product->save();
+        $product->stores()->attach($data['store_id']);
         $this->productImageController->store($data, $product->id);
         $this->productDescriptionController->store($data, $product->id);
 
@@ -55,6 +56,7 @@ class ProductController extends Controller
                 'supplier', 
                 'descriptions',
                 'images',
+                'stores',
             ])
             ->withCount([
                 'images',
@@ -72,6 +74,7 @@ class ProductController extends Controller
         $this->productImageController->update($data, $product->id);
         $product->fill($data);
         $product->save();
+        $product->stores()->sync($data['store_id']);
         $this->productDescriptionController->update($data, $product->id);
 
         return new ProductResource($product);
@@ -83,6 +86,7 @@ class ProductController extends Controller
         $productName = ['product_name' => $product->product_name];
         $productPath = 'img/uploads/products/' . $productSlug;
         
+        $product->stores()->detach();
         $product->delete();
         File::exists($productPath) && File::deleteDirectory($productPath);
 
