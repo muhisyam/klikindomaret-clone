@@ -77,6 +77,17 @@
         </select>
         @include('admin.components.validation-message', ['field' => 'supplier_id', 'validation' => 'form'])
     </div>  
+    <div class="item-input-group mb-4" wire:ignore>
+        <label for="form-select-store" class="block text-sm mb-1">Toko</label>
+        <select id="form-select-store" name="store_id[]" class="{{ array_key_exists('store_id', $error['errors']) && 'is-invalid' }}" multiple="multiple">
+            @unless (isset($data)) <option></option> @endunless
+            @php $selectedStore = isset($data) ? $data['store_id'] : old('store_id') @endphp
+            @foreach ($storesList as $storeData)
+                <option value="{{ $storeData['id'] }}" @selected($selectedStore === $storeData['id'])>{{ $storeData['store_name'] }}</option>
+            @endforeach
+        </select>
+        @include('admin.components.validation-message', ['field' => 'store_id', 'validation' => 'form'])
+    </div>  
 </div>
 
 @push('scripts')

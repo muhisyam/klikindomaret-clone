@@ -11,14 +11,19 @@
             placeholder: 'Pilih kategori...',
         });
 
-        $('#form-select-supplier').select2({
-            width: '100%',
-            placeholder: 'Pilih toko...',
-        });
-
         $('#form-select-product-status').select2({
             width: '100%',
             placeholder: 'Pilih status...',
+        });
+
+        $('#form-select-supplier').select2({
+            width: '100%',
+            placeholder: 'Pilih supplier...',
+        });
+
+        $('#form-select-store').select2({
+            width: '100%',
+            placeholder: 'Pilih toko...',
         });
         // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
         
