@@ -19,7 +19,7 @@ class StoreController extends Controller
     
     public function index(): JsonResource
     {
-        $stores = Store::orderBy('flag', 'asc')->paginate(10);
+        $stores = Store::orderBy('region_id', 'asc')->paginate(10);
 
         return StoreResource::collection($stores);
     }
