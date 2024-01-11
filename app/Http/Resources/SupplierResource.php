@@ -19,6 +19,7 @@ class SupplierResource extends JsonResource
             'flag_code' => $this->flag_code,
             'flag_name' => $this->flag_name,
             'supplier_name' => $this->supplier_name,
+            'stores' => StoreResource::collection($this->whenLoaded('stores')),
         ];
     }
 }

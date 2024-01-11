@@ -16,4 +16,9 @@ class Supplier extends Model
         'flag_name',
         'supplier_name',
     ];
+
+    public function stores()
+    {
+        return $this->hasMany(Store::class);
+    }
 }

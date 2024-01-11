@@ -36,7 +36,18 @@ class SupplierController extends Controller
 
     public function show(string $supplierFlag): SupplierResource
     {
-        $supplier = $this->getSpesificData($supplierFlag);
+        $supplierFlag = explode('-', $supplierFlag);
+        
+        $supplier = $this->apiService->findData(
+            new FindDataDto(
+                model: new Supplier,
+                whereSchema: [
+                    ['flag_code', $supplierFlag[0]],
+                    ['flag_name', $supplierFlag[1]],
+                ],
+                withSchema: ['stores'],
+            )
+        );
 
         return new SupplierResource($supplier);
     }
