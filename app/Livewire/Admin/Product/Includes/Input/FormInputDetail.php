@@ -13,7 +13,7 @@ class FormInputDetail extends Component
     private $getParentChildrensListUrl = 'http://127.0.0.1:8080/api/v1/categories/sub/';
 
     private $getSuppliersListUrl = 'http://127.0.0.1:8080/api/v1/suppliers';
-    private $getStoresListUrl = 'http://127.0.0.1:8080/api/v1/stores';
+    private $getStoresListUrl = 'http://127.0.0.1:8080/api/v1/stores/';
 
     public $error;
     public $data;
@@ -33,6 +33,8 @@ class FormInputDetail extends Component
     public $categoryParent = NULL;
     
     public $suppliersList = NULL;
+    public $supplierInput = NULL;
+
     public $storesList = NULL;
     
     public function mount($error, $data = null, $old = null) 
@@ -84,6 +86,18 @@ class FormInputDetail extends Component
         $this->inputs['slug'] = Str::slug($this->inputs['name']);
     }
 
+    public function updatedSupplierInput()
+    {
+        // Init api service class 
+        $this->apiService = app(ApiCallService::class);
+
+        // Get children top level category
+        $this->getStoresListUrl .= '?supplier_id=' . $this->supplierInput . '&withoutPagination=true';
+        $this->storesList = $this->apiService->getData($this->getStoresListUrl);
+
+        $this->dispatch('select2-store', storeList: $this->storesList); 
+    }
+
     public function render()
     {   
         // Init api service class 
@@ -96,10 +110,6 @@ class FormInputDetail extends Component
         // Get data supplier
         $responseSupplier = $this->apiService->getData($this->getSuppliersListUrl);
         $this->suppliersList = $responseSupplier['data'];
-
-        // Get data store
-        $responseStore = $this->apiService->getData($this->getStoresListUrl);
-        $this->storesList = $responseStore['data'];
 
         return view('livewire.admin.product.includes.input.form-input-detail');
     }
