@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Store;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\StoreRequest;
 use App\Http\Controllers\Controller;
@@ -17,9 +18,13 @@ class StoreController extends Controller
         protected ApiCallService $apiService,
     ) {}
     
-    public function index(): JsonResource
+    public function index(Request $request): JsonResource
     {
-        $stores = Store::orderBy('region_id', 'asc')->paginate(10);
+        $query = Store::query();
+
+        $stores = count($request->all()) === 0 
+            ? $query->orderBy('region_id', 'asc')->paginate(10)
+            : $query->where('supplier_id', $request['supplier_id'])->get();
 
         return StoreResource::collection($stores);
     }
