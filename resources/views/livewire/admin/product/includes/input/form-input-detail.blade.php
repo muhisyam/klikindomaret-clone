@@ -68,26 +68,31 @@
     </div>
     <div class="item-input-group mb-4" wire:ignore>
         <label for="form-select-supplier" class="block text-sm mb-1">Supplier</label>
-        <select id="form-select-supplier" name="supplier_id" class="{{ array_key_exists('supplier_id', $error['errors']) && 'is-invalid' }}">
+        <select id="form-select-supplier" name="supplier_id" class="{{ array_key_exists('supplier_id', $error['errors']) && 'is-invalid' }}" wire.model='supplierInput'>
             @unless (isset($data)) <option></option> @endunless
-            @php $selectedSupplier = isset($data) ? $data['supplier_id'] : old('supplier_id') @endphp
+            @php 
+                /*TODO: Enkripsi id supplier*/
+                $selectedSupplier = isset($data) ? $data['supplier_id'] : old('supplier_id');
+            @endphp
             @foreach ($suppliersList as $supplierData)
                 <option value="{{ $supplierData['id'] }}" @selected($selectedSupplier === $supplierData['id'])>{{ $supplierData['supplier_name'] }}</option>
             @endforeach
         </select>
         @include('admin.components.validation-message', ['field' => 'supplier_id', 'validation' => 'form'])
     </div>  
-    <div class="item-input-group mb-4" wire:ignore>
+    <div class="item-input-group | relative mb-4" wire:ignore>
+        <span class="!absolute -top-1 inline-flex loader-spin ms-8" wire:loading></span>
         <label for="form-select-store" class="block text-sm mb-1">Toko</label>
-        <select id="form-select-store" name="store_id[]" class="{{ array_key_exists('store_id', $error['errors']) && 'is-invalid' }}" multiple="multiple">
-            @unless (isset($data)) <option></option> @endunless
-            @php $selectedStore = isset($data) ? $data['store_id'] : old('store_id') @endphp
-            @foreach ($storesList as $storeData)
+        <select id="form-select-store" name="stores[]" class="{{ array_key_exists('stores', $error['errors']) && 'is-invalid' }}" multiple="multiple" wire:loading.attr="disabled">
+            @php $selectedStore = isset($data) ? $data['stores'] : old('stores') @endphp
+            @unless (isset($data))
+                <option></option>
+            @else
                 <option value="{{ $storeData['id'] }}" @selected($selectedStore === $storeData['id'])>{{ $storeData['store_name'] }}</option>
-            @endforeach
+            @endunless
         </select>
         @include('admin.components.validation-message', ['field' => 'store_id', 'validation' => 'form'])
-    </div>  
+    </div>
 </div>
 
 @push('scripts')
@@ -97,14 +102,18 @@
         $('#form-select-category-parent').on('change', function () {
             @this.set('categoryParent', $(this).val());
         });
+
+        $('#form-select-supplier').on('change', function () {
+            @this.set('supplierInput', $(this).val());
+        });
         // ========>>>>>>> Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
 
         document.addEventListener('livewire:initialized', () => {
-            @this.on('select2', (event) => {
+            @this.on('select2-categories', (event) => {
                 let option = '';
                 const selectChildren = document.querySelector('#form-select-category-children');
                 const isHasValue = selectChildren.value;
-                const dataEvent = event.categoryChildren !== null ? event.categoryChildren.data : null ;
+                const dataEvent = event.categoryChildren !== null ? event.categoryChildren.data : null;
 
                 if (dataEvent !== null) {
                     dataEvent.forEach((data) => {
@@ -117,7 +126,23 @@
                         option += `<optgroup label="${data.category_name}">${childOption}</optgroup>`;
                     });
                 }
+
                 selectChildren.innerHTML = option;
+            });
+
+            @this.on('select2-stores', (event) => {
+                let option = '';
+                const selectStore = document.querySelector('#form-select-store');
+                const isHasValue = selectStore.value;
+                const eventStore = event.storeList ?? null;
+
+                if (eventStore !== null) {
+                    eventStore.data.forEach((dataStore) => {
+                        option += `<option value="${dataStore.id}"${isHasValue == dataStore.id && 'selected'}>${dataStore.store_name}</option>`
+                    });
+                }
+
+                selectStore.innerHTML = option;
             });
         });
     </script>

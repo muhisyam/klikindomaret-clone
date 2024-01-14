@@ -78,7 +78,7 @@ class FormInputDetail extends Component
         $this->getParentChildrensListUrl .= $this->categoryParent . '?withoutPagination=true';
         $this->categoryChildrenList = $this->apiService->getData($this->getParentChildrensListUrl);
 
-        $this->dispatch('select2', categoryChildren: $this->categoryChildrenList); 
+        $this->dispatch('select2-categories', categoryChildren: $this->categoryChildrenList); 
     }
 
     public function updatedInputsName()
@@ -88,6 +88,17 @@ class FormInputDetail extends Component
 
     public function updatedSupplierInput()
     {
+        if ($this->supplierInput === '1' || $this->supplierInput === '2') {
+            $dataStore = [
+                'data' => [
+                    'id' => 'all_store',
+                    'store_name' => 'Semua Toko Indomaret',
+                ]  
+            ];
+
+            return $this->dispatch('select2-stores', storeList: $dataStore); 
+        }
+
         // Init api service class 
         $this->apiService = app(ApiCallService::class);
 
@@ -95,7 +106,7 @@ class FormInputDetail extends Component
         $this->getStoresListUrl .= '?supplier_id=' . $this->supplierInput . '&withoutPagination=true';
         $this->storesList = $this->apiService->getData($this->getStoresListUrl);
 
-        $this->dispatch('select2-store', storeList: $this->storesList); 
+        $this->dispatch('select2-stores', storeList: $this->storesList); 
     }
 
     public function render()
