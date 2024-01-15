@@ -84,11 +84,15 @@
         <span class="!absolute -top-1 inline-flex loader-spin ms-8" wire:loading></span>
         <label for="form-select-store" class="block text-sm mb-1">Toko</label>
         <select id="form-select-store" name="stores[]" class="{{ array_key_exists('stores', $error['errors']) && 'is-invalid' }}" multiple="multiple" wire:loading.attr="disabled">
-            @php $selectedStore = isset($data) ? $data['stores'] : old('stores') @endphp
+            @php $selectedStore = isset($data) ? $data['store_ids'] : old('stores') @endphp
             @unless (isset($data))
                 <option></option>
             @else
-                <option value="{{ $storeData['id'] }}" @selected($selectedStore === $storeData['id'])>{{ $storeData['store_name'] }}</option>
+                @forelse($data['stores'] as $storeData)
+                    <option value="{{ $storeData['id'] }}" @selected(in_array($storeData['id'], $selectedStore))>{{ $storeData['store_name'] }}</option>
+                @empty
+                    <option value="all_store" selected>Semua Toko Indomaret</option>
+                @endforelse
             @endunless
         </select>
         @include('admin.components.validation-message', ['field' => 'store_id', 'validation' => 'form'])
