@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Actions\ProductFilterAction;
+use App\DataTransferObjects\FindDataDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Services\Backend\ImageService;
+use App\Services\Backend\ApiCallService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\File;
 class ProductController extends Controller
 {
     public function __construct(
+        protected ApiCallService $apiService,
         protected ProductImageController $productImageController,
         protected ProductDescriptionController $productDescriptionController,
     ){}
@@ -50,18 +52,24 @@ class ProductController extends Controller
 
     public function show(string $productSlug): ProductResource
     {
-        $product = Product::where('product_slug', $productSlug)
-            ->with([
-                'category', 
-                'supplier', 
-                'descriptions',
-                'images',
-                'stores',
-            ])
-            ->withCount([
-                'images',
-            ])
-            ->first();
+        $product = $this->apiService->findData(
+            new FindDataDto(
+                model: new Product,
+                whereSchema: [
+                    ['product_slug', $productSlug],
+                ],
+                withSchema: [
+                    'category', 
+                    'supplier', 
+                    'descriptions',
+                    'images',
+                    'stores',
+                ],
+                withCountSchema: [
+                    'images',
+                ],
+            )
+        );
 
         return new ProductResource($product);
     }
@@ -69,7 +77,7 @@ class ProductController extends Controller
     public function update(ProductRequest $request, string $productSlug): ProductResource
     {
         $data = $request->validated();
-        $product = Product::where('product_slug', $productSlug)->first();
+        $product = $this->getSpesificData($productSlug);
         
         $this->productImageController->update($data, $product->id);
         $product->fill($data);
@@ -82,7 +90,7 @@ class ProductController extends Controller
 
     public function destroy(string $productSlug): JsonResponse
     {
-        $product = Product::where('product_slug', $productSlug)->first();
+        $product = $this->getSpesificData($productSlug);
         $productName = ['product_name' => $product->product_name];
         $productPath = 'img/uploads/products/' . $productSlug;
         
@@ -91,5 +99,17 @@ class ProductController extends Controller
         File::exists($productPath) && File::deleteDirectory($productPath);
 
         return response()->json(['data' => $productName], 200);
+    }
+
+    private function getSpesificData(string $productSlug)
+    {
+        return $this->apiService->findData(
+            new FindDataDto(
+                model: new Product,
+                whereSchema: [
+                    ['product_slug', $productSlug],
+                ],
+            )
+        );
     }
 }
