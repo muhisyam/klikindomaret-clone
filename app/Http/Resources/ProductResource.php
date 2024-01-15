@@ -32,6 +32,7 @@ class ProductResource extends JsonResource
             'product_images_count' => $this->images_count,
             'product_images' => ProductImageResource::collection($this->whenLoaded('images')),
             'stores' => StoreResource::collection($this->whenLoaded('stores')),
+            'store_ids' => $this->getStoreIds($this->whenLoaded('stores')),
         ];
     }
 }

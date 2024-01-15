@@ -47,4 +47,13 @@ class Product extends Model
     {
         return $this->belongsToMany(Store::class)->withTimestamps();
     }
+
+    public function getStoreIds(mixed $storeCollection)
+    {
+        if (!$storeCollection instanceof \Illuminate\Http\Resources\MissingValue) {
+            return $storeCollection->pluck('id')->toArray();
+        }
+        
+        return null;
+    }
 }
