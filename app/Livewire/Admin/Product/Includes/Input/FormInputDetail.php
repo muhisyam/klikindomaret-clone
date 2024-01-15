@@ -90,10 +90,10 @@ class FormInputDetail extends Component
     {
         if ($this->supplierInput === '1' || $this->supplierInput === '2') {
             $dataStore = [
-                'data' => [
+                'data' => [[
                     'id' => 'all_store',
                     'store_name' => 'Semua Toko Indomaret',
-                ]  
+                ]]  
             ];
 
             return $this->dispatch('select2-stores', storeList: $dataStore); 
