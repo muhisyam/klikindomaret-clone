@@ -43,7 +43,7 @@ class ProductController extends Controller
         $product = new Product($data);
         
         $product->save();
-        $product->stores()->attach($data['store_id']);
+        $product->stores()->attach($data['store_ids']);
         $this->productImageController->store($data, $product->id);
         $this->productDescriptionController->store($data, $product->id);
 
@@ -82,7 +82,7 @@ class ProductController extends Controller
         $this->productImageController->update($data, $product->id);
         $product->fill($data);
         $product->save();
-        $product->stores()->sync($data['store_id']);
+        $product->stores()->sync($data['store_ids']);
         $this->productDescriptionController->update($data, $product->id);
 
         return new ProductResource($product);

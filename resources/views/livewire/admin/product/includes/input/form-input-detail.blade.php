@@ -81,8 +81,8 @@
     <div class="item-input-group | | relative mb-4" wire:ignore>
         <span class="!absolute -top-1 inline-flex loader-spin ms-8" wire:loading></span>
         <label for="form-select-store" class="block text-sm mb-1">Toko</label>
-        <select id="form-select-store" name="stores[]" class="{{ array_key_exists('stores', $error['errors']) && 'is-invalid' }}" multiple="multiple" wire:loading.attr="disabled">
-            @php $selectedStore = isset($data) ? $data['store_ids'] : old('stores') @endphp
+        <select id="form-select-store" name="store_ids[]" class="{{ array_key_exists('store_ids', $error['errors']) && 'is-invalid' }}" multiple="multiple" wire:loading.attr="disabled">
+            @php $selectedStore = isset($data) ? $data['store_ids'] : old('store_ids') @endphp
             @unless (is_null($selectedStore))
                 @foreach($storesList['data'] as $storeData)
                     <option value="{{ $storeData['id'] }}" @selected(in_array((string) $storeData['id'], $selectedStore))>{{ $storeData['store_name'] }}</option>

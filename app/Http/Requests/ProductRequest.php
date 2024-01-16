@@ -37,7 +37,7 @@ class ProductRequest extends FormRequest
                 'title_product_description.*' => ['required'],
                 'product_description.*' => ['required'],
                 'product_images.*' => ['required', 'mimes:jpg,png,jpeg', 'max:512'],
-                'store_id' => ['nullable'],
+                'store_ids' => ['nullable'],
             ];
         } else if ($this->isMethod('put')) {
             return [
@@ -53,7 +53,7 @@ class ProductRequest extends FormRequest
                 'title_product_description.*' => ['required'],
                 'product_description.*' => ['required'],
                 'product_images.*' => ['required', 'mimes:jpg,png,jpeg', 'max:512'],
-                'store_id' => ['nullable'],
+                'store_ids' => ['nullable'],
             ];
         }
     }
