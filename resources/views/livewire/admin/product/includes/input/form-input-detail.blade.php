@@ -1,5 +1,5 @@
 <div>
-    <div class="item-input-group mb-4">
+    <div class="item-input-group | mb-4">
         <label for="form-input-plu" class="block text-sm mb-1">PLU</label>
         <input id="form-input-plu" type="number" name="plu" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('plu', $error['errors']) && 'is-invalid' }}" autofocus wire:model="inputs.plu">
         @include('admin.components.validation-message', ['field' => 'plu', 'validation' => 'form'])
@@ -10,89 +10,83 @@
             <label for="form-select-category-parent" class="block text-sm mb-1">Kategori Induk</label>
             <select id="form-select-category-parent" wire.model='categoryParent' wire:loading.attr="disabled">
                 <option></option>
-                @foreach ($categoryParentsList as $dataParent)
+                @foreach ($categoryParentsList['data'] as $dataParent)
                     <option value="{{ $dataParent['category_slug'] }}">{{ $dataParent['category_name'] }}</option>
                 @endforeach
             </select>
         </div>
-        <div class="children-category w-1/2" wire:ignore>
+        <div class="children-category | w-1/2" wire:ignore>
             <label for="form-select-category-children" class="block text-sm mb-1">Kategori</label>
             <select id="form-select-category-children" name="category_id" class="{{ array_key_exists('category_id', $error['errors']) && 'is-invalid' }}" wire:loading.attr="disabled">
-                @unless (isset($data))
-                    <option></option>
-                @else
-                    <option value="{{ $data['category_id'] }}" selected>{{ $data['category']['category_name'] }}</option>
-                @endunless
+                <option></option>
+                @isset($data)
+                    <option value="{{ $data['category_id'] }}" selected>{{ $data['category']['category_name'] }}</option>    
+                @endisset
             </select>
             @include('admin.components.validation-message', ['field' => 'category_id', 'validation' => 'form'])
         </div>
     </div>
-    <div class="item-input-group mb-4">
+    <div class="item-input-group | mb-4">
         <label for="form-input-product-name" class="block text-sm mb-1">Nama Produk</label>
         <input id="form-input-product-name" type="text" name="product_name" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('product_name', $error['errors']) && 'is-invalid' }}" wire:model.blur="inputs.name">
         @include('admin.components.validation-message', ['field' => 'product_name', 'validation' => 'form'])
     </div>
-    <div class="item-input-group mb-4">
+    <div class="item-input-group | mb-4">
         <label for="form-input-product-slug" class="block text-sm mb-1">Slug</label>
         <input id="form-input-product-slug" type="text" name="product_slug" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('product_slug', $error['errors']) && 'is-invalid' }}" wire:model="inputs.slug">
         @include('admin.components.validation-message', ['field' => 'product_slug', 'validation' => 'form'])
     </div>
-    <div class="item-input-group mb-4">
-        @php
-            // TODO: ADD LABEL RP
-        @endphp
+    <div class="item-input-group | mb-4">
         <label for="form-input-normal-price" class="block text-sm mb-1">Harga</label>
-        <input id="form-input-normal-price" type="number" name="normal_price" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('normal_price', $error['errors']) && 'is-invalid' }}" wire:model="inputs.normalPrice">
+        <div class="flex border border-[#ccc] rounded">
+            <span class="bg-gray-100 border-r border-[#ccc] rounded-l py-2 px-3">Rp</span>
+            <input id="form-input-normal-price" type="number" name="normal_price" class="h-10 w-full py-2 px-3 focus:ring-transparent {{ array_key_exists('normal_price', $error['errors']) && 'is-invalid' }}" wire:model="inputs.normalPrice">
+        </div>
         @include('admin.components.validation-message', ['field' => 'normal_price', 'validation' => 'form'])
     </div>
-    <div class="item-input-group mb-4">
+    <div class="item-input-group | mb-4">
         <label for="form-input-discount_price-price" class="block text-sm mb-1">Harga Diskon</label>
-        <input id="form-input-discount_price-price" type="number" name="discount_price" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('discount_price', $error['errors']) && 'is-invalid' }}" placeholder="0" wire:model="inputs.discountPrice">
+        <div class="flex border border-[#ccc] rounded">
+            <span class="bg-gray-100 border-r border-[#ccc] rounded-l py-2 px-3">Rp</span>
+            <input id="form-input-discount_price-price" type="number" name="discount_price" class="h-10 w-full py-2 px-3 focus:ring-transparent {{ array_key_exists('discount_price', $error['errors']) && 'is-invalid' }}" placeholder="0" wire:model="inputs.discountPrice">
+        </div>
         @include('admin.components.validation-message', ['field' => 'discount_price', 'validation' => 'form'])
     </div>
-    <div class="item-input-group mb-4">
+    <div class="item-input-group | mb-4">
         <label for="form-input-product-stock" class="block text-sm mb-1">Stok</label>
         <input id="form-input-product-stock" type="number" name="product_stock" class="h-10 w-full border border-[#ccc] rounded py-2 px-3 focus:ring-transparent {{ array_key_exists('product_stock', $error['errors']) && 'is-invalid' }}" wire:model="inputs.stock">
         @include('admin.components.validation-message', ['field' => 'product_stock', 'validation' => 'form'])
     </div>
-    <div class="item-input-group mb-4" wire:ignore>
+    <div class="item-input-group | mb-4" wire:ignore>
         <label for="form-select-product-status" class="block text-sm mb-1">Status</label>
         <select id="form-select-product-status" name="product_status" class="{{ array_key_exists('product_status', $error['errors']) && 'is-invalid' }}">
-            {{-- Unless is like not operation --}}
-            @unless (isset($data)) <option></option> @endunless
+            <option></option>
             @php $selectedStatus = isset($data) ? $data['product_status'] : old('product_status') @endphp
             <option value="Draft" @selected($selectedStatus === 'Draft')>Draft</option>
             <option value="Publish" @selected($selectedStatus === 'Publish')>Publish</option>
         </select>
         @include('admin.components.validation-message', ['field' => 'product_status', 'validation' => 'form'])
     </div>
-    <div class="item-input-group mb-4" wire:ignore>
+    <div class="item-input-group | mb-4" wire:ignore>
         <label for="form-select-supplier" class="block text-sm mb-1">Supplier</label>
         <select id="form-select-supplier" name="supplier_id" class="{{ array_key_exists('supplier_id', $error['errors']) && 'is-invalid' }}" wire.model='supplierInput'>
-            @unless (isset($data)) <option></option> @endunless
-            @php 
-                /*TODO: Enkripsi id supplier*/
-                $selectedSupplier = isset($data) ? $data['supplier_id'] : old('supplier_id');
-            @endphp
-            @foreach ($suppliersList as $supplierData)
+            <option></option>
+            @php $selectedSupplier = isset($data) ? $data['supplier_id'] : (int) old('supplier_id') @endphp
+            @foreach ($suppliersList['data'] as $supplierData)
                 <option value="{{ $supplierData['id'] }}" @selected($selectedSupplier === $supplierData['id'])>{{ $supplierData['supplier_name'] }}</option>
             @endforeach
         </select>
         @include('admin.components.validation-message', ['field' => 'supplier_id', 'validation' => 'form'])
     </div>  
-    <div class="item-input-group | relative mb-4" wire:ignore>
+    <div class="item-input-group | | relative mb-4" wire:ignore>
         <span class="!absolute -top-1 inline-flex loader-spin ms-8" wire:loading></span>
         <label for="form-select-store" class="block text-sm mb-1">Toko</label>
         <select id="form-select-store" name="stores[]" class="{{ array_key_exists('stores', $error['errors']) && 'is-invalid' }}" multiple="multiple" wire:loading.attr="disabled">
             @php $selectedStore = isset($data) ? $data['store_ids'] : old('stores') @endphp
-            @unless (isset($data))
-                <option></option>
-            @else
-                @forelse($data['stores'] as $storeData)
-                    <option value="{{ $storeData['id'] }}" @selected(in_array($storeData['id'], $selectedStore))>{{ $storeData['store_name'] }}</option>
-                @empty
-                    <option value="all_store" selected>Semua Toko Indomaret</option>
-                @endforelse
+            @unless (is_null($selectedStore))
+                @foreach($storesList['data'] as $storeData)
+                    <option value="{{ $storeData['id'] }}" @selected(in_array((string) $storeData['id'], $selectedStore))>{{ $storeData['store_name'] }}</option>
+                @endforeach
             @endunless
         </select>
         @include('admin.components.validation-message', ['field' => 'store_id', 'validation' => 'form'])

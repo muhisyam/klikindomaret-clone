@@ -9,11 +9,13 @@ use App\Services\Backend\ApiCallService;
 class FormInputDetail extends Component
 {
     private $apiService;
-    private $getParentsListUrl = 'http://127.0.0.1:8080/api/v1/categories?withoutPagination=true';
-    private $getParentChildrensListUrl = 'http://127.0.0.1:8080/api/v1/categories/sub/';
 
-    private $getSuppliersListUrl = 'http://127.0.0.1:8080/api/v1/suppliers';
-    private $getStoresListUrl = 'http://127.0.0.1:8080/api/v1/stores/';
+    private $endpoint = [
+        'parentList' => 'http://127.0.0.1:8080/api/v1/categories?withoutPagination=true',
+        'childrenList' => 'http://127.0.0.1:8080/api/v1/categories/sub/',
+        'suppliersList' => 'http://127.0.0.1:8080/api/v1/suppliers',
+        'storesList' => 'http://127.0.0.1:8080/api/v1/stores/',
+    ];
 
     public $error;
     public $data;
@@ -38,7 +40,7 @@ class FormInputDetail extends Component
     public $storesList = NULL;
     
     public function mount($error, $data = null, $old = null) 
-    {
+    {   
         $this->error = $error;
         $this->data = $data;
         $this->old = $old;
@@ -46,37 +48,34 @@ class FormInputDetail extends Component
         // Init value each key is NULL 
         $this->inputs = array_map(fn() => NULL, $this->inputs);
 
-        if (!is_null($this->data)) {
+        if (!is_null($this->data) || !empty($this->old)) {
+            $sourceData = !is_null($this->data) ? $this->data : $this->old;
+        
             $this->inputs = [
-                'plu' => $this->data['plu'], 
-                'name' => $this->data['product_name'], 
-                'slug' => $this->data['product_slug'], 
-                'normalPrice' => $this->data['normal_price'], 
-                'discountPrice' => $this->data['discount_price'], 
-                'stock' => $this->data['product_stock'],
+                'plu' => $sourceData['plu'], 
+                'name' => $sourceData['product_name'], 
+                'slug' => $sourceData['product_slug'], 
+                'normalPrice' => $sourceData['normal_price'], 
+                'discountPrice' => $sourceData['discount_price'], 
+                'stock' => $sourceData['product_stock'],
             ];
-        }
+        
+            $this->supplierInput = $sourceData['supplier_id'];
+        
+            if ($this->supplierInput === '1' || $this->supplierInput === '2') {
+                return $this->storesList = $this->isIndomaretSupplierSelected();
+            }
 
-        if (!empty($this->old)) {
-            $this->inputs = [
-                'plu' => $this->old['plu'], 
-                'name' => $this->old['product_name'], 
-                'slug' => $this->old['product_slug'], 
-                'normalPrice' => $this->old['normal_price'], 
-                'discountPrice' => $this->old['discount_price'], 
-                'stock' => $this->old['product_stock'],
-            ];
+            $this->endpoint['storesList'] .= '?supplier_id=' . $this->supplierInput . '&withoutPagination=true';
+            $this->storesList = $this->getDataFromApiService($this->endpoint['storesList']);
         }
     }
 
     public function updatedCategoryParent()
     {
-        // Init api service class 
-        $this->apiService = app(ApiCallService::class);
-
         // Get children top level category
-        $this->getParentChildrensListUrl .= $this->categoryParent . '?withoutPagination=true';
-        $this->categoryChildrenList = $this->apiService->getData($this->getParentChildrensListUrl);
+        $this->endpoint['childrenList'] .= $this->categoryParent . '?withoutPagination=true';
+        $this->categoryChildrenList = $this->getDataFromApiService($this->endpoint['childrenList']);
 
         $this->dispatch('select2-categories', categoryChildren: $this->categoryChildrenList); 
     }
@@ -89,39 +88,42 @@ class FormInputDetail extends Component
     public function updatedSupplierInput()
     {
         if ($this->supplierInput === '1' || $this->supplierInput === '2') {
-            $dataStore = [
-                'data' => [[
-                    'id' => 'all_store',
-                    'store_name' => 'Semua Toko Indomaret',
-                ]]  
-            ];
-
-            return $this->dispatch('select2-stores', storeList: $dataStore); 
+            return $this->dispatch('select2-stores', storeList: $this->isIndomaretSupplierSelected()); 
         }
 
-        // Init api service class 
-        $this->apiService = app(ApiCallService::class);
-
-        // Get children top level category
-        $this->getStoresListUrl .= '?supplier_id=' . $this->supplierInput . '&withoutPagination=true';
-        $this->storesList = $this->apiService->getData($this->getStoresListUrl);
+        // Get stores list
+        $this->endpoint['storesList'] .= '?supplier_id=' . $this->supplierInput . '&withoutPagination=true';
+        $this->storesList = $this->getDataFromApiService($this->endpoint['storesList']);
 
         $this->dispatch('select2-stores', storeList: $this->storesList); 
     }
 
     public function render()
-    {   
+    {
+        // Get data top level category
+        $this->categoryParentsList = $this->getDataFromApiService($this->endpoint['parentList']);
+
+        // Get data supplier
+        $this->suppliersList = $this->getDataFromApiService($this->endpoint['suppliersList']);
+
+        return view('livewire.admin.product.includes.input.form-input-detail');
+    }
+
+    private function getDataFromApiService(string $endpoint)
+    {
         // Init api service class 
         $this->apiService = app(ApiCallService::class);
 
-        // Get data top level category
-        $responseCategory = $this->apiService->getData($this->getParentsListUrl);
-        $this->categoryParentsList = $responseCategory['data'];
+        return $this->apiService->getData($endpoint);
+    }
 
-        // Get data supplier
-        $responseSupplier = $this->apiService->getData($this->getSuppliersListUrl);
-        $this->suppliersList = $responseSupplier['data'];
-
-        return view('livewire.admin.product.includes.input.form-input-detail');
+    private function isIndomaretSupplierSelected()
+    {
+        return [
+            'data' => [[
+                'id' => 'all_store',
+                'store_name' => 'Semua Toko Indomaret',
+            ]]  
+        ]; 
     }
 }
