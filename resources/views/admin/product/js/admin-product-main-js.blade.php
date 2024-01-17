@@ -51,7 +51,8 @@
                 return uploadedImgWrapper.innerHTML = this.noImageUploaded();
             }
 
-            let showImage, imageAttributes, imageSize;
+            let showImage = '';
+            let imageAttributes, imageSize;
             const currImageList = Object.values(imageFiles);
             
             currImageList.forEach((element, index) => {
@@ -64,7 +65,7 @@
                     imageName: element.name,
                     imageSize: imageSize,
                 };
-
+                
                 showImage += this.imageItemWrapper(imageAttributes);
             });
 

@@ -17,26 +17,28 @@
 </div>
 @php $dataimages = isset($data) ? $data['product_images'] : [] @endphp
 @forelse ($dataimages as $index => $dataImage)
-    <div class="item-image-uploaded | relative">
-        <div class="image-item-wrapper | flex items-center justify-between border border-light-grey rounded p-2">
-            <div class="image-info-wrapper | w-11/12 flex items-center">
-                <figure class="media | max-w-[150px] overflow-x-auto me-2">
-                    <img class="h-12 shrink-0" src="{{ asset('img/uploads/products/' . $data['product_slug'] . '/' . $dataImage['product_image_name']) }}" alt="Product Image">
-                </figure>
-                <div class="image-info">
-                    <p class="text | font-bold line-clamp-1 text-ellipsis" data-tooltip-target="image-{{ $index }}-tooltip" data-tooltip-placement="bottom">{{ $dataImage['original_product_image_name'] }}</p>
-                    <p class="size | text-xs font-light">{{ $dataImage['product_image_size'] }} KB</p>
+    <div class="list-image-uploaded flex flex-col gap-2 overflow-auto">
+        <div class="item-image-uploaded | relative">
+            <div class="image-item-wrapper | flex items-center justify-between border border-light-grey rounded p-2">
+                <div class="image-info-wrapper | w-11/12 flex items-center">
+                    <figure class="media | max-w-[150px] overflow-x-auto me-2">
+                        <img class="h-12 shrink-0" src="{{ asset('img/uploads/products/' . $data['product_slug'] . '/' . $dataImage['product_image_name']) }}" alt="Product Image">
+                    </figure>
+                    <div class="image-info">
+                        <p class="text | font-bold line-clamp-1 text-ellipsis" data-tooltip-target="image-{{ $index }}-tooltip" data-tooltip-placement="bottom">{{ $dataImage['original_product_image_name'] }}</p>
+                        <p class="size | text-xs font-light">{{ $dataImage['product_image_size'] }} KB</p>
+                    </div>
+                </div>
+                <div class="action">
+                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="deleteImage({{ $index }})" aria-label="Delete data image" data-image-name="{{ $dataImage['original_product_image_name'] }}">
+                        <i class="ri-delete-bin-6-line"></i>
+                    </button>
                 </div>
             </div>
-            <div class="action">
-                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="deleteImage({{ $index }})" aria-label="Delete data image" data-image-name="{{ $dataImage['original_product_image_name'] }}">
-                    <i class="ri-delete-bin-6-line"></i>
-                </button>
+            <div id="image-{{ $index }}-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
+                {{ $dataImage['original_product_image_name'] }}
+                <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
-        </div>
-        <div id="image-{{ $index }}-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip">
-            {{ $dataImage['original_product_image_name'] }}
-            <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
     </div>
 @empty
