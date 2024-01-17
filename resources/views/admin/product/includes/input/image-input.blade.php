@@ -15,9 +15,10 @@
         </p>
     </div>
 </div>
-@php $dataimages = isset($data) ? $data['product_images'] : [] @endphp
-@forelse ($dataimages as $index => $dataImage)
-    <div class="list-image-uploaded flex flex-col gap-2 overflow-auto">
+
+<div class="list-image-uploaded flex flex-col gap-2 overflow-auto">
+    @php $dataimages = isset($data) ? $data['product_images'] : [] @endphp
+    @forelse ($dataimages as $index => $dataImage)
         <div class="item-image-uploaded | relative">
             <div class="image-item-wrapper | flex items-center justify-between border border-light-grey rounded p-2">
                 <div class="image-info-wrapper | w-11/12 flex items-center">
@@ -40,9 +41,7 @@
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
         </div>
-    </div>
-@empty
-    <div class="list-image-uploaded flex flex-col gap-2 overflow-auto">
+    @empty
         @include('admin.components.validation-message', ['field' => 'product_images', 'validation' => 'multipleImage'])
         <div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
             <div class="image-info-wrapper w-11/12 flex items-center">
@@ -54,5 +53,5 @@
                 </div>
             </div>
         </div>
-    </div>
-@endforelse
+    @endforelse
+</div>
