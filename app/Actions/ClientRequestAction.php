@@ -42,7 +42,9 @@ class ClientRequestAction
 
         } catch (ClientException $exception) {
             $response = $exception->getResponse()->getBody()->getContents();
+            
             $error = json_decode($response, true);
+            $error['errors']['code'] = $exception->getCode();
             
             return $error;
         }
