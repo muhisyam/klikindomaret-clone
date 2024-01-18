@@ -25,8 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // group categories
+Route::apiResource('categories', CategoryController::class);
 Route::group(['prefix' => 'categories'], function() {
-    Route::apiResource('/', CategoryController::class);
     Route::get('/sub/{category}', [CategoryController::class, 'subIndex'])->name('category.subIndex');
     Route::get('/top-children/{category}', [CategoryController::class, 'getTopLevelWithChildren'])->name('category.topChildren');
 });
