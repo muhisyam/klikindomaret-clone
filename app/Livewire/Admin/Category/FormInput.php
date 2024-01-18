@@ -2,14 +2,13 @@
 
 namespace App\Livewire\Admin\Category;
 
+use App\Services\Backend\ApiCallService;
 use Livewire\Component;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Services\Backend\CategoryService;
 
 class FormInput extends Component
 {
-    protected $url = 'http://127.0.0.1:8080/api/v1/categories/query/';
+    protected $url = 'http://127.0.0.1:8080/api/v1/categories/top-children/';
 
     public $error;
     public $data;
@@ -47,17 +46,13 @@ class FormInput extends Component
         }
     }
 
-    public function updatedSelectedLevel(CategoryService $categoryService, Request $request)
+    public function updatedSelectedLevel(ApiCallService $apiService)
     {
         if ($this->selectedLevel != 1) {
-            if ($this->selectedLevel == 2) {
-                $this->categoryLastChild = 0;
-            } elseif ($this->selectedLevel == 3) {
-                $this->categoryLastChild = 1;
-            }
-
+            $this->categoryLastChild = $this->selectedLevel == 2 ? 0 : 1;
+            
             $this->url .= $this->categoryLastChild;
-            $this->category = $categoryService->getData($this->url, $request);
+            $this->category = $apiService->getData($this->url);
         }
 
         $this->dispatch('select2', category: $this->category); 

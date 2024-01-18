@@ -57,7 +57,7 @@ Tambah Kategori
     </section>
     <section class="form-input-wrapper">
         @php 
-            $route = Route::current()->uri == 'categories/{category}/edit' ? route('categories.update', ['category' => $data['id']]) : route('categories.store');
+            $route = Route::current()->uri == 'categories/{category}/edit' ? route('categories.update', ['category' => $data['category_slug']]) : route('categories.store');
             $error = session()->has('inputError') ? session()->get('inputError') : ['errors' => []];
             $options = [
                 'error' => $error, 

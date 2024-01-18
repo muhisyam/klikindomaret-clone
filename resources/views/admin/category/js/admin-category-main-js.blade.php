@@ -13,6 +13,7 @@
 
         $('#form-select-status').select2({
             width: '100%',
+            placeholder: 'Pilih Status...',
         });
         // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
 
@@ -159,22 +160,6 @@
             ariaExpandedToogle(listSubCategoryRow);
             ariaHiddenToogle(listAccordContent);
         });
-    });
-
-    const modalTarget = document.querySelector('.modal-delete');
-    const btnCloseTop = modalTarget.querySelector('#header-button-close');
-    const btnCloseBottom = modalTarget.querySelector('#footer-button-close');
-    const btnDeleteCategory = document.querySelectorAll('button.action-del');
-    const overlay = document.querySelector('#bg-overlay');
-
-    btnDeleteCategory.forEach(elBtn => {
-        elBtn.addEventListener('click', function () {
-            openModal(modalTarget, overlay);
-        });
-    });
-
-    [btnCloseTop, btnCloseBottom, overlay].forEach(el => {
-        el.addEventListener('click', () => closeModal(modalTarget, overlay));
     });
 
     // Input subcategory page

@@ -10,7 +10,7 @@ class TableButtonAction extends Component
 
     public function dispatchModal($dataCategory)
     {
-        $this->dispatch('modal-info', category: $dataCategory);
+        $this->dispatch('modal-show', data: $dataCategory);
     }
 
     public function render()
