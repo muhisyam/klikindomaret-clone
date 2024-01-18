@@ -29,4 +29,9 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
+
+    public function setParentId(string $inputId)
+    {
+        return $inputId !== '0' ? $inputId : null;
+    }
 }

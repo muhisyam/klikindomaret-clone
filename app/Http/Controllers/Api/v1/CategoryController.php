@@ -3,122 +3,133 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Actions\IsCategoryParentAction;
-use App\Models\Category;
+use App\DataTransferObjects\FindDataDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Models\Category;
+use App\Services\Backend\ApiCallService;
 use App\Services\Backend\ImageService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CategoryController extends Controller
 {
     public function __construct(
+        protected ApiCallService $apiService,
         protected ImageService $imageService,
         protected IsCategoryParentAction $isParentAction,
     ) {}
 
-    public function index(): JsonResource
+    public function index(Request $request): JsonResource
     {
-        $categories = Category::where('parent_id', null)
-            ->withCount('children')
-            ->paginate(10);
+        // TODO: Sync like product controller
+        $query = Category::where('parent_id', null)->withCount('children'); 
+        $categories = $request->has('withoutPagination') ? $query->get() : $query->paginate(10);
 
         return CategoryResource::collection($categories);
     }
 
-    public function subIndex(string $category_slug): JsonResource
+    public function subIndex(Request $request, string $category_slug): JsonResource
     {  
-        $parent = $this->findData('category_slug', $category_slug);
-        $categories = Category::where('parent_id', $parent->id)
+        // TODO: Simplying this
+        $parent = Category::where('category_slug', $category_slug);
+        $query = Category::where('parent_id', $parent->id)
             ->with('children')
-            ->withCount('children')
-            ->paginate(5);
+            ->withCount('children');
+         
+        $categories = $request->has('withoutPagination') ? $query->get() : $query->paginate(5);
 
         return CategoryResource::collection($categories);
     }
 
     public function store(CategoryRequest $request): CategoryResource
     {
+        $category = new Category();
         $data = $request->validated();
-        $category = new Category($data);
-        
-        $category->category_image_name = $this->imageService->storeImage($request, 'categories');
-        $category->original_category_image_name = $this->imageService->storeImageName($request);
-        
-        $category->save();
+        $data['parent_id'] = $category->setParentId($data['parent_id']);
 
-        return new CategoryResource($category);
-    }
+        if (isset($data['category_image'])) {
+            $category->category_image_name = $this->imageService->storeImage($data['category_image'], 'categories');
+            $category->original_category_image_name = $this->imageService->storeImageName($data['category_image']);
+        }
 
-    public function show(string $id): CategoryResource
-    {
-        $category = $this->findData('id', $id, true);
-
-        return new CategoryResource($category);
-    }
-
-    public function update(CategoryRequest $request, int $id): CategoryResource
-    {
-        $category = $this->findData('id', $id);
-        $data = $request->validated();
-        $data['parent_id'] = $this->isParentAction->handle($data['parent_id']);
-        
-        $this->imageService->findImage($category, 'categories');
         $category->fill($data);
-
-        $category->category_image_name = $this->imageService->storeImage($request, 'categories');
-        $category->original_category_image_name = $this->imageService->storeImageName($request);
-        
         $category->save();
 
         return new CategoryResource($category);
     }
 
-    public function destroy(int $id): JsonResponse
+    public function show(string $category_slug): CategoryResource
     {
-        $category = $this->findData('id', $id);
-        $categoryName = ['category_name' => $category->category_name];
-        $this->imageService->findImage($category, 'categories');
+        $category = $this->apiService->findData(
+            new FindDataDto(
+                model: new Category(),
+                whereSchema: [
+                    ['category_slug', $category_slug],
+                ],
+                withSchema: ['parent'],
+            )
+        );
 
+        return new CategoryResource($category);
+    }
+
+    public function update(CategoryRequest $request, string $category_slug): CategoryResource
+    {
+        $category = $this->getSpesificData($category_slug);
+        $data = $request->validated();
+        $data['parent_id'] = $category->setParentId($data['parent_id']);
+        
+        $this->imageService->deleteExistsImage($category->category_image_name, 'categories');
+        
+        if (isset($data['category_image'])) {
+            $category->category_image_name = $this->imageService->storeImage($data['category_image'], 'categories');
+            $category->original_category_image_name = $this->imageService->storeImageName($data['category_image']);
+        }
+
+        $category->fill($data);
+        $category->save();
+
+        return new CategoryResource($category);
+    }
+
+    public function destroy(string $category_slug): JsonResponse
+    {
+        $category = $this->getSpesificData($category_slug);
+        $categoryName = ['category_name' => $category->category_name];
+        
         $category->delete();
+        $this->imageService->deleteExistsImage($category, 'categories');
 
         return response()->json(['data' => $categoryName], 200);
     }
 
-    public function selectQuery(bool $isChildren)
+    /**
+     * Get top level category with/without chilren by request and without pagination
+     */
+    // TODO: Pindah ke index
+    public function getTopLevelWithChildren(bool $withChildren): JsonResource
     {
         $categories = Category::where('parent_id', null)
-            ->when($isChildren, function ($query) {
+            ->when($withChildren, function ($query) {
                 $query->with('children');
             })
             ->get();
 
         return CategoryResource::collection($categories);
     }
-    
-    /**
-     * Find data by spesific column in db and return data if exists or throw exception if not found
-     */
-    public function findData(string $column, mixed $value, bool $withParent = false, string $operation = '='): Category
-    {
-        try {
-            return Category::when($withParent, function ($query) {
-                $query->with('parent');
-            })
-            ->where($column, $operation, $value)
-            ->firstOrFail();
 
-        } catch (ModelNotFoundException $th) {
-            throw new HttpResponseException(response()->json([
-                "errors" => [
-                    "message" => [
-                        $th->getMessage()
-                    ]
-                ]
-            ])->setStatusCode(404));
-        }
+    private function getSpesificData(string $category_slug)
+    {
+        return $this->apiService->findData(
+            new FindDataDto(
+                model: new Category(),
+                whereSchema: [
+                    ['category_slug', $category_slug],
+                ],
+            )
+        );
     }
 }
