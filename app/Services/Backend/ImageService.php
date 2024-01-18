@@ -9,7 +9,7 @@ class ImageService
     /**
      * Check if image exists in the public directory, then delete it
      */
-    public function deleteExistsImage(string $dataImageName, string $folderSaveName) 
+    public function deleteExistsImage(string|null $dataImageName, string $folderSaveName) 
     {
         if(!is_null($dataImageName)) {
             $path = 'img/uploads/' . $folderSaveName . '/' . $dataImageName;
