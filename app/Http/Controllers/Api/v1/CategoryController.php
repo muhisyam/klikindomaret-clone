@@ -82,9 +82,8 @@ class CategoryController extends Controller
         $data = $request->validated();
         $data['parent_id'] = $category->setParentId($data['parent_id']);
         
-        $this->imageService->deleteExistsImage($category->category_image_name, 'categories');
-        
         if (isset($data['category_image'])) {
+            $this->imageService->deleteExistsImage($category->category_image_name, 'categories');
             $category->category_image_name = $this->imageService->storeImage($data['category_image'], 'categories');
             $category->original_category_image_name = $this->imageService->storeImageName($data['category_image']);
         }
