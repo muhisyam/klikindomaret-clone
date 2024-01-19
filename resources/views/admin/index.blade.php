@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Admin - @yield('title')</title>
+    <title>@yield('title') - AdminKlik</title>
 
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
 
@@ -43,7 +43,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{-- Thanks for the tolerance(👍 ͡• ₃ ͡•)👍 --}}
     
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script src="{{ asset('js/admin/app.js') }}"></script>
     <script src="{{ asset('js/admin/components.js') }}"></script>
     <script src="{{ asset('js/components.js') }}"></script>
