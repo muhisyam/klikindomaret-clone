@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Admin;
 
 use Illuminate\Http\Request;
+use App\Actions\ErrorResponseAction;
 use App\Http\Controllers\Controller;
 use App\Actions\CreateMultipartAction;
 use App\Services\Backend\ApiCallService;
@@ -10,12 +11,14 @@ use App\Services\Backend\PaginationService;
 
 class SupplierController extends Controller
 {
+    protected const pageRole = 'admin';
     protected const apiUrl = 'http://127.0.0.1:8080/api/v1/suppliers';
 
     public function __construct(
         protected ApiCallService $apiService,
-        protected PaginationService $paginateService,
         protected CreateMultipartAction $createMultipartAction,
+        protected ErrorResponseAction $errorResponseAction,
+        protected PaginationService $paginateService,
     ) {}
 
     public function index(Request $request) 
@@ -26,12 +29,12 @@ class SupplierController extends Controller
         $data['meta'] = $this->paginateService->changeLinksUrl($data['meta'], $search);
         $data['meta']['custom_links'] = $this->paginateService->customPaginationLinks($data['meta']);
 
-        return view('admin.region.index', ['data' => $data]);
+        return view('admin.supplier.index', ['data' => $data]);
     }
 
     public function create()
     {
-        return view('admin.region.input');
+        return view('admin.supplier.input');
     }
     
     public function store(Request $request)
@@ -42,61 +45,57 @@ class SupplierController extends Controller
         $data = $this->apiService->postData($url, $param);
 
         if (isset($data['errors'])) {
-            return redirect()->route('regions.create')->with(['inputError' => $data])->withInput();
+            return redirect()->route('suppliers.create')->with(['inputError' => $data])->withInput();
         }
 
-        return redirect()->route('regions.index')->with([
+        return redirect()->route('suppliers.index')->with([
             'success' => [
                 'title' => 'Berhasil Tambah Wilayah',
-                'message' => $data['data']['region_name'],
+                'message' => $data['data']['supplier_name'],
             ],
         ]);
     }
     // $supplierCode -> flagCode . flagName
-    public function edit(string $regionCode)
+    public function edit(string $supplierCode)
     {
-        $url = static::apiUrl . '/' . $regionCode;
+        $url = static::apiUrl . '/' . $supplierCode;
 
         $data = $this->apiService->showData($url);
 
         if (isset($data['errors'])) {
-            // TODO: redirect to 404 not found
-            return;
-            // return redirect()->route('regions.create')->with(['inputError' => $data['error']])->withInput();
+            return $this->errorResponseAction->execute(static::pageRole, $data['errors']);
         }
 
-        return view('admin.region.input', ['data' => $data['data']]);
+        return view('admin.supplier.input', ['data' => $data['data']]);
     }
 
-    public function update(Request $request, string $regionCode) 
+    public function update(Request $request, string $supplierCode) 
     {
-        $url = static::apiUrl . '/' . $regionCode;
+        $url = static::apiUrl . '/' . $supplierCode;
         
         $param = $this->createMultipartAction->execute($request->all());
         $data = $this->apiService->postData($url, $param);
 
         if (isset($data['errors'])) {
-            // TODO: Add service for multiple image error
-            return redirect()->route('regions.edit', ['region' => $regionCode])->with(['inputError' => $data])->withInput();
+            return redirect()->route('suppliers.edit', ['supplier' => $supplierCode])->with(['inputError' => $data])->withInput();
         }
 
-        return redirect()->route('regions.index')->with([
+        return redirect()->route('suppliers.index')->with([
             'success' => [
                 'title' => 'Berhasil Update Wilayah',
-                'message' => $data['data']['region_name'],
+                'message' => $data['data']['supplier_name'],
             ]
         ]);
     }
 
-    public function destroy(string $regionCode)
+    public function destroy(string $supplierCode)
     {
-        $url = static::apiUrl . '/' . $regionCode;
+        $url = static::apiUrl . '/' . $supplierCode;
         
         $data = $this->apiService->deleteData($url);
 
         if (isset($data['errors'])) {
-            // TODO: redirect to 404 not found
-            return;
+            return $this->errorResponseAction->execute(static::pageRole, $data['errors']);
         }
 
         return redirect()->route('regions.index')->with([

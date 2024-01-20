@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App\Admin;
 
 use Illuminate\Http\Request;
+use App\Actions\ErrorResponseAction;
 use App\Http\Controllers\Controller;
 use App\Actions\CreateMultipartAction;
 use App\Services\Backend\ApiCallService;
@@ -10,12 +11,14 @@ use App\Services\Backend\PaginationService;
 
 class RegionController extends Controller
 {
+    protected const pageRole = 'admin';
     protected const apiUrl = 'http://127.0.0.1:8080/api/v1/regions';
 
     public function __construct(
         protected ApiCallService $apiService,
-        protected PaginationService $paginateService,
         protected CreateMultipartAction $createMultipartAction,
+        protected ErrorResponseAction $errorResponseAction,
+        protected PaginationService $paginateService,
     ) {}
 
     public function index(Request $request) 
@@ -60,9 +63,7 @@ class RegionController extends Controller
         $data = $this->apiService->showData($url);
 
         if (isset($data['errors'])) {
-            // TODO: redirect to 404 not found
-            return;
-            // return redirect()->route('regions.create')->with(['inputError' => $data['error']])->withInput();
+            return $this->errorResponseAction->execute(static::pageRole, $data['errors']);
         }
 
         return view('admin.region.input', ['data' => $data['data']]);
@@ -76,7 +77,6 @@ class RegionController extends Controller
         $data = $this->apiService->postData($url, $param);
 
         if (isset($data['errors'])) {
-            // TODO: Add service for multiple image error
             return redirect()->route('regions.edit', ['region' => $regionCode])->with(['inputError' => $data])->withInput();
         }
 
@@ -95,8 +95,7 @@ class RegionController extends Controller
         $data = $this->apiService->deleteData($url);
 
         if (isset($data['errors'])) {
-            // TODO: redirect to 404 not found
-            return;
+            return $this->errorResponseAction->execute(static::pageRole, $data['errors']);
         }
 
         return redirect()->route('regions.index')->with([

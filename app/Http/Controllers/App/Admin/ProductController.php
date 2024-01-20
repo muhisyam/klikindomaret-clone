@@ -5,19 +5,22 @@ namespace App\Http\Controllers\App\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Actions\CreateMultipartAction;
+use App\Actions\ErrorResponseAction;
 use App\Actions\MergeArrayFieldErrorAction;
 use App\Services\Backend\ApiCallService;
 use App\Services\Backend\PaginationService;
 
 class ProductController extends Controller
 {
+    protected const pageRole = 'admin';
     protected const apiUrl = 'http://127.0.0.1:8080/api/v1/products';
 
     public function __construct(
         protected ApiCallService $apiService,
-        protected PaginationService $paginateService,
-        protected CreateMultipartAction $createMultipartAction, 
+        protected CreateMultipartAction $createMultipartAction,
+        protected ErrorResponseAction $errorResponseAction,
         protected MergeArrayFieldErrorAction $mergeErrorAction, 
+        protected PaginationService $paginateService,
     ) {}
 
     public function index(Request $request) 
@@ -64,9 +67,7 @@ class ProductController extends Controller
         $data = $this->apiService->showData($url);
 
         if (isset($data['errors'])) {
-            // TODO: redirect to 404 not found
-            return;
-            // return redirect()->route('products.create')->with(['inputError' => $data['error']])->withInput();
+            return $this->errorResponseAction->execute(static::pageRole, $data['errors']);
         }
 
         return view('admin.product.input', ['data' => $data['data']]);
@@ -80,7 +81,8 @@ class ProductController extends Controller
         $data = $this->apiService->postData($url, $param);
 
         if (isset($data['errors'])) {
-            // TODO: Add service for multiple image error
+            $data['errors']['product_images'] = $this->mergeErrorAction->execute($data['errors'], 'product_images');
+            
             return redirect()->route('products.edit', ['product' => $slug])->with(['inputError' => $data])->withInput();
         }
 
@@ -99,8 +101,7 @@ class ProductController extends Controller
         $data = $this->apiService->deleteData($url);
 
         if (isset($data['errors'])) {
-            // TODO: redirect to 404 not found
-            return;
+            return $this->errorResponseAction->execute(static::pageRole, $data['errors']);
         }
 
         return redirect()->route('products.index')->with([
