@@ -52,8 +52,9 @@ class ProductRequest extends FormRequest
                 'product_status' => ['required', 'in:Publish,Draft'],
                 'title_product_description.*' => ['required'],
                 'product_description.*' => ['required'],
-                'product_images.*' => ['required', 'mimes:jpg,png,jpeg', 'max:512'],
+                'product_images.*' => ['mimes:jpg,png,jpeg', 'max:512'],
                 'store_ids' => ['nullable'],
+                'delete_images.*' => ['nullable'],
             ];
         }
     }

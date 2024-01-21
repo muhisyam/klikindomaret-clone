@@ -79,7 +79,10 @@ class ProductController extends Controller
         $data = $request->validated();
         $product = $this->getSpesificData($productSlug);
         
-        $this->productImageController->update($data, $product->id);
+        if (isset($data['product_images']) || isset($data['delete_images'])) {
+            $this->productImageController->update($data, $product->id);
+        }
+        
         $product->fill($data);
         $product->save();
         $product->stores()->sync($data['store_ids']);

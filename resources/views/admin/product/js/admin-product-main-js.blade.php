@@ -47,7 +47,7 @@
         };
 
         imageUploadHandler() {
-            if (imageFiles.length === 0) {
+            if (imageFiles.length === 0 || Object.keys(imageFiles).length === 0) {
                 return uploadedImgWrapper.innerHTML = this.noImageUploaded();
             }
 
@@ -86,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="action">
-                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="removeImage(${index})" aria-label="Delete data image" data-image-name="${imageName}">
+                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="removeImage(${index})" aria-label="Delete data image" data-original-image-name="${imageName}">
                                     <i class="ri-delete-bin-6-line"></i>
                                 </button>
                             </div>
@@ -253,6 +253,7 @@
 
             this.addFilesToImageList(newImageFiles);
             new ImageUploader();
+            resetFormDelete();
         };
 
         addFilesToImageList(files) {
@@ -316,14 +317,43 @@
         const targetImage = listImage[elementIndex].querySelector('.action button');
         
         const title = "Berhasil Hapus Gambar"
-        const message = targetImage.getAttribute('data-image-name');
+        const message = targetImage.getAttribute('data-original-image-name');
         
-        imageFilesList.removeFileFromFilesList(elementIndex);
+        if (isHasNewImage) {
+            imageFilesList.removeFileFromFilesList(elementIndex);
+            new ImageUploader();
+        } else {
+            deleteExistsImage(targetImage, listImage);
+        }
+        
         showNotification(title, message);
-        
-        new ImageUploader();
     };
 
+    function deleteExistsImage(el, listEl) { 
+        let deleteExistImage = document.createElement('input');
+        
+        deleteExistImage.type = 'text';
+        deleteExistImage.name = 'delete_images[]';
+        deleteExistImage.value = el.getAttribute('data-image-name');
+        deleteExistImage.classList.add('hidden');
+
+        formInputImg.insertAdjacentElement('afterend', deleteExistImage);
+        el.closest('.item-image-uploaded').classList.add('hidden');
+
+        let isAllHidden = [...listEl].every(element => {
+            return element.classList.contains('hidden');
+        });
+        
+        isAllHidden && new ImageUploader();
+    }
+
+    function resetFormDelete() { 
+        const allDeleteData = document.querySelectorAll('input[name="delete_image[]"]');
+        
+        return [...allDeleteData].forEach(el => el.remove())
+    }
+
+    let isHasNewImage = false;
     let imageFiles = {};
     const formInputImg = document.querySelector('#form-input-image');
     const dropAreaImg = document.querySelector('#drop-area-image');

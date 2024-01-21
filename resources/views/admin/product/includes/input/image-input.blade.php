@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="action">
-                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="deleteImage({{ $index }})" aria-label="Delete data image" data-image-name="{{ $dataImage['original_product_image_name'] }}">
+                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-tertiary hover:text-secondary" onclick="removeImage({{ $index }})" aria-label="Delete data image" data-original-image-name="{{ $dataImage['original_product_image_name'] }}" data-image-name="{{ $dataImage['product_image_name'] }}">
                         <i class="ri-delete-bin-6-line"></i>
                     </button>
                 </div>
