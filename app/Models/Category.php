@@ -34,4 +34,13 @@ class Category extends Model
     {
         return $inputId !== '0' ? $inputId : null;
     }
+
+    public function setImageValue(array $formData)
+    {
+        if (isset($formData['delete_image'])) {
+            return null;
+        } elseif (isset($formData['category_image'])) {
+            return $formData['category_image'];
+        }
+    }
 }

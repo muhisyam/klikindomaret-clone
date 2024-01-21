@@ -82,6 +82,7 @@
     }
 
     function uploadImg() { 
+        isHasNewImage = true;
         let showImage = '';
 
         if (formInputImg.files[0]) {
@@ -108,7 +109,7 @@
                                     </div>
                                 </div>
                                 <div class="action">
-                                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage(this)" aria-label="Delete data image" data-image-name="${imageName}">
+                                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage(this)" aria-label="Delete data image" data-original-image-name="${imageName}">
                                         <i class="ri-delete-bin-6-line"></i>
                                     </button>
                                 </div>
@@ -134,14 +135,31 @@
         return uploadedImgWrapper.innerHTML = noImageUploaded;
     };
 
+    // TODO: remove image
     function deleteImage(e) { 
         const title = "Berhasil Hapus Gambar"
-        const message = e.getAttribute('data-image-name');
+        const message = e.getAttribute('data-original-image-name');
 
         formInputImg.value = '';
         
+        deleteExistImage(e);
         showNotification(title, message);
         uploadImg();
+    };
+
+    function deleteExistImage(e) { 
+        if (isHasNewImage) {
+            return false;
+        }
+
+        let deleteExistImage = document.createElement("input");
+        
+        deleteExistImage.type = "text";
+        deleteExistImage.name = "delete_image";
+        deleteExistImage.value = e.getAttribute('data-image-name');
+        deleteExistImage.classList.add('hidden');
+
+        formInputImg.insertAdjacentElement('afterend', deleteExistImage);
     };
 
     // List subcategory page
@@ -181,6 +199,7 @@
             });
         });
         
+        var isHasNewImage = false;
         var formInputImg = document.querySelector('#form-input-image');
         var uploadedImgWrapper = document.querySelector('.list-image-uploaded');
         const dropAreaImg = document.querySelector('#drop-area-image');

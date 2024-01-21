@@ -23,8 +23,12 @@ class ImageService
     /**
      * Store image to db and public directory
      */
-    public function storeImage(Object $dataImage, string $folderSaveName)
+    public function storeImage(object|null $dataImage, string $folderSaveName)
     {
+        if (is_null($dataImage)) {
+            return $dataImage;
+        }
+
         $randomImageName = null;
         
         $randomImageName = time() . '.' . strtolower($dataImage->getClientOriginalExtension());
@@ -36,7 +40,7 @@ class ImageService
     /**
      * Store multiple image to db and public directory
      */
-    public function storeMultipleImage(Object $dataImage, string $index, string $folderSaveName)
+    public function storeMultipleImage(object $dataImage, string $index, string $folderSaveName)
     {
         $randomImageName = null;
         
@@ -49,8 +53,12 @@ class ImageService
     /**
      * Store image name to db
      */
-    public function storeImageName(Object $dataImage)
+    public function storeImageName(object|null $dataImage)
     {
+        if (is_null($dataImage)) {
+            return $dataImage;
+        }
+
         $fileName = null;
 
         $originalName = explode('.', $dataImage->getClientOriginalName());

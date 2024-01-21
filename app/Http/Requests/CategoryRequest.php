@@ -40,6 +40,7 @@ class CategoryRequest extends FormRequest
                 'category_slug' => ['required', 'max:200'],
                 'category_status' => ['required'],
                 'category_image' => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
+                'delete_image' => ['nullable'],
             ];
         }
     }

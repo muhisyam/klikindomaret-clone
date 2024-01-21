@@ -1,6 +1,6 @@
 <div class="item-input-group mb-4">
     <label for="form-input-image" class="label text-sm mb-1">Tambah Gambar</label>
-    <input id="form-input-image" type="file" accept="image/" class="hidden" name="category_image">
+    <input id="form-input-image" type="file" accept=".jpg, .jpeg, .png" name="category_image" class="hidden">
     <div class="input-image-wrapper relative w-full h-48 flex flex-col justify-center bg-[#fbf0d0] border-4 border-[#f9c828] border-dashed rounded-lg mb-6">
         <div id="drop-area-image" class="absolute top-0 left-0 w-full h-full grid place-content-center bg-black text-white text-2xl rounded-lg z-10">Drop it like it's hot.</div>
         <div class="icon h-24 text-[#aca595] text-8xl text-center mb-3"><i class="ri-image-add-fill"></i></div>
@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="list-image-uploaded flex flex-col gap-2">
-    @include('admin.components.validation-message', ['field' => 'image', 'validation' => 'image'])
+    @include('admin.components.validation-message', ['field' => 'category_image', 'validation' => 'image'])
     @isset($data['category_image_name'])
     <div class="item-image-uploaded">
         <div class="item-image-wrapper flex items-center justify-between border border-[#eee] rounded p-2">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="action">
-                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]"  onclick="deleteImage(this)" aria-label="Delete data image" data-image-name="{{ $data['original_category_image_name'] }}">
+                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]"  onclick="deleteImage(this)" aria-label="Delete data image" data-original-image-name="{{ $data['original_category_image_name'] }}" data-image-name="{{ $data['category_image_name'] }}">
                     <i class="ri-delete-bin-6-line"></i>
                 </button>
             </div>

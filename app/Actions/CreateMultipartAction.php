@@ -8,7 +8,7 @@ class CreateMultipartAction
 {
     private array $param = [];
 
-    private function handleDataImage($key, $value): Array 
+    private function handleDataImage($key, $value): array 
     {
         if (is_array($value)) {
             foreach ($value as $index => $dataImage) {
@@ -29,14 +29,14 @@ class CreateMultipartAction
         return $this->param;
     }
 
-    private function handleDataNonImage($key, $value): Array 
+    private function handleDataNonImage($key, $value): array 
     {
         if (is_array($value)) {
             foreach ($value as $index => $dataForm) {
                 if (!is_null($dataForm)) {
                     $this->param[] = [
                         'name' => $key . '[' . $index . ']',
-                        'contents' => $dataForm,
+                        'contents' => $dataForm === 'all_store' ? null : $dataForm,
                     ];
                 }
             }
@@ -50,7 +50,7 @@ class CreateMultipartAction
         return $this->param;
     }
 
-    private function handleDidntHasImage($key, $value): Array 
+    private function handleDidntHasImage($key): array 
     {
         $keyList = [
             'product_images' => 'product_images[]'
@@ -61,19 +61,41 @@ class CreateMultipartAction
             
             $this->param[] = [
                 'name' => $key,
-                'contents' => $value,
+                'contents' => null,
             ];
         }
 
         return $this->param;
     }
 
-    public function execute(Array $formRequest, String $imageFormName = null): Array
+    private function handleDeleteExitsImage(array|string $dataForm): array 
     {
+        if (is_array($dataForm)) {
+            foreach ($dataForm as $index => $dataForm) {
+                if (!is_null($dataForm)) {
+                    $this->param[] = [
+                        'name' => 'delete_images[' . $index . ']',
+                        'contents' => $dataForm,
+                    ];
+                }
+            }
+        } else {
+            $this->param[] = [
+                'name' => 'delete_image',
+                'contents' => $dataForm,
+            ];
+        }
+
+        return $this->param;
+    }
+
+    public function execute(array $formRequest, string $imageFormName = null): array
+    {
+        $isUpdateProduct = isset($formRequest['_method']);
         $didntHasImage = true;
 
         foreach ($formRequest as $key => $value) {
-            if (Str::contains($key, $imageFormName) && !is_null($didntHasImage)) {
+            if (Str::contains($key, $imageFormName)) {
                 $didntHasImage = false;
                 $this->handleDataImage($key, $value);
             } else {
@@ -81,8 +103,12 @@ class CreateMultipartAction
             }
         }
                 
-        if ($didntHasImage) {
-            $this->handleDidntHasImage($imageFormName, NULL);
+        if ($didntHasImage && !$isUpdateProduct) {
+            if (isset($formRequest['delete_image'])) {
+                $this->handleDeleteExitsImage($formRequest['delete_image']);
+            } else {
+                $this->handleDidntHasImage($imageFormName, NULL);
+            }  
         }
 
         return $this->param;
