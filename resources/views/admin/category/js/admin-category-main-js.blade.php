@@ -61,68 +61,76 @@
         };
     }
 
-    function callFeedback() { 
-        const element = `<div class="invalid-feedback flex text-red-600 text-sm mt-1">
-                            <p class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></p>
-                            <p class="message">Ukuran gambar >500kb</p>
-                        </div>`
-        
-        return element;
-    }
+    class ImageUploader {
+        constructor() {
+            this.imageUploadHandler();
+        }
+    
+        imageUploadHandler() { 
+            isHasNewImage = true;
+            let showImage = '';
+            let fileImage = formInputImg.files[0];
+    
+            if (fileImage) {
+                imageSize = Math.floor(fileImage.size / 1024);
 
-    function uploadImg() { 
-        isHasNewImage = true;
-        let showImage = '';
-
-        if (formInputImg.files[0]) {
-            let imageUrl = URL.createObjectURL(formInputImg.files[0]);
-            let imageName = formInputImg.files[0].name;
-            let imageSize = Math.floor(formInputImg.files[0].size / 1024);
-            let isInvalid = '';
-            let invalidFeedback = false;    
-
-            if (imageSize > 500) {
-                isInvalid = ' is-invalid';
-                invalidFeedback = true;
+                imageAttributes = {
+                    isInvalid: imageSize > 500 ? ' is-invalid' : '',
+                    imageUrl: URL.createObjectURL(fileImage),
+                    imageName: fileImage.name,
+                    imageSize: imageSize,
+                };
+                
+                showImage += this.imageItemWrapper(imageAttributes);    
+    
+                uploadedImgWrapper.innerHTML = showImage;
+            } else {
+                uploadedImgWrapper.innerHTML = this.noImageUploaded();
             }
-
-            showImage += `<div class="item-image-uploaded${isInvalid}">
-                            <div class="image-item-wrapper flex items-center justify-between border border-[#eee] rounded p-2">
-                                <div class="image-info-wrapper w-11/12 flex items-center">
-                                    <figure class="media shrink-0 me-2">
-                                        <img class="h-12" src="${imageUrl}" alt="">
-                                    </figure>
-                                    <div class="info">
-                                        <p class="text font-bold line-clamp-1 text-ellipsis">${imageName}</p>
-                                        <p class="size text-xs font-light">${imageSize} KB</p>
-                                    </div>
-                                </div>
-                                <div class="action">
-                                    <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage(this)" aria-label="Delete data image" data-original-image-name="${imageName}">
-                                        <i class="ri-delete-bin-6-line"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            ${invalidFeedback ? callFeedback() : ''}
-                        </div>`
-
-
-            return uploadedImgWrapper.innerHTML = showImage;
         }
 
-        const noImageUploaded = `<div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
-                                    <div class="image-info-wrapper w-11/12 flex items-center">
-                                        <div class="media h-12 w-12 grid place-items-center shrink-0 bg-[#fbf0d0] text-[#0079c2] text-2xl text-center rounded me-2">
-                                            <div class="icon jump"><i class="ri-upload-cloud-line"></i></div>
-                                        </div>
-                                        <div class="info">
-                                            <p class="text font-bold line-clamp-1 text-ellipsis">Tidak ada gambar.</p>
-                                        </div>
-                                    </div>
-                                </div>`
+        imageItemWrapper({isInvalid, imageUrl, imageName, imageSize}) {
+            return `<div class="item-image-uploaded${isInvalid}">
+                        <div class="image-item-wrapper flex items-center justify-between border border-[#eee] rounded p-2">
+                            <div class="image-info-wrapper w-11/12 flex items-center">
+                                <figure class="media shrink-0 me-2">
+                                    <img class="h-12" src="${imageUrl}" alt="">
+                                </figure>
+                                <div class="info">
+                                    <p class="text font-bold line-clamp-1 text-ellipsis">${imageName}</p>
+                                    <p class="size text-xs font-light">${imageSize} KB</p>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage(this)" aria-label="Delete data image" data-original-image-name="${imageName}">
+                                    <i class="ri-delete-bin-6-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        ${isInvalid ? this.invalidFeedback() : ''}
+                    </div>`
+        }
+        
+        invalidFeedback() { 
+            return `<div class="invalid-feedback flex text-red-600 text-sm mt-1">
+                        <p class="icon h-5 me-1"><i class="ri-error-warning-fill"></i></p>
+                        <p class="message">Ukuran gambar >500kb</p>
+                    </div>`
+        }
 
-        return uploadedImgWrapper.innerHTML = noImageUploaded;
-    };
+        noImageUploaded() { 
+            return `<div class="item-no-image flex items-center justify-between border border-[#eee] rounded p-2">
+                        <div class="image-info-wrapper w-11/12 flex items-center">
+                            <div class="media h-12 w-12 grid place-items-center shrink-0 bg-[#fbf0d0] text-[#0079c2] text-2xl text-center rounded me-2">
+                                <div class="icon jump"><i class="ri-upload-cloud-line"></i></div>
+                            </div>
+                            <div class="info">
+                                <p class="text font-bold line-clamp-1 text-ellipsis">Tidak ada gambar.</p>
+                            </div>
+                        </div>
+                    </div>`
+        }
+    }
 
     // TODO: remove image
     function deleteImage(e) { 
