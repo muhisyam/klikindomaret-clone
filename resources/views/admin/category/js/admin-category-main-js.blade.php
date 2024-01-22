@@ -27,50 +27,39 @@
             s2wrapper.style.borderColor = '#dc2626';
         });
     });
-
-    function hideAccordContent(e, curr) { 
-        e.forEach(listContent => {
-            const listId = listContent.id;
-            return listId !== curr ? listContent.classList.add('hide') : '';
-        });
-    };
-
-    function activateButtonAccord(e, curr) { 
-        e.forEach(btnItem => {
-            const btnAttribute = btnItem.getAttribute('data-accordion-target');
-            return btnAttribute !== curr ? btnItem.classList.remove('active') : '';
-        });
-    };
-
-    function toogleAccordion(isHide, elContent, elBtn) { 
-        if (isHide) {
-            elContent.classList.remove('hide');
-            elBtn.classList.add('active');
-        } else {
-            elContent.classList.add('hide');
-            elBtn.classList.remove('active');
-        }
-    };
-
-    function ariaHiddenToogle(e) { 
-        e.forEach(element => {
-            const isActive = element.classList.contains('hide');
-            return element.setAttribute('aria-hidden', isActive);
-        });
-    };
-
-    function ariaExpandedToogle(e) { 
-        e.forEach(element => {
-            const isActive = element.classList.contains('active');
-
-            if (element.tagName.toLowerCase() != 'button') {
-                const elementButton = element.querySelector('.accordion-category-button button');
-                return elementButton.setAttribute('aria-expanded', isActive);
+    
+    class Accordion {
+        toogleAccordion(isHide, elContent, elBtn) { 
+            if (isHide) {
+                elContent.classList.remove('hide');
+                elBtn.classList.add('active');
+            } else {
+                elContent.classList.add('hide');
+                elBtn.classList.remove('active');
             }
+        };
 
-            return element.setAttribute('aria-expanded', isActive);
-        });
-    };
+        ariaHiddenToogle(listEl) { 
+            listEl.forEach(element => {
+                const isActive = element.classList.contains('hide');
+
+                return element.setAttribute('aria-hidden', isActive);
+            });
+        };
+
+        ariaExpandedToogle(listEl) { 
+            listEl.forEach(element => {
+                const isActive = element.classList.contains('active');
+
+                if (element.tagName.toLowerCase() != 'button') {
+                    const elementButton = element.querySelector('.accordion-category-button button');
+                    return elementButton.setAttribute('aria-expanded', isActive);
+                }
+
+                return element.setAttribute('aria-expanded', isActive);
+            });
+        };
+    }
 
     function callFeedback() { 
         const element = `<div class="invalid-feedback flex text-red-600 text-sm mt-1">
@@ -163,6 +152,7 @@
     };
 
     // List subcategory page
+    const accordion = new Accordion();
     const listSubCategoryRow = document.querySelectorAll('.accordion-category-item');
 
     listSubCategoryRow.forEach(subCategory => {
@@ -174,9 +164,9 @@
             const accordTarget = document.querySelector(`#${accordDataTarget}`);
             const isTargetHide = accordTarget.classList.contains('hide');
 
-            toogleAccordion(isTargetHide, accordTarget, subCategory);
-            ariaExpandedToogle(listSubCategoryRow);
-            ariaHiddenToogle(listAccordContent);
+            accordion.toogleAccordion(isTargetHide, accordTarget, subCategory);
+            accordion.ariaExpandedToogle(listSubCategoryRow);
+            accordion.ariaHiddenToogle(listAccordContent);
         });
     });
 
