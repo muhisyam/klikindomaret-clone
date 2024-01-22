@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                             <div class="action">
-                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="deleteImage(this)" aria-label="Delete data image" data-original-image-name="${imageName}">
+                                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]" onclick="removeImage(this)" aria-label="Delete data image" data-original-image-name="${imageName}">
                                     <i class="ri-delete-bin-6-line"></i>
                                 </button>
                             </div>
@@ -132,8 +132,7 @@
         }
     }
 
-    // TODO: remove image
-    function deleteImage(e) { 
+    function removeImage(e) { 
         const title = "Berhasil Hapus Gambar"
         const message = e.getAttribute('data-original-image-name');
 

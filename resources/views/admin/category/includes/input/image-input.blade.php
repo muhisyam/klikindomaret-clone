@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="action">
-                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]"  onclick="deleteImage(this)" aria-label="Delete data image" data-original-image-name="{{ $data['original_category_image_name'] }}" data-image-name="{{ $data['category_image_name'] }}">
+                <button type="button" class="icon h-8 text-2xl rounded px-1 hover:bg-[#fbde7e] hover:text-[#0079c2]"  onclick="removeImage(this)" aria-label="Delete data image" data-original-image-name="{{ $data['original_category_image_name'] }}" data-image-name="{{ $data['category_image_name'] }}">
                     <i class="ri-delete-bin-6-line"></i>
                 </button>
             </div>
