@@ -179,23 +179,6 @@
 
     // Input subcategory page
     if (window.location.href.indexOf("create") > -1 || window.location.href.indexOf("edit") > -1) {
-        const listSubCategoryBtn = document.querySelectorAll('.accordion-category-heading button');
-
-        listSubCategoryBtn.forEach(subCategoryBtn => {
-            subCategoryBtn.addEventListener('click', function () {
-                const listAccordSubCategory = document.querySelectorAll('.accordion-category-content');
-                const accordDataTarget = subCategoryBtn.getAttribute('data-accordion-target');
-                const accordTarget = document.querySelector(`#${accordDataTarget}`);
-                const isTargetHide = accordTarget.classList.contains('hide');
-
-                hideAccordContent(listAccordSubCategory, accordDataTarget)
-                activateButtonAccord(listSubCategoryBtn, accordDataTarget);
-                toogleAccordion(isTargetHide, accordTarget, subCategoryBtn);
-                ariaExpandedToogle(listSubCategoryBtn);
-                ariaHiddenToogle(listAccordSubCategory);
-            });
-        });
-        
         var isHasNewImage = false;
         var formInputImg = document.querySelector('#form-input-image');
         var uploadedImgWrapper = document.querySelector('.list-image-uploaded');
