@@ -61,13 +61,11 @@ class FormInputDetail extends Component
             ];
         
             $this->supplierInput = $sourceData['supplier_id'];
-        
-            if ($this->supplierInput === '1' || $this->supplierInput === '2') {
-                return $this->storesList = $this->isIndomaretSupplierSelected();
-            }
-
             $this->endpoint['storesList'] .= '?supplier_id=' . $this->supplierInput . '&withoutPagination=true';
-            $this->storesList = $this->getDataFromApiService($this->endpoint['storesList']);
+            
+            $this->storesList = ($this->supplierInput === 1 || $this->supplierInput === 2) 
+                ? $this->isIndomaretSupplierSelected()
+                : $this->getDataFromApiService($this->endpoint['storesList']);
         }
     }
 

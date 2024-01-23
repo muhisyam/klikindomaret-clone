@@ -85,7 +85,7 @@
             @php $selectedStore = isset($data) ? $data['store_ids'] : old('store_ids') @endphp
             @unless (is_null($selectedStore))
                 @foreach($storesList['data'] as $storeData)
-                    <option value="{{ $storeData['id'] }}" @selected(in_array((string) $storeData['id'], $selectedStore))>{{ $storeData['store_name'] }}</option>
+                    <option value="{{ $storeData['id'] }}" @selected(in_array((string) $storeData['id'], $selectedStore) || $storeData['id'] === 'all_store')>{{ $storeData['store_name'] }}</option>
                 @endforeach
             @endunless
         </select>

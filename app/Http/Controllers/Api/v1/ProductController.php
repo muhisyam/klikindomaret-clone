@@ -85,7 +85,12 @@ class ProductController extends Controller
         
         $product->fill($data);
         $product->save();
-        $product->stores()->sync($data['store_ids']);
+        if ($data['supplier_id'] === '1' || $data['supplier_id'] === '2') {
+            $product->stores()->detach();
+        } else {
+            $product->stores()->sync($data['store_ids']);
+        }
+        
         $this->productDescriptionController->update($data, $product->id);
 
         return new ProductResource($product);
