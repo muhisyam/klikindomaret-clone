@@ -67,10 +67,10 @@
         }
     
         imageUploadHandler() { 
-            isHasNewImage = true;
-            let showImage = '';
             let fileImage = formInputImg.files[0];
-    
+            let imageAttributes, imageSize;
+            isHasNewImage = true;
+            
             if (fileImage) {
                 imageSize = Math.floor(fileImage.size / 1024);
 
@@ -80,10 +80,8 @@
                     imageName: fileImage.name,
                     imageSize: imageSize,
                 };
-                
-                showImage += this.imageItemWrapper(imageAttributes);    
-    
-                uploadedImgWrapper.innerHTML = showImage;
+
+                uploadedImgWrapper.innerHTML = this.imageItemWrapper(imageAttributes);;
             } else {
                 uploadedImgWrapper.innerHTML = this.noImageUploaded();
             }
@@ -132,6 +130,30 @@
         }
     }
 
+    class ImageFileHandler {
+        handleDragOver(e) {
+            e.preventDefault();
+
+            dropAreaImg.classList.add('dragover');
+            browseImgBtn.classList.remove('z-20');
+        };
+
+        handleDragLeave() {
+            dropAreaImg.classList.remove('dragover');
+            browseImgBtn.classList.add('z-20');
+        };
+
+        handleDrop(e) {
+            e.preventDefault();
+
+            dropAreaImg.classList.remove('dragover');
+            browseImgBtn.classList.add('z-20');
+            
+            formInputImg.files = e.dataTransfer.files;
+            new ImageUploader();
+        };
+    }
+
     function removeImage(e) { 
         const title = "Berhasil Hapus Gambar"
         const message = e.getAttribute('data-original-image-name');
@@ -140,7 +162,7 @@
         
         deleteExistImage(e);
         showNotification(title, message);
-        uploadImg();
+        new ImageUploader();
     };
 
     function deleteExistImage(e) { 
@@ -182,35 +204,15 @@
         var isHasNewImage = false;
         var formInputImg = document.querySelector('#form-input-image');
         var uploadedImgWrapper = document.querySelector('.list-image-uploaded');
-        const dropAreaImg = document.querySelector('#drop-area-image');
-        const browseImgBtn = document.querySelector('#browse-img');
-        const uploadedImgItem = document.querySelector('.item-image-uploaded');
-        const noImageUploaded = document.querySelector('.item-no-image');
-        const invalidFeedback = document.querySelector('.invalid-feedback');
+        var dropAreaImg = document.querySelector('#drop-area-image');
+        var browseImgBtn = document.querySelector('#browse-img');
+
+        const imageHandler = new ImageFileHandler();
         
         browseImgBtn.addEventListener('click', () => formInputImg.click());
-        formInputImg.addEventListener('change', uploadImg);
-        
-        dropAreaImg.addEventListener('dragover', function(e) {
-            e.preventDefault();
-
-            dropAreaImg.classList.add('dragover');
-            browseImgBtn.classList.remove('z-20');
-        });
-
-        dropAreaImg.addEventListener('dragleave', function() {
-            dropAreaImg.classList.remove('dragover');
-            browseImgBtn.classList.add('z-20');
-        });
-
-        dropAreaImg.addEventListener('drop', function(e) {
-            e.preventDefault();
-
-            dropAreaImg.classList.remove('dragover');
-            browseImgBtn.classList.add('z-20');
-            
-            formInputImg.files = e.dataTransfer.files;
-            uploadImg();
-        });
+        formInputImg.addEventListener('change', () => new ImageUploader());
+        dropAreaImg.addEventListener('dragover', (e) => imageHandler.handleDragOver(e));
+        dropAreaImg.addEventListener('dragleave', () => imageHandler.handleDragLeave());
+        dropAreaImg.addEventListener('drop', (e) => imageHandler.handleDrop(e));
     }
 </script>
