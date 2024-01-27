@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\App\Admin\CategoryController;
 use App\Http\Controllers\App\Admin\ProductController;
-use App\Http\Controllers\Frontend\Admin\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
