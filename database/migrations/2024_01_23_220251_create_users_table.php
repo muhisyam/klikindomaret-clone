@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('role_id')
-                ->default(0)
+                ->nullable()
+                ->default(1) // default user
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
@@ -27,7 +28,8 @@ return new class extends Migration
             $table->date('birthdate');
             $table->string('phone_number')->unique();
             $table->timestamp('phone_number_verified_at')->nullable();
-            $table->dateTime('last_login');
+            $table->string('user_image_name')->nullable();
+            $table->dateTime('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
