@@ -7,7 +7,7 @@
                 </button>
             </div>
             <div class="img">
-                <img class="w-full rounded-t-xl" src="https://account.klikindomaret.com/static/media/background-registration.c086c404.svg" alt="">
+                <img class="w-full rounded-t-xl" src="{{ asset('img/auth/background-registration.jpg') }}" alt="">
             </div>
         </section>
         <section class="body-section relative z-10 bg-white rounded-t-xl p-4 -mt-8">
