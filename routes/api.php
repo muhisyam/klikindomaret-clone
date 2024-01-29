@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\Auth\AuthenticatedSessionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\StoreController;
@@ -23,6 +24,9 @@ use App\Http\Controllers\Api\v1\ProductImageController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// TODO: place inside middleware auth sanctum
+Route::apiResource('login', AuthenticatedSessionController::class);
 
 // group categories
 Route::apiResource('categories', CategoryController::class);
