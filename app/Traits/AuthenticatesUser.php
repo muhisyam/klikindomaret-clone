@@ -6,41 +6,59 @@ use App\Actions\ErrorTraceAction;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\JsonResponse;
 
 trait AuthenticatesUser
 {
-    public function __construct(
-        protected LoginRequest $request,
-        protected ErrorTraceAction $trace,
-    ){} 
+    protected $request;
 
-    public function authenticated()
+    /**
+     * Attempt to authenticate the request's credentials.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function authenticated(LoginRequest $request)
     {
-        if (! $this->attemptLogin($this->request)) {
-            $this->sendFailedLoginResponse(
-                $this->trace->execute()
-            );
+        $this->request = $request;
+
+        if (! $this->attemptLogin($request)) {
+            $trace = app(ErrorTraceAction::class)->execute();
+
+            $this->sendFailedLoginResponse($trace);
         }
 
         // TODO: ADD RATE LIMITER
     }
 
-    protected function sendFailedLoginResponse(array $trace)
+    /**
+     * Send response when authenticate attempt failed.
+     *
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
+     */
+    protected function sendFailedLoginResponse(array $trace): JsonResponse
     {
         throw new HttpResponseException(response([
-            'status_code' => 400,
-            'message' => 'Bad Request',
             'errors' => [
                 'phone_email' => trans('auth.failed'),
             ],
-            "trace" => [
-                'File' => $trace['filename'],
-                'Line' => $trace['line'],
-            ]
-        ], 400));
+            'meta' => [
+                'status_code' => 401,
+                'message' => 'Unauthorized',
+                'trace' => [
+                    'File' => $trace['filename'],
+                    'Line' => $trace['line'],
+                ],
+            ],
+        ])->setStatusCode(401));
     }
 
-    protected function attemptLogin()
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(): bool
     {
         return Auth::attempt(
             $this->credentials($this->request),
@@ -48,7 +66,13 @@ trait AuthenticatesUser
         );
     }
 
-    protected function credentials()
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(): array
     {
         $username = ctype_digit($this->request['phone_email']) ? 'phone_number' : 'email';
 

@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers\Api\v1\Auth;
 
-use Illuminate\Http\Request;
-use App\Traits\AuthenticatesUser;
-use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Resources\LoginResource;
+use App\Traits\AuthenticatesUser;
 
 class AuthenticatedSessionController extends Controller
 {
     use AuthenticatesUser;
 
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Handle an incoming authentication request then, 
+     * create user token that has been authenticated.
+     *
+     * @param  \App\Http\Requests\LoginRequest  $request
+     * @return \App\Http\Resources\LoginResource
      */
     public function store(LoginRequest $request)
     {
@@ -28,28 +24,9 @@ class AuthenticatedSessionController extends Controller
 
         $user = $request->user();
         $user->tokens()->delete();
-        $token = $user->createToken('auth-token')->plainTextToken;
+        $user->token = $user->createToken('auth-token')->plainTextToken;
 
-        return response()->json([
-            'token' => $token,
-            'user' => $user,
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        return new LoginResource($user);
     }
 
     /**
