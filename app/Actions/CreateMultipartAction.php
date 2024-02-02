@@ -89,7 +89,7 @@ class CreateMultipartAction
         return $this->param;
     }
 
-    public function execute(array $formRequest, string $imageFormName = null): array
+    public function create(array $formRequest, string $imageFormName = null): array
     {
         $isUpdateProduct = isset($formRequest['_method']);
         $didntHasImage = true;
