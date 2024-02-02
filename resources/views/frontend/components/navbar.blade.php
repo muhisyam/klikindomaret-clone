@@ -104,17 +104,21 @@
                 </div>
             </div>
             <div class="right-side flex">
-                <button class="shopping-basket drop-shadow-sm mt-1 me-7 text-xl text-[#0079c2]"  data-tooltip-target="shopping-basket-tooltip" data-tooltip-placement="bottom">
-                    <span><i class="ri-shopping-basket-fill"></i></span>
-                </button>
-                <div id="shopping-basket-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    Lihat Keranjang
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-                <div class="guest-button text-sm">
-                    <button type="button" id="btn-login" class="rounded-lg border border-[#0079c2] me-2.5 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
-                    <button type="button" id="btn-register" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
-                </div>
+                @if(is_null(session('auth_token')))
+                    <button class="shopping-basket drop-shadow-sm mt-1 me-7 text-xl text-[#0079c2]"  data-tooltip-target="shopping-basket-tooltip" data-tooltip-placement="bottom">
+                        <span><i class="ri-shopping-basket-fill"></i></span>
+                    </button>
+                    <div id="shopping-basket-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        Lihat Keranjang
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                    <div class="guest-button text-sm">
+                        <button type="button" id="btn-login" class="rounded-lg border border-[#0079c2] me-2.5 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
+                        <button type="button" id="btn-register" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
+                    </div>
+                @else
+                    <div>{{ session('username') }}</div>
+                @endif
             </div>
         </div>
     </div>
