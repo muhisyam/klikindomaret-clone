@@ -2,18 +2,12 @@
 
 namespace App\Actions;
 
+use App\DataTransferObjects\ClientRequestDto;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
 class ClientRequestAction
 {
-    protected $client;
-
-    public function __construct() 
-    {
-        $this->client = new Client();
-    }
-    
     /**
      * Create and send an HTTP request.
      *
@@ -21,19 +15,26 @@ class ClientRequestAction
      * @param string|UriInterface $uri     URI object or string.
      * @param array               $param   Parameter from Request. See \GuzzleHttp\RequestOptions.
      */
-    public function execute(string $method, string $uri, array $param = []): array
+    public function request(ClientRequestDto $dto): array
     {
         $options = [];
+        $client = new Client();
 
-        if (!empty($param)) {
+        if (!empty($dto->headers)) {
             $options = [
-                'header' => ['Content-Type', 'application/json'],
-                'multipart' => $param,
+                'headers' => $dto->headers,
+            ];
+        }
+
+        if (!empty($dto->formData)) {
+            $options = [
+                'headers' => ['Accept-Type', 'application/json'],
+                'multipart' => $dto->formData,
             ];
         }
 
         try {
-            $response = $this->client->request($method, $uri, $options);
+            $response = $client->request($dto->method, $dto->endpoint, $options);
 
             $content = $response->getBody()->getContents();
             $data = json_decode($content, true);
