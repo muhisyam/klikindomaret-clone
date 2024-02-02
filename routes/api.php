@@ -1,14 +1,16 @@
 <?php
 
 use App\Http\Controllers\Api\v1\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Api\v1\CategoryController;
+use App\Http\Controllers\Api\v1\ProductController;
+use App\Http\Controllers\Api\v1\ProductImageController;
+use App\Http\Controllers\Api\v1\RegionController;
+use App\Http\Controllers\Api\v1\StoreController;
+use App\Http\Controllers\Api\v1\SupplierController;
+use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\DebuggingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\v1\StoreController;
-use App\Http\Controllers\Api\v1\RegionController;
-use App\Http\Controllers\Api\v1\ProductController;
-use App\Http\Controllers\Api\v1\CategoryController;
-use App\Http\Controllers\Api\v1\SupplierController;
-use App\Http\Controllers\Api\v1\ProductImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +22,10 @@ use App\Http\Controllers\Api\v1\ProductImageController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    
+Route::middleware('guest')->group(function() {
+    Route::post('login', [AuthenticatedSessionController::class, 'store'])->name('login');
 });
-
-// TODO: place inside middleware auth sanctum
-Route::apiResource('login', AuthenticatedSessionController::class);
 
 // group categories
 Route::apiResource('categories', CategoryController::class);
