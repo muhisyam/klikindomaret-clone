@@ -1,5 +1,5 @@
 <div class="login | fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] modal">
-    <div class="login-wrapper | max-w-sm bg-white rounded-lg">
+    <div class="login-wrapper | max-w-sm bg-white rounded-xl">
         <section class="header-section | min-h-[160px]">
             <div class="nav-back | absolute top-4 left-4">
                 <button>
