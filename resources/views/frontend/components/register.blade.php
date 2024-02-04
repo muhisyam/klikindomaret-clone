@@ -1,21 +1,22 @@
-<div class="login fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
-    <div class="login-wrapper max-w-sm rounded-lg">
-        <section class="header-section min-h-[160px]">
-            <div class="nav-back absolute top-4 left-4">
-                <button>
-                    <div class="icon text-2xl"><i class="ri-arrow-left-line"></i></div>
-                </button>
-            </div>
-            <div class="img">
+<div class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]">
+    <div class="max-w-sm bg-white rounded-xl">
+        <section class="min-h-auth-header">
+            <button class="absolute top-3 left-3 h-9 w-9 bg-white rounded-full text-xl pt-0.5">
+                <i class="ri-arrow-left-line"></i>
+            </button>
+            <figure>
                 <img class="w-full rounded-t-xl" src="{{ asset('img/auth/background-registration.jpg') }}" alt="">
-            </div>
+            </figure>
         </section>
-        <section class="body-section relative z-10 bg-white rounded-t-xl p-4 -mt-8">
-            <div class="nav flex items-center justify-between py-2 mb-4">
-                <div class="title font-bold">Daftar</div>
-                <a href="" class="btn-register text-[#0079c2] text-sm">Masuk</a>
+        <section class="relative z-10 min-h-auth bg-white rounded-t-xl p-4 -mt-8">
+            <div class="flex items-center justify-between py-2 mb-4">
+                <div class="font-bold">Daftar</div>
+                <button type="button" class="text-[#0079c2] text-sm">Masuk</button>
             </div>
-            <div class="form mb-4">
+            @php
+                //TODO: Fix the class, implement the truly tailwind
+            @endphp
+            <div class="mb-4">
                 <form class="form-input-wrapper" action="">
                     <div class="item-input-group mb-4">
                         <label for="form-input-phone" class="block text-sm mb-1">Nomor HP</label>
