@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 
 trait AuthenticatesUser
 {
@@ -18,10 +17,8 @@ trait AuthenticatesUser
 
     /**
      * Attempt to authenticate the request's credentials.
-     *
-     * @throws \Illuminate\Validation\ValidationException
      */
-    public function authenticated(LoginRequest $request)
+    public function authenticated(LoginRequest $request): void
     {
         $this->ensureIsNotRateLimited();
         $this->request = $request;
@@ -38,8 +35,6 @@ trait AuthenticatesUser
 
     /**
      * Ensure the login request is not rate limited.
-     *
-     * @throws \Illuminate\Validation\ValidationException
      */
     public function ensureIsNotRateLimited(): void
     {
@@ -49,14 +44,35 @@ trait AuthenticatesUser
 
         event(new Lockout($this));
 
+        $trace = app(ErrorTraceAction::class)->execute();
+        $this->sendFailedLoginResponse($trace);
+    }
+
+    /**
+     * Send response when Rate Limiter detect too many attempts failed.
+     *
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
+     */
+    protected function sendTooManyAttempts(array $trace): JsonResponse
+    {
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
-        throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
+        throw new HttpResponseException(response([
+            'errors' => [
+                'phone_email' => trans('auth.throttle', [
+                    'seconds' => $seconds,
+                    'minutes' => ceil($seconds / 60)
+                ]),
+            ],
+            'meta' => [
+                'status_code' => 429,
+                'message' => 'Too Many Request',
+                'trace' => [
+                    'File' => $trace['filename'],
+                    'Line' => $trace['line'],
+                ],
+            ],
+        ])->setStatusCode(429));
     }
 
     /**
