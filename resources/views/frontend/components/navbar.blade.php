@@ -103,21 +103,30 @@
                     </form>
                 </div>
             </div>
-            <div class="right-side flex">
+            <div class="right-side flex items-center gap-4">
                 @if(is_null(session('auth_token')))
-                    <button class="shopping-basket drop-shadow-sm mt-1 me-7 text-xl text-[#0079c2]"  data-tooltip-target="shopping-basket-tooltip" data-tooltip-placement="bottom">
-                        <span><i class="ri-shopping-basket-fill"></i></span>
-                    </button>
+                    <button class="h-6 w-6 scale-125 text-secondary rounded me-3 hover:bg-dark-primary" data-tooltip-target="shopping-basket-tooltip" data-tooltip-placement="bottom"><i class="ri-shopping-basket-fill"></i></button>
                     <div id="shopping-basket-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         Lihat Keranjang
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                     <div class="guest-button text-sm">
-                        <button type="button" id="btn-login" class="rounded-lg border border-[#0079c2] me-2.5 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
+                        <button type="button" id="btn-login" class="rounded-lg border border-[#0079c2] me-2 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
                         <button type="button" id="btn-register" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
                     </div>
                 @else
-                    <div>{{ session('username') }}</div>
+                    @php
+                        //TODO: add tooltips
+                    @endphp
+                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="Notification" data-element="notification-user"><i class="ri-notification-3-fill"></i></button>
+                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="List Transaction" data-element="list-transaction-user"><i class="ri-booklet-fill"></i></button>
+                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="Shopping Cart" data-element="shopping-cart-user"><i class="ri-shopping-basket-fill"></i></button>
+                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="Wallet" data-element="wallet-user"><i class="ri-wallet-fill"></i></button>
+                    <button type="button" class="flex items-center gap-1 rounded p-1 hover:bg-dark-primary">
+                        <div class="w-6 h-6 bg-blue-200 border border-slate-200 rounded-full text-xs font-bold text-center pt-[3px] me-1">M</div>
+                        <div class="text-sm">M Hisyam</div>
+                        <span class="text-secondary mt-0.5"><i class="ri-arrow-drop-down-line"></i></span>
+                    </button>
                 @endif
             </div>
         </div>
