@@ -18,6 +18,10 @@ module.exports = {
         'danger': '#c33',
         'dark-primary': '#e1b526',
       },
+      minHeight:{
+        'auth': 'calc(100vh - 380px)',
+        'auth-header': '160px',
+      }
     },
   },
   plugins: [],
