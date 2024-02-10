@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class LoginResource extends JsonResource
+class AuthenticateResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,7 @@ class LoginResource extends JsonResource
     {
         return [
             'token' => $this->token,
-            // TODO: move to user resource
-            'user' => [
-                'id' => $this->id,
-                'username' => $this->username,
-                'email' => $this->email,
-                'phone_number' => $this->phone_number,
-            ],
+            'user' => new UserResource($this),
         ];
     }
     
