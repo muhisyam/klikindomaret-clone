@@ -24,7 +24,7 @@ class User extends Authenticatable
         'password',
         'gender',
         'birthdate',
-        'phone_number',
+        'mobile_number',
         'last_login',
     ];
 
@@ -45,7 +45,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'phone_number_verified_at' => 'datetime',
+        'mobile_number_verified_at' => 'datetime',
     ];
 
     public function roleAs()

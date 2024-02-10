@@ -19,15 +19,15 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->string('fullname');
-            $table->string('username')->unique();
+            $table->string('fullname', 200);
+            $table->string('username', 100)->unique();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('gender', ['laki-laki', 'perempuan'])->nullable();
             $table->date('birthdate');
-            $table->string('phone_number')->unique();
-            $table->timestamp('phone_number_verified_at')->nullable();
+            $table->string('mobile_number')->unique();
+            $table->timestamp('mobile_number_verified_at');
             $table->string('user_image_name')->nullable();
             $table->dateTime('last_login')->nullable();
             $table->rememberToken();
