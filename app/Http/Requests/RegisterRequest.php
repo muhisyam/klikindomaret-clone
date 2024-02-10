@@ -42,11 +42,11 @@ class RegisterRequest extends FormRequest
             'meta' => [
                 'status_code' => 400,
                 'message' => 'Bad Request',
+                'trace' => [
+                    'File' => $trace['filename'],
+                    'Line' => $trace['line'],
+                ],
             ],
-            'trace' => [
-                'File' => $trace['filename'],
-                'Line' => $trace['line'],
-            ]
         ], 400));
     }
 }
