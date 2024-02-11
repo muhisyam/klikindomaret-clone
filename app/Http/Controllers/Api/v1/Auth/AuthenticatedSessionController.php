@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use App\Http\Resources\LoginResource;
+use App\Http\Resources\AuthenticateResource;
 use App\Traits\AuthenticatesUser;
 
 class AuthenticatedSessionController extends Controller
@@ -26,7 +26,7 @@ class AuthenticatedSessionController extends Controller
         $user->tokens()->delete();
         $user->token = $user->createToken('auth-token')->plainTextToken;
 
-        return new LoginResource($user);
+        return new AuthenticateResource($user);
     }
 
     /**
