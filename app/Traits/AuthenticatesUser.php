@@ -20,8 +20,8 @@ trait AuthenticatesUser
      */
     public function authenticated(LoginRequest $request): void
     {
-        $this->ensureIsNotRateLimited();
         $this->request = $request;
+        $this->ensureIsNotRateLimited();
 
         if (! $this->attemptLogin()) {
             RateLimiter::hit($this->throttleKey());
@@ -132,6 +132,6 @@ trait AuthenticatesUser
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->request['phone_email']) . '|' . $this->request->getClientIp());
     }
 }
