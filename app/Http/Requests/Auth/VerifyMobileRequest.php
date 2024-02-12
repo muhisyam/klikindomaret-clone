@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use App\Actions\ErrorTraceAction;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class RegisterRequest extends FormRequest
+class VerifyMobileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,11 +25,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'birthdate' => ['required', 'date', 'before:' . now()],
-            'fullname' => ['required', 'string', 'max:200'],
-            'username' => ['required', 'lowercase', 'unique:users', 'max:100'],
-            'password' => ['required', 'min:8', 'max:20'],
-            'mobile_number' => ['required'],
+            'mobile_number' => ['required', 'numeric', 'digits_between:10,13'],
         ];
     }
 

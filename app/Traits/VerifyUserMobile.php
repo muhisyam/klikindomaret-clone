@@ -3,8 +3,8 @@
 namespace App\Traits;
 
 use App\Actions\ErrorTraceAction;
+use App\Http\Requests\Auth\VerifyMobileRequest;
 use App\Http\Requests\Auth\VerifyOtpRequest;
-use App\Http\Requests\VerifyMobileRequest;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;

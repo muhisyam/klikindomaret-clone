@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use App\Actions\ErrorTraceAction;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,11 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone_email' => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'birthdate' => ['required', 'date', 'before:' . now()],
+            'fullname' => ['required', 'string', 'max:200'],
+            'username' => ['required', 'lowercase', 'unique:users', 'max:100'],
+            'password' => ['required', 'min:8', 'max:20'],
+            'mobile_number' => ['required'],
         ];
     }
 
@@ -35,13 +38,15 @@ class LoginRequest extends FormRequest
         $trace = app(ErrorTraceAction::class)->execute();
         
         throw new HttpResponseException(response([
-            'status_code' => 400,
-            'message' => 'Bad Request',
-            "errors" => $validator->getMessageBag(),
-            "trace" => [
-                'File' => $trace['filename'],
-                'Line' => $trace['line'],
-            ]
+            'errors' => $validator->getMessageBag(),
+            'meta' => [
+                'status_code' => 400,
+                'message' => 'Bad Request',
+                'trace' => [
+                    'File' => $trace['filename'],
+                    'Line' => $trace['line'],
+                ],
+            ],
         ], 400));
     }
 }

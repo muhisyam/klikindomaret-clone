@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use App\Actions\ErrorTraceAction;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class VerifyMobileRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class VerifyMobileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mobile_number' => ['required', 'numeric', 'digits_between:10,13'],
+            'phone_email' => ['required', 'string'],
+            'password' => ['required', 'string'],
         ];
     }
 
@@ -34,13 +35,15 @@ class VerifyMobileRequest extends FormRequest
         $trace = app(ErrorTraceAction::class)->execute();
         
         throw new HttpResponseException(response([
-            'status_code' => 400,
-            'message' => 'Bad Request',
-            "errors" => $validator->getMessageBag(),
-            "trace" => [
-                'File' => $trace['filename'],
-                'Line' => $trace['line'],
-            ]
+            'errors' => $validator->getMessageBag(),
+            'meta' => [
+                'status_code' => 400,
+                'message' => 'Bad Request',
+                'trace' => [
+                    'File' => $trace['filename'],
+                    'Line' => $trace['line'],
+                ],
+            ],
         ], 400));
     }
 }

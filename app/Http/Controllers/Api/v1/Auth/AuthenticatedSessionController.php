@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Resources\AuthenticateResource;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\Auth\AuthenticateResource;
 use App\Traits\AuthenticatesUser;
 
 class AuthenticatedSessionController extends Controller
@@ -15,10 +15,10 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request then, 
      * create user token that has been authenticated.
      *
-     * @param  \App\Http\Requests\LoginRequest  $request
-     * @return \App\Http\Resources\LoginResource
+     * @param  \App\Http\Requests\Auth\LoginRequest $request
+     * @return \App\Http\Resources\AuthenticateResource
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request): AuthenticateResource
     {
         $this->authenticated($request);
 

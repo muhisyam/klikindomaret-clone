@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use App\Actions\ErrorTraceAction;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;

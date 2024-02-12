@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Resources\AuthenticateResource;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Resources\Auth\AuthenticateResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class RegisteredController extends Controller
 {
-    public function store(RegisterRequest $request)
+    /**
+     * Handle an incoming registration request then, save data user.
+     *
+     * @param  \App\Http\Requests\Auth\RegisterRequest $request
+     * @return \App\Http\Resources\Auth\AuthenticateResource
+     */
+    public function store(RegisterRequest $request): AuthenticateResource
     {
         $user = User::create([
             'fullname' => ucwords($request->fullname),

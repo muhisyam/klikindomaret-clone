@@ -3,15 +3,22 @@
 namespace App\Http\Controllers\Api\v1\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\VerifyMobileRequest;
 use App\Http\Requests\Auth\VerifyOtpRequest;
-use App\Http\Requests\VerifyMobileRequest;
 use App\Traits\VerifyUserMobile;
+use Illuminate\Http\JsonResponse;
 
 class VerifiedMobileController extends Controller
 {
     use VerifyUserMobile;
 
-    public function verifyMobile(VerifyMobileRequest $request)
+    /**
+     * Handle an incoming mobile request then, send otp code.
+     *
+     * @param  \App\Http\Requests\Auth\VerifyMobileRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verifyMobile(VerifyMobileRequest $request): JsonResponse
     {
         $this->verify($request);
 
@@ -27,7 +34,13 @@ class VerifiedMobileController extends Controller
         ], 200);
     }
 
-    public function verifyOtp(VerifyOtpRequest $request)
+    /**
+     * Handle an otp request.
+     *
+     * @param  \App\Http\Requests\Auth\VerifyOtpRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function verifyOtp(VerifyOtpRequest $request): JsonResponse
     {
         $this->verified($request);
 
