@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Actions\ErrorTraceAction;
+use App\Http\Requests\Auth\VerifyOtpRequest;
 use App\Http\Requests\VerifyMobileRequest;
 use App\Models\User;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -36,6 +37,15 @@ trait VerifyUserMobile
         $this->otpCode = $this->createOTP();
 
         $this->sendMobileVerificationNotification();
+    }
+
+    /**
+     * Attempt otp code to verified mobile request.
+     */
+    public function verified(VerifyOtpRequest $request): void
+    {
+        $this->request = $request;
+        RateLimiter::clear($this->throttleKey());
     }
 
     /**
@@ -78,7 +88,7 @@ trait VerifyUserMobile
     /**
      * Ensure the mobile request is not rate limited.
      */
-    public function ensureIsNotRateLimited(): void
+    public function ensureIsNotRateLimited(): mixed
     {
         if (! RateLimiter::tooManyAttempts($this->throttleKey(), 3)) {
             return RateLimiter::hit($this->throttleKey());
