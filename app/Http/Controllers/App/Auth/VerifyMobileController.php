@@ -31,27 +31,46 @@ class VerifyMobileController extends Controller
             )
         );
 
+        if ($data['meta']['status_code'] !== 200) {
+            return redirect()
+                ->back()
+                ->with([
+                    'input_error' => $data
+                ]);
+        }
+
         session([
             'mobile_number' => $request->mobile_number,
             'otp' => $data['otp'],
-            'step' => 'verify',
         ]);
 
-        return redirect()->intended('/');
+        return redirect()->back()->with('step', $data['step']);
     }
 
     public function store(Request $request)
     {
-        $inputOtp = (int) implode('', array(...$request->otp));
-       
-        if ($inputOtp !== session('otp')) {
-            return redirect()->intended('/')->with(['verify_wrong' => 'Kode yang dimasukkan salah.']);
+        $request['otp_confirmation'] = (int) implode('', array(...$request->otp_confirmation));
+        $formData = $this->multipartAction->create($request->all());
+        
+        $data = $this->clientAction->request(
+            new ClientRequestDto(
+                method: 'POST',
+                endpoint: $this->endpoint,
+                formData: $formData,
+            )
+        );
+
+        if ($data['meta']['status_code'] !== 202) {
+            return redirect()
+                ->back()
+                ->with([
+                    'input_error' => $data
+                ]);
         }
 
         session()->forget('otp');
-        session(['step' => 'complete_register']);
         
-        return redirect()->intended('/');
+        return redirect()->intended('/')->with('step', $data['step']);
 
     }
 }
