@@ -19,7 +19,7 @@ module.exports = {
         'dark-primary': '#e1b526',
       },
       minHeight:{
-        'auth': 'calc(100vh - 380px)',
+        'auth': '350px',
         'auth-header': '160px',
       }
     },
