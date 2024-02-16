@@ -1,17 +1,126 @@
-// headerCategory();
-openLoginRegis();
+headerCategory();
+toggleLoginOrRegisterModal();
+closeModalFromOverlay();
+handleButtonSwitchForm();
+handleSwitchForm();
+resendOTPTimer();
 
-function openLoginRegis() {
-    const btnLogin = document.querySelector('#btn-login');
+function toggleModal(modalTarget, modalAction) { 
+    // Check if modalTarget is already an object
+    const modalAuth = typeof modalTarget === 'object' ? modalTarget : document.querySelector('.' + modalTarget);
+    const overlay = document.querySelector('#bg-overlay');
+    
+    if (modalAction === 'open') {
+        overlay.classList.remove('hidden');
+        modalAuth.classList.add('show');
+    } else {
+        overlay.classList.add('hidden');
+        modalAuth.classList.remove('show');
+    }
+}
 
-    btnLogin.addEventListener('click', (e) => {
-        const loginElement = document.querySelector('.login');
-        const overlay = document.querySelector('#bg-overlay');
-        
-        loginElement.classList.toggle('show');
-        overlay.classList.toggle('hidden');
+function toggleLoginOrRegisterModal() {
+    const listBtnAuth = document.querySelectorAll('.button-auth');
+
+    listBtnAuth.forEach(btnAuth => {
+        btnAuth.addEventListener('click', (el) => {
+            // Find button element, when is clicked is not the button element
+            triggerEl = el.target.closest('button');
+            modalOpen = triggerEl.getAttribute('data-modal-open');
+            modalClose = triggerEl.getAttribute('data-modal-close');
+            
+            modalTarget = modalOpen ?? modalClose;
+            modalAction = modalOpen ? 'open' : 'close';
+
+            toggleModal(modalTarget, modalAction);
+        });
     });
 }
+
+function closeModalFromOverlay() {
+    const overlay = document.querySelector('#bg-overlay');
+
+    overlay.addEventListener('click', () => {
+        const activeModal = document.querySelector('.modal.show');
+        const modalAction = activeModal ? 'close' : '';
+
+        toggleModal(activeModal, modalAction);
+    });
+}
+
+function ensureInputFormNotEmpty() {
+    birthdate = document.querySelector('#form-input-birthdate').value.trim();
+    fullname = document.querySelector('#form-input-fullname').value.trim(); 
+    username = document.querySelector('#form-input-username-registration').value.trim(); 
+    password = document.querySelector('#form-input-password-registration').value.trim(); 
+
+    listBtnSwitch = document.querySelectorAll('.button-switch-form');
+    btnSubmit = document.querySelector('.button-submit-form');
+
+    listBtnSwitch[0].setAttribute('disabled', '');
+    btnSubmit.setAttribute('disabled', '');
+
+    if (birthdate !== '' && fullname !== '') {
+        if (username !== '' && password !== '') {
+            btnSubmit.removeAttribute('disabled');
+        }
+
+        return listBtnSwitch[0].removeAttribute('disabled');
+    }
+}
+
+function handleButtonSwitchForm() { 
+    birthdate = document.querySelector('#form-input-birthdate');
+    if (! birthdate) {return} // Immediately return
+    fullname = document.querySelector('#form-input-fullname'); 
+    username = document.querySelector('#form-input-username-registration'); 
+    password = document.querySelector('#form-input-password-registration'); 
+
+    birthdate.addEventListener('input', ensureInputFormNotEmpty);
+    fullname.addEventListener('input', ensureInputFormNotEmpty);
+    username.addEventListener('input', ensureInputFormNotEmpty);
+    password.addEventListener('input', ensureInputFormNotEmpty);
+}
+
+function handleSwitchForm() { 
+    listBtnSwitch = document.querySelectorAll('.button-switch-form');
+    firstForm = document.querySelector('.first-form');
+    secondForm = document.querySelector('.second-form');
+
+    listBtnSwitch.forEach(btnSwitch => {
+        btnSwitch.addEventListener('click', (el) => {
+            formTarget = el.target.getAttribute('data-switch-form');
+
+            if (formTarget === 'section-second') {
+                firstForm.classList.add('hidden');
+                secondForm.classList.remove('hidden');
+            } else {
+                firstForm.classList.remove('hidden');
+                secondForm.classList.add('hidden');
+            }
+        });
+    })
+}
+
+function resendOTPTimer() {
+    // TODO: check if has rate limiter error
+    let timerDisplay = document.querySelector('.resend-otp .message');
+    if (! timerDisplay) {return} // Immediately return
+    let timeout = 30;
+    const formResendOTP = document.querySelector('.resend-otp form');
+  
+        let otpTimer = setInterval(function() {
+            timeout--;
+            timerDisplay.innerHTML = 'Kirim ulang OTP dalam ' + timeout + ' detik. ';
+            if (timeout <= 0) {
+                clearInterval(otpTimer);
+                timerDisplay.innerHTML = 'Tidak mendapatkan kode?&nbsp;';
+                formResendOTP.classList.remove('hidden');
+            }
+        }, 1000);
+}
+
+
 
 function headerCategory() {
     const btnCategory = document.querySelector('.bottom-section .category');
@@ -112,3 +221,5 @@ function headerCategory() {
         });
     });
 }
+
+
