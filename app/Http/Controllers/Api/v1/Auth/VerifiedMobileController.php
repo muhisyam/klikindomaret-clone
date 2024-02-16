@@ -25,7 +25,7 @@ class VerifiedMobileController extends Controller
         return response()->json([
             'data' => [
                 'otp' => $this->otpCode,
-                'step' => 'verify_otp',
+                'step' => 'Verify OTP',
             ],
             'meta' => [
                 'status_code' => 200,
@@ -46,7 +46,7 @@ class VerifiedMobileController extends Controller
 
         return response()->json([
             'data' => [
-                'step' => 'complete_register'
+                'step' => 'Complete Registration'
             ],
             'meta' => [
                 'status_code' => 202,
