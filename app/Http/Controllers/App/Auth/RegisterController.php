@@ -17,14 +17,14 @@ class RegisterController extends Controller
         protected ClientRequestAction $clientAction,
         protected CreateMultipartAction $multipartAction,
     ) {
-        $this->endpoint = env('API_URL') . '/v1/register';
+        $this->endpoint = config('api.url') . 'register';
     }
 
     public function register(Request $request)
     {
         $formData = $this->multipartAction->create($request->all());
         
-        $data = $this->clientAction->request(
+        $response = $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
                 endpoint: $this->endpoint,
@@ -32,12 +32,12 @@ class RegisterController extends Controller
             )
         );
 
-        if ($data['meta']['status_code'] === 400) {
+        if ($response['meta']['status_code'] === 400) {
             return redirect()
                 ->back()
                 ->with([
-                    'step' => 'complete_register', 
-                    'inputError' => $data,
+                    'step' => 'Complete Registration', 
+                    'input_error' => $response,
                 ])
                 ->withInput();
         }
@@ -46,9 +46,9 @@ class RegisterController extends Controller
         $request->session()->regenerate();
 
         session([
-            'auth_token' => $data['data']['token'],
-            'fullname' => $data['data']['user']['fullname'],
-            'username' => $data['data']['user']['username'],
+            'auth_token' => $response['data']['token'],
+            'fullname' => $response['data']['user']['fullname'],
+            'username' => $response['data']['user']['username'],
         ]);
 
         return redirect(RouteServiceProvider::HOME);

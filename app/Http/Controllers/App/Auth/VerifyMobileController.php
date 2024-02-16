@@ -16,35 +16,36 @@ class VerifyMobileController extends Controller
         protected ClientRequestAction $clientAction,
         protected CreateMultipartAction $multipartAction,
     ) {
-        $this->endpoint = env('API_URL') . '/v1/verify-mobile';
+        $this->endpoint = config('api.url');
     }
 
     public function __invoke(Request $request) 
     {
         $formData = $this->multipartAction->create($request->all());
         
-        $data = $this->clientAction->request(
+        $response = $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
-                endpoint: $this->endpoint,
+                endpoint: $this->endpoint . 'verify-mobile',
                 formData: $formData,
             )
         );
 
-        if ($data['meta']['status_code'] !== 200) {
+        if ($response['meta']['status_code'] !== 200) {
             return redirect()
                 ->back()
                 ->with([
-                    'input_error' => $data
+                    'step' => 'Verify Mobile', 
+                    'input_error' => $response,
                 ]);
         }
 
         session([
             'mobile_number' => $request->mobile_number,
-            'otp' => $data['otp'],
+            'otp' => $response['data']['otp'],
         ]);
 
-        return redirect()->back()->with('step', $data['step']);
+        return redirect()->back()->with('step', $response['data']['step']);
     }
 
     public function store(Request $request)
@@ -52,25 +53,26 @@ class VerifyMobileController extends Controller
         $request['otp_confirmation'] = (int) implode('', array(...$request->otp_confirmation));
         $formData = $this->multipartAction->create($request->all());
         
-        $data = $this->clientAction->request(
+        $response = $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
-                endpoint: $this->endpoint,
+                endpoint: $this->endpoint . 'verify-otp',
                 formData: $formData,
             )
         );
 
-        if ($data['meta']['status_code'] !== 202) {
+        if ($response['meta']['status_code'] !== 202) {
             return redirect()
                 ->back()
                 ->with([
-                    'input_error' => $data
+                    'step' => 'Verify OTP', 
+                    'input_error' => $response,
                 ]);
         }
 
         session()->forget('otp');
         
-        return redirect()->intended('/')->with('step', $data['step']);
+        return redirect()->intended('/')->with('step', $response['data']['step']);
 
     }
 }
