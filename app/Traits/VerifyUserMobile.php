@@ -30,6 +30,7 @@ trait VerifyUserMobile
     public function verify(VerifyMobileRequest $request): void
     {
         $this->request = $request;
+        // TODO: Move to request
         $this->ensureIsNotInDatabase();
         $this->ensureIsNotRateLimited();
         
@@ -70,9 +71,11 @@ trait VerifyUserMobile
     {
         throw new HttpResponseException(response([
             'errors' => [
-                'mobile_number' => trans('validation.unique', [
-                    'attribute' => 'Number',
-                ]),
+                'mobile_number' => [
+                    trans('validation.unique', [
+                        'attribute' => 'Number',
+                    ])
+                ],
             ],
             'meta' => [
                 'status_code' => 400,
@@ -121,7 +124,7 @@ trait VerifyUserMobile
 
         throw new HttpResponseException(response([
             'errors' => [
-                'mobile_number' => $message,
+                'mobile_number' => [$message],
             ],
             'meta' => [
                 'status_code' => 400,

@@ -37,7 +37,7 @@ class VerifyOtpRequest extends FormRequest
         
         throw new HttpResponseException(response([
             'errors' => [
-                'incorrect_otp' => 'Incorrect OTP entered. Please try again.',
+                'incorrect_otp' => ['Incorrect OTP entered. Please try again.'],
             ],
             'meta' => [
                 'status_code' => 401,
