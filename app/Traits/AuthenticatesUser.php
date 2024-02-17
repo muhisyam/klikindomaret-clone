@@ -3,8 +3,8 @@
 namespace App\Traits;
 
 use App\Actions\ErrorTraceAction;
+use App\Events\Lockout;
 use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -42,10 +42,10 @@ trait AuthenticatesUser
             return;
         }
 
-        event(new Lockout($this));
+        event(new Lockout($this->request));
 
         $trace = app(ErrorTraceAction::class)->execute();
-        $this->sendFailedLoginResponse($trace);
+        $this->sendTooManyAttempts($trace);
     }
 
     /**
@@ -59,10 +59,12 @@ trait AuthenticatesUser
 
         throw new HttpResponseException(response([
             'errors' => [
-                'phone_email' => trans('auth.throttle', [
-                    'seconds' => $seconds,
-                    'minutes' => ceil($seconds / 60)
-                ]),
+                'mobile_email' => [ 
+                    trans('auth.throttle', [
+                        'seconds' => $seconds,
+                        'minutes' => ceil($seconds / 60)
+                    ]),
+                ],
             ],
             'meta' => [
                 'status_code' => 429,
@@ -84,7 +86,9 @@ trait AuthenticatesUser
     {
         throw new HttpResponseException(response([
             'errors' => [
-                'phone_email' => trans('auth.failed'),
+                'mobile_email' => [
+                    trans('auth.failed')
+                ],
             ],
             'meta' => [
                 'status_code' => 401,
@@ -119,10 +123,10 @@ trait AuthenticatesUser
      */
     protected function credentials(): array
     {
-        $username = ctype_digit($this->request['phone_email']) ? 'phone_number' : 'email';
+        $username = ctype_digit($this->request['mobile_email']) ? 'mobile_number' : 'email';
 
         return [
-            $username => $this->request['phone_email'],
+            $username => $this->request['mobile_email'],
             'password' => $this->request['password'],
         ];
     }
@@ -132,6 +136,6 @@ trait AuthenticatesUser
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->request['phone_email']) . '|' . $this->request->getClientIp());
+        return Str::transliterate(Str::lower($this->request['mobile_email']) . '|' . $this->request->getClientIp());
     }
 }
