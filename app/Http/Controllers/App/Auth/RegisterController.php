@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App\Auth;
 use App\Actions\ClientRequestAction;
 use App\Actions\CreateMultipartAction;
 use App\DataTransferObjects\ClientRequestDto;
+use App\Events\Authenticated;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -32,24 +33,17 @@ class RegisterController extends Controller
             )
         );
 
-        if ($response['meta']['status_code'] === 400) {
+        if ($response['meta']['status_code'] !== 200) {
             return redirect()
                 ->back()
                 ->with([
                     'step' => 'Complete Registration', 
-                    'input_error' => $response,
+                    'input_error' => array_merge(['form_error' => 'register'], $response),
                 ])
                 ->withInput();
         }
 
-        // TODO: move to authenticate event
-        $request->session()->regenerate();
-
-        session([
-            'auth_token' => $response['data']['token'],
-            'fullname' => $response['data']['user']['fullname'],
-            'username' => $response['data']['user']['username'],
-        ]);
+        event(new Authenticated($response));
 
         return redirect(RouteServiceProvider::HOME);
     }

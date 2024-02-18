@@ -5,7 +5,9 @@ namespace App\Http\Controllers\App\Auth;
 use App\Actions\ClientRequestAction;
 use App\Actions\CreateMultipartAction;
 use App\DataTransferObjects\ClientRequestDto;
+use App\Events\Authenticated;
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -16,37 +18,35 @@ class LoginController extends Controller
         protected ClientRequestAction $clientAction,
         protected CreateMultipartAction $multipartAction,
     ) {
-        $this->endpoint = env('API_URL') . '/v1/login';
+        $this->endpoint = config('api.url') . 'login';
     }
 
     public function login(Request $request) 
     {
         $formData = $this->multipartAction->create($request->all());
+        $header = [
+            'User-Agent' => $request->userAgent(),
+            'X-Original-Ip' => $request->ip(),
+        ];
         
-        $data = $this->clientAction->request(
+        $response = $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
                 endpoint: $this->endpoint,
+                headers: $header,
                 formData: $formData,
             )
         );
 
-        if (isset($data['errors'])) {
-            return redirect()->route('auth.fail');
+        if ($response['meta']['status_code'] !== 200) {
+            return redirect()
+                ->back()
+                ->with('input_error', array_merge(['form_error' => 'login'], $response))
+                ->withInput();
         }
 
-        $this->authenticated($request, $data);
+        event(new Authenticated($response));
 
-        return redirect()->intended('/');
-    }
-
-    public function authenticated(Request $request, array $dataAuth)
-    {
-        $request->session()->regenerate();
-
-        session([
-            'auth_token' => $dataAuth['data']['token'],
-            'username' => $dataAuth['data']['user']['username'],
-        ]);
+        return redirect()->intended(RouteServiceProvider::ADMIN);
     }
 }

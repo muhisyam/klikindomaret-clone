@@ -36,7 +36,7 @@ class VerifyMobileController extends Controller
                 ->back()
                 ->with([
                     'step' => 'Verify Mobile', 
-                    'input_error' => $response,
+                    'input_error' => array_merge(['form_error' => 'register'], $response),
                 ]);
         }
 
@@ -66,7 +66,7 @@ class VerifyMobileController extends Controller
                 ->back()
                 ->with([
                     'step' => 'Verify OTP', 
-                    'input_error' => $response,
+                    'input_error' => array_merge(['form_error' => 'register'], $response),
                 ]);
         }
 
