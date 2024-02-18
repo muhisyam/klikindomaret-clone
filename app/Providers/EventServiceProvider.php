@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\Authenticated;
 use App\Events\Lockout;
+use App\Listeners\AuthenticatedSession;
 use App\Listeners\LockoutTraceNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         Lockout::class => [
             LockoutTraceNotification::class,
+        ],
+        Authenticated::class => [
+            AuthenticatedSession::class,
         ],
     ];
 
