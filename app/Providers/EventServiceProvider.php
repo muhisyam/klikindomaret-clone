@@ -4,8 +4,12 @@ namespace App\Providers;
 
 use App\Events\Authenticated;
 use App\Events\Lockout;
+use App\Events\Auth\MobileVerify;
 use App\Listeners\AuthenticatedSession;
 use App\Listeners\LockoutTraceNotification;
+use App\Listeners\Auth\RegisterMobileToTwilio;
+use App\Listeners\Auth\SendMobileVerificationNotificationViaSMS;
+use App\Listeners\Auth\SendMobileVerificationNotificationViaWhatsapp;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +25,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        MobileVerify::class => [
+            RegisterMobileToTwilio::class,
+            SendMobileVerificationNotificationViaSMS::class,
+            SendMobileVerificationNotificationViaWhatsapp::class,
         ],
         Lockout::class => [
             LockoutTraceNotification::class,
