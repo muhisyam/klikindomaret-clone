@@ -25,7 +25,8 @@ class VerifyMobileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mobile_number' => ['required', 'numeric', 'digits_between:10,13'],
+            'mobile_number' => ['required', 'numeric', 'unique:users', 'digits_between:10,13'],
+            'via' => ['required', 'string', 'in:sms,whatsapp'],
         ];
     }
 
