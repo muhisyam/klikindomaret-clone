@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Auth;
 
 use App\Actions\ErrorTraceAction;
-use App\Events\Lockout;
+use App\Events\Auth\Lockout;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\VerifyMobileRequest;
 use App\Http\Requests\Auth\VerifyOtpRequest;
-use App\Traits\VerifyUserMobile;
+use App\Traits\Auth\VerifyUserMobile;
 use Illuminate\Http\JsonResponse;
 
 class VerifiedMobileController extends Controller

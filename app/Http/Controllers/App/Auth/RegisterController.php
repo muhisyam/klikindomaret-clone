@@ -5,7 +5,7 @@ namespace App\Http\Controllers\App\Auth;
 use App\Actions\ClientRequestAction;
 use App\Actions\CreateMultipartAction;
 use App\DataTransferObjects\ClientRequestDto;
-use App\Events\Authenticated;
+use App\Events\Auth\Authenticated;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;

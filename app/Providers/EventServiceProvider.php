@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use App\Events\Authenticated;
-use App\Events\Lockout;
+use App\Events\Auth\Authenticated;
+use App\Events\Auth\Lockout;
 use App\Events\Auth\MobileVerify;
-use App\Listeners\AuthenticatedSession;
-use App\Listeners\LockoutTraceNotification;
+use App\Listeners\Auth\AuthenticatedSession;
+use App\Listeners\Auth\LockoutTraceNotification;
 use App\Listeners\Auth\RegisterMobileToTwilio;
 use App\Listeners\Auth\SendMobileVerificationNotificationViaSMS;
 use App\Listeners\Auth\SendMobileVerificationNotificationViaWhatsapp;

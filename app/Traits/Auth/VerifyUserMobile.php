@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits;
+namespace App\Traits\Auth;
 
 use App\Actions\ErrorTraceAction;
 use App\Events\Auth\MobileVerify;
@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
 trait VerifyUserMobile
 {
-    protected $request;
+    protected $request, $otpCode;
     
     /**
      * Attempt mobile to get otp code.
@@ -24,12 +24,12 @@ trait VerifyUserMobile
         $this->ensureIsNotRateLimited();
         
         $targetNumber = $this->formatFirstNumberCode($request['mobile_number']);
-        $otpCode = $this->createOTP();
+        $this->otpCode = $this->createOTP();
 
         event(new MobileVerify([
             'register_to_twilio' => false, 
             'target_number' => $targetNumber, 
-            'otp' => $otpCode,
+            'otp' => $this->otpCode,
             'via' => $request['via'],
         ]));
     }

@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Listeners\Auth;
 
+/**
+ * Create new session for auth user.
+ */
 class AuthenticatedSession
 {
-    /**
-     * Handle the authenticated event.
-     * Create new session for auth user.
-     */
     public function handle(object $event): void
     {
         session([

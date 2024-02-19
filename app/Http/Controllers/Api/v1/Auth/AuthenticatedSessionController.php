@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\v1\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Auth\AuthenticateResource;
-use App\Traits\AuthenticatesUser;
+use App\Traits\Auth\AuthenticatesUser;
 
 class AuthenticatedSessionController extends Controller
 {
