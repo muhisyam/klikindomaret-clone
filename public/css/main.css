@@ -52,11 +52,9 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 }
 
 /* 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ########################################################
----------============    ELEMENT    ===========---------
+--------===========    Components    ===========--------
 ########################################################
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
 .modal {
@@ -74,6 +72,13 @@ button:disabled { opacity: .5; cursor: not-allowed;}
     top: 50%;
     transition: top 800ms ease-out, opacity 1000ms ease-in-out;
 }
+
+/* 
+########################################################
+--------===========    Transition    ===========--------
+########################################################
+*/
+
 
 /* 
 ---------------------==============---------------------
@@ -113,6 +118,9 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 }
 
 /* 
+#########################################################
+---------===========    Sections    ============---------
+#########################################################
 --------------------=================--------------------
 ==================== Header Section =====================
 --------------------=================-------------------- 
@@ -197,6 +205,19 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 .bottom-header .bottom-section .left-side ul li.active {
     background-color: #e1eeff;
     color: #0079c2;
+}
+
+div[data-trigger-dropdown]::before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 0 8px 8px;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    top: -6px;
+    right: 20%;
 }
 
 /* 
