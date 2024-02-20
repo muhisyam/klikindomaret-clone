@@ -5,6 +5,7 @@ hideModalFromOutside();
 handleButtonSwitchForm();
 handleSwitchForm();
 resendOTPTimer();
+hideOpenedComponentsFromOutside();
 
 function toggleDropdown() { 
     const btnDropdownList = document.querySelectorAll('button[data-target-dropdown]');
@@ -155,6 +156,17 @@ function handleSwitchForm() {
             }
         });
     })
+}
+
+function hideOpenedComponentsFromOutside() { 
+    document.addEventListener('click', (event) => {
+        triggerEl = event.target.closest('button') ?? event.target;
+        isDropdown = ! triggerEl.matches('button[data-target-dropdown]');
+
+        if (isDropdown) {
+            hideOpenedDropdown();
+        }
+    });
 }
 
 function resendOTPTimer() {
