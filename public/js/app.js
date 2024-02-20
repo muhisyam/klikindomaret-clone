@@ -1,13 +1,51 @@
 headerCategory();
+toggleDropdown();
 toggleLoginOrRegisterModal();
-closeModalFromOverlay();
+hideModalFromOutside();
 handleButtonSwitchForm();
 handleSwitchForm();
 resendOTPTimer();
 
-function toggleModal(modalTarget, modalAction) { 
+function toggleDropdown() { 
+    const btnDropdownList = document.querySelectorAll('button[data-target-dropdown]');
+
+    btnDropdownList.forEach((triggerEl) => {
+        triggerEl.addEventListener('click', (el) => {
+            // Find button element, when is clicked is not the button element
+            btnTrigger = el.target.closest('button');
+            triggerData = btnTrigger.getAttribute('data-target-dropdown');
+            const targetEl = document.querySelector('div[data-trigger-dropdown="' + triggerData + '"]');
+            const isTargetClosed = targetEl.classList.contains('opacity-0');
+
+            hideOpenedDropdown(targetEl);
+            
+            if (isTargetClosed) {
+                targetEl.classList.remove('opacity-0');
+                targetEl.classList.add('opacity-100', 'z-50');
+            } else {
+                targetEl.classList.remove('opacity-100', 'z-50');   
+                targetEl.classList.add('opacity-0');   
+            }
+        })
+    })
+}
+
+function hideOpenedDropdown() { 
+    const dropdownList = document.querySelectorAll('div[data-trigger-dropdown]');
+
+    dropdownList.forEach((dropdown) => {
+        const isElementOpen = dropdown.classList.contains('opacity-100');
+        
+        if (isElementOpen) {
+            dropdown.classList.remove('opacity-100', 'z-50');
+            dropdown.classList.add('opacity-0');
+        }
+    })
+}
+
+function toggleModal(classTarget, modalAction) { 
     // Check if modalTarget is already an object
-    const modalAuth = typeof modalTarget === 'object' ? modalTarget : document.querySelector('.' + modalTarget);
+    const modalAuth = typeof classTarget === 'object' ? classTarget : document.querySelector('.' + classTarget);
     const overlay = document.querySelector('#bg-overlay');
     
     if (modalAction === 'open') {
@@ -37,7 +75,7 @@ function toggleLoginOrRegisterModal() {
     });
 }
 
-function closeModalFromOverlay() {
+function hideModalFromOutside() {
     const overlay = document.querySelector('#bg-overlay');
 
     overlay.addEventListener('click', () => {
@@ -84,6 +122,8 @@ function handleButtonSwitchForm() {
 
 function handleSwitchForm() { 
     listBtnSwitch = document.querySelectorAll('.button-switch-form');
+    loginForm = document.querySelector('.login');
+    registerForm = document.querySelector('.register');
     firstForm = document.querySelector('.first-form');
     secondForm = document.querySelector('.second-form');
 
@@ -91,12 +131,27 @@ function handleSwitchForm() {
         btnSwitch.addEventListener('click', (el) => {
             formTarget = el.target.getAttribute('data-switch-form');
 
-            if (formTarget === 'section-second') {
-                firstForm.classList.add('hidden');
-                secondForm.classList.remove('hidden');
-            } else {
-                firstForm.classList.remove('hidden');
-                secondForm.classList.add('hidden');
+            switch (formTarget) {
+                case 'register':
+                    loginForm.classList.remove('show');
+                    registerForm.classList.add('show');
+                    
+                    break;
+                case 'section-first':
+                    firstForm.classList.remove('hidden');
+                    secondForm.classList.add('hidden');
+
+                    break;
+                case 'section-second':
+                    firstForm.classList.add('hidden');
+                    secondForm.classList.remove('hidden');
+                
+                    break;
+                default:
+                    loginForm.classList.add('show');
+                    registerForm.classList.remove('show');
+
+                    break;
             }
         });
     })
