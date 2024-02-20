@@ -103,7 +103,7 @@
                     </form>
                 </div>
             </div>
-            <div class="right-side flex items-center gap-4">
+            <div class="right-side relative flex items-center">
                 @if(is_null(session('auth_token')))
                     <button class="h-6 w-6 scale-125 text-secondary rounded me-3 hover:bg-dark-primary" data-tooltip-target="shopping-basket-tooltip" data-tooltip-placement="bottom"><i class="ri-shopping-basket-fill"></i></button>
                     <div id="shopping-basket-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-medium text-white whitespace-nowrap transition-opacity duration-300 bg-gray-900 rounded-md shadow-sm opacity-0 tooltip dark:bg-gray-700">
@@ -111,22 +111,128 @@
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                     <div class="guest-button text-sm">
-                        <button type="button" id="btn-login" class="rounded-lg border border-[#0079c2] me-2 py-1.5 px-4 bg-white text-[#0079c2]">Masuk</button>
-                        <button type="button" id="btn-register" class="rounded-lg py-1.5 px-5 bg-[#0079c2] text-white">Daftar</button>
+                        <button type="button" id="btn-login" class="button-auth  | rounded-lg border border-[#0079c2] me-2 py-1.5 px-4 bg-white text-[#0079c2]" data-modal-open="login">Masuk</button>
+                        <button type="button" id="btn-register" class="button-auth  | rounded-lg py-1.5 px-5 bg-[#0079c2] text-white" data-modal-open="register">Daftar</button>
                     </div>
                 @else
                     @php
                         //TODO: add tooltips
                     @endphp
-                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="Notification" data-element="notification-user"><i class="ri-notification-3-fill"></i></button>
-                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="List Transaction" data-element="list-transaction-user"><i class="ri-booklet-fill"></i></button>
-                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="Shopping Cart" data-element="shopping-cart-user"><i class="ri-shopping-basket-fill"></i></button>
-                    <button type="button" class="h-6 w-6 scale-125 text-secondary rounded hover:bg-dark-primary" aria-label="Wallet" data-element="wallet-user"><i class="ri-wallet-fill"></i></button>
-                    <button type="button" class="flex items-center gap-1 rounded p-1 hover:bg-dark-primary">
-                        <div class="w-6 h-6 bg-blue-200 border border-slate-200 rounded-full text-xs font-bold text-center pt-[3px] me-1">M</div>
-                        <div class="text-sm">M Hisyam</div>
-                        <span class="text-secondary mt-0.5"><i class="ri-arrow-drop-down-line"></i></span>
-                    </button>
+                    <x-nav-link href="#" class="relative me-4 rounded-lg p-1.5 text-secondary hover:bg-dark-primary">
+                        <x-icon class="w-5" src="{{ asset('img/icons/icon-header-bell.webp') }}"/>
+                        <x-notification-count class="top-0 -right-1 rounded py-0.5 px-1" count="99+"/>
+                    </x-nav-link>
+                    <x-nav-link href="#" class="relative me-4 rounded-lg p-1.5 text-secondary hover:bg-dark-primary">
+                        <x-icon class="w-5" src="{{ asset('img/icons/icon-header-status-new.webp') }}"/>
+                    </x-nav-link>
+                    <x-nav-link href="#" class="relative me-4 rounded-lg p-1.5 text-secondary hover:bg-dark-primary">
+                        <x-icon class="w-5" src="{{ asset('img/icons/icon-header-cart.webp') }}"/>
+                        <x-notification-count class="top-0 -right-1 rounded py-0.5 px-1" count="99+"/>
+                    </x-nav-link>
+                    <x-dropdown section="user-account-ewallet">
+                        <x-slot name="trigger" class="gap-1.5 me-2 p-1.5 hover:bg-dark-primary">
+                            <x-icon class="w-5" src="{{ asset('img/icons/icon-head-wallet.webp') }}"/>
+                            <x-icon class="w-1.5" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}"/>
+                        </x-slot>
+                        <x-slot name="content" class="-right-[22px] w-64 p-3 bg-white">
+                            <x-button class="group w-full gap-3 mb-3">
+                                <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-isaku.webp') }}"/>
+                                <div class="flex-grow font-bold text-left text-secondary text-sm">
+                                    <span class="font-normal text-xs text-light-gray-300">i.saku</span><br>
+                                    <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
+                                </div>
+                                <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            </x-button>
+                            <x-button class="group w-full gap-3 mb-3">
+                                <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-poinku.webp') }}"/>
+                                <div class="flex-grow font-bold text-left text-secondary text-sm">
+                                    <span class="font-normal text-xs text-light-gray-300">Poinku</span><br>
+                                    <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
+                                </div>
+                                <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            </x-button>
+                            <x-button class="group w-full gap-3 mb-3">
+                                <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-wallet.webp') }}"/>
+                                <div class="flex-grow font-bold text-left text-sm">
+                                    <span class="font-normal text-xs text-light-gray-300">Saldo Klik</span><br>
+                                    <span class="group-hover:underline group-hover:underline-offset-2">Aktivasi</span>
+                                </div>
+                                <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            </x-button>
+                            <x-button class="group w-full gap-3 mb-3">
+                                <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon_shopeepay.webp') }}"/>
+                                <div class="flex-grow font-bold text-left text-secondary text-sm">
+                                    <span class="font-normal text-xs text-light-gray-300">ShopeePay</span><br>
+                                    <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
+                                </div>
+                                <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            </x-button>
+                            <x-button class="group w-full gap-3 mb-3">
+                                <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-ovo.webp') }}"/>
+                                <div class="flex-grow font-bold text-left text-secondary text-sm">
+                                    <span class="font-normal text-xs text-light-gray-300">OVO</span><br>
+                                    <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
+                                </div>
+                                <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            </x-button>
+                            <x-button class="group w-full gap-3 mb-3">
+                                <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-gopay.webp') }}"/>
+                                <div class="flex-grow font-bold text-left text-secondary text-sm">
+                                    <span class="font-normal text-xs text-light-gray-300">Gopay</span><br>
+                                    <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
+                                </div>
+                                <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            </x-button>
+                        </x-slot>
+                    </x-dropdown>
+                    
+                    <x-dropdown section="user-header">
+                        <x-slot name="trigger" class="gap-1.5 p-1 hover:bg-dark-primary">
+                            <div class="w-6 h-6 bg-blue-200 border border-slate-200 rounded-full text-xs font-bold text-center pt-[3px]">M</div>
+                            <span class="text-sm">M Hisyam</span>
+                            <x-icon class="w-1.5" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}"/>
+                        </x-slot>
+                        <x-slot name="content" class="right-0 w-52 bg-white">
+                            <x-nav-link href="#" class="justify-between p-3 text-xs hover:text-secondary">
+                                <strong>Hi, M Hisyam</strong>
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-edit.webp') }}"  alt="Edit User Icon"/>
+                            </x-nav-link>
+                            <hr>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-fav.webp') }}" alt="Favorite Icon"/>
+                                <span>Favorit</span>
+                            </x-nav-link>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-bank.webp') }}" alt="Bank Account Icon"/>
+                                <span>Rekening Bank</span>
+                            </x-nav-link>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-complaint.webp') }}" alt="Complaint Icon"/>
+                                <span>Resolusi Komplain</span>
+                            </x-nav-link>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-notification.webp') }}" alt="Notification Icon"/>
+                                <span>Notifikasi</span>
+                            </x-nav-link>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-invite-friend.webp') }}" alt="Invite Friend Icon"/>
+                                <span>Undang Teman</span>
+                            </x-nav-link>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-coupon.webp') }}" alt="Coupon Icon"/>
+                                <span>Koupon Saya</span>
+                            </x-nav-link>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
+                                <x-icon class="w-3" src="{{ asset('img/icons/icon-header-help-center.webp') }}" alt="Helper Center Icon"/>
+                                <span>Bantuan</span>
+                            </x-nav-link>
+                            <hr>
+                            <x-nav-link href="#" class="gap-3 p-3 text-xs">
+                                <x-icon class="w-4" src="{{ asset('img/icons/icon-head-logout.webp') }}" alt="Logout Icon"/>
+                                <span class="text-[#ff3e3e]">Keluar</span>
+                            </x-nav-link>
+                        </x-slot>
+                    </x-dropdown>
                 @endif
             </div>
         </div>
