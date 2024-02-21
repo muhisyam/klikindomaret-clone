@@ -8,12 +8,13 @@ resendOTPTimer();
 hideOpenedComponentsFromOutside();
 
 function toggleDropdown() { 
-    const btnDropdownList = document.querySelectorAll('button[data-target-dropdown]');
+    const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
 
-    btnDropdownList.forEach((triggerEl) => {
+    dropdownBtnList.forEach((triggerEl) => {
         triggerEl.addEventListener('click', (el) => {
             // Find button element, when is clicked is not the button element
             btnTrigger = el.target.closest('button');
+            btnArrow = btnTrigger.querySelector('img[data-arrow-dropdown]');
             triggerData = btnTrigger.getAttribute('data-target-dropdown');
             const targetEl = document.querySelector('div[data-trigger-dropdown="' + triggerData + '"]');
             const isTargetClosed = targetEl.classList.contains('opacity-0');
@@ -21,9 +22,13 @@ function toggleDropdown() {
             hideOpenedDropdown(targetEl);
             
             if (isTargetClosed) {
-                targetEl.classList.remove('opacity-0');
+                btnTrigger.classList.add('bg-dark-primary');
+                btnArrow.classList.add('rotate-180');
                 targetEl.classList.add('opacity-100', 'z-50');
+                targetEl.classList.remove('opacity-0');
             } else {
+                btnTrigger.classList.remove('bg-dark-primary');
+                btnArrow.classList.remove('rotate-180');
                 targetEl.classList.remove('opacity-100', 'z-50');   
                 targetEl.classList.add('opacity-0');   
             }
@@ -32,7 +37,18 @@ function toggleDropdown() {
 }
 
 function hideOpenedDropdown() { 
+    const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
     const dropdownList = document.querySelectorAll('div[data-trigger-dropdown]');
+
+    dropdownBtnList.forEach((dropdownBtn) => {
+        const isElementActive = dropdownBtn.classList.contains('bg-dark-primary');
+        
+        if (isElementActive) {
+            const btnArrow = dropdownBtn.querySelector('img[data-arrow-dropdown]');
+            dropdownBtn.classList.remove('bg-dark-primary');
+            btnArrow.classList.remove('rotate-180');
+        }
+    })
 
     dropdownList.forEach((dropdown) => {
         const isElementOpen = dropdown.classList.contains('opacity-100');

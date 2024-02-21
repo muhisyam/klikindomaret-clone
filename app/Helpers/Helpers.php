@@ -14,3 +14,12 @@ function prettierMobileNumber($number)
 
     return $prettierNumber;
 }
+
+function formatFullname(string $fullname): string
+{
+    $countName = str_word_count($fullname, 1);
+    $abbreviatingFirstName = $countName[0][0];
+    $formatedFullname = $abbreviatingFirstName . ' ' . end($countName); 
+
+    return $formatedFullname;
+}

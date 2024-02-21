@@ -122,18 +122,22 @@
                         <x-icon class="w-5" src="{{ asset('img/icons/icon-header-bell.webp') }}"/>
                         <x-notification-count class="top-0 -right-1 rounded py-0.5 px-1" count="99+"/>
                     </x-nav-link>
+                    
                     <x-nav-link href="#" class="relative me-4 rounded-lg p-1.5 text-secondary hover:bg-dark-primary">
                         <x-icon class="w-5" src="{{ asset('img/icons/icon-header-status-new.webp') }}"/>
                     </x-nav-link>
+
                     <x-nav-link href="#" class="relative me-4 rounded-lg p-1.5 text-secondary hover:bg-dark-primary">
                         <x-icon class="w-5" src="{{ asset('img/icons/icon-header-cart.webp') }}"/>
                         <x-notification-count class="top-0 -right-1 rounded py-0.5 px-1" count="99+"/>
                     </x-nav-link>
+
                     <x-dropdown section="user-account-ewallet">
                         <x-slot name="trigger" class="gap-1.5 me-2 p-1.5 hover:bg-dark-primary">
                             <x-icon class="w-5" src="{{ asset('img/icons/icon-head-wallet.webp') }}"/>
-                            <x-icon class="w-1.5" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}"/>
+                            <x-icon class="w-1.5 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                         </x-slot>
+
                         <x-slot name="content" class="-right-[22px] w-64 p-3 bg-white">
                             <x-button class="group w-full gap-3 mb-3">
                                 <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-isaku.webp') }}"/>
@@ -143,6 +147,7 @@
                                 </div>
                                 <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                             </x-button>
+
                             <x-button class="group w-full gap-3 mb-3">
                                 <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-poinku.webp') }}"/>
                                 <div class="flex-grow font-bold text-left text-secondary text-sm">
@@ -151,6 +156,7 @@
                                 </div>
                                 <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                             </x-button>
+
                             <x-button class="group w-full gap-3 mb-3">
                                 <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-wallet.webp') }}"/>
                                 <div class="flex-grow font-bold text-left text-sm">
@@ -159,6 +165,7 @@
                                 </div>
                                 <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                             </x-button>
+
                             <x-button class="group w-full gap-3 mb-3">
                                 <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon_shopeepay.webp') }}"/>
                                 <div class="flex-grow font-bold text-left text-secondary text-sm">
@@ -167,6 +174,7 @@
                                 </div>
                                 <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                             </x-button>
+
                             <x-button class="group w-full gap-3 mb-3">
                                 <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-ovo.webp') }}"/>
                                 <div class="flex-grow font-bold text-left text-secondary text-sm">
@@ -175,6 +183,7 @@
                                 </div>
                                 <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                             </x-button>
+
                             <x-button class="group w-full gap-3 mb-3">
                                 <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-gopay.webp') }}"/>
                                 <div class="flex-grow font-bold text-left text-secondary text-sm">
@@ -185,48 +194,68 @@
                             </x-button>
                         </x-slot>
                     </x-dropdown>
+
+                    @php
+                        $user = session('user');
+                        $username = formatFullname($user['fullname']);
+                    @endphp
                     
                     <x-dropdown section="user-header">
                         <x-slot name="trigger" class="gap-1.5 p-1 hover:bg-dark-primary">
-                            <div class="w-6 h-6 bg-blue-200 border border-slate-200 rounded-full text-xs font-bold text-center pt-[3px]">M</div>
-                            <span class="text-sm">M Hisyam</span>
-                            <x-icon class="w-1.5" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}"/>
+                            @if ($user['user_image_name'])
+                                <x-avatar src="{{ asset() }}"/>
+                            @else
+                                <div class="w-6 h-6 border border-slate-200 rounded-full bg-blue-200 text-xs font-bold text-center pt-[3px]">{{ $user['fullname'][0] }}</div>
+                            @endif
+                            <span class="text-sm">{{ $username }}</span>
+                            <x-icon class="w-1.5 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                         </x-slot>
+
                         <x-slot name="content" class="right-0 w-52 bg-white">
                             <x-nav-link href="#" class="justify-between p-3 text-xs hover:text-secondary">
-                                <strong>Hi, M Hisyam</strong>
+                                <strong>Hi, {{ $username }}</strong>
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-edit.webp') }}"  alt="Edit User Icon"/>
                             </x-nav-link>
+
                             <hr>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-fav.webp') }}" alt="Favorite Icon"/>
                                 <span>Favorit</span>
                             </x-nav-link>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-bank.webp') }}" alt="Bank Account Icon"/>
                                 <span>Rekening Bank</span>
                             </x-nav-link>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-complaint.webp') }}" alt="Complaint Icon"/>
                                 <span>Resolusi Komplain</span>
                             </x-nav-link>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-notification.webp') }}" alt="Notification Icon"/>
                                 <span>Notifikasi</span>
                             </x-nav-link>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-invite-friend.webp') }}" alt="Invite Friend Icon"/>
                                 <span>Undang Teman</span>
                             </x-nav-link>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-coupon.webp') }}" alt="Coupon Icon"/>
                                 <span>Koupon Saya</span>
                             </x-nav-link>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs hover:bg-[#e1eeff]">
                                 <x-icon class="w-3" src="{{ asset('img/icons/icon-header-help-center.webp') }}" alt="Helper Center Icon"/>
                                 <span>Bantuan</span>
                             </x-nav-link>
+
                             <hr>
+
                             <x-nav-link href="#" class="gap-3 p-3 text-xs">
                                 <x-icon class="w-4" src="{{ asset('img/icons/icon-head-logout.webp') }}" alt="Logout Icon"/>
                                 <span class="text-[#ff3e3e]">Keluar</span>

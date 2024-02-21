@@ -207,6 +207,14 @@ button:disabled { opacity: .5; cursor: not-allowed;}
     color: #0079c2;
 }
 
+button[data-target-dropdown].active{
+    background-color: #e1b526;
+}
+
+button[data-target-dropdown].active img:last-child{
+    transform: rotate(180deg);
+}
+
 div[data-trigger-dropdown]::before {
     content: '';
     position: absolute;
@@ -218,6 +226,16 @@ div[data-trigger-dropdown]::before {
     z-index: 1;
     top: -6px;
     right: 20%;
+}
+
+.coba.opacity-100::after {
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: .5;
+    width: 100%;
+    display: block;
+    height: 100%;
+    left: 0;
+    content: "";
 }
 
 /* 
