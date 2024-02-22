@@ -1,3 +1,1 @@
-@props(['class' => 'w-4'])
-
-<img {{ $attributes->merge(['class' => $class, 'alt' => 'Icon']) }}>
+<img {{ $attributes->merge(['alt' => 'Icon']) }}>

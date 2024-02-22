@@ -1,7 +1,7 @@
 @props(['section'])
 
-<div class="relative">
-    <x-button class="{{ $trigger->attributes['class'] }}" :data-target-dropdown=$section>
+<div class="relative" data-dropdown="{{ $section }}">
+    <x-button :class="$trigger->attributes['class']" :data-target-dropdown="$section">
         {{ $trigger }}
     </x-button>
 
