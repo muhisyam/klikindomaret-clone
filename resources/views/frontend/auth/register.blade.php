@@ -1,6 +1,6 @@
 <div @class([
         'register modal | fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[60]', 
-        'show' => ! is_null(session('input_error')) || ! is_null(session('step')),
+        'show' => in_array('register', session('input_error') ?? []) || ! is_null(session('step')),
     ])>
 
     @switch(session('step'))

@@ -1,6 +1,6 @@
 <div class="verify-wrapper | w-96 rounded-xl bg-white">
     <section class="header-section | flex flex-col items-center min-h-auth-header">
-        <button type="button" class="button-auth | absolute top-3 left-3 h-9 w-9 rounded-full pt-0.5 bg-white text-xl" data-modal-close="login">
+        <button type="button" class="button-auth | absolute top-3 left-3 h-9 w-9 rounded-full pt-0.5 bg-white text-xl" data-modal-close="register">
             <i class="ri-arrow-left-line"></i>
         </button>
         <h1 class="header-title | font-bold mt-4">Verifikasi Nomor HP</h1>
@@ -26,11 +26,11 @@
                 <input type="text" name="otp_confirmation[]" class="h-10 w-10 rounded border border-[#ccc] text-center text-sm focus:ring-transparent" maxlength="1">
                 <input type="text" name="otp_confirmation[]" class="h-10 w-10 rounded border border-[#ccc] text-center text-sm focus:ring-transparent" maxlength="1">
             </div>
-            @unless (is_null(session('input_error')))
+            @isset (session('input_error')['register'])
                 <div class="invalid-feedback | -mt-2 mb-2 text-center text-sm text-red-700">
-                    <p>{{ session('input_error')['errors']['incorrect_otp'][0] }}</p>
+                    <p>{{ session('input_error')['register']['errors']['incorrect_otp'][0] }}</p>
                 </div>
-            @endunless
+            @endisset
             <div class="item-input-button">
                 <button type="submit" class="button-submit-otp | h-10 w-full rounded py-2 px-4 bg-[#0079c2] text-white disabled">Verifikasi</button>
             </div>
