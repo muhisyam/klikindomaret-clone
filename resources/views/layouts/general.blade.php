@@ -20,15 +20,10 @@
         <link href="{{ asset('css/main.css') }}" rel="stylesheet">
     </head>
     <body>
-        <nav class="fixed top-0 z-50 drop-shadow w-full text-black">
+        <header class="sticky top-0 z-50 drop-shadow w-full text-black">
             @include('frontend.components.navbar')
             @include('frontend.components.category')
-        </nav>
-
-        @if (is_null(session('auth_token')))
-            @include('frontend.components.login')
-            @include('frontend.auth.register')
-        @endif
+        </header>
         
         <div class="container mx-auto max-w-7xl mt-30">
             {{ $slot }}
@@ -36,6 +31,11 @@
             
         @include('frontend.components.overlay')
         @include('frontend.components.footer')
+
+        
+        <div id="components-container">
+            @stack('components')
+        </div>
 
         <script src="{{ asset('js/app.js') }}" defer></script>
         <script src="{{ asset('js/swiper-bundle.min.js') }}" defer></script>
