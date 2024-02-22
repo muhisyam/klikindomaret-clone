@@ -1,4 +1,4 @@
-@props(['buttonStyle' => 'custom', 'additional'])
+@props(['value', 'buttonStyle' => 'custom', 'additional'])
 
 @php
     $identicalClass = isset($additional) ? $additional . ' | ' : ''; 
@@ -9,6 +9,6 @@
     }
 @endphp
 
-<button {{ $attributes->merge(['type' => 'button', 'class' => $identicalClass . 'flex items-center rounded-lg' . $classes]) }}>
-    {{ $slot }}
+<button {{ $attributes->merge(['type' => 'button', 'class' => $identicalClass . 'flex items-center rounded-md' . $classes]) }}>
+    {{ $value ?? $slot }}
 </button>

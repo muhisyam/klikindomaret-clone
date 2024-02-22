@@ -1,3 +1,5 @@
+@props(['value'])
+
 <a {{ $attributes->merge(['class' => 'flex items-center']) }}>
-    {{ $slot }}
+    {{ $value ?? $slot }}
 </a>

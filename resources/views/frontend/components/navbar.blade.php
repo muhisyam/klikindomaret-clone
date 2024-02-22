@@ -1,14 +1,14 @@
-<section class="container mx-auto max-w-7xl h-full" data-section="navigation-header">
-    <header class="top-section flex justify-between">
+<nav class="container mx-auto max-w-7xl h-full" data-section="navigation-header">
+    <div class="flex justify-between">
         <section class="flex items-center gap-6 text-xs" data-section="app-social">
             <x-dropdown section="app-download">
-                <x-slot name="trigger" class="group gap-1.5 dont-active hover:text-secondary">
+                <x-slot:trigger class="group gap-1.5 dont-active hover:text-secondary">
                     <x-icon class="w-3 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-app.webp') }}"/>
                     <span>Download App Klik Indomaret</span>
                     <x-icon class="w-2 duration-500 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                 </x-slot>
 
-                <x-slot name="content" class="left-0 w-60 p-3 bg-white before:!right-[78%]">
+                <x-slot:content class="left-0 w-60 p-3 bg-white before:!right-[78%]">
                     <img src="{{ asset('img/header/qr_download.png') }}" alt="QR Code">
                     <x-nav-link href="#" class="w-36 mx-auto my-2.5">
                         <img src="{{ asset('img/header/logo_googleplay.png') }}" alt="Google Play">
@@ -30,13 +30,13 @@
             </div>
 
             <x-dropdown section="customer-service">
-                <x-slot name="trigger" class="group gap-1.5 dont-active hover:text-secondary">
+                <x-slot:trigger class="group gap-1.5 dont-active hover:text-secondary">
                     <x-icon class="w-3 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-cs.webp') }}"/>
                     <span>Layanan Pelanggan</span>
                     <x-icon class="w-2 duration-500 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                 </x-slot>
 
-                <x-slot name="content" class="left-0 w-72 p-3 bg-white before:!right-[78%]">
+                <x-slot:content class="left-0 w-72 p-3 bg-white before:!right-[78%]">
                     <div class="phone-block mb-1">
                         <h2 class="mb-1 text-xs">Call Center:</h2>
                         <div class="flex gap-1">
@@ -67,8 +67,8 @@
             </span>
             <x-icon class="h-2 w-2 mt-1.5" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-location=""/>
         </div>
-    </header>
-    <footer class="flex items-center justify-between pt-3 pb-4">
+    </div>
+    <div class="flex items-center justify-between pt-3 pb-4">
         <x-nav-link>
             <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="Logo">
         </x-nav-link>
@@ -89,22 +89,43 @@
             </div>
         </div>
 
-        <div class="right-side relative flex items-center justify-end grow">
+        <div class="relative flex items-center justify-end grow">
             @if(is_null(session('auth_token')))
                 <x-modal section="guest-cart">
-                    <x-slot name="trigger" class="me-4 p-1.5 hover:bg-dark-primary">
+                    <x-slot:trigger class="me-4 p-1.5 hover:bg-dark-primary">
                         <x-icon class="w-5" src="{{ asset('img/icons/icon-header-cart.webp') }}"/>
                     </x-slot>
 
-                    <x-slot name="content">
-                        
+                    <x-slot:content class="separated-modal">
+                        @push('components')
+                            @include('auth.login', ['section' => 'guest-cart login'])
+                        @endpush
                     </x-slot>
                 </x-modal>
 
-                <div class="guest-button text-sm">
-                    <button type="button" id="btn-login" class="button-auth  | rounded-lg border border-[#0079c2] me-2 py-1.5 px-4 bg-white text-[#0079c2]" data-modal-open="login">Masuk</button>
-                    <button type="button" id="btn-register" class="button-auth  | rounded-lg py-1.5 px-5 bg-[#0079c2] text-white" data-modal-open="register">Daftar</button>
-                </div>
+                <section class="guest-auth flex items-center" data-section="auth">
+                    <x-modal section="login">
+                        <x-slot:trigger class="me-2 border border-secondary py-1.5 px-4 bg-white text-sm text-secondary">
+                            Masuk
+                        </x-slot>
+    
+                        <x-slot:content class="separated-modal">
+                            {{-- Has including in guest cart modal component --}}
+                        </x-slot>
+                    </x-modal>
+
+                    <x-modal section="register">
+                        <x-slot:trigger class="py-1.5 px-5 bg-secondary text-sm text-white">
+                            Daftar
+                        </x-slot>
+    
+                        <x-slot:content class="separated-modal">
+                            @push('components')
+                                @include('auth.register', ['section' => 'register'])
+                            @endpush
+                        </x-slot>
+                    </x-modal>
+                </section>
             @else
                 @php
                     //TODO: add tooltips
@@ -124,12 +145,12 @@
                 </x-nav-link>
 
                 <x-dropdown section="user-account-ewallet">
-                    <x-slot name="trigger" class="gap-1.5 me-2 p-1.5 hover:bg-dark-primary">
+                    <x-slot:trigger class="gap-1.5 me-2 p-1.5 hover:bg-dark-primary">
                         <x-icon class="w-5" src="{{ asset('img/icons/icon-header-wallet.webp') }}"/>
                         <x-icon class="w-2 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                     </x-slot>
 
-                    <x-slot name="content" class="-right-[22px] w-64 p-3 bg-white before:right-1/5">
+                    <x-slot:content class="-right-[22px] w-64 p-3 bg-white before:right-1/5">
                         <x-button class="group w-full gap-3 mb-3">
                             <x-icon class="w-8 p-1.5 rounded-full shadow-md" src="{{ asset('img/e-wallet/icon-isaku.webp') }}"/>
                             <div class="flex-grow font-bold text-left text-secondary text-sm">
@@ -192,7 +213,7 @@
                 @endphp
                 
                 <x-dropdown section="user-header">
-                    <x-slot name="trigger" class="gap-1.5 p-1 hover:bg-dark-primary">
+                    <x-slot:trigger class="gap-1.5 p-1 hover:bg-dark-primary">
                         @if ($user['user_image_name'])
                             <x-avatar src="{{ asset() }}"/>
                         @else
@@ -202,7 +223,7 @@
                         <x-icon class="w-2 duration-500 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                     </x-slot>
 
-                    <x-slot name="content" class="right-0 w-52 bg-white before:right-1/5">
+                    <x-slot:content class="right-0 w-52 bg-white before:right-1/5">
                         <x-nav-link href="#" class="justify-between p-3 text-xs hover:text-secondary">
                             <strong>Hi, {{ $username }}</strong>
                             <x-icon class="w-3" src="{{ asset('img/icons/icon-header-edit.webp') }}"  alt="Edit User Icon"/>
@@ -249,11 +270,11 @@
 
                         <x-nav-link href="#" class="gap-3 p-3 text-xs">
                             <x-icon class="w-4" src="{{ asset('img/icons/icon-header-logout.webp') }}" alt="Logout Icon"/>
-                            <span class="text-[#ff3e3e]">Keluar</span>
+                            <span class="text-danger-50">Keluar</span>
                         </x-nav-link>
                     </x-slot>
                 </x-dropdown>
             @endif
         </div>
-    </footer>
-</section>
+    </div>
+</nav>
