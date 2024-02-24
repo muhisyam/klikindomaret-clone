@@ -43,6 +43,7 @@ class VerifyMobileController extends Controller
         session([
             'mobile_number' => $request->mobile_number,
             'otp' => $response['data']['otp'],
+            'via' => $response['data']['via'],
         ]);
 
         return redirect()->back()->with('step', $response['data']['step']);

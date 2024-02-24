@@ -29,7 +29,6 @@
             {{ $slot }}
         </div>
             
-        @include('frontend.components.overlay')
         @include('frontend.components.footer')
 
         

@@ -26,6 +26,7 @@ class VerifiedMobileController extends Controller
             'data' => [
                 'otp' => $this->otpCode,
                 'step' => 'Verify OTP',
+                'via' => $request['via'],
             ],
             'meta' => [
                 'status_code' => 200,
