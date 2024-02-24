@@ -1,36 +1,36 @@
-headerCategory();
+// headerCategory();
+toggleModal();
 toggleDropdown();
-toggleLoginOrRegisterModal();
-hideModalFromOutside();
-handleButtonSwitchForm();
 handleSwitchForm();
-resendOTPTimer();
 hideOpenedComponentsFromOutside();
+changePasswordVisibility();
+selectVerifyVia();
+smartOtpField();
+resendOTPTimer();
 
 function toggleDropdown() { 
     const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
 
     dropdownBtnList.forEach((triggerEl) => {
         triggerEl.addEventListener('click', (el) => {
-            // Find button element, when is clicked is not the button element
-            btnTrigger = el.target.closest('button');
+            btnTrigger = el.target.closest('button'); // Find button element, when is clicked is not the button element
             btnArrow = btnTrigger.querySelector('img[data-arrow-dropdown]');
             triggerData = btnTrigger.getAttribute('data-target-dropdown');
             const targetEl = document.querySelector('div[data-trigger-dropdown="' + triggerData + '"]');
-            const isTargetClosed = targetEl.classList.contains('opacity-0');
+            const isTargetClosed = targetEl.classList.contains('hidden');
 
             hideOpenedDropdown(targetEl);
             
             if (isTargetClosed) {
                 btnTrigger.classList.add('bg-dark-primary');
                 btnArrow.classList.add('rotate-180');
-                targetEl.classList.add('opacity-100', 'z-50');
-                targetEl.classList.remove('opacity-0');
+                targetEl.classList.add('z-50');
+                targetEl.classList.remove('hidden');
             } else {
                 btnTrigger.classList.remove('bg-dark-primary');
                 btnArrow.classList.remove('rotate-180');
-                targetEl.classList.remove('opacity-100', 'z-50');   
-                targetEl.classList.add('opacity-0');   
+                targetEl.classList.remove('z-50');
+                targetEl.classList.add('hidden');
             }
         })
     })
@@ -51,98 +51,51 @@ function hideOpenedDropdown() {
     })
 
     dropdownList.forEach((dropdown) => {
-        const isElementOpen = dropdown.classList.contains('opacity-100');
+        const isElementOpen = ! dropdown.classList.contains('hidden');
         
         if (isElementOpen) {
-            dropdown.classList.remove('opacity-100', 'z-50');
-            dropdown.classList.add('opacity-0');
+            dropdown.classList.remove('z-50');
+            dropdown.classList.add('hidden');
         }
     })
 }
 
-function toggleModal(classTarget, modalAction) { 
-    // Check if modalTarget is already an object
-    const modalAuth = typeof classTarget === 'object' ? classTarget : document.querySelector('.' + classTarget);
-    const overlay = document.querySelector('#bg-overlay');
-    
-    if (modalAction === 'open') {
-        overlay.classList.remove('hidden');
-        modalAuth.classList.add('show');
-    } else {
-        overlay.classList.add('hidden');
-        modalAuth.classList.remove('show');
-    }
-}
+function toggleModal() { 
+    const modalBtnList = document.querySelectorAll('button[data-target-modal]');
 
-function toggleLoginOrRegisterModal() {
-    const listBtnAuth = document.querySelectorAll('.button-auth');
-
-    listBtnAuth.forEach(btnAuth => {
-        btnAuth.addEventListener('click', (el) => {
-            // Find button element, when is clicked is not the button element
-            triggerEl = el.target.closest('button');
-            modalOpen = triggerEl.getAttribute('data-modal-open');
-            modalClose = triggerEl.getAttribute('data-modal-close');
+    modalBtnList.forEach((triggerEl) => {
+        triggerEl.addEventListener('click', (el) => {
+            btnTrigger = el.target.closest('button');
+            triggerData = btnTrigger.getAttribute('data-target-modal');
+            const targetEl = document.querySelector('div[data-trigger-modal*="' + triggerData + '"]:not(.separated-modal)');
+            const isTargetOpened = targetEl.classList.contains('show');
             
-            modalTarget = modalOpen ?? modalClose;
-            modalAction = modalOpen ? 'open' : 'close';
-
-            toggleModal(modalTarget, modalAction);
-        });
-    });
+            if (isTargetOpened) {
+                hideOpenedModal(); 
+            } else {
+                btnTrigger.parentNode.classList.add('active');
+                targetEl.classList.add('show');   
+            }
+        })
+    })
 }
 
-function hideModalFromOutside() {
-    const overlay = document.querySelector('#bg-overlay');
+function hideOpenedModal() { 
+    const activeModalOverlay = document.querySelector('div[data-modal].active');
+    if (! activeModalOverlay) { return }
 
-    overlay.addEventListener('click', () => {
-        const activeModal = document.querySelector('.modal.show');
-        const modalAction = activeModal ? 'close' : '';
+    const modalList = document.querySelectorAll('.modal');
 
-        toggleModal(activeModal, modalAction);
-    });
-}
-
-function ensureInputFormNotEmpty() {
-    birthdate = document.querySelector('#form-input-birthdate').value.trim();
-    fullname = document.querySelector('#form-input-fullname').value.trim(); 
-    username = document.querySelector('#form-input-username-registration').value.trim(); 
-    password = document.querySelector('#form-input-password-registration').value.trim(); 
-
-    listBtnSwitch = document.querySelectorAll('.button-switch-form');
-    btnSubmit = document.querySelector('.button-submit-form');
-
-    listBtnSwitch[0].setAttribute('disabled', '');
-    btnSubmit.setAttribute('disabled', '');
-
-    if (birthdate !== '' && fullname !== '') {
-        if (username !== '' && password !== '') {
-            btnSubmit.removeAttribute('disabled');
-        }
-
-        return listBtnSwitch[0].removeAttribute('disabled');
-    }
-}
-
-function handleButtonSwitchForm() { 
-    birthdate = document.querySelector('#form-input-birthdate');
-    if (! birthdate) {return} // Immediately return
-    fullname = document.querySelector('#form-input-fullname'); 
-    username = document.querySelector('#form-input-username-registration'); 
-    password = document.querySelector('#form-input-password-registration'); 
-
-    birthdate.addEventListener('input', ensureInputFormNotEmpty);
-    fullname.addEventListener('input', ensureInputFormNotEmpty);
-    username.addEventListener('input', ensureInputFormNotEmpty);
-    password.addEventListener('input', ensureInputFormNotEmpty);
+    activeModalOverlay.classList.remove('active');
+    modalList.forEach(modal => modal.classList.remove('show'))
 }
 
 function handleSwitchForm() { 
-    listBtnSwitch = document.querySelectorAll('.button-switch-form');
-    loginForm = document.querySelector('.login');
-    registerForm = document.querySelector('.register');
-    firstForm = document.querySelector('.first-form');
-    secondForm = document.querySelector('.second-form');
+    listBtnSwitch = document.querySelectorAll('button[data-switch-form]');
+    loginForm = document.querySelector('div[data-trigger-modal*="login"]:not(.separated-modal)');
+    registerForm = document.querySelector('div[data-trigger-modal*="register"]:not(.separated-modal)');
+    registerBiodataForm = document.querySelector('section[data-section="register-complete-biodata"]');
+    registerAuthForm = document.querySelector('section[data-section="register-complete-auth"]');
 
     listBtnSwitch.forEach(btnSwitch => {
         btnSwitch.addEventListener('click', (el) => {
@@ -154,14 +107,14 @@ function handleSwitchForm() {
                     registerForm.classList.add('show');
                     
                     break;
-                case 'section-first':
-                    firstForm.classList.remove('hidden');
-                    secondForm.classList.add('hidden');
+                case 'register-complete-biodata':
+                    registerBiodataForm.classList.remove('hidden');
+                    registerAuthForm.classList.add('hidden');
 
                     break;
-                case 'section-second':
-                    firstForm.classList.add('hidden');
-                    secondForm.classList.remove('hidden');
+                case 'register-complete-auth':
+                    registerBiodataForm.classList.add('hidden');
+                    registerAuthForm.classList.remove('hidden');
                 
                     break;
                 default:
@@ -170,40 +123,97 @@ function handleSwitchForm() {
 
                     break;
             }
-        });
+        })
     })
 }
 
 function hideOpenedComponentsFromOutside() { 
     document.addEventListener('click', (event) => {
         triggerEl = event.target.closest('button') ?? event.target;
-        isDropdown = ! triggerEl.matches('button[data-target-dropdown]');
 
-        if (isDropdown) {
-            hideOpenedDropdown();
-        }
-    });
+        isButtonSwitch = triggerEl.matches('button[data-switch-form]');
+        if (isButtonSwitch) { return }
+        
+        activeModalEl = document.querySelector('div[data-trigger-modal].show:not(.separated-modal)');
+        if (! activeModalEl) { return }
+
+        isButtonSwitchForm = activeModalEl.contains(triggerEl);
+        if (isButtonSwitchForm) { return }
+
+        ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
+        ! triggerEl.matches('button[data-target-modal]') ? hideOpenedModal() : '';
+    })
 }
 
 function resendOTPTimer() {
-    // TODO: check if has rate limiter error
-    let timerDisplay = document.querySelector('.resend-otp .message');
-    if (! timerDisplay) {return} // Immediately return
+    const resendOtp = document.querySelector('section[data-section="resend-otp"]');
+    if (! resendOtp) { return } // Immediately return
+    
+    const formResendOTP = resendOtp.querySelector('form');
+    let timerDisplay = resendOtp.querySelector('.message');
     let timeout = 30;
-    const formResendOTP = document.querySelector('.resend-otp form');
-  
-        let otpTimer = setInterval(function() {
-            timeout--;
-            timerDisplay.innerHTML = 'Kirim ulang OTP dalam ' + timeout + ' detik. ';
-            if (timeout <= 0) {
-                clearInterval(otpTimer);
-                timerDisplay.innerHTML = 'Tidak mendapatkan kode?&nbsp;';
-                formResendOTP.classList.remove('hidden');
-            }
-        }, 1000);
+    let otpTimer = setInterval(() => {
+        timeout--;
+        timerDisplay.innerHTML = 'Kirim ulang OTP dalam ' + timeout + ' detik. ';
+        if (timeout <= 0) {
+            clearInterval(otpTimer);
+            timerDisplay.innerHTML = 'Tidak mendapatkan kode?&nbsp;';
+            formResendOTP.classList.remove('hidden');
+        }
+    }, 1000)
 }
 
+function changePasswordVisibility() { 
+    btnVisibility = document.querySelectorAll('button[data-visibility]');
+    if (! btnVisibility) { return }
 
+    btnVisibility.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const changeVisibility = btn.getAttribute('data-visibility');
+            const iconVisibily = btn.querySelector('img');
+    
+            if (changeVisibility === 'text') {
+                iconVisibily.src = iconVisibily.src.replace('password', 'text');
+                btn.previousElementSibling.type = changeVisibility;
+                btn.setAttribute('data-visibility', 'password');
+            } else {
+                iconVisibily.src = iconVisibily.src.replace('text', 'password');
+                btn.previousElementSibling.type = changeVisibility;
+                btn.setAttribute('data-visibility', 'text');            
+            }
+        })
+    })
+}
+
+function selectVerifyVia() { 
+    btnViaInput = document.querySelectorAll('button[data-verify-via]');
+    if (! btnViaInput) { return }
+
+
+    btnViaInput.forEach((el) => {
+        el.addEventListener('click', () => { 
+            verifyVia = el.getAttribute('data-verify-via');
+            document.querySelector('input[name="via"]').value = verifyVia;
+        })
+    })
+}
+
+function smartOtpField() { 
+    btnSubmitOtp = document.querySelector('button[data-submit-form="verify-otp"]');
+    if (! btnSubmitOtp) { return }
+
+    otpInput = document.querySelectorAll('input[name*="otp_confirmation"]');
+
+    otpInput.forEach((el, id) => {
+        el.addEventListener('input', () => { 
+            if (el.value.length > 0) {
+                ! [...otpInput].some(e => e.value.trim() === '') ? btnSubmitOtp.click() : '';
+
+                id !== otpInput.length - 1 ? otpInput[id+1].focus() : '';
+            }
+        })
+    })
+}
 
 function headerCategory() {
     const btnCategory = document.querySelector('.bottom-section .category');
@@ -304,5 +314,3 @@ function headerCategory() {
         });
     });
 }
-
-

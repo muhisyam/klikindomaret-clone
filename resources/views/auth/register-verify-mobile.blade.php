@@ -4,7 +4,7 @@
     </x-button>
     <h1 class="font-bold mt-4">Verifikasi Nomor HP</h1>
 
-    @php $via = session('via') ?? 'whatsapp' @endphp
+    @php $via = session('via') ?? 'sms' @endphp
 
     <img class="w-40 rounded-t-xl" src="{{ asset('img/auth/verification-phone-'. $via .'.webp') }}" alt="Verify OTP">
 </section>
@@ -28,11 +28,7 @@
             <x-input-field name="otp_confirmation[]" class="!w-10 text-center focus:ring-transparent" maxlength="1"/>
             <x-input-field name="otp_confirmation[]" class="!w-10 text-center focus:ring-transparent" maxlength="1"/>
         </div>
-        @isset (session('input_error')['register'])
-            <div class="invalid-feedback | -mt-2 mb-2 text-center text-sm text-red-700">
-                <p>{{ session('input_error')['register']['errors']['incorrect_otp'][0] }}</p>
-            </div>
-        @endisset
+        <x-input-error field="incorrect_otp" class="!-mt-2 mb-2 text-center" :error="session('input_error')"/>
         <x-button type="submit" class="hidden" data-submit-form="verify-otp"/>
     </form>
     <section class="flex justify-center text-xs text-[#95989a]" data-section="resend-otp">

@@ -20,25 +20,6 @@ input::-webkit-inner-spin-button {
 
 button:disabled { opacity: .5; cursor: not-allowed;}
 
-.top-header .app-download:hover,
-.top-header .user-service:hover,
-.top-header .social-media .icon:hover,
-.top-header .category:hover,
-.footer .list-item-footer ul > li > a:hover {
-    color: #0079c2;
-    cursor: pointer;
-}
-
-.blink {
-    animation: blinker 2s linear infinite;
-}
-
-@keyframes blinker {
-    50% {
-        opacity: 0;
-    }
-}
-
 .promo-collection .item-product:hover,
 .section-collection .item-product:hover,
 .product-recommend-wrapper .item-product-recommend:hover,
@@ -61,16 +42,27 @@ button:disabled { opacity: .5; cursor: not-allowed;}
     position: fixed;
     top: -50%;
     left: 50%;
+    z-index: 60;
     opacity: 0;
     transform: translate(-50%, -50%);
     transition: opacity 300ms ease-in-out, top 800ms ease-in-out;
 }
 
 .modal.show {
-    opacity: 1;
     top: 50%;
-    z-index: 60;
+    opacity: 1;
     transition: top 800ms ease-out, opacity 1000ms ease-in-out;
+}
+
+div[data-modal].active::before {
+    content: '';
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* 
@@ -81,6 +73,10 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 
 .guest-info {
     animation: changeInfo 8s infinite;
+}
+
+.blink {
+    animation: blinker 2s linear infinite;
 }
 
 /* 
@@ -99,6 +95,12 @@ button:disabled { opacity: .5; cursor: not-allowed;}
     50%,
     75% {
         transform: translate3d(0, -92%, 0);
+    }
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
     }
 }
 
@@ -155,7 +157,7 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 --------------------=================-------------------- 
 */
 
-section[data-section="navigation-header"]::before {
+nav[data-section="navigation-header"]::before {
     content: '';
     position: absolute;
     height: 100%;

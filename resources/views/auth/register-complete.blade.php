@@ -15,26 +15,32 @@
         <section data-section="register-complete-biodata">
             <div class="mb-4">
                 <x-input-label for="form-input-birthdate" value="Tanggal Lahir"/>
-                <x-input-field id="form-input-birthdate" type="date" name="birthdate" autofocus/>
+                <x-input-field id="form-input-birthdate" type="date" name="birthdate" :error="session('input_error')"/>
+                <x-input-error field="birthdate" :error="session('input_error')"/>
             </div>
             <div class="mb-4">
                 <x-input-label for="form-input-fullname" value="Nama Lengkap"/>
-                <x-input-field id="form-input-fullname" name="fullname"/>
+                <x-input-field id="form-input-fullname" name="fullname" :error="session('input_error')"/>
+                <x-input-error field="fullname" :error="session('input_error')"/>
             </div>
             <x-button class="justify-center h-10 w-full py-2 px-4" buttonStyle="secondary" data-switch-form="register-complete-auth" value="Lanjut"/>
         </section>
         <section class="hidden" data-section="register-complete-auth">
             <div class="mb-4">
                 <x-input-label for="form-input-username-registration" value="Username"/>
-                <x-input-field id="form-input-username-registration" name="username"/>
+                <x-input-field id="form-input-username-registration" name="username" :error="session('input_error')"/>
+                <x-input-error field="username" :error="session('input_error')"/>
             </div>
-            <div class="mb-4">
+            <div class="relative mb-4">
                 <x-input-label for="form-input-password-registration" value="Password"/>
-                <x-input-field id="form-input-password-registration" type="password" name="password"/>
+                <x-input-field id="form-input-password-registration" type="password" name="password" :error="session('input_error')"/>
+                <x-button class="absolute top-6 right-0 justify-center w-10 h-10" data-visibility="text">
+                    <x-icon class="w-5" src="{{ asset('img/icons/icon-auth-visibility-password.webp') }}"/>
+                </x-button>
+                <x-input-error field="password" :error="session('input_error')"/>
             </div>
             <div class="flex gap-2">
                 <x-button class="justify-center h-10 w-full py-2 px-4 text-secondary" data-switch-form="register-complete-biodata" value="Kembali"/>
-
                 <x-button type="submit" class="justify-center h-10 w-full py-2 px-4" buttonStyle="secondary" data-submit-form="register-complete" value="Daftar"/>
             </div>
         </section>

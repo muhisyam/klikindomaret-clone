@@ -12,26 +12,25 @@
     <form method="POST" action="{{ route('verify.mobile') }}">
         @csrf
         
+        <div class="hidden">
+            <input type="text" name="via">
+        </div>
         <div class="mb-4">
             <x-input-label for="form-input-mobile" value="Nomor HP"/>
-            <x-input-field id="form-input-mobile" name="mobile_number"/>
+            <x-input-field id="form-input-mobile" name="mobile_number" :error="session('input_error')"/>
+            <x-input-error field="mobile_number" :error="session('input_error')"/>
         </div>
-        @isset (session('input_error')['register'])
-            <div class="invalid-feedback | -mt-2 mb-2 text-red-700 text-sm">
-                <p>{{ session('input_error')['register']['errors']['mobile_number'][0] }}</p>
-            </div>
-        @endisset
         <div class="flex items-center justify-center gap-2 mb-4">
             <hr class="grow">
             <span class="text-xs text-light-gray-300">Verifikasi via</span>
             <hr class="grow">
         </div>
         <div class="flex gap-4 mb-4">
-            <x-button type="submit" class="justify-center gap-1.5 h-10 w-full py-2 border border-[#25d366] text-sm text-[#25d366]">
+            <x-button type="submit" class="justify-center gap-1.5 h-10 w-full py-2 border border-[#25d366] text-sm text-[#25d366]" data-verify-via="whatsapp">
                 <x-icon class="w-4" src="{{ asset('img/icons/icon-auth-whatsapp.webp') }}"/>
                 <span class="leading-4">Whatsapp</span>
             </x-button>
-            <x-button type="submit" class="justify-center gap-1.5 h-10 w-full py-2 text-sm" buttonStyle="secondary">
+            <x-button type="submit" class="justify-center gap-1.5 h-10 w-full py-2 text-sm" buttonStyle="secondary" data-verify-via="whatsapp">
                 <x-icon class="w-4" src="{{ asset('img/icons/icon-auth-message.webp') }}"/>
                 <span class="leading-4">SMS</span>
             </x-button>

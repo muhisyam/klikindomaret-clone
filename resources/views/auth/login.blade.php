@@ -15,11 +15,15 @@
 
             <div class="mb-4">
                 <x-input-label for="form-input-mobile-email-login" value="Nomor HP/Email"/>
-                <x-input-field id="form-input-mobile-email-login" name="mobile_email"/>
+                <x-input-field id="form-input-mobile-email-login" name="mobile_email" :error="session('input_error')"/>
+                <x-input-error field="mobile_email" :error="session('input_error')"/>
             </div>
-            <div class="mb-4">
+            <div class="relative mb-4">
                 <x-input-label for="form-input-password-login" value="Kata Sandi"/>
                 <x-input-field id="form-input-password-login" type="password" name="password"/>
+                <x-button class="absolute top-6 right-0 justify-center w-10 h-10" data-visibility="text">
+                    <x-icon class="w-5" src="{{ asset('img/icons/icon-auth-visibility-password.webp') }}"/>
+                </x-button>
             </div>
             <div class="flex justify-between mb-4">
                 <div class="flex items-center gap-2">
