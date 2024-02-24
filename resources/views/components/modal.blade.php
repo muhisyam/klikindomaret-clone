@@ -1,11 +1,11 @@
-@props(['section'])
+@props(['section', 'showCondition' => false])
 
-<div class="relative" data-modal="{{ $section }}">
-    <x-button :class="$trigger->attributes['class']" :data-target-modal="$section">
+<div {{ $attributes->class(['active' => $showCondition])->merge(['class' => 'relative']) }} data-modal="{{ $section }}">
+    <x-button :class="$trigger->attributes['class']" :buttonStyle="$trigger->attributes['buttonStyle']" :data-target-modal="$section">
         {{ $trigger }}
     </x-button>
 
-    <div {{ $content->attributes->merge(['class' => 'modal']) }} data-trigger-modal={{ $section }}>
+    <div {{ $content->attributes->class(['show' => $showCondition])->merge(['class' => 'modal']) }} data-trigger-modal={{ $section }}>
         {{ $content }}
     </div>
 </div>

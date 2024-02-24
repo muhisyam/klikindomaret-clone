@@ -1,0 +1,10 @@
+@props(['inputStyle' => 'default'])
+
+@php
+    $classes = match ($inputStyle) {
+        'default' => ' bg-light-gray-50 transition-shadow focus:border-secondary focus:shadow-input focus:outline-secondary',
+        'custom' => '',
+    }
+@endphp
+
+<input {{ $attributes->merge(['class' => 'h-10 w-full rounded-md border border-light-gray-50 py-2 px-3 text-sm text-black' . $classes, 'type' => 'text']) }}>

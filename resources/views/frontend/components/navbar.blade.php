@@ -97,31 +97,37 @@
                     </x-slot>
 
                     <x-slot:content class="separated-modal">
-                        @push('components')
-                            @include('auth.login', ['section' => 'guest-cart login'])
-                        @endpush
+                        {{-- Has including in login modal component --}}
                     </x-slot>
                 </x-modal>
 
                 <section class="guest-auth flex items-center" data-section="auth">
-                    <x-modal section="login">
-                        <x-slot:trigger class="me-2 border border-secondary py-1.5 px-4 bg-white text-sm text-secondary">
+
+                    @php
+                        $showLogin = in_array('login', session('input_error') ?? []);
+                        $showRegister = in_array('register', session('input_error') ?? []) || ! is_null(session('step'));
+                    @endphp
+
+                    <x-modal section="login" :showCondition="$showLogin">
+                        <x-slot:trigger class="me-2 py-1.5 px-4 text-sm" buttonStyle="outline-secondary">
                             Masuk
                         </x-slot>
     
                         <x-slot:content class="separated-modal">
-                            {{-- Has including in guest cart modal component --}}
+                            @push('components')
+                                @include('auth.login', ['section' => 'guest-cart login', 'showCondition' => $showLogin])
+                            @endpush
                         </x-slot>
                     </x-modal>
 
-                    <x-modal section="register">
-                        <x-slot:trigger class="py-1.5 px-5 bg-secondary text-sm text-white">
+                    <x-modal section="register" :showCondition="$showRegister">
+                        <x-slot:trigger class="py-1.5 px-5 text-sm" buttonStyle="secondary">
                             Daftar
                         </x-slot>
     
                         <x-slot:content class="separated-modal">
                             @push('components')
-                                @include('auth.register', ['section' => 'register'])
+                                @include('auth.register', ['section' => 'register', 'showCondition' => $showRegister])
                             @endpush
                         </x-slot>
                     </x-modal>
