@@ -1,8 +1,8 @@
 <nav class="container mx-auto max-w-7xl h-full" data-section="navigation-header">
     <div class="flex justify-between">
         <section class="flex items-center gap-6 text-xs" data-section="app-social">
-            <x-dropdown section="app-download">
-                <x-slot:trigger class="group gap-1.5 dont-active hover:text-secondary">
+            <x-dropdown section="app-download" :activeBtn=false>
+                <x-slot:trigger class="group gap-1.5 hover:text-secondary">
                     <x-icon class="w-3 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-app.webp') }}"/>
                     <span>Download App Klik Indomaret</span>
                     <x-icon class="w-2 duration-500 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
@@ -29,8 +29,8 @@
                 </x-nav-link>
             </div>
 
-            <x-dropdown section="customer-service">
-                <x-slot:trigger class="group gap-1.5 dont-active hover:text-secondary">
+            <x-dropdown section="customer-service" :activeBtn=false>
+                <x-slot:trigger class="group gap-1.5 hover:text-secondary">
                     <x-icon class="w-3 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-cs.webp') }}"/>
                     <span>Layanan Pelanggan</span>
                     <x-icon class="w-2 duration-500 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
@@ -73,11 +73,23 @@
             <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="Logo">
         </x-nav-link>
 
-        <x-button class="flex items-center gap-1.5 h-5 mx-[42px]">
+        <x-dropdown section="category-navigation" :activeBtn=false :overlay=true>
+            <x-slot:trigger class="flex items-center gap-1.5 h-5 mx-[42px]">
+                <x-icon class="w-5" src="{{ asset('img/icons/icon-header-category.webp') }}"/>
+                <span class="text-secondary">Kategori</span>
+                <x-icon class="w-2 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
+            </x-slot>
+
+            <x-slot:content class="!fixed top-[86px] left-0 w-full rounded-t-none bg-white before:opacity-0">
+                <x-category-navigation/>
+            </x-slot>
+        </x-dropdown>
+
+        {{-- <x-button class="flex items-center gap-1.5 h-5 mx-[42px]">
             <x-icon class="w-5" src="{{ asset('img/icons/icon-header-category.webp') }}"/>
             <span class="text-secondary">Kategori</span>
             <x-icon class="w-2" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-category=""/>
-        </x-button>
+        </x-button> --}}
 
         <div class="search-bar w-[39rem]">
             <div class="relative">
@@ -163,7 +175,7 @@
                                 <span class="font-normal text-xs text-light-gray-300">i.saku</span><br>
                                 <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
                             </div>
-                            <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            <x-icon class="w-3" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-button>
 
                         <x-button class="group w-full gap-3 mb-3">
@@ -172,7 +184,7 @@
                                 <span class="font-normal text-xs text-light-gray-300">Poinku</span><br>
                                 <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
                             </div>
-                            <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            <x-icon class="w-3" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-button>
 
                         <x-button class="group w-full gap-3 mb-3">
@@ -181,7 +193,7 @@
                                 <span class="font-normal text-xs text-light-gray-300">Saldo Klik</span><br>
                                 <span class="group-hover:underline group-hover:underline-offset-2">Aktivasi</span>
                             </div>
-                            <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            <x-icon class="w-3" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-button>
 
                         <x-button class="group w-full gap-3 mb-3">
@@ -190,7 +202,7 @@
                                 <span class="font-normal text-xs text-light-gray-300">ShopeePay</span><br>
                                 <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
                             </div>
-                            <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            <x-icon class="w-3" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-button>
 
                         <x-button class="group w-full gap-3 mb-3">
@@ -199,7 +211,7 @@
                                 <span class="font-normal text-xs text-light-gray-300">OVO</span><br>
                                 <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
                             </div>
-                            <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            <x-icon class="w-3" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-button>
 
                         <x-button class="group w-full gap-3 mb-3">
@@ -208,7 +220,7 @@
                                 <span class="font-normal text-xs text-light-gray-300">Gopay</span><br>
                                 <span class="group-hover:underline group-hover:underline-offset-2">Hubungkan</span>
                             </div>
-                            <x-icon class="w-5" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                            <x-icon class="w-3" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-button>
                     </x-slot>
                 </x-dropdown>
