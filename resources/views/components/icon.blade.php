@@ -1,1 +1,1 @@
-<img {{ $attributes->merge(['alt' => 'Icon']) }}>
+<img {{ $attributes->merge(['alt' => 'Icon']) }} loading="lazy">

@@ -1,7 +1,12 @@
-@props(['section'])
+@props(['section', 'activeBtn' => true, 'overlay' => false])
 
-<div class="relative" data-dropdown="{{ $section }}">
-    <x-button :class="$trigger->attributes['class']" :data-target-dropdown="$section">
+@php
+    $activeBtn = ! $activeBtn ? ' dont-active' : '';
+    $activeOverlay = $overlay ? 'dropdown-overlay' : '';
+@endphp
+
+<div class="relative{{ $overlay ? ' before:!-z-10' : '' }}" data-dropdown="{{ $section }}" {{ $activeOverlay }}>
+    <x-button :class="$trigger->attributes['class'] . $activeBtn" :data-target-dropdown="$section">
         {{ $trigger }}
     </x-button>
 
