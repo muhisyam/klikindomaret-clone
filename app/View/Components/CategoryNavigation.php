@@ -18,7 +18,7 @@ class CategoryNavigation extends Component
         protected ClientRequestAction $clientAction,
         protected CreateMultipartAction $multipartAction,
     ) {
-        $this->endpoint = config('api.url') . 'categories';
+        $this->endpoint = config('api.url') . 'categories?depth=3&withoutPagination=true';
     }
     
     /**
@@ -26,12 +26,12 @@ class CategoryNavigation extends Component
      */
     public function render(): View|Closure|string
     {
-        if (is_null(session('category_nav_parent'))) {
-            session(['category_nav_parent' => $this->getDataCategory()]);
+        if (is_null(session('category_nav'))) {
+            session(['category_nav' => $this->getDataCategory()]);
         }
 
         return view('components.category-navigation', [
-            'categoryParent' => session('category_nav_parent')['data'],
+            'categories' => session('category_nav')['data'],
         ]);
     }
 

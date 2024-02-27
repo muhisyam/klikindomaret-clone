@@ -80,16 +80,10 @@
                 <x-icon class="w-2 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
             </x-slot>
 
-            <x-slot:content class="!fixed top-[86px] left-0 w-full rounded-t-none bg-white before:opacity-0">
+            <x-slot:content class="!fixed top-[85px] left-0 w-full rounded-t-none bg-white before:opacity-0">
                 <x-category-navigation/>
             </x-slot>
         </x-dropdown>
-
-        {{-- <x-button class="flex items-center gap-1.5 h-5 mx-[42px]">
-            <x-icon class="w-5" src="{{ asset('img/icons/icon-header-category.webp') }}"/>
-            <span class="text-secondary">Kategori</span>
-            <x-icon class="w-2" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-category=""/>
-        </x-button> --}}
 
         <div class="search-bar w-[39rem]">
             <div class="relative">

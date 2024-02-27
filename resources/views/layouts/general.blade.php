@@ -22,7 +22,6 @@
     <body>
         <header class="sticky top-0 z-50 drop-shadow w-full text-black">
             @include('frontend.components.navbar')
-            @include('frontend.components.category')
         </header>
         
         <div class="container mx-auto max-w-7xl mt-30">

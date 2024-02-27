@@ -1,6 +1,6 @@
 <section data-section="category-navigation">
     <ul class="text-sm shadow">
-        <li class="inline-block w-36 py-3 active" data-target-category-content="retail">
+        <li class="inline-block w-36 py-3" data-target-category-content="retail">
             <x-nav-link href="/" class="justify-center gap-2">
                 <x-icon class="w-5 brightness-95 grayscale-[90%]" src="{{ asset('img/icons/ic_retail.webp') }}"/>
                 <span>Retail</span>
@@ -32,317 +32,54 @@
         </li>
     </ul>
     <div class="min-h-[440px]">
-        <div class="relative" data-category-content="retail">
-            <ul class="left-side w-[17.2%] inline-block shadow-left text-black text-sm">
-                @foreach ($categoryParent as $data)
-                    <li class="item-sub-level-1 group p-3 active hover:bg-[#E1EEFF] hover:text-secondary" data-category-name="{{ $data['category_name'] }}" data-category-image="{{ asset('img/uploads/categories/' . $data['category_image_name']) }}" data-original-category-image="{{ $data['original_category_image_name'] }}">
-                        <x-nav-link class="gap-2" href="{{ url('/category/' . $data['category_slug']) }}" data-category-name="{{ $data['category_name'] }}">
-                            <x-icon class="w-5" src="{{ asset('img/uploads/categories/' . $data['category_image_name']) }}"/>
-                            <span class="grow">{{ $data['category_name'] }}</span>
-                            <x-icon class="w-3 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
-                        </x-nav-link>
-                    </li>
+        <div class="flex" data-category-content="retail">
+            <ul class="w-[17.2%] shadow-left text-black text-sm">
+                @foreach ($categories as $data)
+                <li class="group p-3 active hover:bg-[#E1EEFF] hover:text-secondary" data-target-retail="{{ $data['category_slug'] }}" data-category-image="{{ asset('img/uploads/categories/' . $data['category_image_name']) }}" data-original-category-image="{{ $data['original_category_image_name'] }}">
+                    <x-nav-link class="gap-2" href="{{ url('/category/' . $data['category_slug']) }}" data-category-name="{{ $data['category_name'] }}">
+                        <x-icon class="w-5" src="{{ asset('img/uploads/categories/' . $data['category_image_name']) }}"/>
+                        <span class="grow">{{ $data['category_name'] }}</span>
+                        <x-icon class="w-3 brightness-50 grayscale group-hover:filter-none" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                    </x-nav-link>
+                </li>
                 @endforeach
             </ul>
-            {{-- <div class="right-side w-[82.5%] h-[425px] overflow-auto inline-block text-xs text-[#414141] px-8 pt-5">
-                <div class="subcategory-header mb-5">
-                    <div class="header-wrapper flex items-center">
-                        <img class="max-h-[18px] max-w-[18px] me-2" src="https://assets.klikindomaret.com///products/banner/15-Icon-Makanan-R1.png" alt="Category Icon">
-                        <span class="font-bold">Makanan</span>
+            <div class="h-[440px] w-[82.8%] overflow-auto text-xs text-black">
+                @foreach ($categories as $dataLevel1)
+                <div class="relative pt-5 px-8{{ ! $loop->first ? ' hidden' : '' }}" data-trigger-retail="{{ $dataLevel1['category_slug'] }}">
+                    <div class="flex items-center gap-2 mb-5">
+                        <x-icon class="w-5" src="{{ asset('img/uploads/categories/' . $dataLevel1['category_image_name']) }}"/>
+                        <span class="font-bold">{{ $dataLevel1['category_name'] }}</span>
                     </div>
+                    <ul class="grid grid-cols-6 gap-4 leading-5">
+                        @foreach ($dataLevel1['children'] as $dataLevel2)
+                        <li>
+                            <x-nav-link href="{{ url('/category/' . $dataLevel2['category_slug']) }}" class="font-bold" :value="$dataLevel2['category_name']"/>
+                            <ul>
+                                @foreach ($dataLevel2['children'] as $dataLevel3)
+                                <li>
+                                    <x-nav-link href="{{ url('/category/' . $dataLevel3['category_slug']) }}" :value="$dataLevel3['category_name']"/>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <ul class="subcategory-level-2 subcategory-[idlevel1] grid grid-cols-6 gap-4 leading-5 hidden">
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Cemilan & Biskuit">Cemilan & Biskuit</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Biskuit">Biskuit</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Kacang Kacangan">Kacang Kacangan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Kue Kering">Kue Kering</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Cemilan Lokal">Cemilan Lokal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Wafer">Wafer</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Keripik">Keripik</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Bahan Kue">Bahan Kue</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Gula & Tepung">Gula & Tepung</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Mentega & Margarin">Mentega & Margarin</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Tepung Instan">Tepung Instan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Bahan Puding & Agar Agar">Bahan Puding & Agar Agar</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Cokelat Masak & Cokelat Bubuk">Cokelat Masak & Cokelat Bubuk</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Susu Cair & Kental Manis">Susu Cair & Kental Manis</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Keju">Keju</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Olesan">Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Pengemulsi">Pengemulsi</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Perisa">Perisa</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Topping & Hiasan Kue">Topping & Hiasan Kue</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Lainnya">Lainnya</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="subcategory-level-2 subcategory-[idlevel2] grid grid-cols-6 gap-4 leading-5 hidden">
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Sarapan">Sarapan</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Sereal">Sereal</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Madu">Madu</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Selai & Olesan">Selai & Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Makanan Diet">Makanan Diet</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Roti">Roti</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="subcategory-level-2 subcategory-[idlevel3] grid grid-cols-6 gap-4 leading-5 hidden">
-                    <li class="item-sub-level-2">
-                        <a class="font-bold" href="https://www.klikindomaret.com/category/sarapan" data-sub-name="Bahan Kue">Bahan Kue</a>
-                        <ul class="subcategory-level-3">
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Gula & Tepung">Gula & Tepung</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Mentega & Margarin">Mentega & Margarin</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Tepung Instan">Tepung Instan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Bahan Puding & Agar Agar">Bahan Puding & Agar Agar</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Cokelat Masak & Cokelat Bubuk">Cokelat Masak & Cokelat Bubuk</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Susu Cair & Kental Manis">Susu Cair & Kental Manis</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Keju">Keju</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Olesan">Olesan</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Pengemulsi">Pengemulsi</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Perisa">Perisa</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Topping & Hiasan Kue">Topping & Hiasan Kue</a>
-                            </li>
-                            <li class="item-sub-level-3">
-                                <a href="#" data-sub-name="Lainnya">Lainnya</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div> --}}
+                @endforeach
+            </div>
+        </div>
+        <div class="hidden" data-category-content="food">
+            <h1>food</h1>
+        </div>
+        <div class="hidden" data-category-content="virtual">
+            <h1>virtual</h1>
+        </div>
+        <div class="hidden" data-category-content="travel">
+            <h1>travel</h1>
+        </div>
+        <div class="hidden" data-category-content="ticket">
+            <h1>ticket</h1>
         </div>
     </div>
 </section>

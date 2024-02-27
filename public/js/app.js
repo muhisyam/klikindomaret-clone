@@ -1,18 +1,8 @@
-// headerCategory();
-toggleModal();
-toggleDropdown();
-handleSwitchForm();
-hideOpenedComponentsFromOutside();
-changePasswordVisibility();
-selectVerifyVia();
-smartOtpField();
-resendOTPTimer();
-
 function toggleDropdown() { 
     const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
 
-    dropdownBtnList.forEach((triggerEl) => {
-        triggerEl.addEventListener('click', (el) => {
+    dropdownBtnList.forEach(triggerEl => {
+        triggerEl.addEventListener('click', el => {
             btnTrigger = el.target.closest('button'); // Find button element, when is clicked is not the button element
             btnArrow = btnTrigger.querySelector('img[data-arrow-dropdown]');
             triggerData = btnTrigger.getAttribute('data-target-dropdown');
@@ -22,15 +12,14 @@ function toggleDropdown() {
             hideOpenedDropdown(targetEl);
             
             if (isTargetClosed) {
+                toggleComponentOverlay(btnTrigger, false);
+
                 btnTrigger.classList.add('bg-dark-primary');
                 btnArrow.classList.add('rotate-180');
                 targetEl.classList.add('z-50');
                 targetEl.classList.remove('hidden');
             } else {
-                btnTrigger.classList.remove('bg-dark-primary');
-                btnArrow.classList.remove('rotate-180');
-                targetEl.classList.remove('z-50');
-                targetEl.classList.add('hidden');
+                hideOpenedDropdown();
             }
         })
     })
@@ -40,7 +29,7 @@ function hideOpenedDropdown() {
     const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
     const dropdownList = document.querySelectorAll('div[data-trigger-dropdown]');
 
-    dropdownBtnList.forEach((dropdownBtn) => {
+    dropdownBtnList.forEach(dropdownBtn => {
         const isElementActive = dropdownBtn.classList.contains('bg-dark-primary');
         
         if (isElementActive) {
@@ -48,9 +37,11 @@ function hideOpenedDropdown() {
             dropdownBtn.classList.remove('bg-dark-primary');
             btnArrow.classList.remove('rotate-180');
         }
+
+        toggleComponentOverlay(dropdownBtn);
     })
 
-    dropdownList.forEach((dropdown) => {
+    dropdownList.forEach(dropdown => {
         const isElementOpen = ! dropdown.classList.contains('hidden');
         
         if (isElementOpen) {
@@ -63,8 +54,8 @@ function hideOpenedDropdown() {
 function toggleModal() { 
     const modalBtnList = document.querySelectorAll('button[data-target-modal]');
 
-    modalBtnList.forEach((triggerEl) => {
-        triggerEl.addEventListener('click', (el) => {
+    modalBtnList.forEach(triggerEl => {
+        triggerEl.addEventListener('click', el => {
             btnTrigger = el.target.closest('button');
             triggerData = btnTrigger.getAttribute('data-target-modal');
             const targetEl = document.querySelector('div[data-trigger-modal*="' + triggerData + '"]:not(.separated-modal)');
@@ -73,7 +64,7 @@ function toggleModal() {
             if (isTargetOpened) {
                 hideOpenedModal(); 
             } else {
-                btnTrigger.parentNode.classList.add('active');
+                toggleComponentOverlay(btnTrigger, false);
                 targetEl.classList.add('show');   
             }
         })
@@ -81,13 +72,25 @@ function toggleModal() {
 }
 
 function hideOpenedModal() { 
-    const activeModalOverlay = document.querySelector('div[data-modal].active');
-    if (! activeModalOverlay) { return }
+    const activeModalOverlay = document.querySelector('div[data-modal][overlay="active"]');
+    if (! activeModalOverlay) return;
 
     const modalList = document.querySelectorAll('.modal');
 
-    activeModalOverlay.classList.remove('active');
+    toggleComponentOverlay(activeModalOverlay);
     modalList.forEach(modal => modal.classList.remove('show'))
+}
+
+function toggleComponentOverlay(btnTrigger, hide = true) {
+    const componentWrapper = btnTrigger.matches('button') ? btnTrigger.parentNode : btnTrigger;
+
+    if (componentWrapper.hasAttribute('overlay')) {
+        if (hide) {
+            componentWrapper.setAttribute('overlay', '');
+        } else {
+            componentWrapper.setAttribute('overlay', 'active');
+        }
+    }    
 }
 
 function handleSwitchForm() { 
@@ -128,26 +131,27 @@ function handleSwitchForm() {
 }
 
 function hideOpenedComponentsFromOutside() { 
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
         triggerEl = event.target.closest('button') ?? event.target;
 
+        ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
+
         isButtonSwitch = triggerEl.matches('button[data-switch-form]');
-        if (isButtonSwitch) { return }
+        if (isButtonSwitch) return;
         
         activeModalEl = document.querySelector('div[data-trigger-modal].show:not(.separated-modal)');
-        if (! activeModalEl) { return }
+        if (! activeModalEl) return;
 
         isButtonSwitchForm = activeModalEl.contains(triggerEl);
-        if (isButtonSwitchForm) { return }
+        if (isButtonSwitchForm) return;
 
-        ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
         ! triggerEl.matches('button[data-target-modal]') ? hideOpenedModal() : '';
     })
 }
 
 function resendOTPTimer() {
     const resendOtp = document.querySelector('section[data-section="resend-otp"]');
-    if (! resendOtp) { return } // Immediately return
+    if (! resendOtp) return; // Immediately return
     
     const formResendOTP = resendOtp.querySelector('form');
     let timerDisplay = resendOtp.querySelector('.message');
@@ -165,9 +169,9 @@ function resendOTPTimer() {
 
 function changePasswordVisibility() { 
     btnVisibility = document.querySelectorAll('button[data-visibility]');
-    if (! btnVisibility) { return }
+    if (! btnVisibility) return;
 
-    btnVisibility.forEach((btn) => {
+    btnVisibility.forEach(btn => {
         btn.addEventListener('click', () => {
             const changeVisibility = btn.getAttribute('data-visibility');
             const iconVisibily = btn.querySelector('img');
@@ -187,7 +191,7 @@ function changePasswordVisibility() {
 
 function selectVerifyVia() { 
     btnViaInput = document.querySelectorAll('button[data-verify-via]');
-    if (! btnViaInput) { return }
+    if (! btnViaInput) return;
 
 
     btnViaInput.forEach((el) => {
@@ -200,7 +204,7 @@ function selectVerifyVia() {
 
 function smartOtpField() { 
     btnSubmitOtp = document.querySelector('button[data-submit-form="verify-otp"]');
-    if (! btnSubmitOtp) { return }
+    if (! btnSubmitOtp) return;
 
     otpInput = document.querySelectorAll('input[name*="otp_confirmation"]');
 
@@ -215,102 +219,82 @@ function smartOtpField() {
     })
 }
 
-function headerCategory() {
-    const btnCategory = document.querySelector('.bottom-section .category');
-    const bottomHeaderWrapper = document.querySelector('.header .bottom-header .header-wrapper');
-    
-    function toggleCategoryButton() {
-        const bottomHeader = document.querySelector('.header .bottom-header');
-        const isWrapperHidden = bottomHeader.classList.contains('hidden');
-        
-        if (isWrapperHidden) {
-            bottomHeader.classList.remove('hidden');
-            bottomHeader.querySelector('.header-overlay').classList.remove('hidden');
-        } else {
-            bottomHeader.classList.add('hidden');
-            bottomHeader.querySelector('.header-overlay').classList.add('hidden');
-        }
+class CategoryNavigation {
+    constructor() {
+        this.targetContent;
+        this.targetSubCategory;
+
+        this.init();
     }
-    
-    btnCategory.addEventListener('click', function () { 
-        toggleCategoryButton();
-        document.querySelector('.item-menu-category').classList.add('active');
-        document.querySelector('.list-category-wrapper').classList.remove('hidden');
-        document.querySelector('.item-sub-level-1').classList.add('active');
-        document.querySelector('.subcategory-header img').src = "https://assets.klikindomaret.com///products/banner/15-Icon-Makanan-R1.png";
-        document.querySelector('.subcategory-header span').textContent = "Makanan";
-        document.querySelector('.subcategory-level-2').classList.remove('hidden');
-    });
-    
-    bottomHeaderWrapper.addEventListener('mouseleave', function () { 
-        toggleCategoryButton();
-        
-        arrayItemMenu.map((linkMenu) => {
-            return linkMenu.classList.remove('active');
-        });
 
-        arrayListCategory.map((categoryContent) => {
-            return categoryContent.classList.add('hidden');
-        });
+    init() {
+        const catNavMenu = document.querySelectorAll('[data-target-category-content]');
+        if (! catNavMenu) return;
 
-        arraySubLevel1.map((subLevel1) => {
-            return subLevel1.classList.remove('active');
-        });
-    });
-    
-    const categoryAllItemMenu = document.querySelectorAll('.header .bottom-header .top-section .item-menu-category');
-    const categoryAllListCategory = document.querySelectorAll('.header .bottom-header .bottom-section .list-category-wrapper');
-    const arrayItemMenu = [].slice.call(categoryAllItemMenu);
-    const arrayListCategory = [].slice.call(categoryAllListCategory);
-    
-    arrayItemMenu.map((linkMenu) => {
-        linkMenu.addEventListener('mouseenter', function () { 
-            const menuAttribute = this.querySelector('a').getAttribute('data-menu-name').toLowerCase()
-
-            arrayItemMenu.map((linkMenu) => { 
-                linkMenu.classList.remove('active');
-            });
-
-            arrayListCategory.map((linkCategory) => { 
-                const isCategoryHidden = linkCategory.classList.contains('hidden');
-                return !isCategoryHidden ? linkCategory.classList.add('hidden') : '';
-            });
-
-            this.classList.add('active');
-            document.querySelector('#category-' + menuAttribute).classList.remove('hidden');
-        });
-    });
-    
-    const subcategoryAllLevel1 = document.querySelectorAll('.header .bottom-header .bottom-section .left-side .item-sub-level-1');
-    const subcategoryAllLevel2 = document.querySelectorAll('.header .bottom-header .bottom-section .right-side .subcategory-level-2');
-    const arraySubLevel1 = [].slice.call(subcategoryAllLevel1);
-    const arraySubLevel2 = [].slice.call(subcategoryAllLevel2);
-
-    arraySubLevel1.map((subLevel1) => {
-        subLevel1.addEventListener('mouseenter', function () { 
-            const idCategory = this.getAttribute('data-category-id');
-            const nameCategory = this.getAttribute('data-category-name');
-            const imageCategory = this.getAttribute('data-category-image');
-            
-
-            arraySubLevel1.map((subLevel1) => {
-                subLevel1.classList.remove('active');
-            });
-            
-            arraySubLevel2.map((subLevel2) => {
-                const subcategoryHeader = document.querySelector('.header .bottom-header .bottom-section .right-side .header-wrapper');
-                const isSubcategory = subLevel2.classList.contains('subcategory-' + idCategory);
+        catNavMenu.forEach(menu => {
+            menu.addEventListener('mouseenter', () => {
+                this.activatingMenu(catNavMenu, false);
                 
-                subLevel2.classList.add('hidden');
-
-                if (isSubcategory) {
-                    subcategoryHeader.querySelector('img').src = imageCategory;
-                    subcategoryHeader.querySelector('span').textContent = nameCategory;
-                    subLevel2.classList.remove('hidden');
-                }
+                this.targetContent = menu.getAttribute('data-target-category-content');
+                const catNavContentList = document.querySelectorAll('[data-category-content]');
                 
-                subLevel1.classList.add('active');
-            });
+                this.activatingMenu([menu]);
+                this.resetElementsClass(catNavContentList);
+                this.switchContent('[data-category-content="' + this.targetContent + '"]');
+                
+                if (this.targetContent === 'retail') this.retailContent();
+            })
+        })
+    };
+
+    retailContent() {
+        const triggerList = document.querySelectorAll('[data-target-retail]');
+
+        triggerList.forEach(triggerEl => {
+            triggerEl.addEventListener('mouseenter', () => {
+                this.targetSubCategory = triggerEl.getAttribute('data-target-retail');
+                const targetList = document.querySelectorAll('[data-trigger-retail]');
+
+                this.resetElementsClass(targetList);
+                this.switchContent('[data-trigger-retail="' + this.targetSubCategory + '"]');
+            })
+
         });
-    });
-}
+    }
+
+    activatingMenu(listEl, active = true) {
+        const menuActiveClass = ['border-b', 'border-secondary', 'text-secondary'];
+        const iconInactiveClass= ['brightness-95', 'grayscale-[90%]'];
+
+        return listEl.forEach(el => {
+            if (active) {
+                el.classList.add(...menuActiveClass);
+                el.querySelector('img').classList.remove(...iconInactiveClass);
+            } else {
+                el.classList.remove(...menuActiveClass);
+                el.querySelector('img').classList.add(...iconInactiveClass);
+            }
+        })
+    }
+
+    resetElementsClass(listEl, toggleClass = 'hidden') {
+        return listEl.forEach(el => {
+            el.classList.add(toggleClass);
+        })
+    }
+
+    switchContent(attr, toggleClass = 'hidden') {
+        return document.querySelector(attr).classList.remove(toggleClass);
+    }
+};
+
+toggleModal();
+toggleDropdown();
+handleSwitchForm();
+hideOpenedComponentsFromOutside();
+changePasswordVisibility();
+selectVerifyVia();
+smartOtpField();
+resendOTPTimer();
+
+new CategoryNavigation();
