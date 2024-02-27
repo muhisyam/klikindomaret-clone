@@ -26,6 +26,7 @@ class CategoryController extends Controller
     {
         // TODO: Sync like product controller
         $query = Category::where('parent_id', null)->withCount('children'); 
+        $query = $request->depth === '3' ? $query->with('children.children') : $query;
         $categories = $request->has('withoutPagination') ? $query->get() : $query->paginate(10);
 
         return CategoryResource::collection($categories);
