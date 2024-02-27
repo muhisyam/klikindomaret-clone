@@ -2,10 +2,13 @@
 
 @php
     $activeBtn = ! $activeBtn ? ' dont-active' : '';
-    $activeOverlay = $overlay ? 'dropdown-overlay' : '';
+    $activeOverlay = $overlay ? 'overlay' : '';
 @endphp
 
-<div class="relative{{ $overlay ? ' before:!-z-10' : '' }}" data-dropdown="{{ $section }}" {{ $activeOverlay }}>
+<div @class([
+    'relative', 
+    'before:!-z-10' => $overlay
+]) data-dropdown="{{ $section }}" {{ $activeOverlay }}>
     <x-button :class="$trigger->attributes['class'] . $activeBtn" :data-target-dropdown="$section">
         {{ $trigger }}
     </x-button>

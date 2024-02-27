@@ -1,6 +1,6 @@
 @props(['section', 'showCondition' => false])
 
-<div {{ $attributes->class(['active' => $showCondition])->merge(['class' => 'relative']) }} data-modal="{{ $section }}">
+<div {{ $attributes->class(['active' => $showCondition])->merge(['class' => 'relative']) }} data-modal="{{ $section }}" overlay>
     <x-button :class="$trigger->attributes['class']" :buttonStyle="$trigger->attributes['buttonStyle']" :data-target-modal="$section">
         {{ $trigger }}
     </x-button>

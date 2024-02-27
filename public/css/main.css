@@ -1,14 +1,25 @@
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,.4);
+}
+
 body {
     font-family: "Roboto", sans-serif;
     background-color: #f5f5f5;
     color: #414141;
 }
 
-/* 
---------------------================---------------------
-==================== Global Section ====================
---------------------================--------------------- 
-*/
 input:focus {
     outline: none;
 }
@@ -54,7 +65,7 @@ button:disabled { opacity: .5; cursor: not-allowed;}
     transition: top 800ms ease-out, opacity 1000ms ease-in-out;
 }
 
-div[data-modal].active::before {
+div[overlay="active"]::before {
     content: '';
     position: fixed;
     z-index: 1;
