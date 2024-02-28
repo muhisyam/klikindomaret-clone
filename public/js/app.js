@@ -36,9 +36,9 @@ function hideOpenedDropdown() {
             const btnArrow = dropdownBtn.querySelector('img[data-arrow-dropdown]');
             dropdownBtn.classList.remove('bg-dark-primary');
             btnArrow.classList.remove('rotate-180');
-        }
 
-        toggleComponentOverlay(dropdownBtn);
+            toggleComponentOverlay(dropdownBtn);
+        }
     })
 
     dropdownList.forEach(dropdown => {
@@ -85,10 +85,14 @@ function toggleComponentOverlay(btnTrigger, hide = true) {
     const componentWrapper = btnTrigger.matches('button') ? btnTrigger.parentNode : btnTrigger;
 
     if (componentWrapper.hasAttribute('overlay')) {
+        const body = document.querySelector('body');
+        
         if (hide) {
             componentWrapper.setAttribute('overlay', '');
+            body.classList.remove('overflow-hidden');
         } else {
             componentWrapper.setAttribute('overlay', 'active');
+            body.classList.add('overflow-hidden');
         }
     }    
 }
@@ -134,18 +138,12 @@ function hideOpenedComponentsFromOutside() {
     document.addEventListener('click', event => {
         triggerEl = event.target.closest('button') ?? event.target;
 
+        isClickedInsideModal = ! document.querySelector('div[data-trigger-modal].show:not(.separated-modal)')?.contains(triggerEl);
+        isBtnClosedModal = ! triggerEl.matches('button[data-target-modal]');
+        isBtnSwitchModal = ! triggerEl.matches('button[data-switch-form]');
+
         ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
-
-        isButtonSwitch = triggerEl.matches('button[data-switch-form]');
-        if (isButtonSwitch) return;
-        
-        activeModalEl = document.querySelector('div[data-trigger-modal].show:not(.separated-modal)');
-        if (! activeModalEl) return;
-
-        isButtonSwitchForm = activeModalEl.contains(triggerEl);
-        if (isButtonSwitchForm) return;
-
-        ! triggerEl.matches('button[data-target-modal]') ? hideOpenedModal() : '';
+        isClickedInsideModal && isBtnClosedModal && isBtnSwitchModal ? hideOpenedModal() : '';
     })
 }
 
