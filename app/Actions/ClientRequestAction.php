@@ -28,7 +28,8 @@ class ClientRequestAction
 
         if (!empty($dto->formData)) {
             $options = [
-                'headers' => ['Accept-Type', 'application/json'],
+                'headers' => $dto->headers,
+                // 'headers' => ['Accept-Type', 'application/json'],
                 'multipart' => $dto->formData,
             ];
         }

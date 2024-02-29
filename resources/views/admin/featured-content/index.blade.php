@@ -163,25 +163,3 @@ List Produk
     </section>
 </div>
 @endsection
-
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Jquery just for convert purpose(✌ ͡• ₃ ͡•)✌
-            $('#form-select-featured-product').select2({
-                width: '100%',
-            });
-            // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
-
-
-            const errorSelect = document.querySelectorAll('select[id^=form-select].is-invalid');
-        
-            errorSelect.forEach(el => {
-                const s2Target = el.nextSibling;
-                const s2wrapper = s2Target.querySelector('.select2-selection');
-
-                s2wrapper.style.borderColor = '#dc2626';
-            });
-        });
-    </script>
-@endpush

@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\FeaturedContent;
 
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
+use Livewire\Attributes\On; 
 use Livewire\Component;
 
 class Table extends Component
@@ -28,6 +29,12 @@ class Table extends Component
     }
 
     public function loadContent()
+    {
+        $this->data = $this->getDataFeaturedContent();
+    }
+
+    #[On('stored-content')] 
+    public function storedContent()
     {
         $this->data = $this->getDataFeaturedContent();
     }

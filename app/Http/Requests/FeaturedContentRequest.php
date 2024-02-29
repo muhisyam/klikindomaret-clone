@@ -26,7 +26,7 @@ class FeaturedContentRequest extends FormRequest
     {
         return [
             'featured_name' => ['required', 'string', 'max:100'],
-            'featured_slug' => ['required', 'string', 'max:200'],
+            'featured_slug' => ['required', 'string', 'unique:featured_contents', 'max:200'],
             'product_ids' => ['required'],
         ];
     }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,6 +20,16 @@ class FeaturedContentResource extends JsonResource
             'featured_products_count' => $this->products_count,
             'product_ids' => $this->getProductIds($this->whenLoaded('products')),
             'products' => ProductResource::collection($this->whenLoaded('products')),
+        ];
+    }
+
+    public function with(Request $request): array
+    {
+        return [
+            'meta' => [
+                'status_code' => 200,
+                'message' => 'Success',
+            ],
         ];
     }
 }
