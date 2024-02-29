@@ -79,27 +79,6 @@ function updateCountdown() {
         return greetingBodyWrapper.appendChild(greetingText);
     }
 };
-    
-function btnDataAction(triggerEl) {
-    const actionId = triggerEl.getAttribute('data-target-action');
-    const actionEl = document.querySelector(`#${actionId}-action`);
-    const isOpened = triggerEl.classList.contains('bg-tertiary', 'text-secondary');
-    const triggerAction = triggerEl.querySelector('.icon-action');
-    const triggerClose = triggerEl.querySelector('.icon-close');
-
-    actionEl.classList.toggle('hidden');
-    
-    if (isOpened) {
-        triggerEl.classList.remove('bg-tertiary', 'text-secondary')
-    } else {
-        triggerEl.classList.add('bg-tertiary', 'text-secondary')
-    };
-
-    triggerAction.classList.toggle('hidden');
-    triggerClose.classList.toggle('hidden');
-
-    initTooltips();
-}
 
 const modalTarget = document.querySelector('.modal-delete');
 const btnCloseTop = modalTarget.querySelector('#header-button-close');

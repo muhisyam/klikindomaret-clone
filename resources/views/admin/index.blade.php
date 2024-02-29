@@ -38,14 +38,16 @@
         </main>
     </section>
 
+    <div id="components-container">
+        @stack('components')
+    </div>
+
     {{-- Jquery just for select2 purpose only(✌ ͡• ₃ ͡•)✌ --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{-- Thanks for the tolerance(👍 ͡• ₃ ͡•)👍 --}}
     
-    <script src="{{ asset('js/admin/app.js') }}"></script>
-    <script src="{{ asset('js/admin/components.js') }}"></script>
-    <script src="{{ asset('js/components.js') }}"></script>
+    <script type="module" src="{{ asset('js/admin/app.js') }}" defer></script>
     @yield('scripts')
     @stack('scripts')
 </body>

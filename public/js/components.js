@@ -1,3 +1,116 @@
+export function toggleDropdown() { 
+    const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
+
+    dropdownBtnList.forEach(triggerEl => {
+        triggerEl.addEventListener('click', el => {
+            const btnTrigger = el.target.closest('button'); // Find button element, when is clicked is not the button element
+            const btnArrow = btnTrigger.querySelector('img[data-arrow-dropdown]');
+            const triggerData = btnTrigger.getAttribute('data-target-dropdown');
+            const targetEl = document.querySelector('div[data-trigger-dropdown="' + triggerData + '"]');
+            const isTargetClosed = targetEl.classList.contains('hidden');
+
+            hideOpenedDropdown(targetEl);
+            
+            if (isTargetClosed) {
+                toggleComponentOverlay(btnTrigger, false);
+
+                btnTrigger.classList.add('bg-dark-primary');
+                btnArrow.classList.add('rotate-180');
+                targetEl.classList.add('z-50');
+                targetEl.classList.remove('hidden');
+            } else {
+                hideOpenedDropdown();
+            }
+        })
+    })
+}
+
+function hideOpenedDropdown() { 
+    const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
+    const dropdownList = document.querySelectorAll('div[data-trigger-dropdown]');
+
+    dropdownBtnList.forEach(dropdownBtn => {
+        const isElementActive = dropdownBtn.classList.contains('bg-dark-primary');
+        
+        if (isElementActive) {
+            const btnArrow = dropdownBtn.querySelector('img[data-arrow-dropdown]');
+            dropdownBtn.classList.remove('bg-dark-primary');
+            btnArrow.classList.remove('rotate-180');
+
+            toggleComponentOverlay(dropdownBtn);
+        }
+    })
+
+    dropdownList.forEach(dropdown => {
+        const isElementOpen = ! dropdown.classList.contains('hidden');
+        
+        if (isElementOpen) {
+            dropdown.classList.remove('z-50');
+            dropdown.classList.add('hidden');
+        }
+    })
+}
+
+export function toggleModal() { 
+    const modalBtnList = document.querySelectorAll('button[data-target-modal]');
+
+    modalBtnList.forEach(triggerEl => {
+        triggerEl.addEventListener('click', el => {
+            const btnTrigger = el.target.closest('button');
+            const triggerData = btnTrigger.getAttribute('data-target-modal');
+            const targetEl = document.querySelector('div[data-trigger-modal*="' + triggerData + '"]:not(.separated-modal)');
+            const isTargetOpened = targetEl.classList.contains('show');
+            
+            if (isTargetOpened) {
+                hideOpenedModal(); 
+            } else {
+                toggleComponentOverlay(btnTrigger, false);
+                targetEl.classList.add('show');   
+            }
+        })
+    })
+}
+
+function hideOpenedModal() { 
+    const activeModalOverlay = document.querySelector('div[data-modal][overlay="active"]');
+    if (! activeModalOverlay) return;
+
+    const modalList = document.querySelectorAll('.modal');
+
+    toggleComponentOverlay(activeModalOverlay);
+    modalList.forEach(modal => modal.classList.remove('show'))
+}
+
+function toggleComponentOverlay(btnTrigger, hide = true) {
+    const componentWrapper = btnTrigger.matches('button') ? btnTrigger.parentNode : btnTrigger;
+
+    if (componentWrapper.hasAttribute('overlay')) {
+        const body = document.querySelector('body');
+        
+        if (hide) {
+            componentWrapper.setAttribute('overlay', '');
+            body.classList.remove('overflow-hidden');
+        } else {
+            componentWrapper.setAttribute('overlay', 'active');
+            body.classList.add('overflow-hidden');
+        }
+    }    
+}
+
+export function hideOpenedComponentsFromOutside() { 
+    document.addEventListener('click', event => {
+        const triggerEl = event.target.closest('button') ?? event.target;
+
+        const isClickedInsideModal = ! document.querySelector('div[data-trigger-modal].show:not(.separated-modal)')?.contains(triggerEl);
+        const isBtnClosedModal = ! triggerEl.matches('button[data-target-modal]');
+        const isBtnSwitchModal = ! triggerEl.matches('button[data-switch-form]');
+
+        ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
+        isClickedInsideModal && isBtnClosedModal && isBtnSwitchModal ? hideOpenedModal() : '';
+    })
+}
+
+
 var Tooltip = (function () { 
     function Tooltip(targetEl, triggerEl, placementEl) {
         this._targetEl = targetEl;
@@ -67,7 +180,7 @@ var Tooltip = (function () {
     return Tooltip;
 }());
 
-function initTooltips() { 
+export function initTooltips() { 
     document.querySelectorAll('[data-tooltip-target]').forEach(function(triggerEl) {
         const tooltipId = triggerEl.getAttribute('data-tooltip-target');
         const placement = triggerEl.getAttribute('data-tooltip-placement');
@@ -77,12 +190,25 @@ function initTooltips() {
     });
 };
 
-function openModal(modal, overlay) {
-    modal.classList.contains('show') ? '' : modal.classList.add('show');
-    overlay.classList.remove('hidden');
-};
+export function btnDataAction(triggerEl) {
+    if (! triggerEl) return;
 
-function closeModal(modal, overlay) {
-    modal.classList.contains('show') ? modal.classList.remove('show') :'';
-    overlay.classList.add('hidden');
-};
+    const actionId = triggerEl.getAttribute('data-target-action');
+    const actionEl = document.querySelector(`#${actionId}-action`);
+    const isOpened = triggerEl.classList.contains('bg-tertiary', 'text-secondary');
+    const triggerAction = triggerEl.querySelector('.icon-action');
+    const triggerClose = triggerEl.querySelector('.icon-close');
+
+    actionEl.classList.toggle('hidden');
+    
+    if (isOpened) {
+        triggerEl.classList.remove('bg-tertiary', 'text-secondary')
+    } else {
+        triggerEl.classList.add('bg-tertiary', 'text-secondary')
+    };
+
+    triggerAction.classList.toggle('hidden');
+    triggerClose.classList.toggle('hidden');
+
+    initTooltips();
+}
