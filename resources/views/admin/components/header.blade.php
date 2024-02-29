@@ -27,10 +27,29 @@
                 <button class="icon text-lg me-4" aria-label="Notification info"><i class="ri-notification-3-line"></i></button>
                 <button class="icon text-lg" aria-label="Help Center"><i class="ri-question-line"></i></button>
                 <div class="separator h-7 w-[1px] bg-[#ccc] mx-3"></div>
-                <a href={{ $data['navigation']['url'] }} class="w-fit flex items-center {{ $data['navigation']['info'] != 'back' ? "bg-[#0079c2]" : "bg-[#c33]" }}  text-white rounded py-2 px-4">
+                
+                @isset($data['modal'])
+                <x-modal section="{{ $data['modal']['section'] }}">
+                    <x-slot:trigger class="py-1.5 px-4 text-sm" buttonStyle="secondary">
+                        Tambah Konten
+                    </x-slot>
+
+                    <x-slot:content class="separated-modal">
+                        @push('components')
+                            @if ($data['modal']['is_livewire'])
+                                @livewire($data['modal']['body_path'], ['section' => $data['modal']['section']])
+                            @else
+                                @include($data['modal']['body_path'], ['section' => $data['modal']['section']])
+                            @endif
+                        @endpush
+                    </x-slot>
+                </x-modal>
+                @endisset
+                
+                {{-- <a href={{ $data['navigation']['url'] }} class="w-fit flex items-center {{ $data['navigation']['info'] != 'back' ? "bg-[#0079c2]" : "bg-[#c33]" }}  text-white rounded py-2 px-4">
                     <div class="icon h-6 me-2"><i class="{{ $data['navigation']['icon'] }}"></i></div>
                     <div class="text">{{ $data['navigation']['label'] }}</div>
-                </a>
+                </a> --}}
             </div>
         </div>
     </section>
