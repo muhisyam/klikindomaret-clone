@@ -165,6 +165,31 @@
                 <li class="item-menu">
                     <div class="menu-wrapper" id="product">
                         <div class="accordion-menu-heading mb-1">
+                            <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="content-manegement" aria-expanded="false">
+                                <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-shopping-basket-fill"></i></div>
+                                <div class="title">Manajemen Konten</div>
+                                <div class="icon h-6 duration-500 ms-auto"><i class="ri-arrow-down-s-line"></i></div>
+                            </button>
+                        </div>
+                        <div id="content-manegement" class="accordion-menu-content accordion relative overflow-hidden duration-500 hide" aria-hidden="false">
+                            <ul class="list-submenu min-h-0 flex flex-col gap-1 ps-3">
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="{{ route('featured-content.index') }}">
+                                            <div class="title">Konten Unggulan</div>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="list-menu flex flex-col gap-1">
+                <li class="item-menu">
+                    <div class="menu-wrapper" id="product">
+                        <div class="accordion-menu-heading mb-1">
                             <button class="group w-full flex items-center rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white" data-menu-target="user-menu" aria-expanded="false">
                                 <div class="icon h-6 text-[#0079c2] me-3 group-hover:text-white"><i class="ri-user-3-fill"></i></div>
                                 <div class="title">Pengguna</div>
