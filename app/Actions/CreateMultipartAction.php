@@ -31,6 +31,8 @@ class CreateMultipartAction
 
     private function handleDataNonImage($key, $value): array 
     {
+        $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
+        
         if (is_array($value)) {
             foreach ($value as $index => $dataForm) {
                 if (!is_null($dataForm)) {
