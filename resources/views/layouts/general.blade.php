@@ -17,7 +17,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
         <link href="{{ asset('css/swiper-bundle.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/general.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/components.css') }}" rel="stylesheet">
     </head>
     <body>
         <header class="sticky top-0 z-50 drop-shadow w-full text-black">
@@ -35,7 +36,7 @@
             @stack('components')
         </div>
 
-        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script type="module" src="{{ asset('js/general.js') }}" defer></script>
         <script src="{{ asset('js/swiper-bundle.min.js') }}" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         @stack('scripts')

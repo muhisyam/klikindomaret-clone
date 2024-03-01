@@ -12,8 +12,6 @@ export function toggleDropdown() {
             hideOpenedDropdown(targetEl);
             
             if (isTargetClosed) {
-                toggleComponentOverlay(btnTrigger, false);
-
                 btnTrigger.classList.add('bg-dark-primary');
                 btnArrow.classList.add('rotate-180');
                 targetEl.classList.add('z-50');
@@ -36,8 +34,6 @@ function hideOpenedDropdown() {
             const btnArrow = dropdownBtn.querySelector('img[data-arrow-dropdown]');
             dropdownBtn.classList.remove('bg-dark-primary');
             btnArrow.classList.remove('rotate-180');
-
-            toggleComponentOverlay(dropdownBtn);
         }
     })
 
@@ -58,26 +54,28 @@ export function toggleModal() {
         triggerEl.addEventListener('click', el => {
             const btnTrigger = el.target.closest('button');
             const triggerData = btnTrigger.getAttribute('data-target-modal');
-            const targetEl = document.querySelector('div[data-trigger-modal*="' + triggerData + '"]:not(.separated-modal)');
-            const isTargetOpened = targetEl.classList.contains('show');
-            
-            if (isTargetOpened) {
-                hideOpenedModal(); 
-            } else {
-                toggleComponentOverlay(btnTrigger, false);
-                targetEl.classList.add('show');   
-            }
+            const targetEl = document.querySelectorAll('div[data-trigger-modal*="' + triggerData + '"]');
+
+            targetEl.forEach(el => {
+                const isTargetOpened = el.classList.contains('show');
+
+                if (isTargetOpened) {
+                    hideOpenedModal(el); 
+                } else {
+                    el.classList.add('show'); 
+                }     
+            })
         })
     })
 }
 
-function hideOpenedModal() { 
-    const activeModalOverlay = document.querySelector('div[data-modal][overlay="active"]');
-    if (! activeModalOverlay) return;
+function hideOpenedModal(el = null) { 
+    let temp = [];
+    temp.push(el);
+     
+    const modalList = el ? temp : document.querySelectorAll('.modal');
+    if (! modalList) return;
 
-    const modalList = document.querySelectorAll('.modal');
-
-    toggleComponentOverlay(activeModalOverlay);
     modalList.forEach(modal => modal.classList.remove('show'))
 }
 
