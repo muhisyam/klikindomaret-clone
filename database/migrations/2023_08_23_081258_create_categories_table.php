@@ -20,9 +20,10 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->string('category_name', 100);
             $table->string('category_slug', 200)->unique();
-            $table->enum('category_status', ['Publish', 'Draft'])->default('Publish');
+            $table->string('category_deploy_status', 15);
             $table->string('category_image_name')->nullable();
             $table->string('original_category_image_name')->nullable();
+            $table->string('model_type', 10);
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DeployStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,15 +10,15 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $table = 'categories';
+    protected $guarded = [];
 
-    protected $fillable = [
-        'parent_id',
-        'category_name',
-        'category_slug',
-        'category_status',
-        'category_image_name',
-        'original_category_image_name',
+    protected $attributes = [
+        'category_deploy_status' => DeployStatus::DRAFT->value,
+        'model_type' => 'category',
+    ];
+
+    protected $casts = [
+        'category_deploy_status' => DeployStatus::class,
     ];
     
     public function parent()
