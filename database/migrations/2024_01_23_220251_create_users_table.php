@@ -27,7 +27,7 @@ return new class extends Migration
             $table->enum('gender', ['laki-laki', 'perempuan'])->nullable();
             $table->date('birthdate');
             $table->string('mobile_number')->unique();
-            $table->timestamp('mobile_number_verified_at');
+            $table->timestamp('mobile_number_verified_at')->nullable();
             $table->string('user_image_name')->nullable();
             $table->dateTime('last_login')->nullable();
             $table->rememberToken();
