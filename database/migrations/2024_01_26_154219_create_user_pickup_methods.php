@@ -18,9 +18,9 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->foreignId('last_pickup_with_store')
+            $table->foreignId('last_pickup_with_retailer')
                 ->nullable()
-                ->constrained('stores')
+                ->constrained('retailers')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             $table->foreignId('last_pickup_with_address')
