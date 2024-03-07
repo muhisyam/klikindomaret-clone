@@ -14,8 +14,13 @@ class PromotionBanner extends Model
     protected $guarded = ['product_ids'];
     
     protected $attributes = [
+        'promotion_quota' => 0,
+        'banner_image_name' => 'banner-default-image.jpg',
+        'original_banner_image_name' => 'banner-default-image.jpg',
         'deploy_status' => DeployStatus::DRAFT->value,
         'route_name' => SelectSpesificRoute::PAGE_PROMO->value,
+        'banner_start_date' => '00:00:00',
+        'banner_start_date' => '00:00:00',
         'model_type' => 'banner',
     ];
 
