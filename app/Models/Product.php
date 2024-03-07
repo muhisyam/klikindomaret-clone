@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DeployStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,18 +10,16 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    protected $guarded = [];
 
-    protected $fillable = [
-        'category_id',
-        'supplier_id',
-        'plu',
-        'product_name',
-        'product_slug',
-        'normal_price',
-        'discount_price',
-        'product_stock',
-        'product_status',
+    protected $attributes = [
+        'normal_price' => 0,
+        'product_stock' => 0,
+        'product_deploy_status' => DeployStatus::DRAFT->value,
+    ];
+
+    protected $casts = [
+        'product_deploy_status' => DeployStatus::class,
     ];
 
     public function category()
@@ -43,9 +42,9 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
-    public function stores()
+    public function retailers()
     {
-        return $this->belongsToMany(Store::class)->withTimestamps();
+        return $this->belongsToMany(Retailer::class)->withTimestamps();
     }
 
     public function getStoreIds(mixed $storeCollection)
@@ -55,5 +54,10 @@ class Product extends Model
         }
         
         return null;
+    }
+
+    public function scopeSearch($query, $keyword)
+    {
+        return $query->where('product_name', 'like', '%' . $keyword . '%');
     }
 }

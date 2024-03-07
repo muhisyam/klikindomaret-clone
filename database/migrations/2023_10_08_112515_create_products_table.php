@@ -18,6 +18,11 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
+            $table->foreignId('brand_id')
+                ->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
             $table->foreignId('supplier_id')
                 ->nullable()
                 ->constrained()
@@ -28,9 +33,11 @@ return new class extends Migration
             $table->string('product_slug', 200)->unique();
             $table->integer('normal_price');
             $table->integer('discount_price')->nullable();
+            $table->date('discount_start_date')->nullable();
+            $table->date('discount_end_date')->nullable();
             $table->integer('product_stock');
-            // Brand, keyword
-            $table->enum('product_status', ['Draft', 'Publish'])->default('Publish');
+            $table->string('product_deploy_status', 15);
+            $table->text('product_meta_keyword');
             $table->timestamps();
         });
     }
