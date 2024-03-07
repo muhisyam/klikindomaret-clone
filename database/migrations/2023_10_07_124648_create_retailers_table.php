@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create('retailers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('region_id')
                 ->nullable()
@@ -23,10 +23,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->string('store_code', 5)->unique();
-            $table->string('store_name', 200);
-            $table->string('store_address', 200);
-            $table->enum('store_open', ['Open', 'Close'])->default('Open');
+            $table->string('retailer_code', 5)->unique();
+            $table->string('retailer_name', 200);
+            $table->string('retailer_address', 200);
+            $table->string('retailer_open', 8);
             $table->time('opening_times');
             $table->time('closing_times');
             $table->decimal('longitude', 10, 7);
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('retailers');
     }
 };
