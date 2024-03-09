@@ -13,6 +13,11 @@ class RegionSeeder extends Seeder
      */
     public function run(): void
     {
+        Region::factory(67)->create();
+    }
+
+    private function template()
+    {
         $data = [
             ['region_code' => 'ygya', 'region_name' => 'DI Yogyakarta', 'region_postal_code' => '521', 'created_at' => now()],
             ['region_code' => 'lebk', 'region_name' => 'Lebak', 'region_postal_code' => '142', 'created_at' => now()],

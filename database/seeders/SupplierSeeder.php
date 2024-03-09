@@ -13,6 +13,11 @@ class SupplierSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->template();
+    }
+
+    private function template()
+    {
         $data = [
             ['flag_code' => 'f', 'flag_name' => 'store', 'supplier_name' => 'Indomaret', 'created_at' => now()],
             ['flag_code' => 't', 'flag_name' => 'fresh', 'supplier_name' => 'Indomaret Fresh', 'created_at' => now()],
