@@ -18,8 +18,8 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->string('store_name', 100);
-            $table->string('store_slug', 200)->unique();
+            $table->string('brand_name', 100);
+            $table->string('brand_slug', 200)->unique();
             $table->string('model_type', 15);
             $table->timestamps();
         });

@@ -20,13 +20,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $title = fake()->unique()->sentence(2);
+        $categoryName = fake('id_ID')->unique()->sentence(2);
 
         return [
-            'parent_id' => fake()->numberBetween(1, 26),
-            'name' => $title,
-            'slug' => Str::slug($title),
-            'status' => 1
+            'category_name' => $categoryName,
+            'category_slug' => Str::slug($categoryName),
         ];
     }
 }
