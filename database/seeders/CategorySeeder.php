@@ -15,10 +15,12 @@ class CategorySeeder extends Seeder
     {
         $this->createParentCategory();
 
-        Category::factory(63)
-            ->state(['parent_id' => Category::where('parent_id', null)->inRandomOrder()->first()->id])
-            ->hasChildren(rand(3, 12))
-            ->create();
+        for ($i=0; $i < 73; $i++) { 
+            Category::factory()
+                ->sequence(fn () => ['parent_id' => Category::where('parent_id', null)->inRandomOrder()->first()])
+                ->hasChildren(rand(2, 10))
+                ->create();
+        }
     }
 
     private function createParentCategory()
