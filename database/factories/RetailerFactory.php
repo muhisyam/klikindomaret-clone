@@ -23,9 +23,9 @@ class RetailerFactory extends Factory
         return [
             'region_id' => Region::inRandomOrder()->first()->id,
             'supplier_id' => Supplier::inRandomOrder()->first()->id,
-            'retailer_code' => $fake->regexify('[a-z0-9]{4}'),
-            'retailer_name' => $fake->company(),
-            'retailer_address' => $fake->address(),
+            'retailer_code' => $fake->unique()->regexify('[a-z0-9]{3}'),
+            'retailer_name' => $fake->unique()->company(),
+            'retailer_address' => $fake->unique()->address(),
             'opening_times' => $fake->time(),
             'closing_times' => $fake->time(),
             'longitude' => $fake->longitude(),
