@@ -5,17 +5,17 @@ namespace App\Livewire\Admin\FeaturedContent;
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Web\Admin\FeaturedContentController;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 
-class FormModal extends Component
+class ModalInput extends Component
 {
     public $section, $showCondition;
     public $dataProducts = ['data' => []];
     protected $endpoint, $clientAction;
     
-    public $featuredName, $featuredSlug, $productIds;
+    public $featuredName, $featuredSlug, $productIds, $productKeyword;
+    public $productSelected = ['id' => []];
 
     public function __construct(
     ) {
@@ -36,23 +36,27 @@ class FormModal extends Component
     public function save()
     {
         app(FeaturedContentController::class)->storeData($this->validate());
-        $this->dispatch('stored-content');         
+
+        $this->featuredName = $this->featuredSlug = $this->productIds = null;
+        $this->dispatch('stored-content');
     }
-    
-    public function loadProducts() 
+
+    public function updatedProductKeyword() 
     {
-        $this->dataProducts = $this->clientAction->request(
-            new ClientRequestDto(
-                method: 'GET',
-                endpoint: $this->endpoint,
-            )
-        );
+        if ($this->productKeyword !== '' && strlen($this->productKeyword) > 4) {
+            $this->dataProducts = $this->clientAction->request(
+                new ClientRequestDto(
+                    method: 'GET',
+                    endpoint: $this->endpoint . '?search=' . $this->productKeyword,
+                )
+            );
+        }
     }
 
     public function render()
     {
-        $this->dispatch('products-loaded'); 
+        $this->dispatch('products-loaded', productSelected: $this->productSelected); 
 
-        return view('livewire.admin.featured-content.form-modal');
+        return view('livewire.admin.featured-content.modal-input');
     }
 }
