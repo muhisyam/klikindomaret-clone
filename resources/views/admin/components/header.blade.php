@@ -29,7 +29,11 @@
                 <div class="separator h-7 w-[1px] bg-[#ccc] mx-3"></div>
                 
                 @isset($data['modal'])
-                <x-modal section="{{ $data['modal']['section'] }}">
+                @php
+                    $section = $data['modal']['section'];
+                    $show = true;
+                @endphp
+                <x-modal :section="$section" :showCondition="$show">
                     <x-slot:trigger class="py-1.5 px-4 text-sm" buttonStyle="secondary">
                         Tambah Konten
                     </x-slot>
@@ -37,9 +41,15 @@
                     <x-slot:content class="separated-modal">
                         @push('components')
                             @if ($data['modal']['is_livewire'])
-                                @livewire($data['modal']['body_path'], ['section' => $data['modal']['section']])
+                                @livewire($data['modal']['body_path'], [
+                                    'section' => $section,
+                                    'showCondition' => $show,
+                                ])
                             @else
-                                @include($data['modal']['body_path'], ['section' => $data['modal']['section']])
+                                @include($data['modal']['body_path'], [
+                                    'section' => $section,
+                                    'showCondition' => $show,
+                                ])
                             @endif
                         @endpush
                     </x-slot>

@@ -25,7 +25,7 @@ List Produk
                 'icon' => 'src...',
                 'label' => 'Tambah Kontent',
                 'is_livewire' => true,
-                'body_path' => 'admin.featured-content.form-modal',
+                'body_path' => 'admin.featured-content.modal-input',
                 'section' => 'add-featured'
             ]
         ]
