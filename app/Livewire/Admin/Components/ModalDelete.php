@@ -15,11 +15,13 @@ class ModalDelete extends Component
     public $catalogLists = [
         'category_name' => 'category',
         'product_name' => 'product',
+        'featured_name' => 'featured',
     ];
     
     public $deleteRouteLists = [
         'category' => 'categories.destroy',
         'product' => 'products.destroy',
+        'featured' => 'featured-contents.destroy',
     ]; 
 
     public $catalog;

@@ -19,13 +19,14 @@ class Table extends Component
         $this->endpoint = config('api.url') . 'featured-content';
     }
 
-    public function placeholder()
+    private function getDataFeaturedContent()
     {
-        return <<<'HTML'
-        <div>
-            'sadasdsa'
-        </div>
-        HTML;
+        return $this->clientAction->request(
+            new ClientRequestDto(
+                method: 'GET',
+                endpoint: $this->endpoint,
+            )
+        );
     }
 
     public function loadContent()
@@ -38,19 +39,15 @@ class Table extends Component
     {
         $this->data = $this->getDataFeaturedContent();
     }
-
-    public function getDataFeaturedContent()
+    
+    public function dispatchModal($dataFeaturedContent)
     {
-        return $this->clientAction->request(
-            new ClientRequestDto(
-                method: 'GET',
-                endpoint: $this->endpoint,
-            )
-        );
+        $this->dispatch('modal-show', data: $dataFeaturedContent);
     }
     
     public function render()
     {
+        $this->dispatch('contents-loaded');
         return view('livewire.admin.featured-content.table');
     }
 }
