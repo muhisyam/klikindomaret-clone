@@ -2,17 +2,16 @@ export function toggleDropdown() {
     const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
 
     dropdownBtnList.forEach(triggerEl => {
-        triggerEl.addEventListener('click', el => {
-            const btnTrigger = el.target.closest('button'); // Find button element, when is clicked is not the button element
-            const btnArrow = btnTrigger.querySelector('img[data-arrow-dropdown]');
-            const triggerData = btnTrigger.getAttribute('data-target-dropdown');
+        triggerEl.addEventListener('click', () => {
+            const btnArrow = triggerEl.querySelector('img[data-arrow-dropdown]');
+            const triggerData = triggerEl.getAttribute('data-target-dropdown');
             const targetEl = document.querySelector('div[data-trigger-dropdown="' + triggerData + '"]');
             const isTargetClosed = targetEl.classList.contains('hidden');
 
             hideOpenedDropdown(targetEl);
             
             if (isTargetClosed) {
-                btnTrigger.classList.add('bg-dark-primary');
+                triggerEl.classList.add('bg-dark-primary');
                 btnArrow.classList.add('rotate-180');
                 targetEl.classList.add('z-50');
                 targetEl.classList.remove('hidden');
@@ -51,9 +50,8 @@ export function toggleModal() {
     const modalBtnList = document.querySelectorAll('button[data-target-modal]');
 
     modalBtnList.forEach(triggerEl => {
-        triggerEl.addEventListener('click', el => {
-            const btnTrigger = el.target.closest('button');
-            const triggerData = btnTrigger.getAttribute('data-target-modal');
+        triggerEl.addEventListener('click', () => {
+            const triggerData = triggerEl.getAttribute('data-target-modal');
             const targetEl = document.querySelectorAll('div[data-trigger-modal*="' + triggerData + '"]');
 
             targetEl.forEach(el => {
@@ -69,7 +67,7 @@ export function toggleModal() {
     })
 }
 
-function hideOpenedModal(el = null) { 
+export function hideOpenedModal(el = null) { 
     let temp = [];
     temp.push(el);
      
@@ -79,22 +77,6 @@ function hideOpenedModal(el = null) {
     modalList.forEach(modal => modal.classList.remove('show'))
 }
 
-function toggleComponentOverlay(btnTrigger, hide = true) {
-    const componentWrapper = btnTrigger.matches('button') ? btnTrigger.parentNode : btnTrigger;
-
-    if (componentWrapper.hasAttribute('overlay')) {
-        const body = document.querySelector('body');
-        
-        if (hide) {
-            componentWrapper.setAttribute('overlay', '');
-            body.classList.remove('overflow-hidden');
-        } else {
-            componentWrapper.setAttribute('overlay', 'active');
-            body.classList.add('overflow-hidden');
-        }
-    }    
-}
-
 export function hideOpenedComponentsFromOutside() { 
     document.addEventListener('click', event => {
         const triggerEl = event.target.closest('button') ?? event.target;
@@ -102,12 +84,56 @@ export function hideOpenedComponentsFromOutside() {
         const isClickedInsideModal = ! document.querySelector('div[data-trigger-modal].show:not(.separated-modal)')?.contains(triggerEl);
         const isBtnClosedModal = ! triggerEl.matches('button[data-target-modal]');
         const isBtnSwitchModal = ! triggerEl.matches('button[data-switch-form]');
+        const isBtnRemoveSelect2 = ! triggerEl.matches('button.select2-selection__choice__remove');
 
         ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
-        isClickedInsideModal && isBtnClosedModal && isBtnSwitchModal ? hideOpenedModal() : '';
+        isClickedInsideModal && isBtnClosedModal && isBtnSwitchModal && isBtnRemoveSelect2 ? hideOpenedModal() : '';
     })
 }
 
+export function toggleActionDataTable() {
+    const actionBtnList = document.querySelectorAll('button[data-target-action]');
+    if (! actionBtnList) return;
+
+    actionBtnList.forEach(triggerEl => {
+        triggerEl.addEventListener('click', () => {
+            const triggerData = triggerEl.getAttribute('data-target-action');
+            const targetEl = document.querySelector(`div[data-trigger-action="${triggerData}"`);
+            const isOpened = triggerEl.classList.contains('bg-tertiary', 'text-secondary');
+            const triggerAction = triggerEl.querySelector('[action-icon-open]');
+            const triggerClose = triggerEl.querySelector('[action-icon-close]');
+
+            hideOpenedActionDataTable();
+            
+            if (!isOpened) {
+                triggerEl.classList.add('bg-tertiary', 'text-secondary');
+                triggerAction.classList.add('hidden');
+
+                targetEl.classList.remove('hidden');
+                triggerClose.classList.remove('hidden');
+            };
+
+            initTooltips();
+        })
+    })
+}
+
+function hideOpenedActionDataTable() {
+    // Active Elements
+    const activeActionBtnList = document.querySelectorAll('button[data-target-action].bg-tertiary');
+    const activeActionElemenList = document.querySelectorAll('div[data-trigger-action]:not(.hidden)');
+    
+    activeActionBtnList.forEach(btnEl => {
+        const triggerAction = btnEl.querySelector('[action-icon-open]');
+        const triggerClose = btnEl.querySelector('[action-icon-close]');
+
+        btnEl.classList.remove('bg-tertiary', 'text-secondary')
+        triggerAction.classList.remove('hidden')
+        triggerClose.classList.add('hidden')
+    });
+
+    activeActionElemenList.forEach(el => el.classList.add('hidden'));
+}
 
 var Tooltip = (function () { 
     function Tooltip(targetEl, triggerEl, placementEl) {
@@ -187,26 +213,3 @@ export function initTooltips() {
         new Tooltip(tooltipEl, triggerEl, placement);
     });
 };
-
-export function btnDataAction(triggerEl) {
-    if (! triggerEl) return;
-
-    const actionId = triggerEl.getAttribute('data-target-action');
-    const actionEl = document.querySelector(`#${actionId}-action`);
-    const isOpened = triggerEl.classList.contains('bg-tertiary', 'text-secondary');
-    const triggerAction = triggerEl.querySelector('.icon-action');
-    const triggerClose = triggerEl.querySelector('.icon-close');
-
-    actionEl.classList.toggle('hidden');
-    
-    if (isOpened) {
-        triggerEl.classList.remove('bg-tertiary', 'text-secondary')
-    } else {
-        triggerEl.classList.add('bg-tertiary', 'text-secondary')
-    };
-
-    triggerAction.classList.toggle('hidden');
-    triggerClose.classList.toggle('hidden');
-
-    initTooltips();
-}

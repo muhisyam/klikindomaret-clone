@@ -1,12 +1,6 @@
 // initTooltips();
 import * as component from '../components.js';
 
-component.toggleDropdown();
-component.toggleModal();
-component.hideOpenedComponentsFromOutside();
-component.initTooltips();
-component.btnDataAction();
-
 function findButton(e) {
     const tagName = e.tagName.toLowerCase();
     
@@ -70,3 +64,8 @@ listMenuWrapper.forEach(menu => {
         }); 
     };
 });
+
+component.toggleDropdown();
+component.toggleModal();
+component.hideOpenedComponentsFromOutside();
+component.initTooltips();
