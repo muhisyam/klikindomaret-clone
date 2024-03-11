@@ -20,13 +20,4 @@ class FeaturedContent extends Model
     {
         return $this->belongsToMany(Product::class)->withTimestamps();
     }
-
-    public function getProductIds(mixed $productCollection)
-    {
-        if (!$productCollection instanceof \Illuminate\Http\Resources\MissingValue) {
-            return $productCollection->pluck('id')->toArray();
-        }
-        
-        return null;
-    }
 }

@@ -18,7 +18,6 @@ class FeaturedContentResource extends JsonResource
             'featured_name' => $this->featured_name,
             'featured_slug' => $this->featured_slug,
             'featured_products_count' => $this->products_count,
-            'product_ids' => $this->getProductIds($this->whenLoaded('products')),
             'products' => ProductResource::collection($this->whenLoaded('products')),
         ];
     }
