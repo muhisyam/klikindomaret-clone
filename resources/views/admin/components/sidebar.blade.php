@@ -132,6 +132,7 @@
                                         </a>
                                     </div>
                                 </li>
+                            </ul>
                         </div>
                     </div>
                 </li>
@@ -176,8 +177,16 @@
                                 <li class="item-submenu relative flex items-center">
                                     <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
                                     <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
-                                        <a href="{{ route('featured-content.index') }}">
+                                        <a href="{{ route('featureds.index') }}">
                                             <div class="title">Konten Unggulan</div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="item-submenu relative flex items-center">
+                                    <div class="icon text-[8px] px-1 me-2"><i class="ri-checkbox-blank-circle-fill"></i></div>
+                                    <div class="link w-full rounded duration-300 py-2 px-3 hover:bg-[#0079c2] hover:text-white">
+                                        <a href="{{ route('promotions.index') }}">
+                                            <div class="title">Promosi</div>
                                         </a>
                                     </div>
                                 </li>

@@ -17,16 +17,16 @@ class PromotionBanner extends Model
         'promotion_quota' => 0,
         'banner_image_name' => 'banner-default-image.jpg',
         'original_banner_image_name' => 'banner-default-image.jpg',
-        'deploy_status' => DeployStatus::DRAFT->value,
-        'route_name' => SelectSpesificRoute::PAGE_PROMO->value,
-        'banner_start_date' => '00:00:00',
-        'banner_start_date' => '00:00:00',
+        'banner_deploy_status' => DeployStatus::DRAFT->value,
+        'banner_route_name' => SelectSpesificRoute::PAGE_PROMO->value,
+        'banner_start_date' => '2024-01-01 00:00:00',
+        'banner_end_date' => '2024-01-01 00:00:00',
         'model_type' => 'banner',
     ];
 
     protected $casts = [
-        'deploy_status' => DeployStatus::class,
-        'route_name' => SelectSpesificRoute::class,
+        'banner_deploy_status' => DeployStatus::class,
+        'banner_route_name' => SelectSpesificRoute::class,
     ];
 
     public function children()
