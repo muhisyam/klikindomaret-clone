@@ -60,4 +60,12 @@ class Product extends Model
     {
         return $query->where('product_name', 'like', '%' . $keyword . '%');
     }
+
+    public function scopeGetKeywordList($query): string
+    {
+        $productKeyword = $query->pluck('product_meta_keyword')->implode(',');
+        $arrProductKeyword = explode(',', str_replace(' ', '', $productKeyword));
+        
+        return implode(',', array_unique($arrProductKeyword));
+    }
 }
