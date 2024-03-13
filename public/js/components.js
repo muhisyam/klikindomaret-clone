@@ -85,9 +85,10 @@ export function hideOpenedComponentsFromOutside() {
         const isBtnClosedModal = ! triggerEl.matches('button[data-target-modal]');
         const isBtnSwitchModal = ! triggerEl.matches('button[data-switch-form]');
         const isBtnRemoveSelect2 = ! triggerEl.matches('button.select2-selection__choice__remove');
+        const isPreventClose = ! triggerEl.matches('[prevent-close]');
 
         ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
-        isClickedInsideModal && isBtnClosedModal && isBtnSwitchModal && isBtnRemoveSelect2 ? hideOpenedModal() : '';
+        isClickedInsideModal && isBtnClosedModal && isBtnSwitchModal && isBtnRemoveSelect2 && isPreventClose ? hideOpenedModal() : '';
     })
 }
 
