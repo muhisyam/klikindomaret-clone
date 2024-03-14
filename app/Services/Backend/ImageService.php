@@ -21,20 +21,28 @@ class ImageService
     }
 
     /**
-     * Store image to db and public directory
+     * Store image and image name to db and public directory
+     * 
+     * @param object|null $dataImage
+     * @param string $folderSaveName
+     * @return array [$randomImageName, $originalImageName]
      */
-    public function storeImage(object|null $dataImage, string $folderSaveName)
+    public function storeImage(object|null $dataImage, string $folderSaveName): array
     {
         if (is_null($dataImage)) {
             return $dataImage;
         }
 
         $randomImageName = null;
+        $originalImageName = null;
         
-        $randomImageName = time() . '.' . strtolower($dataImage->getClientOriginalExtension());
+        $randomImageName = time() . mt_rand(11, 99) . '.' . strtolower($dataImage->getClientOriginalExtension());
         $dataImage->move('img/uploads/' . $folderSaveName . '/', $randomImageName);
+        
+        $originalImageName = explode('.', $dataImage->getClientOriginalName());
+        $originalImageName = $originalImageName[0]  . '.' . strtolower($dataImage->getClientOriginalExtension());
 
-        return $randomImageName; 
+        return [$randomImageName, $originalImageName]; 
     }
 
     /**
