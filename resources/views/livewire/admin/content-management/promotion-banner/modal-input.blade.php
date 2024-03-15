@@ -27,13 +27,8 @@
                 <x-input-field id="form-input-banner-slug" name="bannerSlug" :error="$errors" wire:model="bannerSlug" wire:loading.attr="disabled"/>
                 <x-input-error field="bannerSlug" :error="$errors"/>
             </div>
-            <div class="mb-4">
-                <x-input-label for="form-input-banner-image" value="Banner Promo"/>
-                <input id="form-input-banner-image" type="file" accept=".jpg, .jpeg, .png, .webp" name="bannerImageName" wire:model="bannerImageName">
-                <x-input-error field="bannerImageName" :error="$errors"/>
-            </div>
             <div class="relative mb-4">
-                <x-input-label for="form-input-banner-product" value="Tambah Produk"/>
+                <x-input-label for="form-select-banner-product" value="Tambah Produk"/>
                 <x-input-select id="form-select-banner-product" class="overflow-hidden" name="productIds" multiple wire:model="productIds">
                     @php $hasShown = []; @endphp
                     
@@ -54,7 +49,12 @@
                 </x-input-select>
                 <x-input-error field="productIds" :error="$errors"/>
             </div>
-            <x-button type="submit" class="justify-center h-10 px-8 text-sm" buttonStyle="secondary" value="Masuk"/>
+            <div class="mb-4" wire:ignore>
+                <x-input-label for="form-input-banner-image" value="Banner Promo"/>
+                <x-input-image-simple id="form-input-banner-image" type="file" accept=".jpg, .jpeg, .png, .webp" name="bannerImageName" :error="$errors" wire:model="bannerImageName"/>
+                <x-input-error field="bannerImageName" :error="$errors"/>
+            </div>
+            <x-button type="submit" class="ms-auto justify-center h-10 px-8 text-sm" buttonStyle="secondary" value="Masuk"/>
         </form>
     </section>
 </div>
