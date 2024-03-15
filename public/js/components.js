@@ -205,6 +205,66 @@ var Tooltip = (function () {
     return Tooltip;
 }());
 
+export class SimpleImageUploader {
+    constructor(formInputImg) {
+        this.imageFile = formInputImg.files[0];
+        this.imageUploadHandler();
+    }
+
+    imageUploadHandler() {
+        let imageAttributes;
+        let imageSize = Math.floor(this.imageFile.size / 1024);
+
+        imageAttributes = {
+            isInvalid: imageSize > 500 ? ' is-invalid' : '',
+            imageUrl: URL.createObjectURL(this.imageFile),
+            imageName: this.imageFile.name,
+            imageSize: imageSize,
+        };
+
+        this.imageItemWrapper(imageAttributes);
+    }
+
+    shrinkBtnTrigger() {
+        const browseImgBtn = document.querySelector('button[data-image-trigger]');
+
+        browseImgBtn.classList.add('w-[0%]');
+        browseImgBtn.classList.remove('w-full');
+    }
+
+    imageItemWrapper({isInvalid, imageUrl, imageName, imageSize}) {
+        const uploadedImgWrapper = document.querySelector('div[data-image-target]');
+        const iconImgBtn = document.querySelector('button[data-image-trigger] img');
+
+        const imgNameClasses = 'text-sm text-secondary font-bold line-clamp-1';
+        const imgNameInvalidClasses = 'text-[10px] font-light';
+
+        const imgSizeClasses = 'text-[10px] font-light';
+        const imgSizeInvalidClasses = 'text-sm text-red-600 font-bold';
+
+        this.shrinkBtnTrigger();
+
+        setTimeout(() => {
+            const content = `<img class="p-1 h-9 rounded-lg" src="${imageUrl}">
+                            <div class="h-9 leading-4">
+                                <div class="${isInvalid ? imgNameInvalidClasses : imgNameClasses}" title="${imageName}">${imageName}</div>
+                                <div class="${isInvalid ? imgSizeInvalidClasses : imgSizeClasses}">${imageSize} KB ${isInvalid && ' - Invalid Size! (>500KB)'}</div>
+                            </div>`;
+            
+            uploadedImgWrapper.innerHTML = content;
+            uploadedImgWrapper.classList.remove('opacity-0');
+            
+            isInvalid 
+                ? uploadedImgWrapper.parentNode.classList.add('is-invalid') 
+                : uploadedImgWrapper.parentNode.classList.remove('is-invalid');
+
+            iconImgBtn.classList.add('rotate-[135deg]');
+            iconImgBtn.classList.remove('rotate-45');
+        }, 650);
+
+    }
+}
+
 export function initTooltips() { 
     document.querySelectorAll('[data-tooltip-target]').forEach(function(triggerEl) {
         const tooltipId = triggerEl.getAttribute('data-tooltip-target');
