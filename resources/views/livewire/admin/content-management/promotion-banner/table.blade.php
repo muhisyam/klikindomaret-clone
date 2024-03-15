@@ -78,7 +78,7 @@
         @empty
         <tr>
             <td class="rounded-b-md py-2 px-3 bg-light-gray-50" colspan="8">
-                <x-nav-link type="button" role="button" class="justify-center text-secondary hover:underline" data-no-content value="Tambah Konten Baru"/>
+                <x-nav-link type="button" role="button" class="justify-center text-secondary hover:underline" data-no-content value="Tambah Konten Baru" prevent-close=""/>
             </td>
         </tr>
         @endforelse
