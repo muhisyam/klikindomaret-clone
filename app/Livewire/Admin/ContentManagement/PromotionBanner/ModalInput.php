@@ -56,10 +56,12 @@ class ModalInput extends Component
 
     public function save()
     {
+        $data = $this->validate();
+
         //Important: Add dot for product select2 purpose!
-        $this->bannerName .= '.'; 
+        $data['bannerName'] .= '.'; 
         
-        app(PromotionBannerController::class)->store($this->validate());
+        app(PromotionBannerController::class)->store($data);
 
         $this->bannerName = $this->bannerSlug = $this->bannerImageName = $this->productIds = null;
         // $this->dispatch('stored-content');
