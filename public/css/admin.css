@@ -156,14 +156,14 @@ input::-webkit-inner-spin-button {
     border-top-color: #999;
 }
 
-.header-col-wrapper.active-asc .label,
-.header-col-wrapper.active-asc .sortable[data-sort]::before {
+.active-asc .label,
+.active-asc .sortable[data-sort]::before {
     color: #414141;
     border-bottom-color: #414141;
 }
 
-.header-col-wrapper.active-desc .label,
-.header-col-wrapper.active-desc .sortable[data-sort]::after {
+.active-desc .label,
+.active-desc .sortable[data-sort]::after {
     color: #414141;
     border-top-color: #414141;
 }
@@ -185,7 +185,8 @@ input::-webkit-inner-spin-button {
     border-color: #dc2626;
 }
 
-.item-input-group .is-invalid {
+.is-invalid,
+.is-invalid .image-item-wrapper {
     border-color: #dc2626;
 }
 
