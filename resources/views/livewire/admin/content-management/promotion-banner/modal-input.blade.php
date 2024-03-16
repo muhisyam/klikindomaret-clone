@@ -27,26 +27,9 @@
                 <x-input-field id="form-input-banner-slug" name="bannerSlug" :error="$errors" wire:model="bannerSlug" wire:loading.attr="disabled"/>
                 <x-input-error field="bannerSlug" :error="$errors"/>
             </div>
-            <div class="relative mb-4">
+            <div class="mb-4" wire:ignore>
                 <x-input-label for="form-select-banner-product" value="Tambah Produk"/>
-                <x-input-select id="form-select-banner-product" class="overflow-hidden" name="productIds" multiple wire:model="productIds">
-                    @php $hasShown = []; @endphp
-                    
-                    @foreach ($dataProducts['data'] as $categoryName => $productList)
-                    <optgroup class="text-transparent" label="{{ $categoryName }}">
-                        @foreach ($productList as $item)
-                        <option class="text-transparent" value="{{ $item['id'] }}" @selected(in_array($item['id'] ,$productSelected['id']))>{{ $item['product_name'] }}</option>
-                        @php if (in_array($item['id'], $productSelected['id'])) $hasShown[] = $item['id'] @endphp
-                        @endforeach
-                    </optgroup>
-                    @endforeach
-                    
-                    @for ($i = 0; $i < count($productSelected['id']); $i++)
-                        @if (! in_array($productSelected['id'][$i], $hasShown))
-                        <option class="text-transparent" value="{{ $productSelected['id'][$i] }}" selected>{{ $productSelected['product_name'][$i] }}</option>
-                        @endif
-                    @endfor
-                </x-input-select>
+                <x-input-select id="form-select-banner-product" class="overflow-hidden" name="productIds" multiple wire:model="productIds"/>
                 <x-input-error field="productIds" :error="$errors"/>
             </div>
             <div class="mb-4" wire:ignore>
@@ -63,46 +46,66 @@
 
     <script type="module">
         import { hideOpenedModal } from "../js/components.js";
+        
+        // Jquery for convert purpose(✌ ͡• ₃ ͡•)✌
+        $('#form-select-banner-product').select2({
+            ajax: {
+                url: "{{ config('api.url') . 'refresh' }}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term,
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: params.page != data.meta.last_page
+                        }
+                    };
+                },
+            },
+            minimumInputLength: 5,
+            templateResult: formatProduct,
+            templateSelection: formatProductSelection,
+            closeOnSelect: false,
+            width: '100%',
+        });
 
         // Jquery for livewire purpose(✌ ͡• ₃ ͡•)✌
         $('#form-select-banner-product').on('change', function(e) {
-            let selectedProduct = {
-                'id': $(this).val(),
-                'product_name': $(this).find('option:selected').text().split('.').map(name => name + '.'),
-            };
-            
-            @this.productSelected = selectedProduct;
-            @this.productIds = selectedProduct.id;                    
+            @this.productIds = $(this).val();                    
         });
         // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
         
-        function changeToSelect2() { 
-            // Jquery for convert purpose(✌ ͡• ₃ ͡•)✌
-            $('#form-select-banner-product').select2({
-                width: '100%',
-            });
 
-            $('.select2-search__field').attr({
-                'wire:model.live.debounce.750ms': 'productKeyword',
-                'wire:loading.attr': 'disabled',
-            });
-            // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
+        function formatProduct(data) { 
+            if (data.loading) return data.text;
+
+            let isImageDefault = data.product_image_name.includes('default') ? '' : data.product_slug + "/";
+
+            return $(
+                `<div class="flex gap-1.5" prevent-close="">
+                    <img class="h-10 w-10 rounded" src="{{ asset('img/uploads/products/${isImageDefault}${data.product_image_name}') }}" alt="Product image" loading="lazy" prevent-close=""/>
+                    <div>
+                        <div class="font-bold line-clamp-1" title="${data.product_name}" prevent-close="">${data.product_name}</div>
+                        <div class="text-xs line-clamp-1" title="${data.category_lvl_3}" prevent-close="">${data.category_lvl_1} / ${data.category_lvl_2} / ${data.category_lvl_3}</div>
+                    </div>
+                </div>`
+            );
+
+        }
+
+        function formatProductSelection(data) { 
+            return data.product_name;
         }
 
         document.addEventListener('livewire:initialized', () => {
-            @this.on('products-loaded', event => {
-                setTimeout(() => {
-                    $('option').each(function (index, element) {
-                        if (jQuery.inArray(element.value, event.productSelected.id) === -1) {
-                            $(element).prop('selected', false);
-                        }
-                    });
-
-                    changeToSelect2();
-                    $('#form-select-banner-product').select2('open');
-                }, 1);
-            });
-
             @this.on('stored-content', event => {
                 setTimeout(() => {
                     const thisModal = document.querySelectorAll('div[data-trigger-modal*="{{ $section }}"]');
@@ -112,7 +115,6 @@
         });
 
         hideOpenedModal();
-        changeToSelect2();
     </script>
     
 @endpush
