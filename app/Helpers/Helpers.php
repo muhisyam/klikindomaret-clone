@@ -1,5 +1,10 @@
 <?php 
 
+function formatNumber($price) 
+{
+    return number_format($price, 0, '.', '.');
+}
+
 function formatCurrencyIDR($price) 
 {
     return number_format($price, 0, '.', '.');
