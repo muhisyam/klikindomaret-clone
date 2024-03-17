@@ -17,11 +17,9 @@ class Table extends Component
     public string $sortBy, $orderBy;
 
     /**
-     * Content data container
-     *
-     * @var array
+     * Data content container
      */
-    public array $data = ['data' => []];
+    public $data = null;
 
     /**
      * Api client request handler
@@ -56,6 +54,7 @@ class Table extends Component
     public function loadContent()
     {
         $this->data = $this->getPromoContents();
+        $this->dispatch('contents-loaded');
     }
 
     #[On('stored-content')] 
