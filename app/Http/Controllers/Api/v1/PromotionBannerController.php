@@ -7,16 +7,25 @@ use App\Http\Requests\PromotionBannerRequest;
 use App\Http\Resources\PromotionBannerResource;
 use App\Models\Product;
 use App\Models\PromotionBanner;
-use App\Services\Backend\ApiCallService;
 use App\Services\Backend\ImageService;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Arr;
 
 class PromotionBannerController extends Controller
 {
     public function __construct(
-        protected ApiCallService $apiService,
         protected ImageService $imageService,
     ){}
+
+    public function index(Request $request): JsonResource
+    {   
+        $promoBanners = PromotionBanner::with('products')
+            ->withCount('products')
+            ->paginate(10);
+
+        return PromotionBannerResource::collection($promoBanners);
+    }
     
     public function store(PromotionBannerRequest $request): PromotionBannerResource
     {
