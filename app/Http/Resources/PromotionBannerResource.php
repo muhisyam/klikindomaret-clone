@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,15 +24,18 @@ class PromotionBannerResource extends JsonResource
             'term_condition' => $this->term_condition,
             'banner_image_name' => $this->banner_image_name,
             'original_banner_image_name' => $this->original_banner_image_name,
-            'deploy_status' => $this->deploy_status,
-            'route_name' => $this->route_name,
-            'redirect_url' => $this->redirect_url,
-            'redirect_out_site_url' => $this->redirect_out_site_url,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
+            'banner_deploy_status' => $this->banner_deploy_status,
+            'banner_route_name' => $this->banner_route_name,
+            'banner_redirect_url' => $this->redirect_url,
+            'banner_start_date' => $this->banner_start_date,
+            'banner_end_date' => $this->banner_end_date,
+            'banner_date_diff' => $this->getDateDiff(),
             'model_type' => $this->model_type,
-            'children' => PromotionBannerResource::collection($this->whenLoaded('children')),
-            'products' => ProductResource::collection($this->whenLoaded('products')),
+            'banner_meta_keyword' => $this->banner_meta_keyword,
+            'promo_children_count' => $this->whenCounted('children'),
+            'promo_children' => PromotionBannerResource::collection($this->whenLoaded('children')),
+            'promo_products_count' => $this->whenCounted('products'),
+            'promo_products' => ProductResource::collection($this->whenLoaded('products')),
         ];
     }
 
