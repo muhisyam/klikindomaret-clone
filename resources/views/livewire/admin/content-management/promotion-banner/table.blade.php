@@ -12,9 +12,9 @@
                     <div class="sortable" data-sort></div>
                 </div>
             </th>
-            <th class="py-3 px-4">Kuota</th>
+            <th class="py-3 px-4 text-end">Kuota</th>
             <th class="py-3 px-4 w-32 text-center">Status</th>
-            <th class="py-3 px-4">Tenggat Waktu</th>
+            <th class="py-3 px-4">Tanggal Promo</th>
             <th class="py-3 px-4 w-40">
                 <div @class([
                     'relative mx-auto flex cursor-pointer', 
@@ -49,15 +49,18 @@
             </td>
             <td class="py-2 px-4 text-end">{{ formatNumber($content['promotion_quota']) }}</td>
             <td class="py-2 px-4 text-center">{!! \App\Enums\DeployStatus::getStyle($content['banner_deploy_status']) !!}</td>
-        @php
-            // TODO: Continue this
-        @endphp
-            <td class="py-2 px-4">{{ $content['banner_date_diff'] }}</td>
-            <td class="py-2 px-4 flex items-center">
-                <x-button class="mx-auto p-2 gap-2" buttonStyle="secondary">
-                    <span class="leading-4 font-bold">{{ $content['promo_products_count'] }}</span>
-                    <x-icon class="w-4 contrast-[6]" src="{{ asset('img/icons/icon-auth-visibility-password.webp') }}"/>
-                </x-button>
+            <td class="py-2 px-4">
+                <div>Periode: {{ $content['banner_start_date'] }} - {{ $content['banner_end_date'] }}</div>
+                <div class="text-xs font-light">Keterangan: {!! $content['banner_event_status'] !!}</div>
+            </td>
+            <td class="py-2 px-4">
+                <div>{{ formatNumber($content['promo_products_count']) }} Produk</div>
+                <div class="flex items-center gap-1 text-xs font-light">
+                    <span>List Produk:</span>
+                    <x-button>
+                        <x-icon class="w-4" src="{{ asset('img/icons/icon-auth-visibility-password.webp') }}"/>
+                    </x-button>
+                </div>
             </td>
             <td class="py-2 px-4">{{ $content['banner_route_name'] }}</td>
             <td class="py-2 px-4">
