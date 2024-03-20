@@ -12,7 +12,7 @@ class ModalInput extends Component
     use WithFileUploads;
     
     public $section, $showCondition;    
-    public $bannerName, $bannerSlug, $bannerImageName, $productIds;
+    public $bannerName = '', $bannerSlug = '', $bannerImageName = '', $productIds = [];
 
     public function __construct(
     ) {
@@ -38,13 +38,12 @@ class ModalInput extends Component
     {        
         app(PromotionBannerController::class)->store($this->validate());
 
-        $this->bannerName = $this->bannerSlug = $this->bannerImageName = $this->productIds = null;
-        $this->dispatch('stored-content');
+        $this->reset('bannerName', 'bannerSlug', 'bannerImageName', 'productIds');
+        $this->dispatch('content-stored');
     }
 
     public function render()
     {
-        
         return view('livewire.admin.content-management.promotion-banner.modal-input');
     }
 }

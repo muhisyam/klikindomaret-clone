@@ -94,7 +94,7 @@
                     <img class="h-10 w-10 rounded" src="{{ asset('img/uploads/products/${isImageDefault}${data.product_image_name}') }}" alt="Product image" loading="lazy" prevent-close=""/>
                     <div>
                         <div class="font-bold line-clamp-1" title="${data.product_name}" prevent-close="">${data.product_name}</div>
-                        <div class="text-xs line-clamp-1" title="${data.category_lvl_3}" prevent-close="">${data.category_lvl_1} / ${data.category_lvl_2} / ${data.category_lvl_3}</div>
+                        <div class="text-xs line-clamp-1" title="${data.category_lvl_3}" prevent-close="">${data.category_lvl_1} / ${data.category_lvl_3}</div>
                     </div>
                 </div>`
             );
@@ -106,7 +106,7 @@
         }
 
         document.addEventListener('livewire:initialized', () => {
-            @this.on('stored-content', event => {
+            @this.on('content-stored', event => {
                 setTimeout(() => {
                     const thisModal = document.querySelectorAll('div[data-trigger-modal*="{{ $section }}"]');
                     thisModal.forEach(el => el.classList.remove('show'));
