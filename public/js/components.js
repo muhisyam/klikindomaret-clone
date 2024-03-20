@@ -136,6 +136,22 @@ function hideOpenedActionDataTable() {
     activeActionElemenList.forEach(el => el.classList.add('hidden'));
 }
 
+/**
+ * Convert from html string to node element
+ * 
+ * @param {string} parentTag - string
+ * @param {array} parentClass - array
+ * @param {string} innerBody - string
+ */
+export function createElement({parentTag = 'div', parentClass = [], innerBody = ''}) {
+    const newHtmlObject = document.createElement(parentTag);
+
+    newHtmlObject.classList.add(...parentClass);
+    newHtmlObject.innerHTML = innerBody;
+
+    return newHtmlObject;
+}
+
 var Tooltip = (function () { 
     function Tooltip(targetEl, triggerEl, placementEl) {
         this._targetEl = targetEl;
