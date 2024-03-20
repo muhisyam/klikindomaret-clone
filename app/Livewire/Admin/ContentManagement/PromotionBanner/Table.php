@@ -41,7 +41,7 @@ class Table extends Component
         $this->endpoint = config('api.url') . 'promotion-banners';
     }
 
-    private function getPromoContents()
+    private function getPromoContent()
     {
         return $this->clientAction->request(
             new ClientRequestDto(
@@ -53,14 +53,14 @@ class Table extends Component
 
     public function loadContent()
     {
-        $this->data = $this->getPromoContents();
-        $this->dispatch('contents-loaded');
+        $this->data = $this->getPromoContent();
+        $this->dispatch('content-loaded');
     }
 
-    #[On('stored-content')] 
+    #[On('content-stored')] 
     public function storedContent()
     {
-        $this->data = $this->getPromoContents();
+        $this->dispatch('load-new-entries');
     }
 
     public function render()

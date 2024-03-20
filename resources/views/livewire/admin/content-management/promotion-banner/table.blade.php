@@ -97,7 +97,7 @@
         @empty
         <tr>
             <td class="rounded-b-md py-2 px-3 bg-light-gray-50" colspan="8">
-                <x-nav-link type="button" role="button" class="justify-center text-secondary hover:underline" data-no-content value="Tambah Konten Baru" prevent-close=""/>
+                <x-button class="mx-auto text-secondary hover:underline" value="Tambah Konten Baru" data-no-content=""/>
             </td>
         </tr>
         @endforelse
@@ -114,7 +114,7 @@
 
 @push('scripts')
     <script type="module">
-        import { toggleActionDataTable, hideOpenedComponentsFromOutside } from "../js/components.js";
+        import { toggleActionDataTable, hideOpenedModal, createElement } from "../js/components.js";
 
         function noContentBtn() {
             const btnNoContent = document.querySelector('[data-no-content]');
@@ -123,11 +123,33 @@
             btnNoContent.addEventListener('click', () => document.querySelector('button[data-target-modal]').click())
         }
 
+        function hasNewEntries() { 
+            const tableData = document.querySelector('tbody');
+            const btnLoadNewEntries = 
+                `<td class="border-b py-2 px-3 bg-light-gray-50" colspan="8">
+                    <div wire:loading>Loading</div>
+                    <x-button class="mx-auto text-secondary hover:underline" value="Muat Konten Baru" wire:click="loadContent" wire:loading.remove/>
+                </td>`;
+
+            const elLoadNewEntries = createElement({
+                parentTag: 'tr', 
+                innerBody: btnLoadNewEntries
+            });
+            
+            tableData.insertBefore(elLoadNewEntries, tableData.firstElementChild);
+        }
+
         document.addEventListener('livewire:initialized', () => {
-            @this.on('contents-loaded', event => {
+            @this.on('content-loaded', event => {
                 setTimeout(() => {
                     noContentBtn();
                     toggleActionDataTable();
+                }, 1);
+            });
+
+            @this.on('load-new-entries', event => {
+                setTimeout(() => {
+                    hasNewEntries();
                 }, 1);
             });
         });
