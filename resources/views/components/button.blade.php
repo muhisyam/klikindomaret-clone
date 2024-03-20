@@ -8,6 +8,6 @@
     }
 @endphp
 
-<button {{ $attributes->merge(['type' => 'button', 'class' => 'flex items-center rounded-md hover:opacity-90' . $style]) }} {!! $preventClose ?? 'prevent-close=""' !!}>
+<button {{ $attributes->merge(['type' => 'button', 'class' => 'flex items-center rounded-md hover:opacity-90' . $style]) }} {!! $preventClose ? 'prevent-close=""' : '' !!}>
     {{ $value ?? $slot }}
 </button>
