@@ -92,6 +92,9 @@ export function hideOpenedComponentsFromOutside() {
     })
 }
 
+/**
+ * Handle open/close data table action
+ */
 export function toggleActionDataTable() {
     const actionBtnList = document.querySelectorAll('button[data-target-action]');
     if (! actionBtnList) return;
@@ -107,11 +110,16 @@ export function toggleActionDataTable() {
             hideOpenedActionDataTable();
             
             if (!isOpened) {
-                triggerEl.classList.add('bg-tertiary', 'text-secondary');
+                triggerEl.classList.add('bg-tertiary');
                 triggerAction.classList.add('hidden');
-
-                targetEl.classList.remove('hidden');
                 triggerClose.classList.remove('hidden');
+                targetEl.parentNode.classList.add('w-[82px]');
+                targetEl.parentNode.classList.remove('w-0');
+                
+                setTimeout(() => {
+                    targetEl.classList.remove('opacity-0');
+                    targetEl.classList.add('opacity-100');
+                }, 650);
             };
 
             initTooltips();
@@ -120,20 +128,27 @@ export function toggleActionDataTable() {
 }
 
 function hideOpenedActionDataTable() {
-    // Active Elements
+    const activeActionElemenList = document.querySelectorAll('div[data-trigger-action].opacity-100');
     const activeActionBtnList = document.querySelectorAll('button[data-target-action].bg-tertiary');
-    const activeActionElemenList = document.querySelectorAll('div[data-trigger-action]:not(.hidden)');
+
+    activeActionElemenList.forEach(el => {
+        el.classList.add('opacity-0');
+        el.classList.remove('opacity-100');
+        el.parentNode.classList.add('w-0');
+        el.parentNode.classList.remove('w-[82px]');
+    });
     
     activeActionBtnList.forEach(btnEl => {
         const triggerAction = btnEl.querySelector('[action-icon-open]');
         const triggerClose = btnEl.querySelector('[action-icon-close]');
 
-        btnEl.classList.remove('bg-tertiary', 'text-secondary')
-        triggerAction.classList.remove('hidden')
-        triggerClose.classList.add('hidden')
-    });
+        triggerAction.classList.remove('hidden');
+        triggerClose.classList.add('hidden');
 
-    activeActionElemenList.forEach(el => el.classList.add('hidden'));
+        setTimeout(() => {
+            btnEl.classList.remove('bg-tertiary', 'text-secondary');
+        }, 700);
+    });
 }
 
 /**
@@ -282,6 +297,5 @@ export class SimpleImageUploader {
             iconImgBtn.classList.add('rotate-[135deg]');
             iconImgBtn.classList.remove('rotate-45');
         }, 650);
-
     }
 }
