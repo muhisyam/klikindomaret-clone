@@ -201,21 +201,25 @@ class Tooltip {
     }
 
     setupStyleElement(arrowEl) {
-        const triggerPos = this.triggerEl.getBoundingClientRect();  
-        const translateX = triggerPos.left - this.sidebarWidth + (triggerPos.width - this.targetEl.offsetWidth) / 2;
-        const translateY = triggerPos.top + triggerPos.height + arrowEl.offsetHeight;
+        const triggerPos    = this.triggerEl.getBoundingClientRect();
+        const offsetX       = this.targetEl.getAttribute('data-tooltip-offset-x') ?? 0;
+        const offsetY       = this.targetEl.getAttribute('data-tooltip-offset-y') ?? 0;
+        const translateX    = triggerPos.left - this.sidebarWidth + ((triggerPos.width - this.targetEl.offsetWidth) / 2) + parseInt(offsetX);
+        const translateY    = triggerPos.top + triggerPos.height + arrowEl.offsetHeight + parseInt(offsetY);
+        console.log(translateY, translateX);
 
-        this.targetEl.style.position = 'absolute';
-        this.targetEl.style.inset = '0px auto auto 0px';
-        this.targetEl.style.margin = '0px';
+        this.targetEl.style.position  = 'absolute';
+        this.targetEl.style.inset     = '0px auto auto 0px';
+        this.targetEl.style.margin    = '0px';
         this.targetEl.style.transform = `translate3d(${translateX}px, ${translateY}px, 0px)`;
     };
 
     setupStyleArrow(arrowEl) {
-        const translateX = (this.targetEl.offsetWidth / 2) - (arrowEl.offsetWidth / 2);
+        const offsetX    = this.targetEl.getAttribute('data-arrow-offset-x') ?? 0;
+        const translateX = (this.targetEl.offsetWidth / 2) - (arrowEl.offsetWidth / 2) + parseInt(offsetX);
         
-        arrowEl.style.position = 'absolute';
-        arrowEl.style.left = '0px';
+        arrowEl.style.position  = 'absolute';
+        arrowEl.style.left      = '0px';
         arrowEl.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
     };
 
@@ -232,9 +236,9 @@ class Tooltip {
 
 export function initTooltips() { 
     document.querySelectorAll('[data-tooltip-target]').forEach(function(triggerEl) {
-        const tooltipId = triggerEl.getAttribute('data-tooltip-target');
-        const tooltipEl = document.getElementById(tooltipId);
-        const hasSidebar = document.querySelector('.sidebar');
+        const dataTarget   = triggerEl.getAttribute('data-tooltip-target');
+        const tooltipEl    = document.querySelector(`[data-tooltip-trigger="${dataTarget}"]`);
+        const hasSidebar   = document.querySelector('.sidebar');
         const sidebarWidth = hasSidebar ? hasSidebar.getBoundingClientRect().width : 0;
 
         new Tooltip(tooltipEl, triggerEl, 'bottom', sidebarWidth);
