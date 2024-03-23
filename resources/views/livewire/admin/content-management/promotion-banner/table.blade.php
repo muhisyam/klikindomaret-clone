@@ -62,17 +62,25 @@
                     </x-button>
                 </div>
             </td>
-            <td class="py-2 px-4">{{ $content['banner_route_name'] }}</td>
+            <td class="py-2 px-4">
+                <div class="flex items-center gap-1.5">
+                    <div>{{ $content['banner_route_name'] }}</div>
+                    <x-icon class="h-4 grayscale hover:grayscale-0" src="{{ asset('img/icons/icon-info-fill.webp') }}" data-tooltip-target="route-link-{{ $index }}" />
+                    <x-tooltip data-tooltip-trigger="route-link-{{ $index }}" value="{{ route($content['banner_route_name'], ['promo' => $content['banner_slug']]) }}" />
+                </div>
+            </td>
             <td class="py-2 px-2 flex justify-end">
                 <div class="-me-2.5 rounded-md h-9 w-0 bg-light-gray-50 transition-width duration-700">
                     <div class="flex opacity-0 duration-200" data-trigger-action="{{ $content['banner_slug'] . '-action' }}">
-                        <x-button class="h-9 w-9 group hover:bg-light-gray-100">
+                        <x-button class="h-9 w-9 group hover:bg-light-gray-100" data-tooltip-target="action-delete-{{ $index }}">
                             <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-delete.webp') }}"/>
                         </x-button>
+                        <x-tooltip data-tooltip-trigger="action-delete-{{ $index }}" data-tooltip-offset-x="-64" value="Hapus {{ $content['banner_name'] }}" />
 
-                        <x-nav-link href="{{ route('products.edit', ['product' => $content['banner_slug']]) }}" class="rounded-md h-9 w-9 cursor-pointer group hover:bg-light-gray-100">
+                        <x-nav-link href="{{ route('products.edit', ['product' => $content['banner_slug']]) }}" class="rounded-md h-9 w-9 cursor-pointer group hover:bg-light-gray-100" data-tooltip-target="action-edit-{{ $index }}">
                             <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-nav-link>
+                        <x-tooltip data-tooltip-trigger="action-edit-{{ $index }}" data-tooltip-offset-x="-29" value="Edit" />
                     </div>
                 </div>
                 <x-button class="justify-center h-9 w-9 group bg-blacks hover:bg-tertiary" data-target-action="{{ $content['banner_slug'] . '-action' }}">
@@ -101,7 +109,7 @@
 
 @push('scripts')
     <script type="module">
-        import { toggleActionDataTable, hideOpenedModal, createElement } from "../js/components.js";
+        import { toggleActionDataTable, hideOpenedModal, createElement, initTooltips } from "../js/components.js";
 
         function noContentBtn() {
             const btnNoContent = document.querySelector('[data-no-content]');
@@ -130,6 +138,7 @@
             @this.on('content-loaded', event => {
                 setTimeout(() => {
                     noContentBtn();
+                    initTooltips();
                     toggleActionDataTable();
                 }, 1);
             });
