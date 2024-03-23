@@ -22,6 +22,7 @@ class PromotionBannerController extends Controller
     {   
         $promoBanners = PromotionBanner::with('products')
             ->withCount('products')
+            ->latest()
             ->paginate(10);
 
         return PromotionBannerResource::collection($promoBanners);
