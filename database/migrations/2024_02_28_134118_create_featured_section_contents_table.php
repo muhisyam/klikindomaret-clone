@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('featured_content_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('featured_content_id')
+        Schema::create('featured_section_contents', function (Blueprint $table) {
+            $table->foreignId('featured_section_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->foreignId('product_id')
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->morphs('featured_section_content', 'content_type_id_index');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('featured_content_product');
+        Schema::dropIfExists('featured_contents');
     }
 };

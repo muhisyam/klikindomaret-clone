@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('featured_contents', function (Blueprint $table) {
+        Schema::create('featured_sections', function (Blueprint $table) {
             $table->id();
             $table->string('featured_name', 100);
             $table->string('featured_slug', 200)->unique();
+            $table->string('featured_redirect_url');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('featured_contents');
+        Schema::dropIfExists('featured_sections');
     }
 };
