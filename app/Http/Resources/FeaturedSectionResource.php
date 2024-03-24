@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FeaturedContentResource extends JsonResource
+class FeaturedSectionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,11 @@ class FeaturedContentResource extends JsonResource
         return [
             'featured_name' => $this->featured_name,
             'featured_slug' => $this->featured_slug,
-            'featured_products_count' => $this->products_count,
-            'products' => ProductResource::collection($this->whenLoaded('products')),
+            'featured_redirect_url' => $this->featured_redirect_url,
+            'featured_products_count' => $this->whenCounted('products'),
+            'featured_products' => ProductResource::collection($this->whenLoaded('products')),
+            'featured_promos_count' => $this->whenCounted('promos'),
+            'featured_promos' => PromotionBannerResource::collection($this->whenLoaded('promos')),
         ];
     }
 
