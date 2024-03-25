@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin\FeaturedContent;
+namespace App\Livewire\Admin\ContentManagement\FeaturedSection;
 
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
@@ -9,17 +9,18 @@ use Livewire\Component;
 
 class Table extends Component
 {
-    public $sortBy, $orderBy;
-    public $data = ['data' => []];
-    protected $endpoint, $clientAction;
+    public string $sortBy, $orderBy;
+    public $data = null;
+    protected object $clientAction;
+    protected string $endpoint;
 
     public function __construct(
     ) {
         $this->clientAction = app(ClientRequestAction::class);
-        $this->endpoint = config('api.url') . 'featured-content';
+        $this->endpoint     = config('api.url') . 'featured-sections';
     }
 
-    private function getDataFeaturedContent()
+    private function getFeaturedContent()
     {
         return $this->clientAction->request(
             new ClientRequestDto(
@@ -31,13 +32,14 @@ class Table extends Component
 
     public function loadContent()
     {
-        $this->data = $this->getDataFeaturedContent();
+        $this->data = $this->getFeaturedContent();
+        $this->dispatch('content-loaded');
     }
 
-    #[On('stored-content')] 
+    #[On('content-stored')] 
     public function storedContent()
     {
-        $this->data = $this->getDataFeaturedContent();
+        $this->dispatch('load-new-entries');
     }
     
     public function dispatchModal($dataFeaturedContent)
@@ -47,7 +49,6 @@ class Table extends Component
     
     public function render()
     {
-        $this->dispatch('contents-loaded');
-        return view('livewire.admin.featured-content.table');
+        return view('livewire.admin.content-management.featured-section.table');
     }
 }
