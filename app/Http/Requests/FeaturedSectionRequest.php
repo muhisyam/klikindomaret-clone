@@ -29,10 +29,10 @@ class FeaturedSectionRequest extends FormRequest
         if ($this->isMethod('post')) {
             return [
                 'featured_name'         => ['required', 'string', 'max:100'],
-                'featured_slug'         => ['required', 'string', 'max:200', 'unique:featured_sections'],
+                'featured_slug'         => ['required', 'string', 'max:200', 'unique:featured_sections,featured_slug'],
                 'featured_redirect_url' => ['required', 'string'],
-                'content_type.*'        => ['required', Rule::in($featuredSection->contentType)],
-                'content_id.*'          => ['required'],
+                'content_types.*'       => ['required', 'string', Rule::in($featuredSection->contentType)],
+                'content_ids.*'         => ['required', 'numeric'],
             ];
         }
 
@@ -41,8 +41,8 @@ class FeaturedSectionRequest extends FormRequest
                 'featured_name'         => ['required', 'string', 'max:100'],
                 'featured_slug'         => ['required', 'string', 'max:200'],
                 'featured_redirect_url' => ['required', 'string'],
-                'content_type.*'        => ['required', Rule::in($featuredSection->contentType)],
-                'content_id.*'          => ['required'],
+                'content_types.*'       => ['required', 'string', Rule::in($featuredSection->contentType)],
+                'content_ids.*'         => ['required', 'numeric'],
             ];
         }
     }

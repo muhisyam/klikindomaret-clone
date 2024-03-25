@@ -23,6 +23,7 @@ class FeaturedSectionController extends Controller
     {   
         $featured = FeaturedSection::with(['products', 'promos'])
             ->withCount(['products', 'promos'])
+            ->latest()
             ->paginate(10);
 
         return FeaturedSectionResource::collection($featured);
@@ -31,10 +32,10 @@ class FeaturedSectionController extends Controller
     public function store(FeaturedSectionRequest $request): FeaturedSectionResource
     {
         $data     = $request->validated();
-        $featured = FeaturedSection::create(Arr::except($data, ['content_type', 'content_id']));
+        $featured = FeaturedSection::create(Arr::except($data, ['content_types', 'content_ids']));
 
-        foreach ($data['content_type'] as $index => $type) {
-            $featured->morphContentTo($type)->attach($data['content_id'][$index]);
+        foreach ($data['content_types'] as $index => $type) {
+            $featured->morphContentTo($type)->attach($data['content_ids'][$index]);
         }
 
         return new FeaturedSectionResource($featured);
@@ -52,11 +53,11 @@ class FeaturedSectionController extends Controller
         $data     = $request->validated();
         $featured = $this->getSpesificData($featuredSlug);
 
-        $featured->update(Arr::except($data, ['content_type', 'content_id']));
+        $featured->update(Arr::except($data, ['content_types', 'content_ids']));
         $featured->detachMorphContent();
         
-        foreach ($data['content_type'] as $index => $type) {
-            $featured->morphContentTo($type)->attach($data['content_id'][$index]);
+        foreach ($data['content_types'] as $index => $type) {
+            $featured->morphContentTo($type)->attach($data['content_ids'][$index]);
         }
 
         return new FeaturedSectionResource($featured);
