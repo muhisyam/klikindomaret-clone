@@ -63,7 +63,7 @@ class ProductController extends Controller
                     'supplier', 
                     'descriptions',
                     'images',
-                    'stores',
+                    'retailers',
                 ],
                 withCountSchema: [
                     'images',
