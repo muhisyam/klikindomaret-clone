@@ -43,7 +43,11 @@ class FeaturedSectionController extends Controller
 
     public function show(string $featuredSlug): FeaturedSectionResource
     {
-        $featured = $this->getSpesificData($featuredSlug, ['products', 'promos']);
+        $featured = $this->getSpesificData(
+            featuredSlug: $featuredSlug, 
+            withSchema: ['products.supplier', 'products.images', 'products.retailers', 'promos'],
+            withCountSchema: ['products', 'promos'],
+        );
 
         return new FeaturedSectionResource($featured);
     }
@@ -74,10 +78,8 @@ class FeaturedSectionController extends Controller
         return response()->json(['data' => $featuredName], 200);
     }
 
-    private function getSpesificData(string $featuredSlug, array $showSchema = null)
+    private function getSpesificData(string $featuredSlug, array $withSchema = [], array $withCountSchema = [])
     {
-        $withSchema = $withCountSchema = $showSchema ?? [];
-
         return $this->apiService->findData(
             new FindDataDto(
                 model: new FeaturedSection,
