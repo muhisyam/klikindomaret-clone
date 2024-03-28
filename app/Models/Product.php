@@ -16,6 +16,7 @@ class Product extends Model
         'normal_price' => 0,
         'product_stock' => 0,
         'product_deploy_status' => DeployStatus::DRAFT->value,
+        'model_type' => 'product',
     ];
 
     protected $casts = [

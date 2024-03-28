@@ -23,12 +23,14 @@ class ProductResource extends JsonResource
             'product_stock'              => $this->product_stock,
             'product_status'             => $this->product_status,
             'product_category'           => new CategoryResource($this->whenLoaded('category')),
-            'product_descriptions_count' => $this->descriptions_count,
+            'product_descriptions_count' => $this->whenCounted('descriptions'),
             'product_descriptions'       => ProductDescriptionResource::collection($this->whenLoaded('descriptions')),
-            'product_images_count'       => $this->images_count,
+            'product_images_count'       => $this->whenCounted('images'),
             'product_images'             => ProductImageResource::collection($this->whenLoaded('images')),
             'product_supplier'           => new SupplierResource($this->whenLoaded('supplier')),
             'product_retailers'          => RetailerResource::collection($this->whenLoaded('retailers')),
+            'model_type'                 => $this->model_type,
+            'product_meta_keyword'       => $this->product_meta_keyword,
         ];
     }
 }
