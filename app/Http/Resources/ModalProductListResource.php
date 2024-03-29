@@ -20,6 +20,7 @@ class ModalProductListResource extends JsonResource
             "product_slug" => $this->product_slug,
             "product_meta_keyword" => $this->product_meta_keyword,
             "product_image_name" => $this->product_image_name,
+            'model_type' => $this->model_type,
         ];
     }
 }
