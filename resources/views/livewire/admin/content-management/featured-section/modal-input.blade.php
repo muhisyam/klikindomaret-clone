@@ -98,7 +98,7 @@
         // Thanks for the tolerance(👍 ͡• ₃ ͡•)👍
         
         function getApiEndpoint() { 
-            let endpoint = $('#form-select-featured-type').val() === 'Produk' ? 'refresh' : 'refresh2';
+            let endpoint = $('#form-select-featured-type').val() === 'Produk' ? 'refresh' : 'promotion-min';
 
             return "{{ config('api.url') }}" + endpoint;
         }
@@ -106,14 +106,31 @@
         function formatProduct(data) { 
             if (data.loading) return data.text;
 
-            let isImageDefault = data.product_image_name.includes('default') ? '' : data.product_slug + "/";
+            let image, name, slug, desc;
+
+            switch (data.model_type) {
+                case 'banner':
+                    image = `promo-banners/${data.banner_image_name}`;
+                    name  = data.banner_name;
+                    desc  = `${data.banner_start_date} - ${data.banner_end_date}`;
+                    
+                    break;
+                default:
+                    image = data.product_image_name;
+                    slug  = data.product_slug;
+                    image = `products/${image.includes('default') ? image : slug + "/" + image}`;
+                    name  = data.product_name;
+                    desc  = `${data.category_lvl_1} / ${data.category_lvl_3}`;
+                    
+                    break;
+            }
 
             return $(
                 `<div class="flex gap-1.5" prevent-close="">
-                    <img class="h-10 w-10 rounded" src="{{ asset('img/uploads/products/${isImageDefault}${data.product_image_name}') }}" alt="Product image" loading="lazy" prevent-close=""/>
+                    <img class="h-10 w-10 rounded" src="{{ asset('img/uploads/${image}') }}" alt="Item image" loading="lazy" prevent-close=""/>
                     <div>
-                        <div class="font-bold line-clamp-1" title="${data.product_name}" prevent-close="">${data.product_name}</div>
-                        <div class="text-xs line-clamp-1" title="${data.category_lvl_3}" prevent-close="">${data.category_lvl_1} / ${data.category_lvl_3}</div>
+                        <div class="font-bold line-clamp-1" prevent-close="">${name}</div>
+                        <div class="text-xs line-clamp-1" prevent-close="">${desc}</div>
                     </div>
                 </div>`
             );
@@ -121,14 +138,20 @@
         }
 
         function formatProductSelection(data) { 
-            return data.product_name;
+            switch (data.model_type) {
+                case 'banner':
+                    return data.banner_name
+
+                default:
+                    return data.product_name
+            }
         }
         
         document.addEventListener('livewire:initialized', () => {
             @this.on('content-stored', event => {
                 setTimeout(() => {
-                    const thisModal = document.querySelectorAll('div[data-trigger-modal*="{{ $section }}"]');
-                    thisModal.forEach(el => el.classList.remove('show'));
+                    document.querySelectorAll('div[data-trigger-modal*="{{ $section }}"]').forEach(el => el.classList.remove('show'));
+                    $('#form-select-featured-content').val(null).trigger('change');
                 }, 1);
             });
         });

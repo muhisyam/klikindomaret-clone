@@ -42,7 +42,7 @@ class ModalInput extends Component
     {
         app(FeaturedSectionController::class)->store($this->validate());
 
-        $this->reset('featuredName', 'featuredSlug', 'contentTypes', 'contentIds');
+        $this->reset('featuredName', 'featuredSlug', 'featuredRedirectUrl', 'contentTypes', 'contentIds');
         $this->dispatch('content-stored');
     }
 
