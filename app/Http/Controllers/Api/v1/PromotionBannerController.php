@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Enums\DeployStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PromotionBannerRequest;
+use App\Http\Resources\ModalPromoListResource;
 use App\Http\Resources\PromotionBannerResource;
 use App\Models\Product;
 use App\Models\PromotionBanner;
@@ -39,5 +41,16 @@ class PromotionBannerController extends Controller
         $promoBanner->products()->attach($data['product_ids']);
 
         return new PromotionBannerResource($promoBanner);
+    }
+
+    /**
+     * Send just a necessary information for some purposes like modal input.
+     * 
+    */
+    public function indexMinified()
+    {
+        $promoBanners = PromotionBanner::where('banner_deploy_status', DeployStatus::PUBLISHED)->paginate(10);
+
+        return ModalPromoListResource::collection($promoBanners);
     }
 }
