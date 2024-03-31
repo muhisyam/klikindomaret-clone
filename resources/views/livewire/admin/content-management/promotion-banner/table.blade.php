@@ -25,7 +25,7 @@
                     <div class="sortable" data-sort></div>
                 </div>
             </th>
-            {{-- page or redirect, hover show the link --}}
+            @php /*TODO: Fix tooltip not consistent*/ @endphp
             <th class="py-3 px-4">Link</th> 
             <th class="py-3 px-2 rounded-tr-md w-[124px]"></th>
         </tr>
@@ -109,7 +109,7 @@
 
 @push('scripts')
     <script type="module">
-        import { toggleActionDataTable, hideOpenedModal, createElement, initTooltips } from "../js/components.js";
+        import { toggleActionDataTable, hideOpenedModal, createElement, initTooltips } from "{{ asset('js/' . config('view.js_component')) }}";
 
         function noContentBtn() {
             const btnNoContent = document.querySelector('[data-no-content]');

@@ -34,7 +34,10 @@
             <td class="py-2 px-3">
                 <input type="checkbox" class="block m-auto" aria-label="Checkbox select data">
             </td>
-            <td class="py-2 px-4">{{ $content['featured_name'] }}</td>
+            <td class="py-2 px-4">
+                <div class="font-bold line-clamp-1">{{ $content['featured_name'] }}</div>
+                <div class="text-xs font-light">Slug: {{ $content['featured_slug'] }}</div>
+            </td>
             <td class="py-2 px-4">
                 <div>{{ formatNumber($content['featured_total_content']) }} Produk</div>
                 <div class="flex items-center gap-1 text-xs font-light">
@@ -85,7 +88,7 @@
 
 @push('scripts')
     <script type="module">
-        import { toggleActionDataTable, hideOpenedModal, createElement, initTooltips } from "../js/components.js";
+        import { toggleActionDataTable, hideOpenedModal, createElement, initTooltips } from "{{ asset('js/' . config('view.js_component')) }}";
 
         function noContentBtn() {
             const btnNoContent = document.querySelector('[data-no-content]');

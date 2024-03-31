@@ -24,7 +24,7 @@
 @push('scripts')
 
     <script type="module">
-        import { SimpleImageUploader } from "../js/components.js";
+        import { SimpleImageUploader } from "{{ asset('js/' . config('view.js_component')) }}";
 
         function initImageUpload() {
             const browseImgBtn = document.querySelector('button[data-image-trigger]');

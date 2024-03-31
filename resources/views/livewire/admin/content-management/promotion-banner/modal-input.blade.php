@@ -37,7 +37,7 @@
                 <x-input-image-simple id="form-input-banner-image" type="file" accept=".jpg, .jpeg, .png, .webp" name="bannerImageName" :error="$errors" wire:model="bannerImageName"/>
                 <x-input-error field="bannerImageName" :error="$errors"/>
             </div>
-            <x-button type="submit" class="ms-auto justify-center h-10 px-8 text-sm" buttonStyle="secondary" value="Masuk"/>
+            <x-button type="submit" class="ms-auto justify-center h-10 px-8 text-sm" buttonStyle="secondary" value="Tambah"/>
         </form>
     </section>
 </div>
@@ -45,7 +45,7 @@
 @push('scripts')
 
     <script type="module">
-        import { hideOpenedModal } from "../js/components.js";
+        import { hideOpenedModal } from "{{ asset('js/' . config('view.js_component')) }}";
         
         // Jquery for convert purpose(✌ ͡• ₃ ͡•)✌
         $('#form-select-banner-product').select2({
