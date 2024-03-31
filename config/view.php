@@ -33,4 +33,16 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Name active blade js
+    |--------------------------------------------------------------------------
+    |
+    | This option determines name of js file that used in blade components
+    | or view.
+    |
+    */
+
+    'js_component' => 'components.js',
+
 ];
