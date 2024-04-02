@@ -4,7 +4,7 @@ namespace App\Livewire\General\DetailProduct;
 
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
-use Livewire\Attributes\On;
+use App\Http\Controllers\Web\General\CartController;
 use Livewire\Component;
 
 class ProductInfo extends Component
@@ -22,55 +22,6 @@ class ProductInfo extends Component
         $this->endpoint     = config('api.url') . 'products/';
     }
 
-    public function boot()
-    {
-        $this->js(<<<JS
-            setTimeout(() => {
-                const productPromoSwiper = new Swiper('.swiper[data-swiper-id="$this->section-featured"]', {
-                    slidesPerView: 4,
-                    slidesPerGroup: 1,
-                    spaceBetween: 16,
-                });
-
-                document.querySelectorAll('button[qty]').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        const btnAttrMethod = btn.getAttribute('qty');
-                        const inputQty      = document.getElementById('input-qty');
-                        const qtyValue      = parseInt(inputQty.value);
-
-                        switch (btnAttrMethod) {
-                            case 'sub':
-                                if (qtyValue > 1) inputQty.value = qtyValue - 1;
-                                break;
-
-                            default:
-                                inputQty.value = qtyValue + 1;
-                                break;
-                        }
-                    })
-                })
-
-                document
-                    .querySelector('ul[data-product-desc]:last-child')
-                    .addEventListener('click', () => document.querySelector('ul[data-product-desc]').classList.toggle('hide'));
-                
-                document
-                    .querySelector('button[data-share-target]')
-                    .addEventListener('click', function (el) { 
-                        const shareEl = document.querySelector('[data-share-trigger]');
-
-                        if (shareEl.classList.contains('hidden')) {
-                            shareEl.classList.remove('hidden');
-                            shareEl.classList.add('flex');
-                        } else {
-                            shareEl.classList.add('hidden');
-                            shareEl.classList.remove('flex');
-                        }
-                    });
-            }, 1)
-        JS);
-    }
-
     private function getDataProduct()
     {
         $response = $this->clientAction->request(
@@ -83,26 +34,37 @@ class ProductInfo extends Component
         return $response['data'];
     }
 
-    public function placeholder()
+    public function loadContent()
     {
-        return <<<'HTML'
-        <div>
-            loading...
-        </div>
-        HTML;
-
-        // return view('components.skeletons.promo-carousel-section');
+        $this->data = $this->getDataProduct();
+        $this->dispatch('content-loaded');
     }
 
     public function toCart()
     {
-        
+        $cart['product_slug'] = $this->data['product_slug'];
+        $cart['quantity']     = $this->quantity;
+
+        $response = app(CartController::class)->store($cart);
+
+        switch ($response['meta']['status_code']) {
+            case 401:
+                $this->dispatch('unauthenticated');
+                break;
+
+            case 409:
+                session()->flash('failed', 'Produk sudah ada di keranjang');
+                break;
+            
+            default:
+                session()->flash('success', 'Produk berhasil ditambahkan');
+                $this->dispatch('cart-updated');
+                break;
+        }
     }
 
     public function render()
     {
-        $this->data = $this->getDataProduct();
-
         return view('livewire.general.detail-product.product-info');
     }
 }

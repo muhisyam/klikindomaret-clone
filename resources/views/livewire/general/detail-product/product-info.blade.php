@@ -1,4 +1,6 @@
-<div class="flex gap-4">
+<div class="flex gap-4" wire:init="loadContent">
+@unless (is_null($data))
+
     <section class="w-1/3" data-section="product-images">
         <figure class="rounded-lg p-3 mb-4 w-full bg-white ">
             <img src="{{ asset('img/uploads/products/' . $data['product_slug'] . '/' . $data['product_images'][0]['product_image_name']) }}" alt="{{ $data['product_images'][0]['original_product_image_name'] }}">
@@ -21,7 +23,7 @@
         $discountPercent = round((($data['normal_price'] - $data['discount_price']) / $data['normal_price']) * 100);
     @endphp
 
-    <section class="relative w-2/3 space-y-4" data-section="product-informations">
+    <section class="w-2/3 space-y-4" data-section="product-informations">
         <div class="flex items-center justify-between rounded-lg py-2 px-5 mb-4">
             <div class="left-side flex items-center">
                 <img class="w-7 mr-2" src="https://www.klikindomaret.com/Assets/image/icon_flash.png" alt="Flashsale Icon">
@@ -32,7 +34,7 @@
                 <div class="countdown bg-[#ED3128] rounded px-2">00:01:04</div>
             </div>
         </div>
-        <div class="space-y-4 p-5 rounded-lg bg-white">
+        <div class="relative space-y-4 p-5 rounded-lg bg-white">
             <h1 class="product-title text-xl font-bold mb-2">
                 {{ $data['product_name'] }}
             </h1>
@@ -41,6 +43,9 @@
                 <x-icon class="w-4" src="{{ asset('img/icons/icon-header-map-marker.webp') }}"/>
                 <span class="text-xs">Cari Toko yang Menjual</span>
             </button>
+
+            <div>{{ session('success') }}</div>
+            <div>{{ session('failed') }}</div>
             
             <hr>
 
@@ -75,8 +80,10 @@
                 </div>
 
                 <x-button class="justify-center gap-2 h-10 w-60" buttonStyle="secondary" wire:click="toCart">
-                    <x-icon class="w-2.5 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}" iconStyle="white"/>
-                    <span>Keranjang</span>
+                    <span class="loader-spin !bg-transparent after:!border-t-white" wire:loading></span>
+
+                    <x-icon class="w-2.5 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}" iconStyle="white" wire:loading.attr="hidden"/>
+                    <span wire:loading.attr="hidden">Keranjang</span>
                 </x-button>
             </div>
             
@@ -120,4 +127,48 @@
             </li>
         </ul>
     </section>
+
+@else
+    <div>
+        loading...
+    </div>
+@endunless
 </div>
+
+@push('scripts')
+    <script type="module">
+        import { handleInputProductQty } from "{{ asset('js/' . config('view.js_component')) }}";
+
+        document.addEventListener('livewire:initialized', () => {
+            @this.on('content-loaded', event => {
+                setTimeout(() => {
+                    document
+                        .querySelector('ul[data-product-desc]:last-child')
+                        .addEventListener('click', () => document.querySelector('ul[data-product-desc]').classList.toggle('hide'));
+                    
+                    document
+                        .querySelector('button[data-share-target]')
+                        .addEventListener('click', el => { 
+                            const shareEl = document.querySelector('[data-share-trigger]');
+
+                            if (shareEl.classList.contains('hidden')) {
+                                shareEl.classList.remove('hidden');
+                                shareEl.classList.add('flex');
+                            } else {
+                                shareEl.classList.add('hidden');
+                                shareEl.classList.remove('flex');
+                            }
+                        });
+
+                    handleInputProductQty();
+                }, 1);
+            });
+            
+            @this.on('unauthenticated', event => {
+                setTimeout(() => {
+                    document.querySelector('button[data-target-modal="login"]').click();
+                }, 1);
+            });
+        });
+    </script>
+@endpush
