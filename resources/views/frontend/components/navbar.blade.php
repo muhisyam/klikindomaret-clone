@@ -151,10 +151,9 @@
                     <x-icon class="w-5" src="{{ asset('img/icons/icon-header-status-new.webp') }}"/>
                 </x-nav-link>
 
-                <x-nav-link href="#" class="relative me-4 p-1.5 hover:bg-dark-primary">
-                    <x-icon class="w-5" src="{{ asset('img/icons/icon-header-cart.webp') }}"/>
-                    <x-notification-count class="top-0 -right-1 rounded py-0.5 px-1" count="99+"/>
-                </x-nav-link>
+                <x-button>
+                    <livewire:general.header.cart-icon>
+                </x-button>
 
                 <x-dropdown section="user-account-ewallet">
                     <x-slot:trigger class="gap-1.5 me-2 p-1.5 hover:bg-dark-primary">
