@@ -1,3 +1,36 @@
+@if (Request::fullUrlIs(route('checkout')))
+
+<nav class="py-3 bg-white">
+    <div class="container h-full mx-auto flex justify-between">
+        <x-nav-link href="{{ route('homepage') }}">
+            <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="Logo">
+        </x-nav-link>
+
+        <div class="flex gap-3">
+            <a href="#">
+                <div class="button-favorite-wrapper flex items-center text-[#0079C2] border border-[#0079C2] rounded-lg py-2 px-4">
+                    <i class="ri-heart-line mr-2"></i>
+                    <span class="text-sm">Favorit</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="button-clear-cart-wrapper flex items-center text-[#0079C2] border border-[#0079C2] rounded-lg py-2 px-4">
+                    <i class="ri-delete-bin-6-line mr-2"></i>
+                    <span class="text-sm">Hapus Semua Produk</span>
+                </div>
+            </a>
+            <a href="#">
+                <div class="button-clear-cart-wrapper flex items-center gap-2 bg-[#0079C2] text-white border border-[#0079C2] rounded-lg py-2 px-4">
+                    <x-icon class="w-2.5 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}" iconStyle="white"/>
+                    <span class="text-sm">Tambah Pesanan Lagi</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</nav>
+
+@else
+
 <nav class="container mx-auto max-w-7xl h-full" data-section="navigation-header">
     <div class="flex justify-between">
         <section class="flex items-center gap-6 text-xs" data-section="app-social">
@@ -69,7 +102,7 @@
         </div>
     </div>
     <div class="flex items-center justify-between pt-3 pb-4">
-        <x-nav-link>
+        <x-nav-link href="{{ route('homepage') }}">
             <img class="h-8" src="{{ asset('img/header/logo.png') }}" alt="Logo">
         </x-nav-link>
 
@@ -289,3 +322,5 @@
         </div>
     </div>
 </nav>
+
+@endif

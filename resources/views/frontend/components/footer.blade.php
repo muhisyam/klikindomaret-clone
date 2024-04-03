@@ -1,3 +1,11 @@
+@if (Request::fullUrlIs(route('checkout')))
+
+<footer class="fixed bottom-0 w-full bg-white">
+    <div class="py-5 text-sm text-light-gray-400 text-center">Copyright © 2022 Klik Indomaret</div>
+</footer>
+
+@else
+
 <footer class="footer bg-white">
     <div class="footer-wrapper container mx-auto max-w-7xl py-5">
         <div class="footer-content top-section grid grid-cols-6 text-sm text-[#95989A] mb-10">
@@ -201,3 +209,5 @@
         </div>
     </div>
 </footer>
+
+@endif
