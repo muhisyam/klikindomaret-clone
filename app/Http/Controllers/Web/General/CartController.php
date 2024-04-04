@@ -36,4 +36,22 @@ class CartController extends Controller
             )
         );
     }
+
+    public function update(CartRequest|array $request): array
+    {
+        $dataRequest = $request instanceof CartRequest ? $request->all() : $request;
+        $formData    = $this->multipartAction->create($dataRequest);
+        $userId      = session('user')['id'];
+        
+        return $this->clientAction->request(
+            new ClientRequestDto(
+                method: 'POST',
+                endpoint: $this->endpoint . '/' . $userId,
+                formData: $formData,
+                headers: [
+                    'Authorization' => 'Bearer ' . session('auth_token')
+                ],
+            )
+        );
+    }
 }
