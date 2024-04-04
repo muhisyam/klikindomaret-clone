@@ -12,56 +12,66 @@ use Illuminate\Http\JsonResponse;
 
 trait ShoppingCart
 {
+    protected $request;
     protected $user;
     protected $product;
 
     public function addToCart(CartRequest $request)
     {
-        $this->getUserData();
-        $this->getProductData($request);
+        $this->request = $request;
 
-        //TODO: Ensure product stock is available
-        
-        if ($this->ensureProductNotExistInCart()) {
-            $this->user->carts()->attach($this->product->id, ['quantity' => $request['quantity']]);
+        $this->initData();
+        $this->ensureProductShouldBeWhatInCart('not exist');
+        $this->ensureStockNotLessThanQuantity();
+
+        $this->user->carts()->attach($this->product['id'], ['quantity' => $request['quantity']]);
+    }
+
+    public function updateProductQuantity(CartRequest $request)
+    {
+        $this->request = $request;
+
+        $this->initData();
+        $this->ensureProductShouldBeWhatInCart('exist');
+        $this->ensureStockNotLessThanQuantity();
+
+        $this->user->carts()->updateExistingPivot($this->product['id'], ['quantity' => $request['quantity']]);
+    }
+
+    private function initData()
+    {
+        $this->user    = User::find(auth()->user()->getAuthIdentifier());
+        $this->product = Product::query()
+            ->select([
+                'id', 
+                'product_name', 
+                'product_stock',
+            ])
+            ->where('product_slug', $this->request['product_slug'])
+            ->first();
+    }
+
+    protected function ensureStockNotLessThanQuantity(): void
+    {
+        if ($this->product['product_stock'] > $this->request['quantity']) {
+            return;
         }
-    }
-
-    private function getUserData()
-    {
-        $this->user = User::find(auth()->user()->getAuthIdentifier());
-    }
-
-    private function getProductData($request)
-    {
-        $this->product = Product::select(['id', 'product_name'])->where('product_slug', $request['product_slug'])->first();
-    }
-
-    protected function ensureProductNotExistInCart()
-    {
-        // TODO: check if can use whenHas or something like that
-        $isProductExist = Cart::where([
-            ['user_id', $this->user->id],
-            ['product_id', $this->product->id],
-        ])->first();
-
-        if (! $isProductExist) { return true; }
-
+        
         $trace = app(ErrorTraceAction::class)->execute();
-        $this->sendProductHasExist($trace);
+        $this->sendInsufficientProducStock($trace);
     }
 
     /**
-     * Send response when Rate Limiter detect too many attempts failed.
+     * Send response when product stock is less than request quantity.
      *
      * @throws \Illuminate\Http\Exceptions\HttpResponseException
      */
-    protected function sendProductHasExist(array $trace): JsonResponse
+    protected function sendInsufficientProducStock(array $trace): JsonResponse
     {
         throw new HttpResponseException(response([
             'errors' => [
                 'message' => [
-                    'Data already exists'
+                    'Persediaan tidak mencukupi'
                 ],
             ],
             'meta' => [
@@ -73,5 +83,48 @@ trait ShoppingCart
                 ],
             ],
         ])->setStatusCode(409));
+    }
+
+    protected function ensureProductShouldBeWhatInCart(string $shouldBe): void
+    {
+        $isProductExist = Cart::query()
+            ->where('user_id', $this->user['id'])
+            ->where('product_id', $this->product['id'])
+            ->first();
+
+        $condition      = $shouldBe == 'exist' ? $isProductExist : ! $isProductExist;
+        $errorMessage   = $shouldBe == 'exist' ? 'belum ada' : 'sudah';
+        $errorCode      = $shouldBe == 'exist' ? 404 : 409;
+
+        if ($condition) { 
+            return; 
+        }
+
+        $trace = app(ErrorTraceAction::class)->execute();
+        $this->sendProductShouldBeError($trace, $errorMessage, $errorCode);
+    }
+
+    /**
+     * Send response when product conditions in the cart are not met.
+     *
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
+     */
+    protected function sendProductShouldBeError(array $trace, string $message, int $code): JsonResponse
+    {
+        throw new HttpResponseException(response([
+            'errors' => [
+                'message' => [
+                    'Produk ' . $message . ' dalam keranjang'
+                ],
+            ],
+            'meta' => [
+                'status_code' => $code,
+                'message' => $code === 409 ? 'Conflict' : 'Not Found',
+                'trace' => [
+                    'File' => $trace['filename'],
+                    'Line' => $trace['line'],
+                ],
+            ],
+        ])->setStatusCode($code));
     }
 }
