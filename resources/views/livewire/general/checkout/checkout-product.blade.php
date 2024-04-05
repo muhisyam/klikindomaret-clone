@@ -1,38 +1,37 @@
-<section class="rounded-lg p-6 bg-white">
-    <table class="w-full" wire:init="loadContent">
+<section class="space-y-6 rounded-lg p-6 bg-white" wire:init="loadContent">
+
+    @forelse ($products as $retailerName => $productByGroup)
+
+    @php
+        $retailerIcon      = $retailerName !== 'Toko Indomaret' ? $retailerName : 'Store';
+        $totalEachRetailer = 0;
+    @endphp
+
+    <table class="w-full">
         <thead>
             <tr>
-    
-                @php
-                    //TODO: fix this 
-                    $retailerIcon = 'store';
-                @endphp
-            
                 <th colspan="5" class="border-b border-light-gray-100 rounded-t-md bg-light-gray-50">
                     <div class="py-2 px-4 flex items-center gap-2 text-sm">
-                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-store.webp') }}"/>
-                        <span @class([
+                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($retailerIcon) . '.webp') }}"/>
+                        <h2 @class([
                             'font-bold',
-                            'text-secondary' => $retailerIcon !== 'warehouse',
-                            'text-[#00b110]' => $retailerIcon === 'warehouse',
-                        ])>Toko Indomaret</span>
-                        <span>({{ count($products) }} Item)</span>
-                        {{ session('coba2') }}
+                            'text-secondary' => $retailerName === 'Toko Indomaret',
+                            'text-[#00b110]' => $retailerName === 'Warehouse',
+                        ])>{{ $retailerName }}</h2>
+                        <span>({{ count($productByGroup) }} Item)</span>
                     </div>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr class="relative" wire:loading wire:loading.class="!table-row" wire:target="updateQuantity">
-                <td colspan="5" class="absolute top-0 left-0 z-10 h-[{{ count($products) * 96 }}px] w-full grid place-items-center bg-light-gray-200/50">
-                    <span class="inline-flex loader-spin"></span>
-                </td>
-            </tr>
-        @forelse ($products as $index => $product)
-            
-        @php
-            $discountPercent = round((($product['normal_price'] - $product['discount_price']) / $product['normal_price']) * 100);
-        @endphp
+
+        @foreach ($productByGroup as $product)
+
+            @php
+                $discountPercent   = round((($product['normal_price'] - $product['discount_price']) / $product['normal_price']) * 100);
+                $totalEachProduct  = $product['quantity'] * ($product['discount_price'] ?? $product['normal_price']);
+                $totalEachRetailer += $totalEachProduct;
+            @endphp
     
             <tr class="relative border-b border-light-gray-100 last:border-b-0">
                 <td class="py-4 ps-4 w-1/12">
@@ -66,23 +65,12 @@
                 </td>
                 
                 <td class="py-4 w-2/16 space-y-2">
-                    {{-- <div class="flex items-center justify-center">
-                        <x-button class="shrink-0 h-8 w-8 group hover:bg-secondary" buttonStyle="outline-secondary" wire:click="updateQuantity('sub', '{{ $product['product_slug'] }}')">
-                            <x-icon class="mx-auto w-2.5" src="{{ asset('img/icons/icon-minus.webp') }}" iconStyle="hover-white"/>
-                        </x-button>
-                        
-                        <x-input-field class="mx-1 !h-8 text-center" name="quantity[]" wire:model="quantity.{{ $product['product_slug'] }}"/>
-                        
-                        <x-button class="shrink-0 h-8 w-8 group hover:bg-secondary" buttonStyle="outline-secondary" wire:click="updateQuantity('add', '{{ $product['product_slug'] }}')">
-                            <x-icon class="mx-auto w-2.5 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}" iconStyle="hover-white"/>
-                        </x-button>
-                    </div> --}}
                     <div class="flex items-center justify-center">
                         <x-button class="shrink-0 h-8 w-8 group hover:bg-secondary" buttonStyle="outline-secondary" qty="sub">
                             <x-icon class="mx-auto w-2.5" src="{{ asset('img/icons/icon-minus.webp') }}" iconStyle="hover-white"/>
                         </x-button>
                         
-                        <x-input-field class="mx-1 !h-8 text-center" name="quantity[]" wire:model="quantity.{{ $product['product_slug'] }}"/>
+                        <x-input-field class="mx-1 !h-8 text-center" name="quantity[]" wire:model="quantity.{{ $retailerName . '.' . $product['product_slug'] }}"/>
                         
                         <x-button class="shrink-0 h-8 w-8 group hover:bg-secondary" buttonStyle="outline-secondary" qty="add">
                             <x-icon class="mx-auto w-2.5 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}" iconStyle="hover-white"/>
@@ -91,42 +79,48 @@
                     {{-- <div class="text-[#BF1F1F] text-[10px] text-center">Persediaan tidak mencukupi</div> --}}
                 </td>
                 
-                <td class="py-4 pe-4 w-2/12 text-end text-sm">Rp {{ formatCurrencyIDR($subTotal[$index]) }}</td>
+                <td class="py-4 pe-4 w-2/12 text-end text-sm">Rp {{ formatCurrencyIDR($totalEachProduct) }}</td>
                 
-                <td class="absolute right-0 top-0">
+                <td class="absolute right-0 top-0 p-0">
                     <x-button class="rounded-bl-full ps-6 pe-4 h-7 bg-red-600 text-white">
                         <x-icon class="w-3" src="{{ asset('img/icons/icon-delete.webp') }}" iconStyle="white"/>
                     </x-button>
                 </td>
             </tr>
         
-        @empty
-            <tr>
-                <td>Loading...</td>
-            </tr>
-        @endforelse
+        @endforeach
+
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="5" class="border-t border-light-gray-100 rounded-b-md bg-light-gray-50 text-sm font-bold">
                     <div class="py-2 flex justify-end">
                         <div class="w-5/6 text-end">Subtotal:</div>
-                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($grandTotal) }}</div>
+                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($totalEachRetailer) }}</div>
                     </div>
                 </td>
             </tr>
         </tfoot>
     </table>
+
+    @empty
+
+    <div>Belum ada product dikeranjang</div>
+
+    @endforelse
+
 </section>
     
 @push('scripts')
-    <script>
-        // import { handleInputProductQty } from "{{ asset('js/' . config('view.js_component')) }}";
+    <script type="module">
+        import { toggleDropdown, toggleModal } from "{{ asset('js/' . config('view.js_component')) }}";
 
         document.addEventListener('livewire:initialized', () => {
             @this.on('content-loaded', event => {
                 setTimeout(() => {
                     handleInputProductQty();
+                    toggleDropdown();
+                    toggleModal();
                 }, 1);
             });
         });
