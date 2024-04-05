@@ -12,10 +12,9 @@ class CheckoutProduct extends Component
     protected object $clientAction;
     protected string $endpoint;
 
-    public mixed $products = [];
+    public array $products = [];
     public array $quantity = [];
-    public array $subTotal = [];
-    public int $grandTotal = 0;
+    public int $grandTotal = 0; 
 
     public function __construct(
     ) {
@@ -41,21 +40,26 @@ class CheckoutProduct extends Component
 
     public function loadContent()
     {
-        // TODO: fix this loop now
-        $this->products = $this->getDataUserCartProducts()['data'];
+        $this->products      = $this->getDataUserCartProducts()['data'];
+        $eachProductDiscount = 0;
 
-        foreach ($this->products as $index => $product) {
-            // This quantity prop, the key is the product slug 
-            // then will be like --> $quantity = ['slug' => 'quantity', etc...]
-            $this->quantity   = array_merge($this->quantity, [$product['product_slug'] => $product['quantity']]);
+        foreach ($this->products as $retailerName => $productByGroup) {
+            $this->quantity[$retailerName] = [];
 
-            // But in this prop the key is index of loop, not the product slug 
-            // so you have to pay attention in blade view
-            $this->subTotal[] = ($product['discount_price'] ?? $product['normal_price']) * $product['quantity'];
-            $this->grandTotal += $this->subTotal[$index];
+            foreach ($productByGroup as $product) {
+                // This quantity prop, grouped by supplier name then has the product inside it. The key each product using product slug. 
+                // The prop will be like --> ['Warehouse' => ['product_slug' => 'quantity', etc...]]
+                $this->quantity[$retailerName] = array_merge($this->quantity[$retailerName], [$product['product_slug'] => $product['quantity']]);
+                $eachProductPrice              = $product['quantity'] * ($product['discount_price'] ?? $product['normal_price']);
+                $eachProductDiscount          += $product['quantity'] * ($product['normal_price'] - ($product['discount_price'] ?? $product['normal_price']));
+                $this->grandTotal             += $eachProductPrice;
+            }
         }
 
-        $this->dispatch('content-loaded');
+        $this->dispatch('content-loaded', summary: [
+            'grandTotal'          => $this->grandTotal,
+            'eachProductDiscount' => $eachProductDiscount,
+        ]);
     }
 
     public function updateQuantity($updateMethod, $productSlug)
@@ -83,8 +87,6 @@ class CheckoutProduct extends Component
 
     public function render()
     {
-        // $this->products = $this->getDataUserCartProducts()['data'];
-
         return view('livewire.general.checkout.checkout-product');
     }
 }
