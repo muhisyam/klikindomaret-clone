@@ -26,6 +26,50 @@
         <tbody>
 
         @foreach ($productByGroup as $product)
+            
+            @if ($loop->first)
+                <tr>
+                    <td colspan="5" class="py-4 border-b border-light-gray-100">
+                        <x-dropdown section="user-account-ewallet-{{ Str::slug($retailerName) }}">
+                            <x-slot:trigger class="p-4 flex-col gap-2 w-full bg-light-gray-50">
+                                <div class="flex items-center gap-2 w-full" data-delivery-type="">
+                                    <x-icon class="mr-auto w-40" src="{{ asset('img/checkout/choose-time.webp') }}"/>
+                                    <div>Rp {{ formatCurrencyIDR(5000) }}</div>
+                                    <x-icon class="w-4 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
+                                </div>
+                                <div class="w-full text-left text-sm" data-delivery-info="">Hari ini, 07 April 2024, 16:00-16:59</div>
+                            </x-slot>
+        
+                            <x-slot:content class="overflow-hidden drop-shadow-md w-full bg-white before:hidden">
+                                <x-button class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
+                                    <x-icon class="w-40" src="{{ asset('img/checkout/choose-reguler.webp') }}"/>
+                                    <div class="text-left text-sm">Tidak tersedia untuk pesanan dari penjual ini</div>
+                                </x-button>
+
+                                <x-modal section="choose-time">
+                                    <x-slot:trigger class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
+                                        <x-icon class="w-40" src="{{ asset('img/checkout/choose-time.webp') }}"/>
+                                        <div class="text-left text-sm">Pilih sendiri waktu yang kamu mau</div>
+                                    </x-slot>
+                
+                                    <x-slot:content>
+                                    </x-slot>
+                                </x-modal>
+
+                                <x-button class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
+                                    <x-icon class="w-40" src="{{ asset('img/checkout/choose-sameday.webp') }}"/>
+                                    <div class="text-left text-sm">Tidak tersedia untuk pesanan dari penjual ini</div>
+                                </x-button>
+
+                                <x-button class="!rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
+                                    <x-icon class="w-40" src="{{ asset('img/checkout/choose-express.webp') }}"/>
+                                    <div class="text-left text-sm">Pesanan dikirim maksimal 1 jam setelah pembayaran lunas</div>
+                                </x-button>
+                            </x-slot>
+                        </x-dropdown>   
+                    </td>
+                </tr>
+            @endif
 
             @php
                 $discountPercent   = round((($product['normal_price'] - $product['discount_price']) / $product['normal_price']) * 100);
