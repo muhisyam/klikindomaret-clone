@@ -7,14 +7,11 @@
         <div class="font-bold">Pilih Waktu</div>
     </section>
 
-    <section class="p-4 flex gap-4 border-b border-light-gray-100 ">
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-today" buttonStyle="secondary" value="Hari ini, {{ date('j') }} {{ date('M') }}"/>
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-tomorrow" buttonStyle="outline-secondary" value="Besok, {{ date('j') + 1 }} {{ date('M') }}"/>
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-after-tomorrow" buttonStyle="outline-secondary" value="Ini perbaikin,  {{ date('j') + 2 }} {{ date('M') }}"/>
-    </section>
-
     @php
-        $openingHours = [
+        $today         = today()->format('j M');
+        $tomorrow      = today()->addDay()->format('j M');
+        $afterTomorrow = today()->addDays(2)->format('l, j M');
+        $openingHours  = [
             '07.00 - 07.59', '08.00 - 08.59', '09.00 - 09.59',  '10.00 - 10.59',
             '11.00 - 11.59', '12.00 - 12.59', '13.00 - 13.59',  '14.00 - 14.59',
             '15.00 - 15.59', '16.00 - 16.59', '17.00 - 17.59',  '18.00 - 18.59',
@@ -22,15 +19,21 @@
         ];
     @endphp
 
+    <section class="p-4 flex gap-4 border-b border-light-gray-100 ">
+        <x-button class="py-2 px-4 text-sm" data-section-target="date-today" buttonStyle="secondary" value="Hari ini, {{ $today }}"/>
+        <x-button class="py-2 px-4 text-sm" data-section-target="date-tomorrow" buttonStyle="outline-secondary" value="Besok, {{ $tomorrow }}"/>
+        <x-button class="py-2 px-4 text-sm" data-section-target="date-after-tomorrow" buttonStyle="outline-secondary" value="{{ $afterTomorrow }}"/>
+    </section>
+
     <section class="p-4 grid grid-cols-2 gap-4" data-section="date-today">
 
     @foreach ($openingHours as $index => $openingHour)
 
     @php
-        $currentHour   = date('H');
-        $strHour       = explode(' - ', $openingHour)[0];
-        $hourInFormat  = date('H', strtotime($strHour));
-        $isPastTimeNow = $currentHour > $hourInFormat;
+        $currentHour      = now();
+        $intOpenHour      = (int) explode(' - ', $openingHour)[0];
+        $openHourInFormat = \Carbon\Carbon::createFromTime($intOpenHour);
+        $isPastTimeNow    = $currentHour->gt($openHourInFormat);
     @endphp
 
         <div class="rounded-md border border-light-gray-100 pe-2 ps-4 flex items-center justify-between h-12 w-96 text-sm{{ $isPastTimeNow ? ' bg-light-gray-100' : '' }}">
