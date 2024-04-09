@@ -101,16 +101,20 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 ---------------------==============--------------------- 
 */
 
+[data-swiper-carousel] .swiper-slide:not(.swiper-slide-active) {
+    opacity: 0.4;
+}
+
 .swiper-button-next::after,
 .swiper-button-prev::after {
     content: "";
 }
 
-.heroes-banner .swiper-lazy-preloader {
+.swiper-lazy-preloader {
     top: 150px;
 }
 
-.heroes-banner .swiper-pagination-bullet {
+.swiper-pagination-bullet {
     width: 10px;
     height: 10px;
     background: #fff;
@@ -119,7 +123,7 @@ button:disabled { opacity: .5; cursor: not-allowed;}
     margin: 0 2px !important;
 }
 
-.heroes-banner .swiper-pagination-bullet-active {
+.swiper-pagination-bullet-active {
     opacity: 1;
     background: #0079c2 !important;
 }
@@ -192,19 +196,6 @@ div[data-trigger-dropdown]::before {
 ---------=============    HOME    =============---------
 ########################################################
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
---------------------================--------------------
-==================== Heroes Section ====================
---------------------================-------------------- 
-*/
-
-.heroes-banner .swiper-slide {
-    opacity: 0.4;
-}
-
-.heroes-banner .swiper-slide.swiper-slide-active {
-    opacity: 1;
-}
 
 /* 
 --------------------=================--------------------
@@ -385,11 +376,8 @@ div[data-trigger-dropdown]::before {
     background-size: cover;
 }
 
-.detail-product .right-side .product-info-wrapper .product-spec-wrapper.hide {
+ul[data-product-desc].hide {
     padding-bottom: 50px;
-}
-
-.detail-product .right-side .product-info-wrapper .product-spec-wrapper.hide .product-spec-content {
     max-height: 200px;
     overflow: hidden;
     padding-bottom: 0px;
