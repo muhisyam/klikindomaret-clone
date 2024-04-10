@@ -173,6 +173,7 @@
                     toggleModal();
                     switchDateDelivery();
                     changeDateDeliveryInfo();
+                    pickDateDelivery();
                 }, 1);
             });
         });
@@ -215,22 +216,38 @@
         }
 
         function changeDateDeliveryInfo() {
-            const dateDelivery = document.querySelector('#date-delivery-picker').value;
-            const timeDelivery = document.querySelector('#time-delivery-picker').value;
-            const deliveryInfo = document.querySelector('[data-delivery-info]');
-            const currentDay   = (new Date()).getDate();
-            const deliveryDay  = dateDelivery.split(" ")[0];
-            let deliveryInfo   = '';
+            const dateDelivery  = document.querySelector('#date-delivery-picker').value;
+            const timeDelivery  = document.querySelector('#time-delivery-picker').value;
+            const deliveryInfo  = document.querySelector('[data-delivery-info]');
+            const currentDay    = (new Date()).getDate();
+            const deliveryDay   = dateDelivery.split(" ")[0];
+            let willBeDelivered = '';
             
             if ((deliveryDay - currentDay) == '0') {
-                deliveryInfo = 'Hari ini';
+                willBeDelivered = 'Hari ini';
             } else if ((deliveryDay - currentDay) == '1') {
-                deliveryInfo = 'Besok';
+                willBeDelivered = 'Besok';
             } else {
-                deliveryInfo = 'Lusa';
+                willBeDelivered = 'Lusa';
             }
 
-            deliveryInfo.innerHTML = `${deliveryInfo}, ${dateDelivery}, ${timeDelivery}`;
+            deliveryInfo.innerHTML = `${willBeDelivered}, ${dateDelivery}, ${timeDelivery}`;
+        }
+
+        function pickDateDelivery() {
+            const buttonDatePicker = document.querySelectorAll('button[data-delivery-date]');
+
+            buttonDatePicker.forEach(btnDate => {
+                btnDate.addEventListener('click', () => {
+                    const dataDate     = btnDate.getAttribute('data-delivery-date');
+                    const dataTime     = btnDate.getAttribute('data-delivery-time');
+                    const dateDelivery = document.querySelector('#date-delivery-picker');
+                    const timeDelivery = document.querySelector('#time-delivery-picker');
+
+                    dateDelivery.value = dataDate;
+                    timeDelivery.value = dataTime;
+                })
+            })
         }
     </script>
 @endpush
