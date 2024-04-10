@@ -172,6 +172,7 @@
                     toggleDropdown();
                     toggleModal();
                     switchDateDelivery();
+                    changeDateDeliveryInfo();
                 }, 1);
             });
         });
@@ -211,7 +212,25 @@
                 sectionSwitch.classList.add('hidden');
                 sectionSwitch.classList.remove('grid');
             })
+        }
 
+        function changeDateDeliveryInfo() {
+            const dateDelivery = document.querySelector('#date-delivery-picker').value;
+            const timeDelivery = document.querySelector('#time-delivery-picker').value;
+            const deliveryInfo = document.querySelector('[data-delivery-info]');
+            const currentDay   = (new Date()).getDate();
+            const deliveryDay  = dateDelivery.split(" ")[0];
+            let deliveryInfo   = '';
+            
+            if ((deliveryDay - currentDay) == '0') {
+                deliveryInfo = 'Hari ini';
+            } else if ((deliveryDay - currentDay) == '1') {
+                deliveryInfo = 'Besok';
+            } else {
+                deliveryInfo = 'Lusa';
+            }
+
+            deliveryInfo.innerHTML = `${deliveryInfo}, ${dateDelivery}, ${timeDelivery}`;
         }
     </script>
 @endpush
