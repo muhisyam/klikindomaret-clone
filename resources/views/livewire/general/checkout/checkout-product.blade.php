@@ -163,7 +163,7 @@
     
 @push('scripts')
     <script type="module">
-        import { toggleDropdown, toggleModal } from "{{ asset('js/' . config('view.js_component')) }}";
+        import { handleInputProductQty, toggleDropdown, toggleModal } from "{{ asset('js/' . config('view.js_component')) }}";
 
         document.addEventListener('livewire:initialized', () => {
             @this.on('content-loaded', event => {
@@ -175,32 +175,6 @@
                 }, 1);
             });
         });
-
-        function handleInputProductQty() { 
-            const btnHandlerQty = document.querySelectorAll('button[qty]');
-
-            btnHandlerQty.forEach(btn => {
-                btn.addEventListener('click', el => {
-                    let inputQty, qtyValue;
-                    const btnQty        = el.target.closest('button') ?? event.target;
-                    const btnAttrMethod = btnQty.getAttribute('qty');
-
-                    switch (btnAttrMethod) {
-                        case 'sub':
-                            inputQty       = btnQty.nextElementSibling;
-                            qtyValue       = parseInt(inputQty.value);
-                            inputQty.value = qtyValue > 1 ? qtyValue - 1 : qtyValue;
-                            break;
-                    
-                        default:
-                            inputQty       = btnQty.previousElementSibling;
-                            qtyValue       = parseInt(inputQty.value);
-                            inputQty.value = qtyValue + 1;
-                            break;
-                    }
-                })
-            })
-        }
 
         function switchDateDelivery() { 
             const btnSwitchDateList = document.querySelectorAll('button[data-section-target]');
