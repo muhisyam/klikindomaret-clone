@@ -8,11 +8,11 @@
     </section>
 
     @php
-        $today            = today()->format('j M');
-        $tomorrow         = today()->addDay()->format('j M');
-        $afterTomorrow    = today()->addDays(2)->format('j M');
+        $today            = today()->format('j M Y');
+        $tomorrow         = today()->addDay()->format('j M Y');
+        $afterTomorrow    = today()->addDays(2)->format('j M Y');
         $dayAfterTomorrow = today()->addDays(2)->format('l');
-        $isHasDefaultDate = false;
+        $defaultDate      = null;
         $openingHours     = [
             '07.00 - 07.59', '08.00 - 08.59', '09.00 - 09.59',  '10.00 - 10.59',
             '11.00 - 11.59', '12.00 - 12.59', '13.00 - 13.59',  '14.00 - 14.59',
@@ -22,9 +22,9 @@
     @endphp
 
     <section class="p-4 flex gap-4 border-b border-light-gray-100 ">
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-today" buttonStyle="secondary" value="Hari ini, {{ $today }}"/>
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-tomorrow" buttonStyle="outline-secondary" value="Besok, {{ $tomorrow }}"/>
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-after-tomorrow" buttonStyle="outline-secondary" value="{{ $dayAfterTomorrow }}, {{ $afterTomorrow }}"/>
+        <x-button class="py-2 px-4 text-sm" data-section-target="date-today" buttonStyle="secondary" value="Hari ini, {{ str_replace('2024', '', $today) }}"/>
+        <x-button class="py-2 px-4 text-sm" data-section-target="date-tomorrow" buttonStyle="outline-secondary" value="Besok, {{ str_replace('2024', '', $tomorrow) }}"/>
+        <x-button class="py-2 px-4 text-sm" data-section-target="date-after-tomorrow" buttonStyle="outline-secondary" value="{{ $dayAfterTomorrow }}, {{ str_replace('2024', '', $afterTomorrow) }}"/>
     </section>
 
     <section class="p-4 grid grid-cols-2 gap-4" data-section="date-today">
@@ -34,11 +34,11 @@
     @php
         $currentHour      = now();
         $intOpenHour      = (int) explode(' - ', $openingHour)[0];
-        $openHourInFormat = \Carbon\Carbon::createFromTime($intOpenHour);
+        $openHourInFormat = \Carbon\Carbon::createFromTime($intOpenHour + 1);
         $isPastTimeNow    = $currentHour->gt($openHourInFormat);
-        $defaultDate      = null;
+        $isHasDefaultDate = false;
 
-        if (! $isPastTimeNow && ! $isHasDefaultDate) { 
+        if (! $isPastTimeNow && $defaultDate === null) { 
             $defaultDate      = $openingHour;
             $isHasDefaultDate = true;
         }
@@ -47,7 +47,7 @@
         <div class="rounded-md border border-light-gray-100 pe-2 ps-4 flex items-center justify-between h-12 w-96 text-sm{{ $isPastTimeNow ? ' bg-light-gray-100' : '' }}">
             <div class="font-bold">{{ $openingHour }}</div>
         @unless ($isPastTimeNow)
-            <x-button class="!rounded py-1 w-24 justify-center text-sm" data-delivery-date="{{ $today }}" data-delivery-time="{{ $openingHour }}" buttonStyle="{{ $defaultDate !== null ? 'secondary' : 'outline-secondary' }}" value="{{ $defaultDate !== null ? 'Terpilih' : 'Pilih jam ini' }}"/>
+            <x-button class="!rounded py-1 w-24 justify-center text-sm" data-delivery-date="{{ $today }}" data-delivery-time="{{ $openingHour }}" buttonStyle="{{ $isHasDefaultDate ? 'secondary' : 'outline-secondary' }}" value="{{ $isHasDefaultDate ? 'Terpilih' : 'Pilih jam ini' }}"/>
         @endunless
         </div>
     @endforeach
@@ -75,4 +75,7 @@
     @endforeach
 
     </section>
+    
+    <input id="date-delivery-picker" type="hidden" value="{{ $today }}">
+    <input id="time-delivery-picker" type="hidden" value="{{ $defaultDate }}">
 </div>
