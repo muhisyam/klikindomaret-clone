@@ -2,9 +2,9 @@
 
 @php
     $style = match ($buttonStyle) {
-        'secondary' => ' bg-secondary text-white',
+        'secondary'         => ' border border-secondary bg-secondary text-white',
         'outline-secondary' => ' border border-secondary bg-white text-secondary',
-        'custom' => '',
+        'custom'            => '',
     }
 @endphp
 
