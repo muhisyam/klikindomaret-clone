@@ -248,16 +248,23 @@
             const dateDelivery  = document.querySelector('#date-delivery-picker').value;
             const timeDelivery  = document.querySelector('#time-delivery-picker').value;
             const deliveryInfo  = document.querySelector('[data-delivery-info]');
-            const currentDay    = (new Date()).getDate();
+            const dateJS        = new Date();
+            const currentDay    = dateJS.getDate();
             const deliveryDay   = dateDelivery.split(" ")[0];
+            const dayDifference = deliveryDay - currentDay;
             let willBeDelivered = '';
             
-            if ((deliveryDay - currentDay) == '0') {
-                willBeDelivered = 'Hari ini';
-            } else if ((deliveryDay - currentDay) == '1') {
+            if (dayDifference >= '2') {
+                const weekday = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at",'Sabtu'];
+                
+                willBeDelivered = weekday[dateJS.getDay() + dayDifference];
+            
+            } else if (dayDifference == '1') {
                 willBeDelivered = 'Besok';
+            
             } else {
-                willBeDelivered = 'Lusa';
+                willBeDelivered = 'Hari ini';
+
             }
 
             deliveryInfo.innerHTML = `${willBeDelivered}, ${dateDelivery}, ${timeDelivery}`;
