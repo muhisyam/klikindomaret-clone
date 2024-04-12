@@ -8,10 +8,10 @@
     </section>
 
     @php
-        $today            = today()->format('j M Y');
-        $tomorrow         = today()->addDay()->format('j M Y');
-        $afterTomorrow    = today()->addDays(2)->format('j M Y');
-        $dayAfterTomorrow = today()->addDays(2)->format('l');
+        $today            = formatToIdnLocale(today(), 'j M Y');
+        $tomorrow         = formatToIdnLocale(today()->addDay(), 'j M Y');
+        $afterTomorrow    = formatToIdnLocale(today()->addDays(2), 'j M Y');
+        $dayAfterTomorrow = formatToIdnLocale(today()->addDays(2), 'l');
         $defaultDate      = null;
         $openingHours     = [
             '07.00 - 07.59', '08.00 - 08.59', '09.00 - 09.59',  '10.00 - 10.59',

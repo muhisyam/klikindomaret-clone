@@ -1,5 +1,7 @@
 <?php 
 
+use Carbon\Carbon;
+
 function formatNumber($price) 
 {
     return number_format($price, 0, '.', '.');
@@ -27,4 +29,9 @@ function formatFullname(string $fullname): string
     $formatedFullname = $abbreviatingFirstName . ' ' . end($countName); 
 
     return $formatedFullname;
+}
+
+function formatToIdnLocale(Carbon $datetime, string $formatDate = ''): string
+{
+    return $datetime->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format($formatDate);
 }
