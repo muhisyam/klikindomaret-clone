@@ -154,7 +154,7 @@
     @endforelse
 
     <div id="components-container-checkout" class="!m-0">
-        @include('general.checkout.date-delivery-modal')
+        @include('general.checkout.modal-date-delivery')
 
         <div separate-modal-overlay=""></div>
     </div>
