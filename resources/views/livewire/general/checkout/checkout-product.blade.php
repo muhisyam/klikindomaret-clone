@@ -46,13 +46,20 @@
                                     <div class="text-left text-sm">Tidak tersedia untuk pesanan dari penjual ini</div>
                                 </x-button>
 
-                                <x-modal section="choose-time-{{ Str::slug($retailerName) }}" withOverlay="false">
+                                @php 
+                                    $section = 'choose-time-' . Str::slug($retailerName);
+                                @endphp
+
+                                <x-modal :section="$section" withOverlay="false">
                                     <x-slot:trigger class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
                                         <x-icon class="w-40" src="{{ asset('img/checkout/choose-time.webp') }}"/>
                                         <div class="text-left text-sm">Pilih sendiri waktu yang kamu mau</div>
                                     </x-slot>
                 
                                     <x-slot:content class="separated-modal">
+                                    @push('modal-date-delivery')
+                                        @include('general.checkout.modal-date-delivery', ['section' => $section])
+                                    @endpush
                                     </x-slot>
                                 </x-modal>
 
@@ -154,8 +161,7 @@
     @endforelse
 
     <div id="components-container-checkout" class="!m-0">
-        @include('general.checkout.modal-date-delivery')
-
+        @stack('modal-date-delivery')
         <div separate-modal-overlay=""></div>
     </div>
 
