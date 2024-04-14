@@ -1,4 +1,4 @@
-<div class="modal rounded-xl w-max bg-white" data-trigger-modal="choose-time-toko-indomaret">
+<div class="modal rounded-xl w-max bg-white" data-trigger-modal="{{ $section }}">
     <section class="flex items-center justify-center border-b border-light-gray-100 p-3">
         <x-button class="absolute top-0 left-0 h-12 w-12" data-target-modal="choose-time-toko-indomaret" :preventClose="false">
             <x-icon class="w-3 m-auto" src="{{ asset('img/icons/icon-header-arrow-left.webp') }}"/>
@@ -22,12 +22,12 @@
     @endphp
 
     <section class="p-4 flex gap-4 border-b border-light-gray-100 ">
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-today" buttonStyle="secondary" value="Hari ini, {{ str_replace('2024', '', $today) }}"/>
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-tomorrow" buttonStyle="outline-secondary" value="Besok, {{ str_replace('2024', '', $tomorrow) }}"/>
-        <x-button class="py-2 px-4 text-sm" data-section-target="date-after-tomorrow" buttonStyle="outline-secondary" value="{{ $dayAfterTomorrow }}, {{ str_replace('2024', '', $afterTomorrow) }}"/>
+        <x-button class="py-2 px-4 text-sm" data-retailer="{{ $retailerName }}" data-section-target="date-today" buttonStyle="secondary" value="Hari ini, {{ str_replace('2024', '', $today) }}"/>
+        <x-button class="py-2 px-4 text-sm" data-retailer="{{ $retailerName }}" data-section-target="date-tomorrow" buttonStyle="outline-secondary" value="Besok, {{ str_replace('2024', '', $tomorrow) }}"/>
+        <x-button class="py-2 px-4 text-sm" data-retailer="{{ $retailerName }}" data-section-target="date-after-tomorrow" buttonStyle="outline-secondary" value="{{ $dayAfterTomorrow }}, {{ str_replace('2024', '', $afterTomorrow) }}"/>
     </section>
 
-    <section class="p-4 grid grid-cols-2 gap-4" data-section="date-today">
+    <section class="p-4 grid grid-cols-2 gap-4" data-retailer="{{ $retailerName }}" data-section="date-today">
 
     @foreach ($openingHours as $index => $openingHour)
 
@@ -54,7 +54,7 @@
 
     </section>
     
-    <section class="p-4 hidden grid-cols-2 gap-4" data-section="date-tomorrow">
+    <section class="p-4 hidden grid-cols-2 gap-4" data-retailer="{{ $retailerName }}" data-section="date-tomorrow">
 
     @foreach ($openingHours as $index => $openingHour)
         <div class="rounded-md border border-light-gray-100 pe-2 ps-4 flex items-center justify-between h-12 w-96 text-sm">
@@ -65,7 +65,7 @@
 
     </section>
     
-    <section class="p-4 hidden grid-cols-2 gap-4" data-section="date-after-tomorrow">
+    <section class="p-4 hidden grid-cols-2 gap-4" data-retailer="{{ $retailerName }}" data-section="date-after-tomorrow">
 
     @foreach ($openingHours as $index => $openingHour)
         <div class="rounded-md border border-light-gray-100 pe-2 ps-4 flex items-center justify-between h-12 w-96 text-sm">
