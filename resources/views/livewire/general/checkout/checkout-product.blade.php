@@ -46,9 +46,7 @@
                                     <div class="text-left text-sm">Tidak tersedia untuk pesanan dari penjual ini</div>
                                 </x-button>
 
-                                @php 
-                                    $section = 'choose-time-' . Str::slug($retailerName);
-                                @endphp
+                                @php  $section = 'choose-time-' . Str::slug($retailerName) @endphp
 
                                 <x-modal :section="$section" withOverlay="false">
                                     <x-slot:trigger class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
@@ -58,7 +56,10 @@
                 
                                     <x-slot:content class="separated-modal">
                                     @push('modal-date-delivery')
-                                        @include('general.checkout.modal-date-delivery', ['section' => $section])
+                                        @include('general.checkout.modal-date-delivery', [
+                                            'section'      => $section,
+                                            'retailerName' => $retailerName,
+                                        ])
                                     @endpush
                                     </x-slot>
                                 </x-modal>
@@ -190,10 +191,11 @@
             btnSwitchDateList.forEach(btnSwitch => {
                 btnSwitch.addEventListener('click', () => {
                     const targetIndetity = btnSwitch.getAttribute('data-section-target');
-                    const targetEl       = document.querySelector(`section[data-section="${targetIndetity}"]`);
+                    const targetRetailer = btnSwitch.getAttribute('data-retailer');
+                    const targetEl       = document.querySelector(`section[data-retailer="${targetRetailer}"][data-section="${targetIndetity}"]`);
                     const isTargetHidden = targetEl.classList.contains('hidden');
 
-                    hideOpenedDateSection();
+                    hideOpenedDateSection(targetRetailer);
 
                     if (isTargetHidden) {
                         btnSwitch.classList.add('bg-secondary', 'text-white');
@@ -206,9 +208,9 @@
             })
         }
 
-        function hideOpenedDateSection() {
-            const btnSwitchDateList    = document.querySelectorAll('button[data-section-target]');
-            const sectionModalDateList = document.querySelectorAll('section[data-section*="date-"]');
+        function hideOpenedDateSection(retailerName) {
+            const btnSwitchDateList    = document.querySelectorAll(`button[data-retailer="${retailerName}"]`);
+            const sectionModalDateList = document.querySelectorAll(`section[data-retailer="${retailerName}"]`);
 
             btnSwitchDateList.forEach(btnSwitch => {
                 btnSwitch.classList.add('border', 'border-secondary', 'bg-white', 'text-secondary');
