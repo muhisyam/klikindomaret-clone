@@ -290,29 +290,6 @@
 
                 deliveryInfo.innerHTML = `${willBeDelivered}, ${dateValue}, ${timeValue}`;
             })
-            // const dateDelivery  = document.querySelector('#date-delivery-picker').value;
-            // const timeDelivery  = document.querySelector('#time-delivery-picker').value;
-            // const deliveryInfo  = document.querySelector('[data-delivery-info=]');
-            // const dateJS        = new Date();
-            // const currentDay    = dateJS.getDate();
-            // const deliveryDay   = dateDelivery.split(" ")[0];
-            // const dayDifference = deliveryDay - currentDay;
-            // let willBeDelivered = '';
-            
-            // if (dayDifference >= '2') {
-            //     const weekday = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at",'Sabtu'];
-                
-            //     willBeDelivered = weekday[dateJS.getDay() + dayDifference];
-            
-            // } else if (dayDifference == '1') {
-            //     willBeDelivered = 'Besok';
-            
-            // } else {
-            //     willBeDelivered = 'Hari ini';
-
-            // }
-
-            // deliveryInfo.innerHTML = `${willBeDelivered}, ${dateDelivery}, ${timeDelivery}`;
         }
     </script>
 @endpush
