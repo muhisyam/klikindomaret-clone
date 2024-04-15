@@ -31,9 +31,9 @@
         
         @if ($loop->first)
             <tr>
-                <td colspan="5" class="py-4 border-b border-light-gray-100">
+                <td colspan="5" class="p-0 border-b border-light-gray-100">
                     <x-dropdown section="user-account-ewallet-{{ $retailerSlug }}">
-                        <x-slot:trigger class="p-4 flex-col gap-2 w-full bg-light-gray-50">
+                        <x-slot:trigger class="!rounded-none p-4 flex-col gap-2 w-full bg-light-gray-50">
                             <div class="flex items-center gap-2 w-full" data-delivery-type="">
                                 <x-icon class="mr-auto w-40" src="{{ asset('img/checkout/choose-time.webp') }}"/>
                                 <div>Rp {{ formatCurrencyIDR(5000) }}</div>
