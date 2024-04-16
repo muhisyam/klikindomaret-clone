@@ -10,7 +10,7 @@
     <table class="w-full">
         <thead>
             <tr>
-                <th colspan="5" class="border-b border-light-gray-100 rounded-t-md bg-light-gray-50">
+                <th colspan="5" class="border-b-2 border-light-gray-100 rounded-t-md bg-light-gray-50">
                     <div class="py-2 px-4 flex items-center gap-2 text-sm">
                         <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($retailerIcon) . '.webp') }}"/>
                         <h2 @class([
@@ -176,7 +176,7 @@
         import { handleInputProductQty, toggleDropdown, toggleModal } from "{{ asset('js/' . config('view.js_component')) }}";
 
         document.addEventListener('livewire:initialized', () => {
-            @this.on('content-loaded', event => {
+            @this.on('run-js-content-loaded', event => {
                 setTimeout(() => {
                     handleInputProductQty();
                     toggleDropdown();
@@ -184,6 +184,7 @@
                     switchDateDelivery();
                     updateDateDeliveryInfo();
                     pickDateDelivery();
+                    detectChangesInProductQty();
                 }, 1);
             });
         });
@@ -289,6 +290,36 @@
                 }
 
                 deliveryInfo.innerHTML = `${willBeDelivered}, ${dateValue}, ${timeValue}`;
+            })
+        }
+
+        function detectChangesInProductQty() {
+            const qtyInputList      = document.querySelectorAll('input[name*="quantity"]');
+            const btnCheckoutList   = document.querySelectorAll('button[btn-checkout]');
+            const btnCheckoutPay    = btnCheckoutList[0];
+            const btnCheckoutUpdate = btnCheckoutList[1];
+            
+            qtyInputList.forEach((qtyInput, index) => {
+                // Save original value
+                qtyInput.dataset.originalValue = qtyInput.value;
+
+                qtyInput.addEventListener('change', function() {
+                    const isHasQtyChanges = [...qtyInputList].some(e => e.value !== e.dataset.originalValue);
+
+                    if (isHasQtyChanges) {
+                        const dataValue = [...qtyInputList].map(e => e.value);
+                        
+                        btnCheckoutPay.classList.add('hidden');
+                        btnCheckoutUpdate.classList.remove('hidden');
+
+                        return btnCheckoutUpdate.setAttribute('wire:click', `updateCart(${JSON.stringify(dataValue)})`);
+                    }
+
+                    btnCheckoutPay.classList.remove('hidden');
+                    btnCheckoutUpdate.classList.add('hidden');
+
+                    btnCheckoutUpdate.removeAttribute('wire:click');
+                })
             })
         }
     </script>
