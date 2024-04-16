@@ -5,6 +5,8 @@ namespace App\Livewire\General\Checkout;
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Web\General\CartController;
+use Illuminate\Support\Arr;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CheckoutProduct extends Component
@@ -38,7 +40,7 @@ class CheckoutProduct extends Component
         );
     }
 
-    public function loadContent()
+    public function loadContent($rerendering = false)
     {
         $this->products      = $this->getDataUserCartProducts()['data'];
         $eachProductDiscount = 0;
@@ -60,29 +62,32 @@ class CheckoutProduct extends Component
             'grandTotal'          => $this->grandTotal,
             'eachProductDiscount' => $eachProductDiscount,
         ]);
+
+        if (! $rerendering) {
+            $this->dispatch('run-js-content-loaded');
+        }
     }
 
-    public function updateQuantity($updateMethod, $productSlug)
+    #[On('qty-content-changed')]
+    public function updateQuantity($quantityChanged)
     {
-        $quantity = $this->quantity[$productSlug];
+        $index = 0;
+        $collapsedDataQtys = Arr::collapse($this->quantity);
 
-        if ($updateMethod == 'sub' && $quantity == 1) {
-            return;
+        foreach ($collapsedDataQtys as $productSlug => $qty) {
+            if ($qty != $quantityChanged[$index]) {
+                $updateCart['product_slug'] = $productSlug;
+                $updateCart['quantity']     = $quantityChanged[$index];
+                $updateCart['_method']      = 'put';
+                
+                app(CartController::class)->update($updateCart);
+            }
+
+            $index++;
         }
-
-        $quantity = match ($updateMethod) {
-            'sub' => $quantity - 1,
-            'add' => $quantity + 1,
-        };
-
-        $updateCart['product_slug'] = $productSlug;
-        $updateCart['quantity']     = $quantity;
-        $updateCart['_method']      = 'put';
-
-        app(CartController::class)->update($updateCart);
         
-        $this->reset('subTotal', 'grandTotal');
-        $this->loadContent();
+        $this->reset('grandTotal');
+        $this->loadContent(true);
     }
 
     public function render()
