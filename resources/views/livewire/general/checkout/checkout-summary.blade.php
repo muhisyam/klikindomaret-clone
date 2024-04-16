@@ -24,12 +24,15 @@
             <div>Rp {{ formatCurrencyIDR($grandTotal) }}</div>
         </div>
 
-        <x-button class="py-2 px-4 justify-center w-full text-sm" buttonStyle="secondary" value="Pilih Opsi Pembayaran"/>
-        {{-- <button class="w-full bg-[#0079C2] text-white text-sm text-center font-bold rounded py-2 px-4" data-page-name="" data-flag="" data-store-code="">Bayar</button> --}}
-        {{-- <button class="w-full flex items-center justify-center bg-[#0079C2] text-white text-sm font-bold rounded py-2 px-4">
-            <span class="icon leading-none me-2"><i class="ri-refresh-line"></i></span>
-            <span>Perbarui Keranjang</span>
-        </button> --}}
+    @if ($grandTotal == 0)
+        <x-button class="py-2 px-4 justify-center gap-2 w-full text-sm" buttonStyle="secondary">
+            <span class="loader-spin inset-0 inline-flex !h-4 !w-4 !bg-transparent after:!inset-0 after:!border-t-white"></span>
+            Memuat Keranjang
+        </x-button>
+    @endif
+    
+        <x-button class="py-2 px-4 justify-center w-full text-sm{{ $grandTotal == 0 ? ' hidden' : '' }}" btn-checkout="pay" buttonStyle="secondary" value="Pilih Opsi Pembayaran"/>
+        <x-button class="py-2 px-4 justify-center w-full text-sm hidden{{ $grandTotal == 0 ? ' hidden' : '' }}" btn-checkout="updateCart" buttonStyle="secondary" value="Perbarui Keranjang"/>
     </div>
 
     <div class="p-6 rounded-lg flex bg-white">
