@@ -4,8 +4,8 @@ export function toggleDropdown() {
     dropdownBtnList.forEach(triggerEl => {
         triggerEl.addEventListener('click', () => {
             const btnArrow = triggerEl.querySelector('img[data-arrow-dropdown]');
-            const triggerData = triggerEl.getAttribute('data-target-dropdown');
-            const targetEl = document.querySelector('div[data-trigger-dropdown="' + triggerData + '"]');
+            const targetIndetity = triggerEl.getAttribute('data-target-dropdown');
+            const targetEl = document.querySelector(`div[data-trigger-dropdown="${targetIndetity}"]`);
             const isTargetClosed = targetEl.classList.contains('hidden');
 
             hideOpenedDropdown(targetEl);
@@ -51,8 +51,8 @@ export function toggleModal() {
 
     modalBtnList.forEach(triggerEl => {
         triggerEl.addEventListener('click', () => {
-            const triggerData = triggerEl.getAttribute('data-target-modal');
-            const targetEl = document.querySelectorAll('div[data-trigger-modal*="' + triggerData + '"]');
+            const targetIndetity = triggerEl.getAttribute('data-target-modal');
+            const targetEl = document.querySelectorAll(`div[data-trigger-modal*="${targetIndetity}"]`);
 
             targetEl.forEach(el => {
                 const isTargetOpened = el.classList.contains('show');
@@ -85,7 +85,7 @@ export function hideOpenedComponentsFromOutside() {
         const isBtnClosedModal = ! triggerEl.matches('button[data-target-modal]');
         const isBtnSwitchModal = ! triggerEl.matches('button[data-switch-form]');
         const isBtnRemoveSelect2 = ! triggerEl.matches('button.select2-selection__choice__remove');
-        const isPreventClose = ! triggerEl.hasAttribute('[prevent-close]');
+        const isPreventClose = ! triggerEl.hasAttribute('prevent-close');
 
         ! triggerEl.matches('button[data-target-dropdown]') ? hideOpenedDropdown() : '';
         isClickedInsideModal && isBtnClosedModal && isBtnSwitchModal && isBtnRemoveSelect2 && isPreventClose ? hideOpenedModal() : '';
@@ -101,8 +101,8 @@ export function toggleActionDataTable() {
 
     actionBtnList.forEach(triggerEl => {
         triggerEl.addEventListener('click', () => {
-            const triggerData = triggerEl.getAttribute('data-target-action');
-            const targetEl = document.querySelector(`div[data-trigger-action="${triggerData}"`);
+            const targetIndetity = triggerEl.getAttribute('data-target-action');
+            const targetEl = document.querySelector(`div[data-trigger-action="${targetIndetity}"`);
             const isOpened = triggerEl.classList.contains('bg-tertiary', 'text-secondary');
             const triggerAction = triggerEl.querySelector('[action-icon-open]');
             const triggerClose = triggerEl.querySelector('[action-icon-close]');
@@ -151,6 +151,34 @@ function hideOpenedActionDataTable() {
     });
 }
 
+export function handleInputProductQty() { 
+    const btnHandlerQtyList = document.querySelectorAll('button[qty]');
+
+    btnHandlerQtyList.forEach(btnHandlerQty => {
+        btnHandlerQty.addEventListener('click', event => {
+            let inputQty, qtyValue;
+            const btnQty        = event.target.closest('button') ?? event.target;
+            const btnAttrMethod = btnQty.getAttribute('qty');
+
+            switch (btnAttrMethod) {
+                case 'sub':
+                    inputQty       = btnQty.nextElementSibling;
+                    qtyValue       = parseInt(inputQty.value);
+                    inputQty.value = qtyValue > 1 ? qtyValue - 1 : qtyValue;
+                    break;
+            
+                default:
+                    inputQty       = btnQty.previousElementSibling;
+                    qtyValue       = parseInt(inputQty.value);
+                    inputQty.value = qtyValue + 1;
+                    break;
+            }
+
+            inputQty.dispatchEvent(new Event('change'));
+        })
+    })
+}
+
 /**
  * Convert from html string to node element
  * 
@@ -169,9 +197,9 @@ export function createElement({parentTag = 'div', parentClass = [], innerBody = 
 
 class Tooltip {
     constructor(targetEl, triggerEl, placementEl, sidebarWidth) {
-        this.targetEl = targetEl;
-        this.triggerEl = triggerEl;
-        this.placementEl = placementEl;
+        this.targetEl     = targetEl;
+        this.triggerEl    = triggerEl;
+        this.placementEl  = placementEl;
         this.sidebarWidth = sidebarWidth;
         this.init();
     }
@@ -204,9 +232,9 @@ class Tooltip {
         const triggerPos    = this.triggerEl.getBoundingClientRect();
         const offsetX       = this.targetEl.getAttribute('data-tooltip-offset-x') ?? 0;
         const offsetY       = this.targetEl.getAttribute('data-tooltip-offset-y') ?? 0;
+        const arrowHeight   = arrowEl?.offsetHeight ?? 0;
         const translateX    = triggerPos.left - this.sidebarWidth + ((triggerPos.width - this.targetEl.offsetWidth) / 2) + parseInt(offsetX);
-        const translateY    = triggerPos.top + triggerPos.height + arrowEl.offsetHeight + parseInt(offsetY);
-        console.log(translateY, translateX);
+        const translateY    = triggerPos.top + triggerPos.height + parseInt(offsetY) + arrowHeight;
 
         this.targetEl.style.position  = 'absolute';
         this.targetEl.style.inset     = '0px auto auto 0px';
@@ -215,6 +243,7 @@ class Tooltip {
     };
 
     setupStyleArrow(arrowEl) {
+        if (! arrowEl) return;
         const offsetX    = this.targetEl.getAttribute('data-arrow-offset-x') ?? 0;
         const translateX = (this.targetEl.offsetWidth / 2) - (arrowEl.offsetWidth / 2) + parseInt(offsetX);
         
@@ -224,6 +253,7 @@ class Tooltip {
     };
 
     show() {
+        this.handleStyle();
         this.targetEl.classList.remove('opacity-0', 'invisible');
         this.targetEl.classList.add('opacity-100', 'visible');
     };
