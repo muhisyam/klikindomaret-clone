@@ -182,7 +182,6 @@ component.toggleDropdown();
 component.toggleModal();
 component.hideOpenedComponentsFromOutside();
 component.initTooltips();
-component.btnDataAction();
 handleSwitchForm();
 changePasswordVisibility();
 selectVerifyVia();
