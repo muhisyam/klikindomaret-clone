@@ -275,9 +275,14 @@
                 const dataRetailer  = dateDelivery.getAttribute('data-retailer');
                 const deliveryInfo  = document.querySelector(`[data-delivery-info="${dataRetailer}"]`);
                 let willBeDelivered = '';
-                
+
                 if (dayDifference >= '2') {
-                    const weekday = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at",'Sabtu'];
+                    /**
+                     * When curr day is friday or saturday, the index is 7 and 8. So it will undefined if 
+                     * the weekday on usual format like ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'].
+                     * So to trick it, set the 2 front indexes to any even though it will never be elected.
+                    */
+                    const weekday = ['weekOffset0', 'weekOffset1', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu', 'Minggu', 'Senin'];
                     
                     willBeDelivered = weekday[dateJS.getDay() + dayDifference];
                 
