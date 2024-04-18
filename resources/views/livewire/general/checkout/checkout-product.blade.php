@@ -1,10 +1,12 @@
 <section class="space-y-6 rounded-lg p-6 bg-white" wire:init="loadContent">
 
-    @forelse ($products as $retailerName => $productByGroup)
+    @forelse ($carts as $retailerName => $productByGroup)
 
     @php
-        $retailerIcon      = $retailerName !== 'Toko Indomaret' ? $retailerName : 'Store';
-        $totalEachRetailer = 0;
+        $retailerSlug         = Str::slug($retailerName);
+        $defaultDeliveryPrice = $productByGroup['delivery_options']['regular']['price'];
+        $activeDeliveryPrice  = empty($pickedDelivery) ? $defaultDeliveryPrice : $pickedDelivery[$retailerName]['price'];
+        $filterGroup          = Arr::except($productByGroup, ['retailer_icon', 'total_price_each_retailer', 'product_count', 'delivery_options']);
     @endphp
 
     <table class="w-full">
@@ -12,48 +14,54 @@
             <tr>
                 <th colspan="5" class="border-b-2 border-light-gray-100 rounded-t-md bg-light-gray-50">
                     <div class="py-2 px-4 flex items-center gap-2 text-sm">
-                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($retailerIcon) . '.webp') }}"/>
+                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($productByGroup['retailer_icon']) . '.webp') }}"/>
                         <h2 @class([
                             'font-bold',
                             'text-secondary' => $retailerName === 'Toko Indomaret',
                             'text-[#00b110]' => $retailerName === 'Warehouse',
                         ])>{{ $retailerName }}</h2>
-                        <span>({{ count($productByGroup) }} Item)</span>
+                        <span>({{ $productByGroup['product_count'] }} Item)</span>
                     </div>
                 </th>
             </tr>
         </thead>
         <tbody>
 
-        @foreach ($productByGroup as $product)
+        @foreach ($filterGroup as $product)
 
-        @php $retailerSlug = Str::slug($retailerName) @endphp
-        
         @if ($loop->first)
+
             <tr>
                 <td colspan="5" class="p-0 border-b border-light-gray-100">
                     <x-dropdown section="user-account-ewallet-{{ $retailerSlug }}">
                         <x-slot:trigger class="!rounded-none p-4 flex-col gap-2 w-full bg-light-gray-50">
+                            @php /*TODO: fix reguler jadi regular*/ @endphp
+
                             <div class="flex items-center gap-2 w-full" data-delivery-type="">
-                                <x-icon class="mr-auto w-40" src="{{ asset('img/checkout/choose-time.webp') }}"/>
-                                <div>Rp {{ formatCurrencyIDR(5000) }}</div>
+                                <x-icon class="mr-auto w-40" src="{{ asset('img/checkout/choose-reguler.webp') }}"/>
+                                <div>Rp {{ formatCurrencyIDR($activeDeliveryPrice) }}</div>
                                 <x-icon class="w-4 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                             </div>
                             <div class="w-full text-left text-sm" data-delivery-info="{{ $retailerSlug }}">Hari ini, 07 April 2024, 16:00-16:59</div>
                         </x-slot>
-    
+
                         <x-slot:content class="overflow-hidden drop-shadow-md w-full bg-white before:hidden">
-                            <x-button class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
+                            <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
+                                        wire:click="setDeliveryOpt('{{ $retailerName }}', 'regular', {{ $productByGroup['delivery_options']['regular']['price'] }})">
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-reguler.webp') }}"/>
-                                <div class="text-left text-sm">Tidak tersedia untuk pesanan dari penjual ini</div>
+                                <div class="text-left text-sm">{{ $productByGroup['delivery_options']['regular']['message'] }}</div>
                             </x-button>
 
                             @php  $section = 'choose-time-' . $retailerSlug @endphp
 
+                            @php
+                                //TODO: Fix wire click gabisa
+                            @endphp
+
                             <x-modal :section="$section" withOverlay="false">
                                 <x-slot:trigger class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
                                     <x-icon class="w-40" src="{{ asset('img/checkout/choose-time.webp') }}"/>
-                                    <div class="text-left text-sm">Pilih sendiri waktu yang kamu mau</div>
+                                    <div class="text-left text-sm"> {{ $productByGroup['delivery_options']['time']['message'] }}</div>
                                 </x-slot>
             
                                 <x-slot:content class="separated-modal">
@@ -67,27 +75,36 @@
                                 </x-slot>
                             </x-modal>
 
-                            <x-button class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
+                            <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
+                                        wire:click="setDeliveryOpt('{{ $retailerName }}', 'sameday', {{ $productByGroup['delivery_options']['sameday']['price'] }})">
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-sameday.webp') }}"/>
-                                <div class="text-left text-sm">Tidak tersedia untuk pesanan dari penjual ini</div>
+                                <div class="text-left text-sm">{{ $productByGroup['delivery_options']['sameday']['message'] }}</div>
                             </x-button>
 
-                            <x-button class="!rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
+                            @php
+                                $wireClick       = '';
+                                $deliveryMessage = 'Tidak tersedia untuk pesanan dari penjual ini';
+                                $disableClass    = ' bg-light-gray-50';
+
+                                if (array_key_exists('express', $productByGroup['delivery_options'])) {
+                                    $deliveryOpt     = $productByGroup['delivery_options']['express'];
+                                    $wireClick       = 'setDeliveryOpt("' . $retailerName . '", "express",' . $deliveryOpt['price'] . ')';
+                                    $deliveryMessage = $deliveryOpt['message'];
+                                    $disabledClass   = ' hover:bg-secondary-50';
+                                }
+                            @endphp
+
+                            <x-button class="!rounded-none p-4 flex-col !items-baseline gap-2 w-full{{ $disabledClass }}" wire:click="{{ $wireClick }}">
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-express.webp') }}"/>
-                                <div class="text-left text-sm">Pesanan dikirim maksimal 1 jam setelah pembayaran lunas</div>
+                                <div class="text-left text-sm">{{ $deliveryMessage }}</div>
                             </x-button>
                         </x-slot>
-                    </x-dropdown>   
+                    </x-dropdown>
                 </td>
             </tr>
+
         @endif
 
-        @php
-            $discountPercent    = round((($product['normal_price'] - $product['discount_price']) / $product['normal_price']) * 100);
-            $totalEachProduct   = $product['quantity'] * ($product['discount_price'] ?? $product['normal_price']);
-            $totalEachRetailer += $totalEachProduct;
-        @endphp
-    
             <tr class="relative border-b border-light-gray-100 last:border-b-0">
                 <td class="py-4 ps-4 w-1/12">
                     <img class="rounded" src="{{ asset('img/uploads/products/product-default-image.jpg') }}" alt="Product Image">
@@ -106,7 +123,7 @@
                 <td class="py-4 w-2/12">
                 @if ($product['discount_price'])
                     <div class="mb-2 flex items-center gap-2 text-xs">
-                        <div class="rounded p-1.5 bg-primary-100 text-primary-600 text-center font-bold leading-none">{{ $discountPercent }}%</div>
+                        <div class="rounded p-1.5 bg-primary-100 text-primary-600 text-center font-bold leading-none">{{ $product['discount_percent'] }}%</div>
                         <div class="text-light-gray-300 leading-none line-through">Rp {{ formatCurrencyIDR($product['normal_price']) }}</div>
                     </div>
                 @endif
@@ -125,7 +142,7 @@
                             <x-icon class="mx-auto w-2.5" src="{{ asset('img/icons/icon-minus.webp') }}" iconStyle="hover-white"/>
                         </x-button>
                         
-                        <x-input-field class="mx-1 !h-8 text-center" name="quantity[]" wire:model="quantity.{{ $retailerName . '.' . $product['product_slug'] }}"/>
+                        <x-input-field class="mx-1 !h-8 text-center" name="quantity[]" wire:model="quantities.{{ $retailerName . '.' . $product['product_slug'] }}"/>
                         
                         <x-button class="shrink-0 h-8 w-8 group hover:bg-secondary" buttonStyle="outline-secondary" qty="add">
                             <x-icon class="mx-auto w-2.5 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}" iconStyle="hover-white"/>
@@ -134,7 +151,7 @@
                     {{-- <div class="text-[#BF1F1F] text-[10px] text-center">Persediaan tidak mencukupi</div> --}}
                 </td>
                 
-                <td class="py-4 pe-4 w-2/12 text-end text-sm">Rp {{ formatCurrencyIDR($totalEachProduct) }}</td>
+                <td class="py-4 pe-4 w-2/12 text-end text-sm">Rp {{ formatCurrencyIDR($product['total_price']) }}</td>
                 
                 <td class="absolute right-0 top-0 p-0">
                     <x-button class="rounded-bl-full ps-6 pe-4 h-7 bg-red-600 text-white">
@@ -151,7 +168,7 @@
                 <td colspan="5" class="border-t border-light-gray-100 rounded-b-md bg-light-gray-50 text-sm font-bold">
                     <div class="py-2 flex justify-end">
                         <div class="w-5/6 text-end">Subtotal:</div>
-                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($totalEachRetailer) }}</div>
+                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($productByGroup['total_price_each_retailer']) }}</div>
                     </div>
                 </td>
             </tr>
