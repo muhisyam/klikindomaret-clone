@@ -14,8 +14,8 @@ class CheckoutSummary extends Component
     #[On('content-loaded')]
     public function initSummary(array $summary)
     {
-        $this->discountTotal = $summary['eachProductDiscount'];
-        $this->grandTotal    = $summary['grandTotal'];
+        $this->discountTotal = $summary['total_product_discount'];
+        $this->grandTotal    = $summary['grand_total'];
         $this->normalTotal   = $this->discountTotal + $this->grandTotal;
     }
 
