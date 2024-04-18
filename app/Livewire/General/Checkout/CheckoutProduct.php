@@ -78,6 +78,14 @@ class CheckoutProduct extends Component
         $this->loadContent(true);
     }
 
+    public function setDeliveryOpt(string $retailerName, string $deliveryOption, int $shippingCost)
+    {
+        $this->pickedDelivery[$retailerName] = [
+            'option' => $deliveryOption,
+            'price' => $shippingCost,
+        ];
+    }
+
     public function render()
     {
         return view('livewire.general.checkout.checkout-product');
