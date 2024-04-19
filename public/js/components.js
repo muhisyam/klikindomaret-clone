@@ -2,24 +2,28 @@ export function toggleDropdown() {
     const dropdownBtnList = document.querySelectorAll('button[data-target-dropdown]');
 
     dropdownBtnList.forEach(triggerEl => {
-        triggerEl.addEventListener('click', () => {
-            const btnArrow = triggerEl.querySelector('img[data-arrow-dropdown]');
-            const targetIndetity = triggerEl.getAttribute('data-target-dropdown');
-            const targetEl = document.querySelector(`div[data-trigger-dropdown="${targetIndetity}"]`);
-            const isTargetClosed = targetEl.classList.contains('hidden');
-
-            hideOpenedDropdown(targetEl);
-            
-            if (isTargetClosed) {
-                triggerEl.classList.add('bg-dark-primary');
-                btnArrow.classList.add('rotate-180');
-                targetEl.classList.add('z-50');
-                targetEl.classList.remove('hidden');
-            } else {
-                hideOpenedDropdown();
-            }
-        })
+        triggerEl.removeEventListener('click', dropdownClickHandler);
+        triggerEl.addEventListener('click', dropdownClickHandler);
     })
+}
+
+function dropdownClickHandler(event) {
+    const triggerEl      = event.currentTarget;
+    const btnArrow       = triggerEl.querySelector('img[data-arrow-dropdown]');
+    const targetIndetity = triggerEl.getAttribute('data-target-dropdown');
+    const targetEl       = document.querySelector(`div[data-trigger-dropdown="${targetIndetity}"]`);
+    const isTargetClosed = targetEl.classList.contains('hidden');
+
+    hideOpenedDropdown(targetEl);
+    
+    if (isTargetClosed) {
+        triggerEl.classList.add('bg-dark-primary');
+        btnArrow.classList.add('rotate-180');
+        targetEl.classList.add('z-50');
+        targetEl.classList.remove('hidden');
+    } else {
+        hideOpenedDropdown();
+    }
 }
 
 function hideOpenedDropdown() { 
@@ -50,20 +54,24 @@ export function toggleModal() {
     const modalBtnList = document.querySelectorAll('button[data-target-modal]');
 
     modalBtnList.forEach(triggerEl => {
-        triggerEl.addEventListener('click', () => {
-            const targetIndetity = triggerEl.getAttribute('data-target-modal');
-            const targetEl = document.querySelectorAll(`div[data-trigger-modal*="${targetIndetity}"]`);
+        triggerEl.removeEventListener('click', modalClickHandler);
+        triggerEl.addEventListener('click', modalClickHandler);
+    })
+}
 
-            targetEl.forEach(el => {
-                const isTargetOpened = el.classList.contains('show');
+function modalClickHandler(event) {
+    const triggerEl      = event.currentTarget;
+    const targetIndetity = triggerEl.getAttribute('data-target-modal');
+    const targetEl       = document.querySelectorAll(`div[data-trigger-modal*="${targetIndetity}"]`);
 
-                if (isTargetOpened) {
-                    hideOpenedModal(el); 
-                } else {
-                    el.classList.add('show'); 
-                }     
-            })
-        })
+    targetEl.forEach(el => {
+        const isTargetOpened = el.classList.contains('show');
+
+        if (isTargetOpened) {
+            hideOpenedModal(el); 
+        } else {
+            el.classList.add('show'); 
+        }     
     })
 }
 
