@@ -19,25 +19,27 @@
         <link href="{{ asset('css/swiper-bundle.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/general.css') }}" rel="stylesheet">
         <link href="{{ asset('css/components.css') }}" rel="stylesheet">
+        
+        <script src="{{ asset('js/swiper-bundle.min.js') }}" async></script>
     </head>
     <body>
         <header class="sticky top-0 z-50 drop-shadow w-full text-black">
             @include('frontend.components.navbar')
         </header>
         
-        <div class="container mx-auto max-w-7xl mt-30">
+        <main {{ $attributes->merge(['class' => 'container mx-auto max-w-7xl mt-6']) }}>
             {{ $slot }}
-        </div>
+        </main>
             
         @include('frontend.components.footer')
 
         
-        <div id="components-container">
+        <div id="components-container" class="relative z-[60]">
             @stack('components')
+            <div separate-modal-overlay=""></div>
         </div>
 
         <script type="module" src="{{ asset('js/general.js') }}" defer></script>
-        <script src="{{ asset('js/swiper-bundle.min.js') }}" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
         @stack('scripts')
     </body>
