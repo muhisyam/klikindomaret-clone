@@ -62,6 +62,6 @@ class User extends Authenticatable
 
     public function pickupMethod(): HasMany
     {
-        return $this->hasMany(UserPickupMethod::class);
+        return $this->hasMany(UserPickupMethod::class)->orderBy('updated_at', 'desc');;
     }
 }
