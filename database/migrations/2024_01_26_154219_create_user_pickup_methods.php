@@ -28,6 +28,7 @@ return new class extends Migration
                 ->constrained('user_addresses')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
+            $table->boolean('is_selected_method');
             $table->timestamps();
         });
     }
