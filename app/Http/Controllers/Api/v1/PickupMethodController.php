@@ -13,6 +13,6 @@ class PickupMethodController extends Controller
         $userPickupMethods = $request->user()->pickupMethod;
         $detailAddress     = $pickupService->getPickupDetailAddress($userPickupMethods);
 
-        return $detailAddress;
+        return response()->json(['data' => $detailAddress], 200);
     }
 }
