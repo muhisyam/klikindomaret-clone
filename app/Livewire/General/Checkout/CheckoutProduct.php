@@ -26,13 +26,13 @@ class CheckoutProduct extends Component
 
     private function getDataUserCartProducts()
     {
-        $userId    = session('user')['id'];
+        $username  = session('user')['username'];
         $userToken = session('auth_token');
 
         return $this->clientAction->request(
             new ClientRequestDto(
                 method: 'GET',
-                endpoint: $this->endpoint . $userId,
+                endpoint: $this->endpoint . $username,
                 headers: [
                     'Authorization' => 'Bearer ' . $userToken
                 ],
@@ -84,6 +84,22 @@ class CheckoutProduct extends Component
             'option' => $deliveryOption,
             'price' => $shippingCost,
         ];
+    }
+
+    #[On('picked_up_in_store')]
+    public function updateStoreDeliveryShippingPrice()
+    {
+        if (! isset($this->carts['Toko Indomaret'])) {
+            return;
+        }
+
+        $deliveryOptions = $this->carts['Toko Indomaret']['delivery_options'];
+
+        foreach ($deliveryOptions as $type => $option) {
+            $deliveryOptions[$type]['price'] = 0;
+        }
+
+        $this->carts['Toko Indomaret']['delivery_options'] = $deliveryOptions;
     }
 
     public function render()
