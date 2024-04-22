@@ -7,19 +7,35 @@ use App\Models\UserAddress;
 
 class PickupMethodService 
 {
-    public function getPickupDetailAddress($userPickupMethods)
+    public function getPickupDetailAddress(object $userPickupMethods): object
     {
+        $isPickedInStore = false;
+        $pickupIcon      = 'shipping';
+
         foreach ($userPickupMethods as $method) {
-            $placeDetail          = $this->getPlaceDetailInformation($method, $this->isPickedUpInStore($method));
+            if ($this->isPickedUpInStore($method)) {
+                $isPickedInStore = true;
+                $pickupIcon      = 'send-by-store';
+            }
+
+            $placeDetail          = $this->getPlaceDetailInformation($method, $this->userPlacePickedIn($method));
             $method->place_detail = $placeDetail;
         }
 
-        return $method;
+        $userPickupMethods['is_picked_up_in_store'] = $isPickedInStore;
+        $userPickupMethods['pickup_icon']           = $pickupIcon;
+
+        return $userPickupMethods;
     }
 
-    public function isPickedUpInStore($method): string
+    private function isPickedUpInStore($method): bool
     {
-        return $method->last_pickup_with_retailer ? 'store' : 'address';
+        return $method->last_pickup_with_retailer ? true : false;
+    }
+
+    private function userPlacePickedIn($method): string
+    {
+        return $this->isPickedUpInStore($method) ? 'store' : 'address';
     }
 
     private function getPlaceDetailInformation(object $method, string $pickedUpIn): array
