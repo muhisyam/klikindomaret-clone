@@ -5,7 +5,7 @@
     @php
         $retailerSlug         = Str::slug($retailerName);
         $defaultDeliveryPrice = $productByGroup['delivery_options']['regular']['price'];
-        $activeDeliveryPrice  = empty($pickedDelivery) ? $defaultDeliveryPrice : $pickedDelivery[$retailerName]['price'];
+        $activeDeliveryPrice  = isset($pickedDelivery[$retailerName]) ? $pickedDelivery[$retailerName]['price'] : $defaultDeliveryPrice;
         $filterGroup          = Arr::except($productByGroup, ['retailer_icon', 'total_price_each_retailer', 'product_count', 'delivery_options']);
     @endphp
 
@@ -39,13 +39,13 @@
 
                             <div class="flex items-center gap-2 w-full" data-delivery-type="">
                                 <x-icon class="mr-auto w-40" src="{{ asset('img/checkout/choose-reguler.webp') }}"/>
-                                <div>Rp {{ formatCurrencyIDR($activeDeliveryPrice) }}</div>
+                                <div>{{ $activeDeliveryPrice ? 'Rp ' . formatCurrencyIDR($activeDeliveryPrice) : 'Gratis' }}</div>
                                 <x-icon class="w-4 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                             </div>
                             <div class="w-full text-left text-sm" data-delivery-info="{{ $retailerSlug }}">Hari ini, 07 April 2024, 16:00-16:59</div>
                         </x-slot>
 
-                        <x-slot:content class="overflow-hidden drop-shadow-md w-full bg-white before:hidden">
+                        <x-slot:content class="overflow-hidden w-full bg-white before:hidden">
                             <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
                                         wire:click="setDeliveryOpt('{{ $retailerName }}', 'regular', {{ $productByGroup['delivery_options']['regular']['price'] }})">
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-reguler.webp') }}"/>
@@ -255,7 +255,9 @@
                     const dateDelivery = document.querySelector(`input[name*="date-delivery-picker"][data-retailer="${dataRetailer}"]`);
                     const timeDelivery = document.querySelector(`input[name*="time-delivery-picker"][data-retailer="${dataRetailer}"]`);
 
-                    // Reset button style TODO: fix this
+                    /**
+                     * Reset the buttons style
+                    */
                     listBtnDatePicker.forEach(btnDate => {
                         const isBtnHasRightRetailer = btnDate.closest('[data-retailer]').matches(`[data-retailer="${dataRetailer}"]`);
 
