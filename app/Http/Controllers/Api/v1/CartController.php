@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Services\CartService;
 use App\Traits\General\ShoppingCart;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -22,8 +23,9 @@ class CartController extends Controller
         return response()->json(['data' => $productName], 200);
     }
 
-    public function show(int $userId, CartService $cartService): JsonResponse
+    public function show(Request $request, CartService $cartService): JsonResponse
     {
+        $userId    = $request->user()->id;
         $arrCarts  = Cart::userProducts($userId);
         $dataCarts = $cartService->getMoreInformation($arrCarts);
 
