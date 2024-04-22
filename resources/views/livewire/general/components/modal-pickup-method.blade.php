@@ -1,4 +1,4 @@
-<div class="modal w-[900px] rounded-xl bg-white" data-trigger-modal="{{ $section }}">
+<div class="modal w-[900px] rounded-xl bg-white" data-trigger-modal="{{ $section }}" wire:init="loadContent">
     <section class="border-b border-light-gray-100 p-3 flex items-center justify-center">
         <x-button class="absolute top-0 right-0 h-12 w-12" data-target-modal="{{ $section }}" :preventClose="false">
             <x-icon class="m-auto w-3" src="{{ asset('img/icons/icon-header-close.webp') }}"/>
@@ -8,35 +8,46 @@
     </section>
 
     <ul class="p-4 grid grid-cols-4 gap-4">
-        <li class="relative space-y-2 rounded-md border border-secondary shadow-input p-2 text-sm overflow-hidden">
-            <div class="absolute top-0 right-0 py-1 ps-4 pe-2 rounded-bl-full bg-secondary text-xs text-white">Aktif</div>
-            <div class="flex items-center gap-2 !mt-0">
-                @php /*TODO: icon home / office*/ @endphp
-                <x-icon class="h-4 w-4" src="{{ asset('img/icons/icon-header-map-marker.webp') }}"/>
-                <h4>Rumah Cilegon</h4>
-            </div>
-            <hr class="bg-light-gray-100">
-            <div>
-                <div class="font-bold">M Hisyam</div>
-                <div class="font-light">0812 9823 2264</div>
-            </div>
-            <address class="text-xs">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis similique sapiente expedita veniam beatae mollitia, temporibus ipsum aut iure in reiciendis possimus totam doloremque voluptatum!</address>
+        
+    @foreach ($methods as $method)
+
+        <li>
+            @php
+                $selectedBorderStyle = $method['is_selected_method'] ? 'border-secondary shadow-input overflow-hidden' : 'border-light-gray-100';
+            @endphp
+
+            <x-button @class([
+                'relative space-y-2 border p-2 flex-col !items-baseline text-sm overflow-hidden',
+                'border-secondary shadow-input' => $method['is_selected_method'],
+                'border-light-gray-100'         => ! $method['is_selected_method'],
+            ])>
+                @if ($method['is_selected_method'])
+                    <div class="absolute top-0 right-0 py-1 ps-4 pe-2 rounded-bl-full bg-secondary text-xs text-white">Aktif</div> 
+                @endif
+        
+                    <div @class([
+                        'border-b border-light-gray-100 pb-2 flex items-center gap-1 w-full', 
+                        '!mt-0' => $method['is_selected_method'],
+                    ])>
+                        <x-icon class="h-4 w-4" src="{{ asset('img/icons/icon-bookmark.webp') }}"/>
+                        <h4 class="line-clamp-1">{{ $method['place_detail']['place_name'] }}</h4>
+                    </div>
+        
+                    <div class="min-h-[40px]">
+                        <div class="font-bold line-clamp-1">{{ $method['place_detail']['reciever_name'] }}</div>
+        
+                    @unless (is_null($method['place_detail']['reciever_phone_number'])) 
+                        <div class="font-light">{{ $method['place_detail']['reciever_phone_number'] }}</div> 
+                    @endunless
+                        
+                    </div>
+                    
+                    <address class="min-h-[80px] text-xs text-left line-clamp-5">{{ $method['place_detail']['place_address'] }}</address>
+            </x-button>
         </li>
-        @for ($i = 0; $i < 3; $i++)
-        <li class="relative space-y-2 rounded-md border border-light-gray-100 p-2 text-sm">
-            <div class="flex items-center gap-2">
-                @php /*TODO: icon home / office*/ @endphp
-                <x-icon class="h-4 w-4" src="{{ asset('img/icons/icon-header-map-marker.webp') }}"/>
-                <h4>Rumah Cilegon</h4>
-            </div>
-            <hr class="bg-light-gray-100">
-            <div>
-                <div class="font-bold">M Hisyam</div>
-                <div class="font-light">0812 9823 2264</div>
-            </div>
-            <address class="text-xs">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis similique sapiente expedita veniam beatae mollitia, temporibus ipsum aut iure in reiciendis possimus totam doloremque voluptatum!</address>
-        </li>
-        @endfor
+
+    @endforeach
+
     </ul>
 
     <div class="text-sm text-center my-2">atau pilih metode lainnya:</div>
