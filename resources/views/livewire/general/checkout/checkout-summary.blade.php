@@ -7,7 +7,7 @@
 
         <div class="flex justify-between text-sm">
             <div class="text-light-gray-300">Ongkos Kirim</div>
-            <div>GRATIS</div>
+            <div>{{ $deliveryPrice ? 'Rp ' . formatCurrencyIDR($deliveryPrice) : 'GRATIS' }}</div>
         </div>
 
         <hr>
