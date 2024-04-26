@@ -14,6 +14,7 @@ class CheckoutProduct extends Component
     protected object $clientAction;
     protected string $endpoint;
 
+    public array $response       = [];
     public array $carts          = [];
     public array $pickedDelivery = [];
     public array $quantities     = [];
@@ -22,6 +23,25 @@ class CheckoutProduct extends Component
     ) {
         $this->clientAction = app(ClientRequestAction::class);
         $this->endpoint     = config('api.url') . 'carts/';
+    }
+
+    public function loadContent($rerendering = false)
+    {
+        $this->response       = $this->getDataUserCartProducts()['data'];
+        $this->carts          = Arr::except($this->response, ['default_delivery_option', 'qty_product_each_retailer', 'total_product_discount', 'grand_total']);
+        $this->quantities     = $this->response['qty_product_each_retailer'];
+        $this->pickedDelivery = $this->response['default_delivery_option'];
+        
+        $this->dispatch('content-loaded', summary: [
+            'total_delivery_price'   => $this->getTotalDeliveryPrice($this->pickedDelivery),
+            'total_product_discount' => $this->response['total_product_discount'],
+            'grand_total'            => $this->response['grand_total'],
+        ]);
+
+        if (! $rerendering) {
+            $this->dispatch('run-js-content-loaded');
+        }
+
     }
 
     private function getDataUserCartProducts()
@@ -40,21 +60,15 @@ class CheckoutProduct extends Component
         );
     }
 
-    public function loadContent($rerendering = false)
+    private function getTotalDeliveryPrice(array $deliveryOptions): int
     {
-        $this->carts      = $this->getDataUserCartProducts()['data'];
-        $this->quantities = $this->carts['qty_product_each_retailer'];
-        
-        $this->dispatch('content-loaded', summary: [
-            'total_product_discount' => $this->carts['total_product_discount'],
-            'grand_total'            => $this->carts['grand_total'],
-        ]);
+        $total = 0;
 
-        if (! $rerendering) {
-            $this->dispatch('run-js-content-loaded');
+        foreach ($deliveryOptions as $option) {
+            $total += $option['price'];
         }
 
-        $this->carts = Arr::except($this->carts, ['qty_product_each_retailer', 'total_product_discount', 'grand_total']);
+        return $total;
     }
 
     #[On('qty-content-changed')]
@@ -93,6 +107,9 @@ class CheckoutProduct extends Component
             return;
         }
 
+        /**
+         * Update select delivery option data price to 0 
+        */
         $deliveryOptions = $this->carts['Toko Indomaret']['delivery_options'];
 
         foreach ($deliveryOptions as $type => $option) {
@@ -100,6 +117,17 @@ class CheckoutProduct extends Component
         }
 
         $this->carts['Toko Indomaret']['delivery_options'] = $deliveryOptions;
+
+        /**
+         * Update data picked delivery option data price to 0 
+        */
+        $this->pickedDelivery['Toko Indomaret']['price'] = 0;
+
+        $this->dispatch('content-loaded', summary: [
+            'total_delivery_price'   => $this->getTotalDeliveryPrice($this->pickedDelivery),
+            'total_product_discount' => $this->response['total_product_discount'],
+            'grand_total'            => $this->response['grand_total'],
+        ]);
     }
 
     public function render()
