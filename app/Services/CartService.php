@@ -24,7 +24,8 @@ class CartService
         $eachProductDiscount  = 0;
         $totalEachRetailer    = 0;
         $grandTotal           = 0;
-        $availDeliveryOptions = [
+        $defaultDeliveryOpt   = [];
+        $availDeliveryOptions = [//TODO: jadi gratis klo total sub tertentu
             'regular' => [
                 'message' => 'Estimasi 2-3 hari',
                 'price'   => 5000,
@@ -67,10 +68,19 @@ class CartService
             }
             
             $productCount              = count($productByGroup);
-            $grandTotal               += $totalEachRetailer;
             $retailerIcon              = $retailerName !== 'Toko Indomaret' ? $retailerName : 'Store';
-            $availDeliveryEachRetailer = $retailerName !== 'Toko Indomaret' ? Arr::except($availDeliveryOptions, 'express') : $availDeliveryOptions ;
-            
+            $availDeliveryEachRetailer = $retailerName !== 'Toko Indomaret' ? Arr::except($availDeliveryOptions, 'express') : $availDeliveryOptions;
+            $deliveryFirstListType     = array_key_first($availDeliveryEachRetailer);
+            $deliveryFirstListPrice    = $availDeliveryEachRetailer[$deliveryFirstListType]['price'];
+            $grandTotal               += $totalEachRetailer + $deliveryFirstListPrice;
+            $defaultDeliveryOpt        = array_merge($defaultDeliveryOpt, [
+                $retailerName => [
+                    'option' => $deliveryFirstListType,
+                    'price'  => $deliveryFirstListPrice,
+                ]
+            ]);
+
+
             $carts[$retailerName] = array_merge($carts[$retailerName], [
                 'retailer_icon'             => $retailerIcon,
                 'total_price_each_retailer' => $totalEachRetailer,
@@ -80,6 +90,7 @@ class CartService
         }
 
         $carts = array_merge($carts, [
+            'default_delivery_option'   => $defaultDeliveryOpt,
             'qty_product_each_retailer' => $quantities,
             'total_product_discount'    => $eachProductDiscount,
             'grand_total'               => $grandTotal
