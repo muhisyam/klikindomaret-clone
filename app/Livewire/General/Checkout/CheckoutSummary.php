@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class CheckoutSummary extends Component
 {
+    public int $deliveryPrice = 0;
     public int $discountTotal = 0;
     public int $grandTotal    = 0;
     public int $normalTotal   = 0;
@@ -14,9 +15,10 @@ class CheckoutSummary extends Component
     #[On('content-loaded')]
     public function initSummary(array $summary)
     {
+        $this->deliveryPrice = $summary['total_delivery_price'];
         $this->discountTotal = $summary['total_product_discount'];
         $this->grandTotal    = $summary['grand_total'];
-        $this->normalTotal   = $this->discountTotal + $this->grandTotal;
+        $this->normalTotal   = $this->discountTotal + $this->grandTotal - $this->deliveryPrice;
     }
 
     public function updateCart($quantityChanged)
