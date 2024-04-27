@@ -3,10 +3,11 @@
     @forelse ($carts as $retailerName => $productByGroup)
 
     @php
-        $retailerSlug         = Str::slug($retailerName);
-        $activeDeliveryOption = $pickedDelivery[$retailerName]['option'];
-        $activeDeliveryPrice  = $pickedDelivery[$retailerName]['price'];
-        $filterGroup          = Arr::except($productByGroup, ['retailer_icon', 'total_price_each_retailer', 'product_count', 'delivery_options']);
+        $retailerSlug          = Str::slug($retailerName);
+        $activeDeliveryOption  = $pickedDelivery[$retailerName]['option'];
+        $activeDeliveryPrice   = $pickedDelivery[$retailerName]['price'];
+        $activeDeliveryMessage = $pickedDelivery[$retailerName]['message'];
+        $filterGroup           = Arr::except($productByGroup, ['retailer_icon', 'total_price_each_retailer', 'product_count', 'delivery_options']);
     @endphp
 
     <table class="w-full">
@@ -35,30 +36,31 @@
                 <td colspan="5" class="p-0 border-b border-light-gray-100">
                     <x-dropdown section="user-account-ewallet-{{ $retailerSlug }}">
                         <x-slot:trigger class="!rounded-none p-4 flex-col gap-2 w-full bg-light-gray-50">
-                            @php /*TODO: fix reguler jadi regular*/ @endphp
-
                             <div class="flex items-center gap-2 w-full" data-delivery-type="">
                                 <x-icon class="mr-auto w-40" src="{{ asset('img/checkout/choose-'. $activeDeliveryOption .'.webp') }}"/>
                                 <div class="text-sm">{{ $activeDeliveryPrice ? 'Rp ' . formatCurrencyIDR($activeDeliveryPrice) : 'GRATIS' }}</div>
                                 <x-icon class="w-3 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                             </div>
-                            <div class="w-full text-left text-sm" data-delivery-info="{{ $retailerSlug }}">
-                                {{ $productByGroup['delivery_options'][$activeDeliveryOption]['message'] }}
-                            </div>
+                            <div class="w-full text-left text-sm" data-delivery-info="{{ $retailerSlug }}">{{ $activeDeliveryMessage }}</div>
                         </x-slot>
 
                         <x-slot:content class="overflow-hidden w-full bg-white before:hidden">
+
+                            @php $deliveryType = $productByGroup['delivery_options']['regular'] @endphp 
+
                             <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
-                                        wire:click="setDeliveryOpt('{{ $retailerName }}', 'regular', {{ $productByGroup['delivery_options']['regular']['price'] }})">
+                                        wire:click="setDeliveryOpt(
+                                            '{{ $retailerName }}',
+                                            'regular',
+                                            '{{ $deliveryType['price'] }}',
+                                            '{{ $deliveryType['message'] }}',
+                                        )"
+                            >
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-regular.webp') }}"/>
                                 <div class="text-left text-sm">{{ $productByGroup['delivery_options']['regular']['message'] }}</div>
                             </x-button>
 
                             @php  $section = 'choose-time-' . $retailerSlug @endphp
-
-                            @php
-                                //TODO: Fix wire click gabisa
-                            @endphp
 
                             <x-modal :section="$section" withOverlay="false">
                                 <x-slot:trigger class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
@@ -69,16 +71,25 @@
                                 <x-slot:content class="separated-modal">
                                 @push('modal-date-delivery')
                                     @include('general.checkout.modal-date-delivery', [
-                                        'section'      => $section,
-                                        'retailerName' => $retailerName,
-                                        'retailerSlug' => $retailerSlug,
+                                        'section'       => $section,
+                                        'retailerName'  => $retailerName,
+                                        'retailerSlug'  => $retailerSlug,
+                                        'deliveryPrice' => $productByGroup['delivery_options']['time']['price'],
                                     ])
                                 @endpush
                                 </x-slot>
                             </x-modal>
 
+                            @php $deliveryType = $productByGroup['delivery_options']['sameday'] @endphp 
+
                             <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
-                                        wire:click="setDeliveryOpt('{{ $retailerName }}', 'sameday', {{ $productByGroup['delivery_options']['sameday']['price'] }})">
+                                        wire:click="setDeliveryOpt(
+                                            '{{ $retailerName }}',
+                                            'sameday',
+                                            '{{ $deliveryType['price'] }}',
+                                            '{{ $deliveryType['message'] }}',
+                                        )"
+                            >
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-sameday.webp') }}"/>
                                 <div class="text-left text-sm">{{ $productByGroup['delivery_options']['sameday']['message'] }}</div>
                             </x-button>
@@ -86,13 +97,18 @@
                             @php
                                 $wireClick       = '';
                                 $deliveryMessage = 'Tidak tersedia untuk pesanan dari penjual ini';
-                                $disableClass    = ' bg-light-gray-50';
+                                $disabledClass    = ' bg-light-gray-50 opacity-50 hover:!opacity-50';
 
                                 if (array_key_exists('express', $productByGroup['delivery_options'])) {
                                     $deliveryOpt     = $productByGroup['delivery_options']['express'];
-                                    $wireClick       = 'setDeliveryOpt("' . $retailerName . '", "express",' . $deliveryOpt['price'] . ')';
                                     $deliveryMessage = $deliveryOpt['message'];
                                     $disabledClass   = ' hover:bg-secondary-50';
+                                    $wireClick       = 'setDeliveryOpt(
+                                                            "'.$retailerName.'", 
+                                                            "express",
+                                                            "'.$deliveryOpt['price'].'",
+                                                            "'.$deliveryMessage.'",
+                                                        )';
                                 }
                             @endphp
 
@@ -201,7 +217,6 @@
                     toggleDropdown();
                     toggleModal();
                     switchDateDelivery();
-                    updateDateDeliveryInfo();
                     pickDateDelivery();
                     detectChangesInProductQty();
                 }, 1);
@@ -251,11 +266,10 @@
 
             listBtnDatePicker.forEach(btnDate => {
                 btnDate.addEventListener('click', () => {
-                    const dataDate     = btnDate.getAttribute('data-delivery-date');
-                    const dataTime     = btnDate.getAttribute('data-delivery-time');
-                    const dataRetailer = btnDate.closest('[data-retailer]').getAttribute('data-retailer');
-                    const dateDelivery = document.querySelector(`input[name*="date-delivery-picker"][data-retailer="${dataRetailer}"]`);
-                    const timeDelivery = document.querySelector(`input[name*="time-delivery-picker"][data-retailer="${dataRetailer}"]`);
+                    const dataDate          = btnDate.getAttribute('data-delivery-date');
+                    const dataTime          = btnDate.getAttribute('data-delivery-time');
+                    const dataRetailer      = btnDate.closest('[data-retailer]').getAttribute('data-retailer');
+                    const dataDeliveryPrice = btnDate.closest('[data-delivery-price]').getAttribute('data-delivery-price');
 
                     /**
                      * Reset the buttons style
@@ -270,53 +284,28 @@
                         }
                     })
 
-                    dateDelivery.value = dataDate;
-                    timeDelivery.value = dataTime;
-                    btnDate.innerHTML  = 'Terpilih';
-
                     btnDate.classList.add('bg-secondary', 'text-white');
                     btnDate.classList.remove('bg-white', 'text-secondary');
+                    btnDate.innerHTML = 'Terpilih';
 
-                    updateDateDeliveryInfo();
+                    Livewire.dispatch('set-picked-delivery-opt', { 
+                        retailerName:    makeTitle(dataRetailer),
+                        deliveryOption: 'time',
+                        shippingCost:   dataDeliveryPrice,
+                        message:        `${dataDate}|${dataTime}`,
+                    })
                 })
             })
         }
 
-        function updateDateDeliveryInfo() {
-            const dateDeliveryList = document.querySelectorAll('input[name*="date-delivery-picker"]');
-            const timeDeliveryList = document.querySelectorAll('input[name*="time-delivery-picker"]');
+        function makeTitle(slug) {
+            const words = slug.split('-');
 
-            dateDeliveryList.forEach((dateDelivery, index) => {
-                const dateValue     = dateDelivery.value;
-                const timeValue     = timeDeliveryList[index].value;
-                const dateJS        = new Date();
-                const currentDay    = dateJS.getDate();
-                const deliveryDay   = dateValue.split(" ")[0];
-                const dayDifference = deliveryDay - currentDay;
-                const dataRetailer  = dateDelivery.getAttribute('data-retailer');
-                const deliveryInfo  = document.querySelector(`[data-delivery-info="${dataRetailer}"]`);
-                let willBeDelivered = '';
+            for (let i = 0; i < words.length; i++) {
+                words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+            }
 
-                if (dayDifference >= '2') {
-                    /**
-                     * When curr day is friday or saturday, the index is 7 and 8. So it will undefined if 
-                     * the weekday on usual format like ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu'].
-                     * So to trick it, set the 2 front indexes to any even though it will never be elected.
-                    */
-                    const weekday = ['weekOffset0', 'weekOffset1', 'Selasa', 'Rabu', 'Kamis', "Jum'at", 'Sabtu', 'Minggu', 'Senin'];
-                    
-                    willBeDelivered = weekday[dateJS.getDay() + dayDifference];
-                
-                } else if (dayDifference == '1') {
-                    willBeDelivered = 'Besok';
-                
-                } else {
-                    willBeDelivered = 'Hari ini';
-
-                }
-
-                deliveryInfo.innerHTML = `${willBeDelivered}, ${dateValue}, ${timeValue}`;
-            })
+            return words.join(' ');
         }
 
         function detectChangesInProductQty() {
