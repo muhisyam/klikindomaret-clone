@@ -5,6 +5,7 @@ namespace App\Livewire\General\Checkout;
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Web\General\CartController;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -32,11 +33,7 @@ class CheckoutProduct extends Component
         $this->quantities     = $this->response['qty_product_each_retailer'];
         $this->pickedDelivery = $this->response['default_delivery_option'];
         
-        $this->dispatch('content-loaded', summary: [
-            'total_delivery_price'   => $this->getTotalDeliveryPrice($this->pickedDelivery),
-            'total_product_discount' => $this->response['total_product_discount'],
-            'grand_total'            => $this->response['grand_total'],
-        ]);
+        $this->dispatchSummaryContent();
 
         if (! $rerendering) {
             $this->dispatch('run-js-content-loaded');
@@ -71,6 +68,16 @@ class CheckoutProduct extends Component
         return $total;
     }
 
+
+    private function dispatchSummaryContent()
+    {
+        return $this->dispatch('content-loaded', summary: [
+            'total_delivery_price'   => $this->getTotalDeliveryPrice($this->pickedDelivery),
+            'total_product_discount' => $this->response['total_product_discount'],
+            'grand_total'            => $this->response['grand_total'],
+        ]);
+    }
+
     #[On('qty-content-changed')]
     public function updateQuantity($quantityChanged)
     {
@@ -92,15 +99,45 @@ class CheckoutProduct extends Component
         $this->loadContent(true);
     }
 
-    public function setDeliveryOpt(string $retailerName, string $deliveryOption, int $shippingCost)
+    #[On('set-picked-delivery-opt')]
+    public function setDeliveryOpt(string $retailerName, string $deliveryOption, string $shippingCost, string $message)
     {
+        $message = $this->getTimeOptionMessage($deliveryOption, $message);
+
         $this->pickedDelivery[$retailerName] = [
-            'option' => $deliveryOption,
-            'price' => $shippingCost,
+            'option'  => $deliveryOption,
+            'price'   => (int) $shippingCost,
+            'message' => $message,
         ];
+
+        $this->dispatchSummaryContent();
     }
 
-    #[On('picked_up_in_store')]
+    private function getTimeOptionMessage(string $deliveryOption, string $message)
+    {
+        if($deliveryOption !== 'time') {
+            return $message;
+        }
+
+        $monthInt = [
+            'Januari'   => 1, 'Februari' => 2,  'Maret'    => 3,  'April'    => 4, 
+            'Mei'       => 5, 'Juni'     => 6,  'Juli'     => 7,  'Agustus'  => 8, 
+            'September' => 9, 'Oktober'  => 10, 'November' => 11, 'Desember' => 12
+        ];
+
+        $arrMessage      = explode('|', $message);
+        $arrDate         = explode(' ', $arrMessage[0]);
+        $deliveryDate    = Carbon::create($arrDate[2], $monthInt[$arrDate[1]], $arrDate[0]);
+        $today           = Carbon::today();
+        $willBeDelivered = match ($deliveryDate->diffInDays($today)) {
+            0 => 'Hari ini',
+            1 => 'Besok',
+            2 => formatToIdnLocale($deliveryDate, 'l'),
+        };
+        return $willBeDelivered . ', ' . $arrMessage[0] . ', ' . $arrMessage[1];
+    }
+
+    #[On('picked-up-in-store')]
     public function updateStoreDeliveryShippingPrice()
     {
         if (! isset($this->carts['Toko Indomaret'])) {
@@ -122,12 +159,8 @@ class CheckoutProduct extends Component
          * Update data picked delivery option data price to 0 
         */
         $this->pickedDelivery['Toko Indomaret']['price'] = 0;
-
-        $this->dispatch('content-loaded', summary: [
-            'total_delivery_price'   => $this->getTotalDeliveryPrice($this->pickedDelivery),
-            'total_product_discount' => $this->response['total_product_discount'],
-            'grand_total'            => $this->response['grand_total'],
-        ]);
+        
+        $this->dispatchSummaryContent();
     }
 
     public function render()
