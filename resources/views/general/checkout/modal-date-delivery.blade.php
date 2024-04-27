@@ -27,7 +27,7 @@
         <x-button class="py-2 px-4 text-sm" data-retailer="{{ $retailerSlug }}" data-section-target="date-after-tomorrow" buttonStyle="outline-secondary" value="{{ $dayAfterTomorrow }}, {{ str_replace('2024', '', $afterTomorrow) }}"/>
     </section>
 
-    <section class="p-4 grid grid-cols-2 gap-4" data-retailer="{{ $retailerSlug }}" data-section="date-today">
+    <section class="p-4 grid grid-cols-2 gap-4" data-retailer="{{ $retailerSlug }}" data-delivery-price="{{ $deliveryPrice }}" data-section="date-today">
 
     @foreach ($openingHours as $index => $openingHour)
 
@@ -54,7 +54,7 @@
 
     </section>
     
-    <section class="p-4 hidden grid-cols-2 gap-4" data-retailer="{{ $retailerSlug }}" data-section="date-tomorrow">
+    <section class="p-4 hidden grid-cols-2 gap-4" data-retailer="{{ $retailerSlug }}" data-delivery-price="{{ $deliveryPrice }}" data-section="date-tomorrow">
 
     @foreach ($openingHours as $index => $openingHour)
         <div class="rounded-md border border-light-gray-100 pe-2 ps-4 flex items-center justify-between h-12 w-96 text-sm">
@@ -65,7 +65,7 @@
 
     </section>
     
-    <section class="p-4 hidden grid-cols-2 gap-4" data-retailer="{{ $retailerSlug }}" data-section="date-after-tomorrow">
+    <section class="p-4 hidden grid-cols-2 gap-4" data-retailer="{{ $retailerSlug }}" data-delivery-price="{{ $deliveryPrice }}" data-section="date-after-tomorrow">
 
     @foreach ($openingHours as $index => $openingHour)
         <div class="rounded-md border border-light-gray-100 pe-2 ps-4 flex items-center justify-between h-12 w-96 text-sm">
@@ -75,7 +75,4 @@
     @endforeach
 
     </section>
-    
-    <input name="date-delivery-picker[]" data-retailer="{{ $retailerSlug }}" type="hidden" value="{{ $today }}">
-    <input name="time-delivery-picker[]" data-retailer="{{ $retailerSlug }}" type="hidden" value="{{ $defaultDate }}">
 </div>
