@@ -72,11 +72,13 @@ class CartService
             $availDeliveryEachRetailer = $retailerName !== 'Toko Indomaret' ? Arr::except($availDeliveryOptions, 'express') : $availDeliveryOptions;
             $deliveryFirstListType     = array_key_first($availDeliveryEachRetailer);
             $deliveryFirstListPrice    = $availDeliveryEachRetailer[$deliveryFirstListType]['price'];
-            $grandTotal               += $totalEachRetailer + $deliveryFirstListPrice;
+            $deliveryFirstListMessage  = $availDeliveryEachRetailer[$deliveryFirstListType]['message'];
+            $grandTotal               += $totalEachRetailer;
             $defaultDeliveryOpt        = array_merge($defaultDeliveryOpt, [
                 $retailerName => [
-                    'option' => $deliveryFirstListType,
-                    'price'  => $deliveryFirstListPrice,
+                    'option'  => $deliveryFirstListType,
+                    'price'   => $deliveryFirstListPrice,
+                    'message' => $deliveryFirstListMessage,
                 ]
             ]);
 
