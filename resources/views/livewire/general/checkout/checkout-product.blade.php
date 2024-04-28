@@ -338,4 +338,14 @@
             })
         }
     </script>
+
+    <script type="text/javascript" src="{{ config('midtrans.url') . 'snap/snap.js' }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('success-get-token', event => {
+                window.snap.pay(event.token.snap_token);
+            });
+        });
+    </script>
 @endpush
