@@ -219,9 +219,9 @@
                     switchDateDelivery();
                     pickDateDelivery();
                     detectChangesInProductQty();
-                }, 1);
-            });
-        });
+                }, 1)
+            })
+        })
 
         function switchDateDelivery() { 
             const btnSwitchDateList = document.querySelectorAll('button[data-section-target]');
@@ -344,8 +344,18 @@
     <script type="text/javascript">
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('success-get-token', event => {
-                window.snap.pay(event.token.snap_token);
-            });
-        });
+                window.snap.pay(event.token.snap_token, {
+                    onPending: function(result){
+                        /**
+                         * If user close the payment modal without completing the payment,
+                         * the order in midtrans dashboard will be automaticly cancelled.
+                        */
+                        Livewire.dispatch('payment-pending', {
+                            orderId: result.order_id,
+                        })
+                    },
+                })
+            })
+        })
     </script>
 @endpush
