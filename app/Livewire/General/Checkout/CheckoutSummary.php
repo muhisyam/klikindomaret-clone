@@ -11,6 +11,7 @@ class CheckoutSummary extends Component
 {
     protected object $clientAction;
     protected string $endpoint;
+    protected string $sessionPaymentKey;
     
     public int $deliveryPrice = 0;
     public int $discountTotal = 0;
@@ -20,8 +21,9 @@ class CheckoutSummary extends Component
 
     public function __construct(
     ) {
-        $this->clientAction = app(ClientRequestAction::class);
-        $this->endpoint     = config('api.url') . 'checkouts';
+        $this->clientAction      = app(ClientRequestAction::class);
+        $this->endpoint          = config('api.url') . 'checkouts';
+        $this->sessionPaymentKey = session('user')['username'] . '-payment-created';
     }
 
     #[On('content-loaded')]
@@ -41,10 +43,18 @@ class CheckoutSummary extends Component
 
     public function getPaymentToken()
     {
-        $this->loading = true;
-        $response      = $this->getPaymentSnapToken();
+        $this->loading   = true;
+        $sessionTokenKey = session('user')['username'] . '-payment-token';
+        $isHasPendingPay = empty(session($this->sessionPaymentKey));
+        $response        = ! $isHasPendingPay ? session($sessionTokenKey) : $this->getPaymentSnapToken();
 
-        // TODO: Validate response token
+        session([$sessionTokenKey => $response]);
+
+        // TODO: complete this
+        // if ($response['meta']['status'] != 201) {
+        //     # code...
+        // }
+
         $this->dispatch('success-get-token', token: $response);
     }
 
@@ -61,6 +71,14 @@ class CheckoutSummary extends Component
                 ],
             )
         );
+    }
+
+    #[On('payment-pending')]
+    public function paymentOnPending(string $orderId)
+    {
+        session([$this->sessionPaymentKey => $orderId]);
+        
+        $this->loading = false;
     }
 
     public function render()
