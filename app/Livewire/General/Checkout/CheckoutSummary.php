@@ -60,14 +60,12 @@ class CheckoutSummary extends Component
 
     private function getPaymentSnapToken()
     {
-        $userToken = session('auth_token');
-
         return $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
                 endpoint: $this->endpoint,
                 headers: [
-                    'Authorization' => 'Bearer ' . $userToken
+                    'Authorization' => 'Bearer ' . session('auth_token'),
                 ],
             )
         );
