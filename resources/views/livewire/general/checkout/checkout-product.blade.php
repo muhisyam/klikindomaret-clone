@@ -345,10 +345,23 @@
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('success-get-token', event => {
                 window.snap.pay(event.token.snap_token, {
-                    onPending: function(result){
+                    onSuccess: function(result) {
+                        /**
+                         * Call event when user successfully finish the payment.
+                         * Call in Checkout Product Class
+                        */
+                        Livewire.dispatch('payment-success', {
+                            resultCallback: {
+                                orderId:     result.order_id,
+                                paymentType: result.payment_type,
+                            },
+                        })
+                    },
+                    onPending: function(result) {
                         /**
                          * If user close the payment modal without completing the payment,
                          * the order in midtrans dashboard will be automaticly cancelled.
+                         * Call in Checkout Summary Class
                         */
                         Livewire.dispatch('payment-pending', {
                             orderId: result.order_id,
