@@ -5,6 +5,7 @@ namespace App\Livewire\General\Checkout;
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Web\General\CartController;
+use App\Http\Controllers\Web\General\GeneralController;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Livewire\Attributes\On;
@@ -38,7 +39,6 @@ class CheckoutProduct extends Component
         if (! $rerendering) {
             $this->dispatch('run-js-content-loaded');
         }
-
     }
 
     private function getDataUserCartProducts()
@@ -134,6 +134,7 @@ class CheckoutProduct extends Component
             1 => 'Besok',
             2 => formatToIdnLocale($deliveryDate, 'l'),
         };
+
         return $willBeDelivered . ', ' . $arrMessage[0] . ', ' . $arrMessage[1];
     }
 
@@ -161,6 +162,24 @@ class CheckoutProduct extends Component
         $this->pickedDelivery['Toko Indomaret']['price'] = 0;
         
         $this->dispatchSummaryContent();
+    }
+
+    #[On('payment-success')]
+    public function paymentOnSuccess(array $resultCallback)
+    {   
+        $dataPicked = [
+            'supplier' => [],
+            'expected_time' => [],
+        ];
+
+        foreach ($this->pickedDelivery as $supplierName => $value) {
+            array_push($dataPicked['supplier'], $supplierName);
+            array_push($dataPicked['expected_time'], $value['message']);
+        }
+
+        $params = array_merge($resultCallback, $dataPicked);
+
+        app(GeneralController::class)->paymented($params);
     }
 
     public function render()
