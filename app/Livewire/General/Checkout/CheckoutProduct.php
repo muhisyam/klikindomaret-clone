@@ -30,8 +30,8 @@ class CheckoutProduct extends Component
     public function loadContent($rerendering = false)
     {
         $this->response       = $this->getDataUserCartProducts()['data'];
-        $this->carts          = Arr::except($this->response, ['default_delivery_option', 'qty_product_each_retailer', 'total_product_discount', 'grand_total']);
-        $this->quantities     = $this->response['qty_product_each_retailer'];
+        $this->carts          = Arr::except($this->response, ['default_delivery_option', 'qty_product_each_supplier', 'total_product_discount', 'grand_total']);
+        $this->quantities     = $this->response['qty_product_each_supplier'];
         $this->pickedDelivery = $this->response['default_delivery_option'];
         
         $this->dispatchSummaryContent();

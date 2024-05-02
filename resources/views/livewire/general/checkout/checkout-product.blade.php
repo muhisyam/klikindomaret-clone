@@ -1,13 +1,13 @@
 <section class="space-y-6 rounded-lg p-6 bg-white" wire:init="loadContent">
 
-    @forelse ($carts as $retailerName => $productByGroup)
+    @forelse ($carts as $supplierName => $productByGroup)
 
     @php
-        $retailerSlug          = Str::slug($retailerName);
-        $activeDeliveryOption  = $pickedDelivery[$retailerName]['option'];
-        $activeDeliveryPrice   = $pickedDelivery[$retailerName]['price'];
-        $activeDeliveryMessage = $pickedDelivery[$retailerName]['message'];
-        $filterGroup           = Arr::except($productByGroup, ['retailer_icon', 'total_price_each_retailer', 'product_count', 'delivery_options']);
+        $supplierSlug          = Str::slug($supplierName);
+        $activeDeliveryOption  = $pickedDelivery[$supplierName]['option'];
+        $activeDeliveryPrice   = $pickedDelivery[$supplierName]['price'];
+        $activeDeliveryMessage = $pickedDelivery[$supplierName]['message'];
+        $filterGroup           = Arr::except($productByGroup, ['supplier_icon', 'total_price_each_supplier', 'product_count', 'delivery_options']);
     @endphp
 
     <table class="w-full">
@@ -15,12 +15,12 @@
             <tr>
                 <th colspan="5" class="border-b-2 border-light-gray-100 rounded-t-md bg-light-gray-50">
                     <div class="py-2 px-4 flex items-center gap-2 text-sm">
-                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($productByGroup['retailer_icon']) . '.webp') }}"/>
+                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($productByGroup['supplier_icon']) . '.webp') }}"/>
                         <h2 @class([
                             'font-bold',
-                            'text-secondary' => $retailerName === 'Toko Indomaret',
-                            'text-[#00b110]' => $retailerName === 'Warehouse',
-                        ])>{{ $retailerName }}</h2>
+                            'text-secondary' => $supplierName === 'Toko Indomaret',
+                            'text-[#00b110]' => $supplierName === 'Warehouse',
+                        ])>{{ $supplierName }}</h2>
                         <span>({{ $productByGroup['product_count'] }} Item)</span>
                     </div>
                 </th>
@@ -34,14 +34,14 @@
 
             <tr>
                 <td colspan="5" class="p-0 border-b border-light-gray-100">
-                    <x-dropdown section="user-account-ewallet-{{ $retailerSlug }}">
+                    <x-dropdown section="user-account-ewallet-{{ $supplierSlug }}">
                         <x-slot:trigger class="!rounded-none p-4 flex-col gap-2 w-full bg-light-gray-50">
                             <div class="flex items-center gap-2 w-full" data-delivery-type="">
                                 <x-icon class="mr-auto w-40" src="{{ asset('img/checkout/choose-'. $activeDeliveryOption .'.webp') }}"/>
                                 <div class="text-sm">{{ $activeDeliveryPrice ? 'Rp ' . formatCurrencyIDR($activeDeliveryPrice) : 'GRATIS' }}</div>
                                 <x-icon class="w-3 duration-500" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}" data-arrow-dropdown=""/>
                             </div>
-                            <div class="w-full text-left text-sm" data-delivery-info="{{ $retailerSlug }}">{{ $activeDeliveryMessage }}</div>
+                            <div class="w-full text-left text-sm" data-delivery-info="{{ $supplierSlug }}">{{ $activeDeliveryMessage }}</div>
                         </x-slot>
 
                         <x-slot:content class="overflow-hidden w-full bg-white before:hidden">
@@ -50,7 +50,7 @@
 
                             <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
                                         wire:click="setDeliveryOpt(
-                                            '{{ $retailerName }}',
+                                            '{{ $supplierName }}',
                                             'regular',
                                             '{{ $deliveryType['price'] }}',
                                             '{{ $deliveryType['message'] }}',
@@ -60,7 +60,7 @@
                                 <div class="text-left text-sm">{{ $productByGroup['delivery_options']['regular']['message'] }}</div>
                             </x-button>
 
-                            @php  $section = 'choose-time-' . $retailerSlug @endphp
+                            @php  $section = 'choose-time-' . $supplierSlug @endphp
 
                             <x-modal :section="$section" withOverlay="false">
                                 <x-slot:trigger class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
@@ -72,8 +72,8 @@
                                 @push('modal-date-delivery')
                                     @include('general.checkout.modal-date-delivery', [
                                         'section'       => $section,
-                                        'retailerName'  => $retailerName,
-                                        'retailerSlug'  => $retailerSlug,
+                                        'supplierName'  => $supplierName,
+                                        'supplierSlug'  => $supplierSlug,
                                         'deliveryPrice' => $productByGroup['delivery_options']['time']['price'],
                                     ])
                                 @endpush
@@ -84,7 +84,7 @@
 
                             <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
                                         wire:click="setDeliveryOpt(
-                                            '{{ $retailerName }}',
+                                            '{{ $supplierName }}',
                                             'sameday',
                                             '{{ $deliveryType['price'] }}',
                                             '{{ $deliveryType['message'] }}',
@@ -104,7 +104,7 @@
                                     $deliveryMessage = $deliveryOpt['message'];
                                     $disabledClass   = ' hover:bg-secondary-50';
                                     $wireClick       = 'setDeliveryOpt(
-                                                            "'.$retailerName.'", 
+                                                            "'.$supplierName.'", 
                                                             "express",
                                                             "'.$deliveryOpt['price'].'",
                                                             "'.$deliveryMessage.'",
@@ -160,7 +160,7 @@
                             <x-icon class="mx-auto w-2.5" src="{{ asset('img/icons/icon-minus.webp') }}" iconStyle="hover-white"/>
                         </x-button>
                         
-                        <x-input-field class="mx-1 !h-8 text-center" name="quantity[]" wire:model="quantities.{{ $retailerName . '.' . $product['product_slug'] }}"/>
+                        <x-input-field class="mx-1 !h-8 text-center" name="quantity[]" wire:model="quantities.{{ $supplierName . '.' . $product['product_slug'] }}"/>
                         
                         <x-button class="shrink-0 h-8 w-8 group hover:bg-secondary" buttonStyle="outline-secondary" qty="add">
                             <x-icon class="mx-auto w-2.5 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}" iconStyle="hover-white"/>
@@ -186,7 +186,7 @@
                 <td colspan="5" class="border-t border-light-gray-100 rounded-b-md bg-light-gray-50 text-sm font-bold">
                     <div class="py-2 flex justify-end">
                         <div class="w-5/6 text-end">Subtotal:</div>
-                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($productByGroup['total_price_each_retailer']) }}</div>
+                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($productByGroup['total_price_each_supplier']) }}</div>
                     </div>
                 </td>
             </tr>
@@ -229,8 +229,8 @@
             btnSwitchDateList.forEach(btnSwitch => {
                 btnSwitch.addEventListener('click', () => {
                     const targetIndetity = btnSwitch.getAttribute('data-section-target');
-                    const targetRetailer = btnSwitch.getAttribute('data-retailer');
-                    const targetEl       = document.querySelector(`section[data-retailer="${targetRetailer}"][data-section="${targetIndetity}"]`);
+                    const targetSupplier = btnSwitch.getAttribute('data-supplier');
+                    const targetEl       = document.querySelector(`section[data-supplier="${targetSupplier}"][data-section="${targetIndetity}"]`);
                     const isTargetHidden = targetEl.classList.contains('hidden');
 
                     hideOpenedDateSection(targetRetailer);
@@ -247,8 +247,8 @@
         }
 
         function hideOpenedDateSection(retailerName) {
-            const btnSwitchDateList    = document.querySelectorAll(`button[data-retailer="${retailerName}"]`);
-            const sectionModalDateList = document.querySelectorAll(`section[data-retailer="${retailerName}"]`);
+            const btnSwitchDateList    = document.querySelectorAll(`button[data-supplier="${retailerName}"]`);
+            const sectionModalDateList = document.querySelectorAll(`section[data-supplier="${retailerName}"]`);
 
             btnSwitchDateList.forEach(btnSwitch => {
                 btnSwitch.classList.add('border', 'border-secondary', 'bg-white', 'text-secondary');
@@ -268,16 +268,16 @@
                 btnDate.addEventListener('click', () => {
                     const dataDate          = btnDate.getAttribute('data-delivery-date');
                     const dataTime          = btnDate.getAttribute('data-delivery-time');
-                    const dataRetailer      = btnDate.closest('[data-retailer]').getAttribute('data-retailer');
+                    const dataSupplier      = btnDate.closest('[data-supplier]').getAttribute('data-supplier');
                     const dataDeliveryPrice = btnDate.closest('[data-delivery-price]').getAttribute('data-delivery-price');
 
                     /**
                      * Reset the buttons style
                     */
                     listBtnDatePicker.forEach(btnDate => {
-                        const isBtnHasRightRetailer = btnDate.closest('[data-retailer]').matches(`[data-retailer="${dataRetailer}"]`);
+                        const isBtnHasRightSupplier = btnDate.closest('[data-supplier]').matches(`[data-supplier="${dataSupplier}"]`);
 
-                        if (isBtnHasRightRetailer) {
+                        if (isBtnHasRightSupplier) {
                             btnDate.classList.add('bg-white', 'text-secondary');
                             btnDate.classList.remove('bg-secondary', 'text-white');
                             btnDate.innerHTML  = 'Pilih jam ini';
@@ -289,7 +289,7 @@
                     btnDate.innerHTML = 'Terpilih';
 
                     Livewire.dispatch('set-picked-delivery-opt', { 
-                        retailerName:    makeTitle(dataRetailer),
+                        retailerName:    makeTitle(dataSupplier),
                         deliveryOption: 'time',
                         shippingCost:   dataDeliveryPrice,
                         message:        `${dataDate}|${dataTime}`,
@@ -351,10 +351,7 @@
                          * Call in Checkout Product Class
                         */
                         Livewire.dispatch('payment-success', {
-                            resultCallback: {
-                                orderId:     result.order_id,
-                                paymentType: result.payment_type,
-                            },
+                            resultCallback: result,
                         })
                     },
                     onPending: function(result) {
