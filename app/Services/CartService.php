@@ -6,8 +6,6 @@ use Illuminate\Support\Arr;
 
 class CartService 
 {
-    //TODO: jadiin [product => ...products, detail => ...details]
-
     /**
      * Adding additional information including:
      * - product discount percent
@@ -23,6 +21,7 @@ class CartService
     */
     public function getMoreInformation(array $carts): array
     {
+        $newDataCarts         = [];
         $eachProductDiscount  = 0;
         $totalEachSupplier    = 0;
         $grandTotal           = 0;
@@ -63,11 +62,17 @@ class CartService
                 $eachProductDiscount      += $product['quantity'] * ($product['normal_price'] - ($product['discount_price'] ?? $product['normal_price']));
                 $totalEachSupplier        += $eachProductPrice;
                 
-                $carts[$supplierName][$index] = array_merge($carts[$supplierName][$index], [
+                $productByGroup[$index] = array_merge($product, [
                     'discount_percent' => $discountPercent,
                     'total_price'      => $eachProductPrice,
                 ]);
             }
+
+            $newDataCarts = array_merge($newDataCarts, [
+                $supplierName => [
+                    'products' => $productByGroup,
+                ]
+            ]);
             
             $productCount              = count($productByGroup);
             $supplierIcon              = $supplierName !== 'Toko Indomaret' ? $supplierName : 'Store';
@@ -85,23 +90,26 @@ class CartService
                 ]
             ]);
 
-
-            $carts[$supplierName] = array_merge($carts[$supplierName], [
-                'supplier_icon'             => $supplierIcon,
-                'total_price_each_supplier' => $totalEachSupplier,
-                'product_count'             => $productCount,
-                'delivery_options'          => $availDeliveryEachSupplier,
+            $newDataCarts[$supplierName] = array_merge($newDataCarts[$supplierName], [
+                'additional_info' => [
+                    'supplier_icon'             => $supplierIcon,
+                    'total_price_each_supplier' => $totalEachSupplier,
+                    'product_count'             => $productCount,
+                    'delivery_options'          => $availDeliveryEachSupplier,
+                ]
             ]);
         }
 
-        $carts = array_merge($carts, [
-            'default_delivery_option'   => $defaultDeliveryOpt,
-            'qty_product_each_supplier' => $quantities,
-            'total_product_discount'    => $eachProductDiscount,
-            'grand_total'               => $grandTotal
+        $newDataCarts = array_merge($newDataCarts, [
+            'other_info' => [
+                'default_delivery_option'   => $defaultDeliveryOpt,
+                'qty_product_each_supplier' => $quantities,
+                'total_product_discount'    => $eachProductDiscount,
+                'grand_total'               => $grandTotal,
+            ]
         ]);
 
-        return $carts;
+        return $newDataCarts;
     }
 
     private function getFreeDelivery(array $availDeliveryOptions, int $totalEachSupplier)
