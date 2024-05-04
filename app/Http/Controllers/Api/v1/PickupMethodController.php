@@ -8,11 +8,22 @@ use Illuminate\Http\Request;
 
 class PickupMethodController extends Controller
 {
-    public function show(Request $request, PickupMethodService $pickupService, string $username)
+    public function __construct(
+        protected PickupMethodService $pickupService,
+    ) {}
+
+    public function show(Request $request)
     {
-        $userPickupMethods = $request->user()->pickupMethod;
-        $detailAddress     = $pickupService->getPickupDetailAddress($userPickupMethods);
+        $detailAddress = $this->getUserPickupData($request);
 
         return response()->json(['data' => $detailAddress], 200);
+    }
+    
+    public function getUserPickupData(Request $request)
+    {
+        $userPickupMethods = $request->user()->pickupMethod;
+        $detailAddress     = $this->pickupService->getPickupDetailAddress($userPickupMethods)->toArray();
+
+        return $detailAddress;
     }
 }
