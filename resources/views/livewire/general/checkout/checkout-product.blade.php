@@ -1,13 +1,14 @@
 <section class="space-y-6 rounded-lg p-6 bg-white" wire:init="loadContent">
 
-    @forelse ($carts as $supplierName => $productByGroup)
+    @forelse ($carts as $supplierName => $groupBySupplier)
 
     @php
         $supplierSlug          = Str::slug($supplierName);
         $activeDeliveryOption  = $pickedDelivery[$supplierName]['option'];
         $activeDeliveryPrice   = $pickedDelivery[$supplierName]['price'];
         $activeDeliveryMessage = $pickedDelivery[$supplierName]['message'];
-        $filterGroup           = Arr::except($productByGroup, ['supplier_icon', 'total_price_each_supplier', 'product_count', 'delivery_options']);
+        $products              = $groupBySupplier['products'];
+        $additionalInfo        = $groupBySupplier['additional_info'];
     @endphp
 
     <table class="w-full">
@@ -15,20 +16,20 @@
             <tr>
                 <th colspan="5" class="border-b-2 border-light-gray-100 rounded-t-md bg-light-gray-50">
                     <div class="py-2 px-4 flex items-center gap-2 text-sm">
-                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($productByGroup['supplier_icon']) . '.webp') }}"/>
+                        <x-icon class="w-[18px]" src="{{ asset('img/icons/icon-send-by-' . strtolower($additionalInfo['supplier_icon']) . '.webp') }}"/>
                         <h2 @class([
                             'font-bold',
                             'text-secondary' => $supplierName === 'Toko Indomaret',
                             'text-[#00b110]' => $supplierName === 'Warehouse',
                         ])>{{ $supplierName }}</h2>
-                        <span>({{ $productByGroup['product_count'] }} Item)</span>
+                        <span>({{ $additionalInfo['product_count'] }} Item)</span>
                     </div>
                 </th>
             </tr>
         </thead>
         <tbody>
 
-        @foreach ($filterGroup as $product)
+        @foreach ($products as $product)
 
         @if ($loop->first)
 
@@ -46,7 +47,7 @@
 
                         <x-slot:content class="overflow-hidden w-full bg-white before:hidden">
 
-                            @php $deliveryType = $productByGroup['delivery_options']['regular'] @endphp 
+                            @php $deliveryType = $additionalInfo['delivery_options']['regular'] @endphp 
 
                             <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
                                         wire:click="setDeliveryOpt(
@@ -57,7 +58,7 @@
                                         )"
                             >
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-regular.webp') }}"/>
-                                <div class="text-left text-sm">{{ $productByGroup['delivery_options']['regular']['message'] }}</div>
+                                <div class="text-left text-sm">{{ $additionalInfo['delivery_options']['regular']['message'] }}</div>
                             </x-button>
 
                             @php  $section = 'choose-time-' . $supplierSlug @endphp
@@ -65,7 +66,7 @@
                             <x-modal :section="$section" withOverlay="false">
                                 <x-slot:trigger class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50">
                                     <x-icon class="w-40" src="{{ asset('img/checkout/choose-time.webp') }}"/>
-                                    <div class="text-left text-sm"> {{ $productByGroup['delivery_options']['time']['message'] }}</div>
+                                    <div class="text-left text-sm"> {{ $additionalInfo['delivery_options']['time']['message'] }}</div>
                                 </x-slot>
             
                                 <x-slot:content class="separated-modal">
@@ -74,13 +75,13 @@
                                         'section'       => $section,
                                         'supplierName'  => $supplierName,
                                         'supplierSlug'  => $supplierSlug,
-                                        'deliveryPrice' => $productByGroup['delivery_options']['time']['price'],
+                                        'deliveryPrice' => $additionalInfo['delivery_options']['time']['price'],
                                     ])
                                 @endpush
                                 </x-slot>
                             </x-modal>
 
-                            @php $deliveryType = $productByGroup['delivery_options']['sameday'] @endphp 
+                            @php $deliveryType = $additionalInfo['delivery_options']['sameday'] @endphp 
 
                             <x-button   class="border-b border-light-gray-100 !rounded-none p-4 flex-col !items-baseline gap-2 w-full hover:bg-secondary-50" 
                                         wire:click="setDeliveryOpt(
@@ -91,7 +92,7 @@
                                         )"
                             >
                                 <x-icon class="w-40" src="{{ asset('img/checkout/choose-sameday.webp') }}"/>
-                                <div class="text-left text-sm">{{ $productByGroup['delivery_options']['sameday']['message'] }}</div>
+                                <div class="text-left text-sm">{{ $additionalInfo['delivery_options']['sameday']['message'] }}</div>
                             </x-button>
 
                             @php
@@ -99,8 +100,8 @@
                                 $deliveryMessage = 'Tidak tersedia untuk pesanan dari penjual ini';
                                 $disabledClass    = ' bg-light-gray-50 opacity-50 hover:!opacity-50';
 
-                                if (array_key_exists('express', $productByGroup['delivery_options'])) {
-                                    $deliveryOpt     = $productByGroup['delivery_options']['express'];
+                                if (array_key_exists('express', $additionalInfo['delivery_options'])) {
+                                    $deliveryOpt     = $additionalInfo['delivery_options']['express'];
                                     $deliveryMessage = $deliveryOpt['message'];
                                     $disabledClass   = ' hover:bg-secondary-50';
                                     $wireClick       = 'setDeliveryOpt(
@@ -186,7 +187,7 @@
                 <td colspan="5" class="border-t border-light-gray-100 rounded-b-md bg-light-gray-50 text-sm font-bold">
                     <div class="py-2 flex justify-end">
                         <div class="w-5/6 text-end">Subtotal:</div>
-                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($productByGroup['total_price_each_supplier']) }}</div>
+                        <div class="pe-4 w-1/6 text-end">Rp {{ formatCurrencyIDR($additionalInfo['total_price_each_supplier']) }}</div>
                     </div>
                 </td>
             </tr>
@@ -246,9 +247,9 @@
             })
         }
 
-        function hideOpenedDateSection(retailerName) {
-            const btnSwitchDateList    = document.querySelectorAll(`button[data-supplier="${retailerName}"]`);
-            const sectionModalDateList = document.querySelectorAll(`section[data-supplier="${retailerName}"]`);
+        function hideOpenedDateSection(supplierName) {
+            const btnSwitchDateList    = document.querySelectorAll(`button[data-supplier="${supplierName}"]`);
+            const sectionModalDateList = document.querySelectorAll(`section[data-supplier="${supplierName}"]`);
 
             btnSwitchDateList.forEach(btnSwitch => {
                 btnSwitch.classList.add('border', 'border-secondary', 'bg-white', 'text-secondary');
@@ -280,7 +281,7 @@
                         if (isBtnHasRightSupplier) {
                             btnDate.classList.add('bg-white', 'text-secondary');
                             btnDate.classList.remove('bg-secondary', 'text-white');
-                            btnDate.innerHTML  = 'Pilih jam ini';
+                            btnDate.innerHTML = 'Pilih jam ini';
                         }
                     })
 
@@ -289,7 +290,7 @@
                     btnDate.innerHTML = 'Terpilih';
 
                     Livewire.dispatch('set-picked-delivery-opt', { 
-                        retailerName:    makeTitle(dataSupplier),
+                        supplierName:    makeTitle(dataSupplier),
                         deliveryOption: 'time',
                         shippingCost:   dataDeliveryPrice,
                         message:        `${dataDate}|${dataTime}`,

@@ -18,6 +18,7 @@ class CheckoutProduct extends Component
 
     public array $response       = [];
     public array $carts          = [];
+    public array $otherInfo      = [];
     public array $pickedDelivery = [];
     public array $quantities     = [];
 
@@ -30,9 +31,10 @@ class CheckoutProduct extends Component
     public function loadContent($rerendering = false)
     {
         $this->response       = $this->getDataUserCartProducts()['data'];
-        $this->carts          = Arr::except($this->response, ['default_delivery_option', 'qty_product_each_supplier', 'total_product_discount', 'grand_total']);
-        $this->quantities     = $this->response['qty_product_each_supplier'];
-        $this->pickedDelivery = $this->response['default_delivery_option'];
+        $this->carts          = Arr::except($this->response, ['other_info']);
+        $this->otherInfo      = $this->response['other_info'];
+        $this->quantities     = $this->otherInfo['qty_product_each_supplier'];
+        $this->pickedDelivery = $this->otherInfo['default_delivery_option'];
         
         $this->dispatchSummaryContent();
 
@@ -73,8 +75,8 @@ class CheckoutProduct extends Component
     {
         return $this->dispatch('content-loaded', summary: [
             'total_delivery_price'   => $this->getTotalDeliveryPrice($this->pickedDelivery),
-            'total_product_discount' => $this->response['total_product_discount'],
-            'grand_total'            => $this->response['grand_total'],
+            'total_product_discount' => $this->otherInfo['total_product_discount'],
+            'grand_total'            => $this->otherInfo['grand_total'],
         ]);
     }
 
@@ -100,11 +102,11 @@ class CheckoutProduct extends Component
     }
 
     #[On('set-picked-delivery-opt')]
-    public function setDeliveryOpt(string $retailerName, string $deliveryOption, string $shippingCost, string $message)
+    public function setDeliveryOpt(string $supplierName, string $deliveryOption, string $shippingCost, string $message)
     {
         $message = $this->getTimeOptionMessage($deliveryOption, $message);
 
-        $this->pickedDelivery[$retailerName] = [
+        $this->pickedDelivery[$supplierName] = [
             'option'  => $deliveryOption,
             'price'   => (int) $shippingCost,
             'message' => $message,
@@ -146,15 +148,16 @@ class CheckoutProduct extends Component
         }
 
         /**
-         * Update select delivery option data price to 0 
+         * Update select delivery option data price to 0, if user pickup method
+         * is taken from store.
         */
-        $deliveryOptions = $this->carts['Toko Indomaret']['delivery_options'];
+        $deliveryOptions = $this->carts['Toko Indomaret']['additional_info']['delivery_options'];
 
         foreach ($deliveryOptions as $type => $option) {
             $deliveryOptions[$type]['price'] = 0;
         }
 
-        $this->carts['Toko Indomaret']['delivery_options'] = $deliveryOptions;
+        $this->carts['Toko Indomaret']['additional_info']['delivery_options'] = $deliveryOptions;
 
         /**
          * Update data picked delivery option data price to 0 
