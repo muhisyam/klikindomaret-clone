@@ -14,6 +14,10 @@ class CartController extends Controller
 {
     use ShoppingCart;
 
+    public function __construct(
+        protected CartService $cartService,
+    ) {}
+
     public function store(CartRequest $request): JsonResponse
     {
         $this->addToCart($request);
@@ -23,13 +27,20 @@ class CartController extends Controller
         return response()->json(['data' => $productName], 200);
     }
 
-    public function show(Request $request, CartService $cartService): JsonResponse
+    public function show(Request $request): JsonResponse
+    {
+        $dataCarts = $this->getUserCart($request);
+
+        return response()->json(['data' => $dataCarts], 200);
+    }
+
+    public function getUserCart(Request $request)
     {
         $userId    = $request->user()->id;
         $arrCarts  = Cart::userProducts($userId);
-        $dataCarts = $cartService->getMoreInformation($arrCarts);
+        $dataCarts = $this->cartService->getMoreInformation($arrCarts);
 
-        return response()->json(['data' => $dataCarts], 200);
+        return $dataCarts;
     }
     
     public function update(CartRequest $request, int $userId): JsonResponse
