@@ -67,6 +67,9 @@ class CheckoutSummary extends Component
                 headers: [
                     'Authorization' => 'Bearer ' . session('auth_token'),
                 ],
+                formData: [
+                    'delivery_price' => $this->deliveryPrice,
+                ]
             )
         );
     }

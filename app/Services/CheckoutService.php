@@ -15,11 +15,13 @@ use Midtrans\Snap;
 
 class CheckoutService
 {
-    protected User $user;
-    protected string $orderKey;
     protected array $userPickupAddress;
     protected array $userCarts;
     protected array $productIds = [];
+    protected int $deliveryPrice;
+    protected string $orderKey;
+    protected string $pickupInfo;
+    protected User $user;
 
     public function getSnapToken(Request $request)
     {
@@ -44,11 +46,11 @@ class CheckoutService
     */
     private function initGlobalData(Request $request)
     {
-        $this->user      = $request->user();
-        $this->orderKey  = ''; 
-        $this->userCarts = app(CartController::class)->getUserCart($request);
-        $pickupAddresses = app(PickupMethodController::class)->getUserPickupData($request);
-        $pickupAddresses = Arr::except($pickupAddresses, ['is_picked_up_in_store', 'pickup_icon']);
+        $this->user           = $request->user();
+        $this->deliveryPrice  = $request['delivery_price'];
+        $this->userCarts      = app(CartController::class)->getUserCart($request);
+        $pickupAddresses      = app(PickupMethodController::class)->getUserPickupData($request);
+        $pickupAddresses      = Arr::except($pickupAddresses, ['is_picked_up_in_store', 'pickup_icon']);
         
         /**
          * Order key combination, consists of 3 digits of binary numbers. Each digit
@@ -71,7 +73,9 @@ class CheckoutService
         foreach ($pickupAddresses as $address) {
             if ($address['is_selected_method']) {
                 $this->userPickupAddress = $address;
-                $keyMethod               = $address['last_pickup_with_retailer'] ? 'T' : 'D';
+                $isPickedInStore         = $address['last_pickup_with_retailer'];
+                $keyMethod               = $isPickedInStore ? 'T' : 'D';
+                $this->pickupInfo        = $isPickedInStore ? 'taken' : 'delivered';
             }
         }
 
@@ -83,7 +87,7 @@ class CheckoutService
         $params = [
             'transaction_details' => [
                 'order_id'     => $this->orderKey,
-                'gross_amount' => $this->userCarts['other_info']['grand_total'],
+                'gross_amount' => $this->userCarts['other_info']['grand_total'] + $this->deliveryPrice,
             ],
             'customer_details' => $this->setDataCustomer(),
             'item_details'     => $this->setDataItems(),
@@ -137,13 +141,21 @@ class CheckoutService
                 ]);
             }
         }
+        
+        $dataEachItem = array_merge($dataEachItem, [
+            [
+                "id"       => '-',
+                "price"    => $this->deliveryPrice,
+                "quantity" => 1,
+                "name"     => 'Shipping Price',
+            ]
+        ]);
 
         return $dataEachItem;
     }
 
     private function createDataUserOrder()
     {
-
     }
 
     private function sendSnapTokenFailed(Exception $error)
