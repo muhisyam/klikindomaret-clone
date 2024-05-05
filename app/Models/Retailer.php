@@ -19,6 +19,11 @@ class Retailer extends Model
         'latitude' => 0,
     ];
 
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class);
