@@ -42,13 +42,16 @@ class PickupMethodService
     {
         $dataAttributes = $this->getDataAttributes($pickedUpIn);
         $placeId        = $method[$dataAttributes['place_id']];
-        $dataplace      = $dataAttributes['model']::find($placeId);
+        $dataPlace      = $dataAttributes['model']::with('region')->find($placeId);
+        $dataRegion     = $dataPlace['region'];
         $detailAttr     = $dataAttributes['detail_attribute'];
         $placeDetail    = [
-            'place_name'            => $dataplace[$detailAttr['place_name']],
-            'place_address'         => $dataplace[$detailAttr['place_address']],
-            'reciever_name'         => $dataplace[$detailAttr['reciever_name']],
-            'reciever_phone_number' => $dataplace[$detailAttr['reciever_phone_number']],
+            'place_name'            => $dataPlace[$detailAttr['place_name']],
+            'place_address'         => $dataPlace[$detailAttr['place_address']],
+            'place_location'        => $dataRegion['region_name'],
+            'place_postal_code'     => $dataRegion['region_postal_code'],
+            'reciever_name'         => $dataPlace[$detailAttr['reciever_name']],
+            'reciever_phone_number' => $dataPlace[$detailAttr['reciever_phone_number']],
         ];
 
         return $placeDetail;
