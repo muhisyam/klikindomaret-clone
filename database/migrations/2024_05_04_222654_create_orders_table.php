@@ -18,15 +18,15 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->string('user_order_status', 15);
+            $table->string('user_order_status', 50);
             $table->string('pickup_info', 15);
+            $table->morphs('pickup_address', 'address_type_id_index');
             $table->string('pickup_code', 10)->nullable();
             $table->date('pickup_expired')->nullable();
-            $table->date('expected_pickup_date')->nullable();
-            $table->string('expected_time_between', 15)->nullable();
             $table->string('payment_channel', 30)->nullable();
-            $table->string('bank_va_number', 20)->nullable();
+            $table->string('va_number', 20)->nullable();
             $table->integer('grandtotal');
+            $table->dateTime('order_completed')->nullable();
             $table->timestamps();
         });
     }

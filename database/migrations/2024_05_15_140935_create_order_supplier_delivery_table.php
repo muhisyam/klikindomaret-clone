@@ -11,12 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_pickup_addresses', function (Blueprint $table) {
+        Schema::create('order_supplier_delivery', function (Blueprint $table) {
             $table->foreignId('order_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->morphs('order_pickup_address', 'address_type_id_index');
+            $table->foreignId('supplier_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->string('delivery_option', 15);
+            $table->string('expected_time_between', 15)->nullable();
+            $table->date('expected_pickup_date');
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_pickup_addresses');
+        Schema::dropIfExists('order_supplier_delivery');
     }
 };
