@@ -23,27 +23,27 @@
             <div class="">Total Pembayaran</div>
             <div>Rp {{ formatCurrencyIDR($grandTotal) }}</div>
         </div>
-
-    @if ($grandTotal == 0 || $loading)
-        <x-button class="py-2 px-4 justify-center gap-2 w-full text-sm" buttonStyle="secondary">
+        
+        <x-button class="py-2 px-4 justify-center gap-2 w-full text-sm{{ $loading ? '' : ' hidden' }}" btn-checkout="loading" buttonStyle="secondary">
             <span class="loader-spin inset-0 inline-flex !h-4 !w-4 !bg-transparent after:!inset-0 after:!border-t-white"></span>
             Memuat Keranjang
         </x-button>
-    @endif
     
         <x-button 
-            class="py-2 px-4 justify-center w-full text-sm{{ $grandTotal == 0 || $loading ? ' hidden' : '' }}"
+            class="py-2 px-4 justify-center w-full text-sm{{ $loading ? ' hidden' : '' }}"
             btn-checkout="pay"
             buttonStyle="secondary"
             value="Pilih Opsi Pembayaran"
             wire:click="getPaymentToken"
+            wire:loading.remove
         />
 
         <x-button 
-            class="py-2 px-4 justify-center w-full text-sm hidden{{ $grandTotal == 0 || $loading ? ' hidden' : '' }}" 
+            class="py-2 px-4 justify-center w-full text-sm hidden{{ $loading ? ' hidden' : '' }}" 
             btn-checkout="updateCart" 
             buttonStyle="secondary" 
             value="Perbarui Keranjang"
+            wire:loading.remove
         />
     </div>
 

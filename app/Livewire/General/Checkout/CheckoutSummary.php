@@ -4,6 +4,7 @@ namespace App\Livewire\General\Checkout;
 
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
+use App\Services\OrderService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -17,10 +18,10 @@ class CheckoutSummary extends Component
     public int $discountTotal = 0;
     public int $grandTotal    = 0;
     public int $normalTotal   = 0;
-    public bool $loading      = false;
+    public bool $loading      = true;
 
-    public function __construct(
-    ) {
+    public function __construct()
+    {
         $this->clientAction      = app(ClientRequestAction::class);
         $this->endpoint          = config('api.url') . 'checkouts';
         $this->sessionPaymentKey = session('user')['username'] . '-payment-created';
@@ -33,10 +34,13 @@ class CheckoutSummary extends Component
         $this->deliveryPrice = $summary['total_delivery_price'];
         $this->discountTotal = $summary['total_product_discount'];
         $this->grandTotal    = $summary['grand_total'] + $this->deliveryPrice;
+        $this->loading       = false;
     }
 
     public function updateCart($quantityChanged)
     {
+        $this->loading = true;
+        
         $this->dispatch('qty-content-changed', quantityChanged: $quantityChanged);
         $this->reset('discountTotal', 'grandTotal', 'normalTotal');
     }
@@ -75,11 +79,48 @@ class CheckoutSummary extends Component
     }
 
     #[On('payment-pending')]
-    public function paymentOnPending(string $orderId)
+    public function paymentOnPending(array $resultCallback)
     {
-        session([$this->sessionPaymentKey => $orderId]);
+        session([$this->sessionPaymentKey => $resultCallback['order_id']]);
         
+        $username      = session('user')['username'];
+        $userToken     = session('auth_token');
+        $dataChannel   = app(OrderService::class)->getDataPayment($resultCallback);
         $this->loading = false;
+
+        $this->clientAction->request(
+            new ClientRequestDto(
+                method: 'POST',
+                endpoint: config('api.url') . 'orders/' . $username . '/pending',
+                headers: [
+                    'Authorization' => 'Bearer ' . $userToken
+                ],
+                formData: [
+                    '_method'         => 'put',
+                    'payment_channel' => $dataChannel['payment_channel'],
+                    'va_number'       => $dataChannel['va_number'],
+                    'order_status'    => $dataChannel['order_status'],
+                ],
+            )
+        );
+    }
+
+    #[On('snap-close')]
+    public function snapOnClose()
+    {   
+        $username      = session('user')['username'];
+        $userToken     = session('auth_token');
+        $this->loading = false;
+
+        return $this->clientAction->request(
+            new ClientRequestDto(
+                method: 'DELETE',
+                endpoint: config('api.url') . 'orders/' . $username,
+                headers: [
+                    'Authorization' => 'Bearer ' . $userToken
+                ],
+            )
+        );
     }
 
     public function render()
