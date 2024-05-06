@@ -3,8 +3,11 @@
 namespace App\Services;
 
 use App\Http\Controllers\Api\v1\CartController;
+use App\Http\Controllers\Api\v1\OrderController;
 use App\Http\Controllers\Api\v1\PickupMethodController;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\Retailer;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -17,7 +20,8 @@ class CheckoutService
 {
     protected array $userPickupAddress;
     protected array $userCarts;
-    protected array $productIds = [];
+    protected array $dataProductRelation;
+    protected array $dataRetailerRelation = [];
     protected int $deliveryPrice;
     protected string $orderKey;
     protected string $pickupInfo;
@@ -35,22 +39,26 @@ class CheckoutService
         $params = $this->createRequestBody();
 
         try {
-            return Snap::getSnapToken($params);
+            $token = Snap::getSnapToken($params);
+            $this->createDataUserOrder();
+            
+            return $token;
         } catch (Exception $error) {
             $this->sendSnapTokenFailed($error);
         }
     }
 
     /**
-     * Cant pass request from parent to constructor
+     * Why didn't place in construct, i prefer to put everything together here 
+     * with data initialization logic to make it looks cleaner.
     */
     private function initGlobalData(Request $request)
     {
-        $this->user           = $request->user();
-        $this->deliveryPrice  = $request['delivery_price'];
-        $this->userCarts      = app(CartController::class)->getUserCart($request);
-        $pickupAddresses      = app(PickupMethodController::class)->getUserPickupData($request);
-        $pickupAddresses      = Arr::except($pickupAddresses, ['is_picked_up_in_store', 'pickup_icon']);
+        $this->user          = $request->user();
+        $this->deliveryPrice = $request['delivery_price'] ?? 0;
+        $this->userCarts     = app(CartController::class)->getUserCart($request);
+        $pickupAddresses     = app(PickupMethodController::class)->getUserPickupData($request);
+        $pickupAddresses     = Arr::except($pickupAddresses, ['is_picked_up_in_store', 'pickup_icon']);
         
         /**
          * Order key combination, consists of 3 digits of binary numbers. Each digit
@@ -66,9 +74,9 @@ class CheckoutService
          * One of order key combination. This value only "D" or "T". D is mean delivery to
          * user address. T is mean taken, when user pickup products in store.
         */
-        $keyMethod     = '';
-        $keyDate       = today()->format('ymd');
-        $keyUsername   = strtoupper($this->user['username']);
+        $keyMethod   = '';
+        $keyDate     = today()->format('ymd');
+        $keyUsername = strtoupper($this->user['username']);
 
         foreach ($pickupAddresses as $address) {
             if ($address['is_selected_method']) {
@@ -125,23 +133,36 @@ class CheckoutService
         $dataEachItem = [];
         $carts        = Arr::except($this->userCarts, 'other_info');
 
-        foreach ($carts as $groupBySupplier) {
-            $productSlugs     = Arr::pluck($groupBySupplier['products'], 'product_slug');
-            $productIds       = Product::whereIn('product_slug', $productSlugs)->pluck('id')->toArray();
-            $this->productIds = array_merge($this->productIds, $productIds);
+        foreach ($carts as $supplierName => $groupBySupplier) {
+            $productSlugs = Arr::pluck($groupBySupplier['products'], 'product_slug');
+            $dataProducts = Product::select('id')->with('retailers:id')->whereIn('product_slug', $productSlugs)->get()->toArray();
+            $productIds   = Arr::pluck($dataProducts, 'id');
 
             foreach ($groupBySupplier['products'] as $index => $product) {
-                $dataEachItem = array_merge($dataEachItem, [
-                    [
-                        "id"       => $productIds[$index],
-                        "price"    => $product['discount_price'] ?? $product['normal_price'],
-                        "quantity" => $product['quantity'],
-                        "name"     => $product['product_name'],
-                    ]
-                ]);
+                $productId  = $productIds[$index];
+                $arrProduct = [
+                    "id"       => $productId,
+                    "price"    => $product['discount_price'] ?? $product['normal_price'],
+                    "quantity" => $product['quantity'],
+                    "name"     => $product['product_name'],
+                ];
+
+                $dataEachItem        = array_merge($dataEachItem, [$arrProduct]);
+                $productAttrRelation = Arr::except($arrProduct, ['id', 'name']);
+
+                $this->dataProductRelation[$productId] = $productAttrRelation;
             }
+
+            $retailerId          = $supplierName === 'Toko Indomaret' ? $this->getClosestStoreToUser() : Arr::pluck($dataProducts, 'retailers.0.id');
+            $retailerOrderStatus = Order::$retailerStatus['create'];
+            $productAttrRelation = array_fill_keys($retailerId, [
+                'retailer_order_status' => $retailerOrderStatus,
+                'message'               => Order::$retailerStatusMessage[$retailerOrderStatus],
+            ]);
+            
+            $this->dataRetailerRelation += $productAttrRelation;
         }
-        
+
         $dataEachItem = array_merge($dataEachItem, [
             [
                 "id"       => '-',
@@ -154,8 +175,60 @@ class CheckoutService
         return $dataEachItem;
     }
 
+    private function getClosestStoreToUser()
+    {
+        if ($this->pickupInfo === 'taken') {
+            return array($this->userPickupAddress['last_pickup_with_retailer']);
+        }
+
+        /**
+         * Get closest store to user address using region postal code relationship
+        */
+        $postalCode        = $this->userPickupAddress['place_detail']['place_postal_code'];
+        $closestRetailerId = Retailer::select('id')->whereRelation('region', 'region_postal_code', $postalCode)->first();
+
+        if (! $closestRetailerId) {
+            return $this->sendIfNotStoreNearby();
+        }
+
+        return $closestRetailerId->toArray();
+    }
+
+    private function sendIfNotStoreNearby()
+    {
+        // TODO: Future feature
+    }
+
     private function createDataUserOrder()
     {
+        $dataStore = [
+            'product_ids'    => $this->dataProductRelation,
+            'retailer_ids'   => $this->dataRetailerRelation,
+            'pickup_address' => $this->getDataPickupAddressRelations(),
+            'order_data'     => [
+                'order_key'         => $this->orderKey,
+                'user_id'           => $this->user['id'],
+                'user_order_status' => Order::$userStatus['create'],
+                'pickup_info'       => $this->pickupInfo,
+                'grandtotal'        => $this->userCarts['other_info']['grand_total'] + $this->deliveryPrice,
+            ],
+        ];
+
+        app(OrderController::class)->store($dataStore);
+    }
+
+    private function getDataPickupAddressRelations()
+    {
+        $takenInStore   = $this->userPickupAddress['last_pickup_with_retailer'];
+        $deliveryToUser = $this->userPickupAddress['last_pickup_with_address'];
+        $addressType    = $takenInStore ? 'retailer' : 'user_address';
+        $addressId      = $takenInStore ?? $deliveryToUser;
+        $pickupAddress  = [
+            'type' => $addressType,
+            'id'   => $addressId,
+        ];
+
+        return $pickupAddress;
     }
 
     private function sendSnapTokenFailed(Exception $error)
