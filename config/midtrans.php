@@ -40,27 +40,22 @@ return [
     
     /*
     |--------------------------------------------------------------------------
-    | Midtrans Endpoint
+    | Midtrans URL
     |--------------------------------------------------------------------------
     |
-    | This endpoint that used to access midtrans payment API for any purposes
+    | This URL contain url app and api midtrans.
+    |
+    | - App url refers to your midtrans application environment that currently
+    | running. Sandbox or production.
+    | - Api url that used to access midtrans payment API for any purposes
     | like get token, cancel, refund payment etc.
     |
     */
 
-    'endpoint' => env('MIDTRANS_API_URL', 'https://api.sandbox.midtrans.com/v2/'),
-    
-    /*
-    |--------------------------------------------------------------------------
-    | Midtrans URL
-    |--------------------------------------------------------------------------
-    |
-    | This URL refers to your midtrans application environment that currently
-    | running. Sandbox or production.
-    |
-    */
-
-    'url' => env('MIDTRANS_APP_URL', 'https://app.sandbox.midtrans.com/'),
+    'url' => [
+        'app' => env('MIDTRANS_APP_URL', 'https://app.sandbox.midtrans.com/'),
+        'api' => env('MIDTRANS_API_URL', 'https://api.sandbox.midtrans.com/v2/'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
