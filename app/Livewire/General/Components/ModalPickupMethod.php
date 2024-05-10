@@ -46,7 +46,7 @@ class ModalPickupMethod extends Component
         $this->icon    = $response['pickup_icon'];
         
         if ($response['is_picked_up_in_store']) {
-            $this->dispatch('picked_up_in_store');
+            $this->dispatch('picked-up-in-store');
         }
     }
 

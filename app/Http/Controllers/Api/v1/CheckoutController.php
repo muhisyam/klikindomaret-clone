@@ -10,13 +10,8 @@ class CheckoutController extends Controller
 {
     public function __invoke(Request $request, CheckoutService $checkoutService)
     {
-        $snapToken  = $checkoutService->getSnapToken($request);
+        $snapToken = $checkoutService->getSnapToken($request);
 
         return response()->json(['snap_token' => $snapToken], 201);
-    }
-
-    public function paymented(Request $request)
-    {
-        
     }
 }

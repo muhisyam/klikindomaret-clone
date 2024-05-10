@@ -12,7 +12,7 @@ class Cart extends Model
 
     protected $guarded = [];
 
-    public function scopeUserProducts($query, $userId)
+    public function scopeUserProducts($query, $userId): array
     {
         $result = $query
             ->where('user_id', $userId)
@@ -45,7 +45,7 @@ class Cart extends Model
         return $this->mergeOfficialSupplier($result);
     }
 
-    public function mergeOfficialSupplier($queryResult)
+    public function mergeOfficialSupplier($queryResult): array
     {
         $arrayResult   = $queryResult->toArray();
         $isHasFlagF    = $arrayResult['Indomaret'] ?? [];
