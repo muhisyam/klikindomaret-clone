@@ -6,6 +6,7 @@ use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Web\General\CartController;
 use App\Http\Controllers\Web\General\GeneralController;
+use App\Services\OrderService;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Livewire\Attributes\On;
@@ -22,8 +23,8 @@ class CheckoutProduct extends Component
     public array $pickedDelivery = [];
     public array $quantities     = [];
 
-    public function __construct(
-    ) {
+    public function __construct() 
+    {
         $this->clientAction = app(ClientRequestAction::class);
         $this->endpoint     = config('api.url') . 'carts/';
     }
@@ -83,10 +84,10 @@ class CheckoutProduct extends Component
     #[On('qty-content-changed')]
     public function updateQuantity($quantityChanged)
     {
-        $index = 0;
-        $collapsedDataQtys = Arr::collapse($this->quantities);
+        $index      = 0;
+        $quantities = Arr::collapse($this->quantities);
 
-        foreach ($collapsedDataQtys as $productSlug => $qty) {
+        foreach ($quantities as $productSlug => $qty) {
             if ($qty != $quantityChanged[$index]) {
                 $updateCart['product_slug'] = $productSlug;
                 $updateCart['quantity']     = $quantityChanged[$index];
@@ -121,15 +122,8 @@ class CheckoutProduct extends Component
             return $message;
         }
 
-        $monthInt = [
-            'Januari'   => 1, 'Februari' => 2,  'Maret'    => 3,  'April'    => 4, 
-            'Mei'       => 5, 'Juni'     => 6,  'Juli'     => 7,  'Agustus'  => 8, 
-            'September' => 9, 'Oktober'  => 10, 'November' => 11, 'Desember' => 12
-        ];
-
         $arrMessage      = explode('|', $message);
-        $arrDate         = explode(' ', $arrMessage[0]);
-        $deliveryDate    = Carbon::create($arrDate[2], $monthInt[$arrDate[1]], $arrDate[0]);
+        $deliveryDate    = parseToCarbon($arrMessage[0]);
         $today           = Carbon::today();
         $willBeDelivered = match ($deliveryDate->diffInDays($today)) {
             0 => 'Hari ini',
@@ -170,19 +164,23 @@ class CheckoutProduct extends Component
     #[On('payment-success')]
     public function paymentOnSuccess(array $resultCallback)
     {   
-        $dataPicked = [
-            'supplier' => [],
+        $dataChannel = app(OrderService::class)->getDataPayment($resultCallback);
+        $dataPicked  = [
+            '_method'       => 'put',
+            'supplier'      => [],
+            'option'        => [],
             'expected_time' => [],
         ];
 
         foreach ($this->pickedDelivery as $supplierName => $value) {
             array_push($dataPicked['supplier'], $supplierName);
+            array_push($dataPicked['option'], $value['option']);
             array_push($dataPicked['expected_time'], $value['message']);
         }
 
-        $params = array_merge($resultCallback, $dataPicked);
+        $params = array_merge($dataChannel, $dataPicked);
 
-        app(GeneralController::class)->paymented($params);
+        app(GeneralController::class)->processOrder($params);
     }
 
     public function render()
