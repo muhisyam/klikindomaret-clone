@@ -220,6 +220,7 @@
                     switchDateDelivery();
                     pickDateDelivery();
                     detectChangesInProductQty();
+                    runLoadingImmediately();
                 }, 1)
             })
         })
@@ -312,11 +313,13 @@
         function detectChangesInProductQty() {
             const qtyInputList      = document.querySelectorAll('input[name*="quantity"]');
             const btnCheckoutList   = document.querySelectorAll('button[btn-checkout]');
-            const btnCheckoutPay    = btnCheckoutList[0];
-            const btnCheckoutUpdate = btnCheckoutList[1];
+            const btnCheckoutPay    = btnCheckoutList[1];
+            const btnCheckoutUpdate = btnCheckoutList[2];
             
             qtyInputList.forEach((qtyInput, index) => {
-                // Save original value
+                /**
+                 * Save original value
+                */
                 qtyInput.dataset.originalValue = qtyInput.value;
 
                 qtyInput.addEventListener('change', function() {
@@ -338,9 +341,21 @@
                 })
             })
         }
+
+        function runLoadingImmediately() { 
+            const btnTriggers = document.querySelectorAll('button[btn-checkout]');
+            
+            btnTriggers.forEach(btnTrigger => {
+                btnTrigger.addEventListener('click', function() {
+                    const btnLoading = document.querySelector('button[btn-checkout="loading"]');
+                    
+                    btnLoading.classList.remove('hidden');
+                })
+            })
+        }
     </script>
 
-    <script type="text/javascript" src="{{ config('midtrans.url') . 'snap/snap.js' }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+    <script type="text/javascript" src="{{ config('midtrans.url.app') . 'snap/snap.js' }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
 
     <script type="text/javascript">
         document.addEventListener('livewire:initialized', () => {
@@ -362,9 +377,12 @@
                          * Call in Checkout Summary Class
                         */
                         Livewire.dispatch('payment-pending', {
-                            orderId: result.order_id,
+                            resultCallback: result,
                         })
                     },
+                    onClose: function () {
+                        Livewire.dispatch('snap-close')
+                    }
                 })
             })
         })
