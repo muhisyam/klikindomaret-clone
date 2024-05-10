@@ -51,4 +51,14 @@ class CartController extends Controller
 
         return response()->json(['data' => $productName], 200);
     }
+
+    public function destroy(Request $request, string $productSlug)
+    {
+
+    }
+
+    public function destroyCart(int $userId): object
+    {
+        return Cart::where('user_id', $userId)->delete();
+    }
 }
