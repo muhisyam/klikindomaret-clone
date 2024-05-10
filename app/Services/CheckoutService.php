@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Retailer;
 use App\Models\User;
+use App\Models\UserAddress;
 use Exception;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ class CheckoutService
     public function getSnapToken(Request $request)
     {
         $this->initGlobalData($request);
+        $this->ensureFreshOrderDoesntExist($request);
 
         Config::$serverKey    = config('midtrans.server_key');
         Config::$isProduction = config('midtrans.env');
@@ -52,7 +54,7 @@ class CheckoutService
      * Why didn't place in construct, i prefer to put everything together here 
      * with data initialization logic to make it looks cleaner.
     */
-    private function initGlobalData(Request $request)
+    private function initGlobalData(Request $request): void
     {
         $this->user          = $request->user();
         $this->deliveryPrice = $request['delivery_price'] ?? 0;
@@ -77,20 +79,29 @@ class CheckoutService
         $keyMethod   = '';
         $keyDate     = today()->format('ymd');
         $keyUsername = strtoupper($this->user['username']);
+        $randNumber  = mt_rand(111, 999);
 
         foreach ($pickupAddresses as $address) {
             if ($address['is_selected_method']) {
                 $this->userPickupAddress = $address;
                 $isPickedInStore         = $address['last_pickup_with_retailer'];
                 $keyMethod               = $isPickedInStore ? 'T' : 'D';
-                $this->pickupInfo        = $isPickedInStore ? 'taken' : 'delivered';
+                $this->pickupInfo        = $isPickedInStore ? 'Diambil' : 'Diantar';
             }
         }
 
-        $this->orderKey = $keyUsername . '-' . $keySupplier . '-' . $keyMethod . $keyDate;
+        $this->orderKey = $keyUsername . '-' . $keySupplier . '-' . $keyMethod . $keyDate . $randNumber;
     }
 
-    private function createRequestBody()
+    private function ensureFreshOrderDoesntExist(Request $request): void
+    {
+        app(OrderController::class)->destroy($request->user());
+    }
+
+    /**
+     * Create midtrans request body of order details
+    */
+    private function createRequestBody(): array
     {
         $params = [
             'transaction_details' => [
@@ -104,7 +115,7 @@ class CheckoutService
         return $params;
     }
 
-    private function setDataCustomer()
+    private function setDataCustomer(): array
     {
         $shippingDetail = $this->userPickupAddress['place_detail'];
         $userFullname   = explode(' ', $this->user['fullname'], 2);
@@ -128,7 +139,7 @@ class CheckoutService
         return $dataCustomer;
     }
 
-    private function setDataItems()
+    private function setDataItems(): array
     {
         $dataEachItem = [];
         $carts        = Arr::except($this->userCarts, 'other_info');
@@ -175,9 +186,9 @@ class CheckoutService
         return $dataEachItem;
     }
 
-    private function getClosestStoreToUser()
+    private function getClosestStoreToUser(): array
     {
-        if ($this->pickupInfo === 'taken') {
+        if ($this->pickupInfo === 'Diambil') {
             return array($this->userPickupAddress['last_pickup_with_retailer']);
         }
 
@@ -199,29 +210,38 @@ class CheckoutService
         // TODO: Future feature
     }
 
-    private function createDataUserOrder()
+    /**
+     * Create data user order to database
+    */
+    private function createDataUserOrder(): void
     {
-        $dataStore = [
+        $pickupAddress = $this->getDataPickupAddressRelations();
+        $dataStore     = [
             'product_ids'    => $this->dataProductRelation,
             'retailer_ids'   => $this->dataRetailerRelation,
-            'pickup_address' => $this->getDataPickupAddressRelations(),
             'order_data'     => [
-                'order_key'         => $this->orderKey,
-                'user_id'           => $this->user['id'],
-                'user_order_status' => Order::$userStatus['create'],
-                'pickup_info'       => $this->pickupInfo,
-                'grandtotal'        => $this->userCarts['other_info']['grand_total'] + $this->deliveryPrice,
+                'order_key'           => $this->orderKey,
+                'user_id'             => $this->user['id'],
+                'user_order_status'   => Order::$userStatus['create'],
+                'pickup_info'         => $this->pickupInfo,
+                'grandtotal'          => $this->userCarts['other_info']['grand_total'] + $this->deliveryPrice,
+                'pickup_address_type' => $pickupAddress['type'],
+                'pickup_address_id'   => $pickupAddress['id'],
             ],
         ];
 
         app(OrderController::class)->store($dataStore);
     }
 
-    private function getDataPickupAddressRelations()
+    /**
+     * Get data pickup delivery each supplier for creating order 
+     * supplier relation table.
+    */
+    private function getDataPickupAddressRelations(): array
     {
         $takenInStore   = $this->userPickupAddress['last_pickup_with_retailer'];
         $deliveryToUser = $this->userPickupAddress['last_pickup_with_address'];
-        $addressType    = $takenInStore ? 'retailer' : 'user_address';
+        $addressType    = $takenInStore ? Retailer::class : UserAddress::class;
         $addressId      = $takenInStore ?? $deliveryToUser;
         $pickupAddress  = [
             'type' => $addressType,
@@ -231,14 +251,15 @@ class CheckoutService
         return $pickupAddress;
     }
 
-    private function sendSnapTokenFailed(Exception $error)
+    private function sendSnapTokenFailed(Exception $error): void
     {
         $statusCode  = $error->getCode();
-        $codeMessage = [
-            400 => 'Bad Request',
-            401 => 'Unauthorized',
-            500 => 'Internal Server Error',
-        ];
+        $codeMessage = match ($statusCode) {
+            400     => 'Bad Request',
+            401     => 'Unauthorized',
+            500     => 'Internal Server Error',
+            default => 'Unknown Error Code',
+        };
 
         throw new HttpResponseException(
             response([
@@ -249,7 +270,7 @@ class CheckoutService
                 ],
                 'meta' => [
                     'status_code' => $statusCode,
-                    'message'     => $codeMessage[$statusCode],
+                    'message'     => $codeMessage,
                 ],
             ])
             ->setStatusCode($statusCode)
