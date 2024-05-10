@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\App\Auth;
 
 use App\Actions\ClientRequestAction;
-use App\Actions\CreateMultipartAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,20 +13,17 @@ class VerifyMobileController extends Controller
 
     public function __construct(
         protected ClientRequestAction $clientAction,
-        protected CreateMultipartAction $multipartAction,
     ) {
         $this->endpoint = config('api.url');
     }
 
     public function __invoke(Request $request) 
     {
-        $formData = $this->multipartAction->create($request->all());
-        
         $response = $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
                 endpoint: $this->endpoint . 'verify-mobile',
-                formData: $formData,
+                formData: $request->all(),
             )
         );
 
@@ -52,13 +48,12 @@ class VerifyMobileController extends Controller
     public function store(Request $request)
     {
         $request['otp_confirmation'] = (int) implode('', array(...$request->otp_confirmation));
-        $formData = $this->multipartAction->create($request->all());
         
         $response = $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
                 endpoint: $this->endpoint . 'verify-otp',
-                formData: $formData,
+                formData: $request->all(),
             )
         );
 

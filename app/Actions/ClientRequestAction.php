@@ -10,6 +10,10 @@ use Illuminate\Support\Arr;
 
 class ClientRequestAction
 {
+    public function __construct(
+        protected CreateMultipartAction $multipartAction,
+    ) {}
+
     /**
      * Create and send an HTTP request.
      *
@@ -25,7 +29,7 @@ class ClientRequestAction
         $acceptJson = ['Accept' => 'application/json'];
         $options    = [
             'headers'   => array_merge($acceptJson, $dto->headers),
-            'multipart' => $dto->formData,
+            'multipart' => $this->multipartAction->create($dto->formData),
         ];
 
         try {
@@ -44,7 +48,6 @@ class ClientRequestAction
      * Add metadata resource to the response for convinience checking responses.
      * 
      * @param Response $response Response data from request.
-     * 
      * @return array [data => [...], meta => [...]]
     */
     private function withMetadata(Response $response): array

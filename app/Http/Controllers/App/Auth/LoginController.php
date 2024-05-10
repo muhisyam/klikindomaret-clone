@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\App\Auth;
 
 use App\Actions\ClientRequestAction;
-use App\Actions\CreateMultipartAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Events\Auth\Authenticated;
 use App\Http\Controllers\Controller;
@@ -16,14 +15,12 @@ class LoginController extends Controller
 
     public function __construct(
         protected ClientRequestAction $clientAction,
-        protected CreateMultipartAction $multipartAction,
     ) {
         $this->endpoint = config('api.url') . 'login';
     }
 
     public function login(Request $request) 
     {
-        $formData = $this->multipartAction->create($request->all());
         $header = [
             'User-Agent' => $request->userAgent(),
             'X-Original-Ip' => $request->ip(),
@@ -34,7 +31,7 @@ class LoginController extends Controller
                 method: 'POST',
                 endpoint: $this->endpoint,
                 headers: $header,
-                formData: $formData,
+                formData: $request->all(),
             )
         );
 
