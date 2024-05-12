@@ -49,7 +49,9 @@ class Order extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withTimestamps();
+        return $this->belongsToMany(Product::class)
+            ->withPivot('price', 'quantity')
+            ->withTimestamps();
     }
 
     public function retailers(): BelongsToMany
@@ -59,11 +61,46 @@ class Order extends Model
 
     public function supplierDeliveries(): BelongsToMany
     {
-        return $this->belongsToMany(Supplier::class, 'order_supplier_delivery')->withTimestamps();
+        return $this->belongsToMany(Supplier::class, 'order_supplier_delivery')
+            ->withPivot('delivery_option', 'expected_time_between', 'expected_pickup_date')
+            ->withTimestamps();
     }
 
     public function pickupAddress(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function scopeGetUserModalOrder($query, $orderKey): Order
+    {
+        $result = $query
+            ->with([
+                'products' => [
+                    'supplier', 
+                    'images'
+                ], 
+                'supplierDeliveries',
+                'pickupAddress.region',
+            ])
+            ->where('order_key', $orderKey)
+            ->first();
+
+        // TODO: fix when data not found
+
+        $result->products   = $result->products->groupBy('supplier.supplier_name');
+        $result->deliveries = $result->supplierDeliveries->groupBy('supplier_name');
+
+        return $result;
+    }
+
+    public static function getHeaderStyle(string $label)
+    {
+        return match ($label) {
+            self::$userStatus['expire']     => 'bg-danger-100 text-danger',
+            self::$userStatus['pending']    => 'bg-primary-100 text-primary-600',
+            self::$userStatus['settlement'] => 'bg-primary-100 text-primary-600',
+            self::$userStatus['completed']  => 'bg-success-100 text-success-600',
+            default                         => '',
+        };
     }
 }
