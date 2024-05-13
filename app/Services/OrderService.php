@@ -5,9 +5,13 @@ namespace App\Services;
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Api\v1\OrderController;
+use App\Http\Resources\OrderDeliveryResource;
+use App\Http\Resources\OrderProductResource;
 use App\Models\Order;
+use App\Models\Retailer;
 use App\Models\Supplier;
 use App\Models\User;
+use App\Models\UserAddress;
 use Illuminate\Http\Request;
 
 class OrderService 
@@ -31,7 +35,10 @@ class OrderService
         }
 
         foreach ($userOrders as $order) {
-            if ($order->user_order_status !== Order::$userStatus['create']) {
+            if (
+                $order->user_order_status !== Order::$userStatus['create'] || 
+                $order->user_order_status !== Order::$userStatus['pending']
+            ) {
                 continue;
             }
 
@@ -110,7 +117,7 @@ class OrderService
 
             $expectTime = match ($currOption) {
                 'time'    => explode('|', $expectedTimes[$i])[1],
-                'express' => now()->addMinutes(15)->format('H.i') . ' - '. now()->addHour()->addMinutes(15)->format('H.i'),
+                'express' => now()->addMinutes(15)->format('H:i') . ' - '. now()->addHour()->addMinutes(15)->format('H:i'),
                 default   => null,
             };
             
@@ -127,5 +134,89 @@ class OrderService
     public function getPickupCode(int $length = 6, string $pool = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'): string
     {
         return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
+    }
+
+    public function sanitizeGroupBy(object $userOrder): object
+    {
+        $supplierGroupedData = [
+            'products'   => $userOrder->products,
+            'deliveries' => $userOrder->deliveries,
+        ];
+
+        foreach ($supplierGroupedData as $keyName => $data) {
+            $isHasFlagF          = collect($data['Indomaret'] ?? []);
+            $isHasFlagT          = collect($data['Indomaret Fresh'] ?? []);
+            $mergeSupplier       = ['Toko Indomaret' => $isHasFlagF->merge($isHasFlagT)];
+            $mergeToResult       = collect($mergeSupplier)->merge(collect($data));
+            $userOrder->$keyName = $mergeToResult->except(['Indomaret', 'Indomaret Fresh']);
+        }
+
+        return $userOrder;
+    }
+
+    public function getStatusIcon(string $orderStatus): string
+    {
+        return array_search($orderStatus, Order::$userStatus);
+    }
+
+    public function getPickupAddress(object $dataPlace): array
+    {
+        $detailAttr = $this->getDataAttributes($dataPlace);
+        $dataRegion = $dataPlace['region'];
+
+        return [
+            'place_name'            => $dataPlace[$detailAttr['place_name']],
+            'place_address'         => $dataPlace[$detailAttr['place_address']],
+            'place_postal_code'     => $dataRegion['region_postal_code'],
+            'longitude'             => $dataPlace['longitude'],
+            'latitude'              => $dataPlace['latitude'],
+            'reciever_name'         => $dataPlace[$detailAttr['reciever_name']],
+            'reciever_phone_number' => $dataPlace[$detailAttr['reciever_phone_number']],
+        ];
+    }
+
+    private function getDataAttributes(object $dataPlace): array
+    {
+        return match (get_class($dataPlace)) {
+            Retailer::class => [
+                'place_name'            => 'retailer_name',
+                'place_address'         => 'retailer_address',
+                'reciever_name'         => 'retailer_name',
+                'reciever_phone_number' => null,
+            ],
+            UserAddress::class => [
+                'place_name'            => 'address_label',
+                'place_address'         => 'address_main',
+                'reciever_name'         => 'reciever_name',
+                'reciever_phone_number' => 'reciever_phone_number',
+            ],
+        };
+    }
+
+    public function getDataSanitizedProducts(object $dataProducts): array
+    {
+        $newArr = [];
+        
+        foreach ($dataProducts as $supplierName => $groupedBySupplier) {
+            $newArr[$supplierName] = OrderProductResource::collection($groupedBySupplier);
+        }
+        
+        return $newArr;
+    }
+
+    public function getDataSanitizedDeliveries(object $dataDeliveries): array
+    {
+        $newArr = [];
+        
+        foreach ($dataDeliveries as $supplierName => $groupedBySupplier) {
+            /**
+             * Should be pay attention, because the results of group by is a data collection 
+             * for each supplier, so you have to select the first index array then select 
+             * the pivot data to get supplier deliveries data.
+            */
+            $newArr[$supplierName] = new OrderDeliveryResource($groupedBySupplier[0]->pivot);
+        }
+        
+        return $newArr;
     }
 }
