@@ -21,7 +21,7 @@
 
     <div class="flex">
         <section class="w-1/6 me-4" data-section="sidebar">
-            @include('general.information.components.sidebar')
+            @include('general.informations.components.sidebar')
         </section>
         <section class="space-y-5 rounded-lg py-5 px-6 w-5/6 bg-white">
             <div class="flex justify-between">
@@ -76,4 +76,15 @@
         </section>
     </div>
 
+    <x-loader/>
+
 </x-general-layout>
+
+<script type="module">
+    import { showLoader, hideLoader } from "{{ asset('js/' . config('view.js_component')) }}";
+
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.on('open-order-modal', event => showLoader())
+        Livewire.on('opened-order-modal', event => hideLoader())
+    })
+</script>

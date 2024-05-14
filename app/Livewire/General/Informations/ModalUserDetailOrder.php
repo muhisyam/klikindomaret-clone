@@ -29,8 +29,10 @@ class ModalUserDetailOrder extends Component
     #[On('open-order-modal')]
     public function initModal(string $orderKey)
     {
-        $this->order = $this->getDetailUserOrder($orderKey)['data'];
+        $this->order         = $this->getDetailUserOrder($orderKey)['data'];
         $this->showCondition = true;
+        
+        $this->dispatch('opened-order-modal');
     }
 
     private function getDetailUserOrder(string $orderKey)
