@@ -18,7 +18,11 @@
 }
 
 .animation-bounceInRight {
-    animation-name: bounceInRight;
+    animation-name: bounce-in-right;
+}
+
+.loader-pulse {
+    animation: loader-pulse 1s infinite ease-out;
 }
 
 /* 
@@ -27,7 +31,7 @@
 ------------------=====================------------------
 */
 
-@keyframes bounceInRight {
+@keyframes bounce-in-right {
     0%, 60%, 75%, 90%, 100% {
         animation-timing-function: cubic-bezier(.215,.61,.355,1);
     }
@@ -47,5 +51,36 @@
     }
     100% {
         transform: translateZ(0);
+    }
+}
+
+@keyframes skLinRotate {
+    95% ,100% { 
+        transform: rotate(840deg) 
+    }
+}
+
+@keyframes loader-pulse {
+    0% {
+        box-shadow: 0 0 0 3px rgba(204, 51, 51, .9);
+    }
+    19% {
+        box-shadow: 0 0 0 2px rgba(204, 51, 51, .7);
+    }
+    20% {
+        box-shadow: 0 0 0 6px rgba(204, 51, 51, .8);
+    }
+    39% {
+        box-shadow: 0 0 0 5px rgba(0, 121, 194, .6);
+    }
+    40% {
+        box-shadow: 0 0 0 9px rgba(0, 121, 194, .7);
+    }
+    60% {
+        box-shadow: 0 0 0 8px rgba(255, 204, 51, .6);
+        animation-timing-function: cubic-bezier(.5,0,1,.5);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 204, 51, .2);
     }
 }
