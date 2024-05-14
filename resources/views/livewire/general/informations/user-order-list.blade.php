@@ -15,7 +15,6 @@
             <ul class="w-4/5">
 
             @php $productLeft = $order['product_count'] @endphp
-
             @foreach ($order['products'] as $index => $product)
 
             @if ($index > 1) 
@@ -28,7 +27,7 @@
                     {{-- <img class="rounded h-12 w-12 object-fill" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $product['product_image']) }}" alt="Product Image"> --}}
                     <div class="text-start">
                         <div class="text-sm font-bold">{{ $product['product_name'] }}</div>
-                        <div class="text-sm font-light">x{{ $product['quantity'] }} | Rp {{ formatCurrencyIDR($product['subtotal']) }}</div>
+                        <div class="text-sm font-light">x{{ $product['quantity'] }} | {{ formatCurrencyIDR($product['subtotal']) }}</div>
                     </div>
                 </li>
                 <hr class="my-2">
@@ -40,7 +39,7 @@
             </ul>
             <div class="w-1/5 text-end">
                 <div class="text-sm">Subtotal Pembayaran</div>
-                <div class="text-lg text-primary-600 font-bold">Rp {{ formatCurrencyIDR($order['grandtotal']) }}</div>
+                <div class="text-lg text-primary-600 font-bold">{{ formatCurrencyIDR($order['grandtotal']) }}</div>
             </div>
         </div>
         <div class="absolute -bottom-full left-1/2 -translate-x-1/2 rounded-full py-2 px-4 flex items-center gap-2 bg-light-gray-50 transition-all group-hover:bottom-2">

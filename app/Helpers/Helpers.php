@@ -9,7 +9,7 @@ function formatNumber($price): string
 
 function formatCurrencyIDR($price): string
 {
-    return number_format($price, 0, '.', '.');
+    return 'Rp ' . number_format($price, 0, '.', '.');
 }
 
 function prettierMobileNumber($number): string

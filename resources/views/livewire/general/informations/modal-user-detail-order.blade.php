@@ -59,7 +59,7 @@
                 
                 <div class="flex justify-between text-sm">
                     <span>Subtotal {{ $supplierName }}</span>
-                    <span>Rp {{ formatCurrencyIDR($totalEachSupplier) }}</span>
+                    <span>{{ formatCurrencyIDR($totalEachSupplier) }}</span>
                 </div>
                 
             @endforeach
@@ -67,12 +67,12 @@
 
                 <div class="flex justify-between text-sm">
                     <span>Ongkos Kirim</span>
-                    <span>Rp {{ formatCurrencyIDR($totalShipping) }}</span>
+                    <span>{{ formatCurrencyIDR($totalShipping) }}</span>
                 </div>
                 <div class="my-2 border-b-2 border-dashed border-light-gray-400"></div>
                 <div class="flex justify-between text-sm">
                     <span class="font-bold">Total pembayaran</span>
-                    <span class="text-primary-600 font-bold">Rp {{ formatCurrencyIDR($order['grandtotal']) }}</span>
+                    <span class="text-primary-600 font-bold">{{ formatCurrencyIDR($order['grandtotal']) }}</span>
                 </div>
             </div>
             <div class="space-y-2 p-6 w-1/3">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
 
-                @unless (is_null($order['pickup_code']))
+                    @unless (is_null($order['pickup_code']))
 
                     {{-- Pickup Code --}}
                     <div>
@@ -133,12 +133,14 @@
                         </div>
                     </div>
                     
-                @endunless
+                    @endunless
 
                     {{-- Product --}}
                     <div class="space-y-4">
                         <span class="!m-0 text-xs font-light">Pesanan</span>
+
                     @php $totalEachSupplier = 0 @endphp
+
                     @foreach ($groupedBySupplier as $product)
                         
                         <div @class([
@@ -149,9 +151,9 @@
                             {{-- <img class="w-16 rounded-md" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $product['product_image']) }}" alt="Product Image"> --}}
                             <div class="flex-grow">
                                 <div class="text-sm font-bold">{{ $product['product_name'] }}</div>
-                                <div class="text-sm font-light">x{{ $product['quantity'] }} | Rp {{ formatCurrencyIDR($product['product_price']) }}</div>
+                                <div class="text-sm font-light">x{{ $product['quantity'] }} | {{ formatCurrencyIDR($product['product_price']) }}</div>
                             </div>
-                            <div class="text-sm font-bold">Rp {{ formatCurrencyIDR($product['subtotal']) }}</div>
+                            <div class="text-sm font-bold">{{ formatCurrencyIDR($product['subtotal']) }}</div>
                         </div>
 
                         @php $totalEachSupplier += $product['subtotal'] @endphp
@@ -166,16 +168,16 @@
                     <div class="ml-auto w-1/3 space-y-4">
                         <div class="flex items-center justify-between text-sm">
                             <span>Total Belanja</span>
-                            <span class="font-bold">Rp {{ formatCurrencyIDR($totalEachSupplier) }}</span>
+                            <span class="font-bold">{{ formatCurrencyIDR($totalEachSupplier) }}</span>
                         </div>
                         <div class="flex items-center justify-between text-sm">
                             <span>Ongkos Kirim</span>
-                            <span class="font-bold">@php /*TODO: FIX ONGKOS KIRIM, nanti bawahnya + ongkos kirim*/ @endphp Gratis</span>
+                            <span class="font-bold">{{ $delivery['delivery_price'] ? formatCurrencyIDR($delivery['delivery_price']) : 'Gratis' }}</span>
                         </div>
                         <div class="my-2 border-b-2 border-dashed border-light-gray-400"></div>
                         <div class="flex items-center justify-between text-sm">
                             <span>Subtotal</span>
-                            <span class="font-bold">Rp {{ formatCurrencyIDR($totalEachSupplier) }}</span>
+                            <span class="font-bold">{{ formatCurrencyIDR($totalEachSupplier + $delivery['delivery_price']) }}</span>
                         </div>
                     </div>
                 </div>
