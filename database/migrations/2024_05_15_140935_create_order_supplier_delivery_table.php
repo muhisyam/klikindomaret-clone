@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('delivery_option', 15);
             $table->string('expected_time_between', 15)->nullable();
             $table->date('expected_pickup_date');
+            $table->integer('delivery_price')->nullable();
             $table->timestamps();
         });
     }
