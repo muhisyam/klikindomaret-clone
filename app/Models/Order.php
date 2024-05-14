@@ -62,7 +62,7 @@ class Order extends Model
     public function supplierDeliveries(): BelongsToMany
     {
         return $this->belongsToMany(Supplier::class, 'order_supplier_delivery')
-            ->withPivot('delivery_option', 'expected_time_between', 'expected_pickup_date')
+            ->withPivot('delivery_option', 'expected_time_between', 'expected_pickup_date', 'delivery_price')
             ->withTimestamps();
     }
 

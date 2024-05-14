@@ -170,12 +170,14 @@ class CheckoutProduct extends Component
             'supplier'      => [],
             'option'        => [],
             'expected_time' => [],
+            'price'         => [],
         ];
 
         foreach ($this->pickedDelivery as $supplierName => $value) {
             array_push($dataPicked['supplier'], $supplierName);
             array_push($dataPicked['option'], $value['option']);
             array_push($dataPicked['expected_time'], $value['message']);
+            array_push($dataPicked['price'], $value['price']);
         }
 
         $params = array_merge($dataChannel, $dataPicked);

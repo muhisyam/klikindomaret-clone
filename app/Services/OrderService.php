@@ -117,7 +117,7 @@ class OrderService
 
             $expectTime = match ($currOption) {
                 'time'    => explode('|', $expectedTimes[$i])[1],
-                'express' => now()->addMinutes(15)->format('H:i') . ' - '. now()->addHour()->addMinutes(15)->format('H:i'),
+                'express' => now()->addMinutes(15)->format('H.i') . ' - '. now()->addHour()->addMinutes(15)->format('H.i'),
                 default   => null,
             };
             
@@ -125,6 +125,7 @@ class OrderService
                 'delivery_option'       => $currOption,
                 'expected_pickup_date'  => $expectDate,
                 'expected_time_between' => $expectTime,
+                'delivery_price'        => $request['price'][$i],
             ];
         }
 

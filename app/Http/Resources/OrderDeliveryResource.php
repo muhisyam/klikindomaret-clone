@@ -18,6 +18,7 @@ class OrderDeliveryResource extends JsonResource
             'delivery_option'       => $this->delivery_option,
             'expected_pickup_date'  => $this->expected_pickup_date,
             'expected_time_between' => $this->expected_time_between,
+            'delivery_price'        => $this->delivery_price,
         ];
     }
 }
