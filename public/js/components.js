@@ -70,7 +70,8 @@ function modalClickHandler(event) {
         if (isTargetOpened) {
             hideOpenedModal(el); 
         } else {
-            el.classList.add('show'); 
+            el.classList.add('show');
+            hideLoader();
         }     
     })
 }
@@ -185,6 +186,20 @@ export function handleInputProductQty() {
             inputQty.dispatchEvent(new Event('change'));
         })
     })
+}
+
+export function showLoader() { 
+    const loader = document.querySelector('#page-loader');
+    if (! loader) return;
+
+    return loader.classList.remove('hidden');
+}
+
+export function hideLoader() { 
+    const loader = document.querySelector('#page-loader');
+    if (! loader) return;
+
+    return loader.classList.add('hidden');
 }
 
 /**
