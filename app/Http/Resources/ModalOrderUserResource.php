@@ -29,6 +29,7 @@ class ModalOrderUserResource extends JsonResource
             'pickup_address'    => $orderService->getPickupAddress($this->pickupAddress),
             'products'          => $orderService->getDataSanitizedProducts($this->products),
             'deliveries'        => $orderService->getDataSanitizedDeliveries($this->deliveries),
+            'retailer_status'   => OrderRetailerResource::collection($this->whenLoaded('retailers')),
         ];
     }
 }
