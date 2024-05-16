@@ -1,23 +1,28 @@
 <div class="modal w-[1000px] bg-white rounded-xl overflow-hidden{{ $showCondition ? ' show' : '' }}" data-trigger-modal="{{ $section }}">
-    <section class="flex items-center {{ \App\Models\Order::getHeaderStyle($order['user_order_status']) }}">
+
+    @php $orderModel = new \App\Models\Order @endphp
+
+    <section class="flex items-center {{ $orderModel::getHeaderStyle($order['user_order_status']) }}">
         <div class="p-6 w-1/3 bg-white text-black">
             <span class="font-light">Pesanan</span>
             <h4 class="font-bold">#{{ $order['order_key'] }}</h4>
         </div>
-
-        <div class="px-6 flex items-center gap-2">
+        
+        <x-button class="p-6 items-center gap-6" data-switch-section="order-status" data-section-opened="order-detail-info">
             <x-icon class="h-6" src="{{ asset('img/icons/icon-transaction-' . $order['status_icon'] . '.webp') }}"/>
             <span class="font-bold">{{ $order['user_order_status'] }}</span>
-        </div>
+            <x-icon class="h-5 transition-transform rotate-180 {{ $orderModel::getIconColorStyle($order['user_order_status']) }}" src="{{ asset('img/icons/icon-header-chevron-down.webp') }}"/>
+        </x-button>
 
         <x-button class="ml-auto mr-6" data-target-modal="{{ $section }}" :preventClose="false">
             <x-icon class="w-5 grayscale" src="{{ asset('img/icons/icon-header-close.webp') }}"/>
         </x-button>
     </section>
 
-@unless (is_null($order['order_key']))
+    @unless (is_null($order['order_key']))
 
-    <section class="h-[600px] overflow-auto">
+    <section class="h-[600px] overflow-auto" data-section="order-detail-info">
+        {{-- Body order information --}}
         <div class="flex">
             <div class="p-6 w-1/3 space-y-4">
                 <div>
@@ -43,19 +48,18 @@
             <div class="p-6 w-1/3">
                 <span class="text-xs font-light">Ringkasan Pembayaran</span>
 
-
-            @php $totalWithoutShipping = 0 @endphp
+                @php $totalWithoutShipping = 0; /*TODO: Add total each supp ['Toko' => 1231, 'Ware' => 123...]*/ @endphp
             @foreach ($order['products'] as $supplierName => $groupedBySupplier)
                 
-                @php 
-                    $totalEachSupplier = 0;
+                    @php 
+                        $totalEachSupplier = 0;
 
-                    foreach ($groupedBySupplier as $product) { 
-                        $totalEachSupplier += $product['subtotal'];
-                    }
+                        foreach ($groupedBySupplier as $product) { 
+                            $totalEachSupplier += $product['subtotal'];
+                        }
 
-                    $totalWithoutShipping += $totalEachSupplier;
-                @endphp
+                        $totalWithoutShipping += $totalEachSupplier;
+                    @endphp
                 
                 <div class="flex justify-between text-sm">
                     <span>Subtotal {{ $supplierName }}</span>
@@ -63,7 +67,7 @@
                 </div>
                 
             @endforeach
-            @php $totalShipping = $order['grandtotal'] - $totalWithoutShipping @endphp
+                @php $totalShipping = $order['grandtotal'] - $totalWithoutShipping @endphp
 
                 <div class="flex justify-between text-sm">
                     <span>Ongkos Kirim</span>
@@ -82,11 +86,12 @@
             </div>
         </div>
 
+        {{-- Body product each supplier --}}
         <div>
 
         @foreach ($order['products'] as $supplierName => $groupedBySupplier)
 
-        @php $supplierIcon = $supplierName === 'Toko Indomaret' ? 'store' : strtolower($supplierName) @endphp
+            @php $supplierIcon = $supplierName === 'Toko Indomaret' ? 'store' : strtolower($supplierName) @endphp
 
             <div class="mb-6 mx-6 rounded-lg border border-light-gray-100 overflow-hidden">
                 {{-- Header --}}
@@ -139,7 +144,7 @@
                     <div class="space-y-4">
                         <span class="!m-0 text-xs font-light">Pesanan</span>
 
-                    @php $totalEachSupplier = 0 @endphp
+                        @php $totalEachSupplier = 0 @endphp
 
                     @foreach ($groupedBySupplier as $product)
                         
@@ -187,7 +192,51 @@
         
         </div>
     </section>
+        
 
-@endunless
+    @php /*TODO: Design https://media.nngroup.com/media/editor/2019/01/25/fedex-tracker.jpg*/ @endphp
+    <section class="h-[600px] overflow-auto hidden" data-section="order-status">
+        <ul class="p-6 flex flex-col-reverse">
+            <li class="flex">
+                <div @class([
+                    'status-tracker relative after:!hidden', 
+                    'before:!bg-secondary' => empty($order['retailer_status']),
+                    'tracker-pulse'        => empty($order['retailer_status']),
+                ])></div>
+                <div class="pb-4 px-4">
+                    @php
+                        // TODO: add pembayaran lunas date
+                    @endphp
+                    <div @class([
+                        'text-sm font-light', 
+                        'text-light-gray-400' => ! empty($order['retailer_status']),
+                        'text-secondary'      => empty($order['retailer_status']),
+                    ])>Date</div>
+                    <div class="text-sm">Pembayaran Lunas</div>
+                </div>
+            </li>
+
+        @foreach ($order['retailer_status'] as $status)
+            <li class="flex">
+                <div @class([
+                    'status-tracker relative', 
+                    'before:!bg-secondary' => $loop->last && is_null($order['order_completed']),
+                    'tracker-pulse'        => $loop->last && is_null($order['order_completed']),
+                ])></div>
+                <div class="pb-4 px-4">
+                    <div @class([
+                        'text-sm font-light', 
+                        'text-light-gray-400' => ! $loop->last && is_null($order['order_completed']),
+                        'text-secondary'      => $loop->last && is_null($order['order_completed']),
+                    ])>{{ $status['created_at'] }}</div>
+                    <div class="text-sm">{{ $status['message'] }}</div>
+                </div>
+            </li>
+        @endforeach
+
+        </ul>
+    </section>
+
+    @endunless
 
 </div>
