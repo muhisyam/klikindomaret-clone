@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('payment_channel', 30)->nullable();
             $table->string('va_number', 20)->nullable();
             $table->integer('grandtotal');
+            $table->dateTime('payment_success')->nullable();
             $table->dateTime('order_completed')->nullable();
             $table->timestamps();
         });
