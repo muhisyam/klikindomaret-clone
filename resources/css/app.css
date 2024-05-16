@@ -11,3 +11,19 @@
 .mt-30 {
     margin-top: 7.5rem;
 }
+
+.filter-primary {
+    filter: invert(46%) sepia(99%) saturate(649%) hue-rotate(354deg) brightness(104%) contrast(90%);
+}
+
+.filter-secondary {
+    filter: invert(29%) sepia(99%) saturate(1169%) hue-rotate(178deg) brightness(100%) contrast(101%);
+}
+
+.filter-danger {
+    filter: invert(37%) sepia(23%) saturate(6475%) hue-rotate(341deg) brightness(79%) contrast(90%);
+}
+
+.filter-success {
+    filter: invert(18%) sepia(98%) saturate(5662%) hue-rotate(142deg) brightness(100%) contrast(102%);
+}
