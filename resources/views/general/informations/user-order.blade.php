@@ -87,4 +87,24 @@
         Livewire.on('open-order-modal', event => showLoader())
         Livewire.on('opened-order-modal', event => hideLoader())
     })
+
+    function handleSwitchSection() {
+        const btnTrigger = document.querySelector('button[data-switch-section]');
+
+        btnTrigger.addEventListener('click', () => {
+            const targetIndetity = btnTrigger.getAttribute('data-switch-section');
+            const openedSection  = btnTrigger.getAttribute('data-section-opened');
+            const targetEl       = document.querySelector(`section[data-section="${targetIndetity}"]`);
+            const openedEl       = document.querySelector(`section[data-section="${openedSection}"]`);
+            const iconChevron    = btnTrigger.querySelector('img:last-child');
+            
+            openedEl.classList.add('hidden');
+            targetEl.classList.remove('hidden');
+            btnTrigger.setAttribute('data-switch-section', openedSection);
+            btnTrigger.setAttribute('data-section-opened', targetIndetity);
+            iconChevron.classList.toggle('rotate-180');
+        })
+    }
+
+    handleSwitchSection();
 </script>
