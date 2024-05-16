@@ -37,9 +37,17 @@ class Order extends Model
         'Dibuat'   => 'Pesanan Dibuat',
         'Masuk'    => 'Pesanan Masuk',
         'Diterima' => 'Pesanan diterima oleh',
-        'Dikirim',
-        'Siap',
-        'Selesai',
+        'Diproses' => 'Pesanan sedang diproses oleh',
+        'Dikirim'  => 'Pesanan sudah dikirim oleh',
+        'Siap'     => 'Pesanan siap diambil',
+        'Selesai'  => 'Pesanan telah diambil',
+    ];
+
+    /**
+     * Status based on confirmation from the retailer.
+    */
+    public static $basedOnRetailer = [
+        'Diterima', 'Diproses', 'Dikirim'
     ];
 
     public function user()
@@ -56,7 +64,9 @@ class Order extends Model
 
     public function retailers(): BelongsToMany
     {
-        return $this->belongsToMany(Retailer::class)->withTimestamps();
+        return $this->belongsToMany(Retailer::class)
+            ->withPivot('retailer_order_status', 'message')
+            ->withTimestamps();
     }
 
     public function supplierDeliveries(): BelongsToMany
@@ -81,6 +91,9 @@ class Order extends Model
                 ], 
                 'supplierDeliveries',
                 'pickupAddress.region',
+                'retailers' => function($retailer) {
+                    return $retailer->whereNot('retailer_order_status', 'Masuk');
+                },
             ])
             ->where('order_key', $orderKey)
             ->first();
@@ -101,6 +114,17 @@ class Order extends Model
             self::$userStatus['settlement'] => 'bg-primary-100 text-primary-600',
             self::$userStatus['completed']  => 'bg-success-100 text-success-600',
             default                         => '',
+        };
+    }
+
+    public static function getIconColorStyle(string $label)
+    {
+        return match ($label) {
+            self::$userStatus['expire']     => 'filter-danger',
+            self::$userStatus['pending']    => 'filter-primary',
+            self::$userStatus['settlement'] => 'filter-primary',
+            self::$userStatus['completed']  => 'filter-success',
+            default                         => 'grayscale',
         };
     }
 }
