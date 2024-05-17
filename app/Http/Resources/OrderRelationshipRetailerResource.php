@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderRetailerResource extends JsonResource
+class OrderRelationshipRetailerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
