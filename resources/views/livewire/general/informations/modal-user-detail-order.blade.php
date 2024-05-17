@@ -7,7 +7,7 @@
             <span class="font-light">Pesanan</span>
             <h4 class="font-bold">#{{ $order['order_key'] }}</h4>
         </div>
-        
+
         <x-button class="p-6 items-center gap-6" data-switch-section="order-status" data-section-opened="order-detail-info">
             <x-icon class="h-6" src="{{ asset('img/icons/icon-transaction-' . $order['status_icon'] . '.webp') }}"/>
             <span class="font-bold">{{ $order['user_order_status'] }}</span>
@@ -193,9 +193,11 @@
         </div>
     </section>
         
-
     @php /*TODO: Design https://media.nngroup.com/media/editor/2019/01/25/fedex-tracker.jpg*/ @endphp
     <section class="h-[600px] overflow-auto hidden" data-section="order-status">
+        
+        @unless (is_null($order['payment_success']))
+
         <ul class="p-6 flex flex-col-reverse">
             <li class="flex">
                 <div @class([
@@ -204,14 +206,11 @@
                     'tracker-pulse'        => empty($order['retailer_status']),
                 ])></div>
                 <div class="pb-4 px-4">
-                    @php
-                        // TODO: add pembayaran lunas date
-                    @endphp
                     <div @class([
                         'text-sm font-light', 
                         'text-light-gray-400' => ! empty($order['retailer_status']),
                         'text-secondary'      => empty($order['retailer_status']),
-                    ])>Date</div>
+                    ])>[ {{ $order['payment_success'] }} ]</div>
                     <div class="text-sm">Pembayaran Lunas</div>
                 </div>
             </li>
@@ -235,6 +234,19 @@
         @endforeach
 
         </ul>
+            
+        @else
+            
+        <div class="p-6 flex">
+            <div class="status-tracker relative tracker-pulse after:!hidden before:!bg-secondary"></div>
+            <div class="pb-4 px-4">
+                <div class="text-sm font-light text-secondary">[ {{ $order['created_at'] }} ]</div>
+                <div class="text-sm">Menunggu Pembayaran</div>
+            </div>
+        </div>
+
+        @endunless
+
     </section>
 
     @endunless
