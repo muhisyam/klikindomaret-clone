@@ -96,6 +96,7 @@ class OrderController extends Controller
                 'pickup_expired'    => today()->addDays(3),
                 'payment_channel'   => $request['payment_channel'],
                 'va_number'         => $request['va_number'],
+                'payment_success'   => now(),
             ]);
 
             $userOrder->supplierDeliveries()->attach($dataDeliveryInfo);

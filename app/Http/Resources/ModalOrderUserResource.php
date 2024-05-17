@@ -11,8 +11,9 @@ class ModalOrderUserResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        $orderService = app(OrderService::class);
-        $createdDate  = formatToIdnLocale(Carbon::parse($this->created_at), 'j M Y | H:i') . ' WIB';
+        $orderService    = app(OrderService::class);
+        $paymentSuccsess = is_null($this->payment_success) ? $this->payment_success : formatToIdnLocale(Carbon::parse($this->payment_success), 'j M Y | H:i') . ' WIB';
+        $createdDate     = formatToIdnLocale(Carbon::parse($this->created_at), 'j M Y | H:i') . ' WIB';
 
         return [
             'order_key'         => $this->order_key,
@@ -24,6 +25,7 @@ class ModalOrderUserResource extends JsonResource
             'va_number'         => $this->va_number,
             'grandtotal'        => $this->grandtotal,
             'order_completed'   => $this->order_completed,
+            'payment_success'   => $paymentSuccsess,
             'created_at'        => $createdDate,
             'status_icon'       => $orderService->getStatusIcon($this->user_order_status),
             'pickup_address'    => $orderService->getPickupAddress($this->pickupAddress),
