@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ModalOrderUserResource;
+use App\Http\Resources\OrderPageRetailerResource;
 use App\Http\Resources\OrderUserResource;
 use App\Models\Order;
 use App\Models\User;
@@ -16,10 +17,28 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    /**
+     * Meta data for success resource response.
+     * 
+     * @var array $metaSuccess
+    */
+    protected array $metaSuccess = [
+        'meta' => [
+            'status_code' => 200,
+            'message'     => 'OK',
+        ]
+    ];
+
     public function __construct(
         protected OrderService $orderService,
     ) {}
 
+    /**
+     * Create new order, call when user click pay the order
+     * in checkout page.
+     *
+     * @param array<string, mixed> $request
+     */
     public function store(array $request): void
     {
         DB::transaction(function () use ($request) {
@@ -30,6 +49,12 @@ class OrderController extends Controller
         });
     }
 
+    /**
+     * Get user orders data for user page. 
+     *
+     * @param User $user
+     * @param Request<string, mixed> $request
+     */
     public function showUserOrder(User $user, Request $request): JsonResource
     {
         $userOrders = $this->getDataShowUserOrder($user, $request);
@@ -52,6 +77,12 @@ class OrderController extends Controller
         ->get();
     }
 
+    /**
+     * Get detail user order data for modal order user page. 
+     *
+     * @param User $user
+     * @param Request<string, string> $request
+     */
     public function showUserModalOrder(Request $request): ModalOrderUserResource
     {
         $userOrders     = Order::getUserModalOrder($request['order_key']);
@@ -60,6 +91,27 @@ class OrderController extends Controller
         return new ModalOrderUserResource($sanitizedGroup);
     }
 
+    /**
+     * Get retailer orders data for admin page. 
+     *
+     * @param User $user
+     * @param Request<string, mixed> $request
+     */
+    public function showRetailerOrder(User $user, Request $request): JsonResource
+    {
+        $retailer       = $user->retailer;
+        $retailerOrders = $this->orderService->getDataRetailerOrders($retailer);
+
+        return OrderPageRetailerResource::collection($retailerOrders)->additional($this->metaSuccess);
+    }
+
+    /**
+     * Update data when order payment is pending. 
+     *
+     * @param User $user
+     * @param Request<string, mixed> $request
+     * @param null|array<string, mixed> $orderData
+     */
     public function updateOnPending(User $user, Request $request, array $orderData = null): OrderUserResource
     {
         if ($orderData) {
@@ -81,6 +133,15 @@ class OrderController extends Controller
         return new OrderUserResource($userOrder);
     }
 
+    /**
+     * Update data when order payment is successfull then, the user cart will be deleted.. This will add relation data including;
+     * - Delivery info each supplier
+     * - Retailer that provide the product
+     * 
+     *
+     * @param User $user
+     * @param Request<string, mixed> $request
+     */
     public function updateOnProcess(User $user, Request $request): OrderUserResource
     {
         $userOrder = DB::transaction(function () use ($user, $request) {
@@ -113,6 +174,11 @@ class OrderController extends Controller
         return new OrderUserResource($userOrder);
     }
 
+    /**
+     * Delete data order where order didnt have the payment.
+     *
+     * @param User $user
+     */
     public function destroy(User $user): JsonResponse
     {
         $orderFromTheOven = $this->getUserOrderData($user, 'create')->first();
@@ -128,18 +194,26 @@ class OrderController extends Controller
         return response()->json(['data' => $contentName], 200);
     }
 
+    /**
+     * Method for retrieving order that can reusable.
+     *
+     * @param User $user
+     * @param string|null $orderStatus
+     * @param array<int, string> $withSchema
+     * @param array<int, string> $withCountSchema
+     */
     private function getUserOrderData(User $user, string $orderStatus = null, array $withSchema = [], array $withCountSchema = []): object|null
     {
         return Order::query()
             ->whereBelongsTo($user)
-            ->when($orderStatus, function($q) use ($orderStatus) {
-                return $q->where('user_order_status', Order::$userStatus[$orderStatus]);
+            ->when($orderStatus, function($order) use ($orderStatus) {
+                return $order->where('user_order_status', Order::$userStatus[$orderStatus]);
             })
-            ->when($withSchema, function($q) use ($withSchema) {
-                return $q->with($withSchema);
+            ->when($withSchema, function($order) use ($withSchema) {
+                return $order->with($withSchema);
             })
-            ->when($withCountSchema, function($q) use ($withCountSchema) {
-                return $q->withCount($withCountSchema);
+            ->when($withCountSchema, function($order) use ($withCountSchema) {
+                return $order->withCount($withCountSchema);
             });
     }
 }
