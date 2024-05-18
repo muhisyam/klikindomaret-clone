@@ -31,16 +31,18 @@ class Order extends Model
         'delivery' => 'Dikirim',
         'ready'    => 'Siap',
         'complete' => 'Selesai',
+        'expire'   => 'Kadaluwarsa',
     ];
 
     public static $retailerStatusMessage = [
-        'Dibuat'   => 'Pesanan Dibuat',
-        'Masuk'    => 'Pesanan Masuk',
-        'Diterima' => 'Pesanan diterima oleh',
-        'Diproses' => 'Pesanan sedang diproses oleh',
-        'Dikirim'  => 'Pesanan sudah dikirim oleh',
-        'Siap'     => 'Pesanan siap diambil',
-        'Selesai'  => 'Pesanan telah diambil',
+        'Dibuat'      => 'Pesanan Dibuat',
+        'Masuk'       => 'Pesanan Masuk',
+        'Diterima'    => 'Pesanan diterima oleh',
+        'Diproses'    => 'Pesanan sedang diproses oleh',
+        'Dikirim'     => 'Pesanan sudah dikirim oleh',
+        'Siap'        => 'Pesanan siap diambil',
+        'Selesai'     => 'Pesanan telah diambil',
+        'Kadaluwarsa' => 'Pesanan kadaluwarsa',
     ];
 
     /**
