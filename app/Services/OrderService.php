@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Actions\ClientRequestAction;
 use App\DataTransferObjects\ClientRequestDto;
 use App\Http\Controllers\Api\v1\OrderController;
-use App\Http\Resources\OrderDeliveryResource;
 use App\Http\Resources\OrderProductResource;
+use App\Http\Resources\OrderRelationshipDeliveryResource;
 use App\Models\Order;
 use App\Models\Retailer;
 use App\Models\Supplier;
@@ -215,9 +215,35 @@ class OrderService
              * for each supplier, so you have to select the first index array then select 
              * the pivot data to get supplier deliveries data.
             */
-            $newArr[$supplierName] = new OrderDeliveryResource($groupedBySupplier[0]->pivot);
+            $newArr[$supplierName] = new OrderRelationshipDeliveryResource($groupedBySupplier[0]->pivot);
         }
         
         return $newArr;
+    }
+
+    public function getDataRetailerOrders(object|null $retailer)
+    {
+        if (is_null($retailer)) {
+            return [];
+        }
+
+        $containerIds = $this->setSupplierAndRetailerId($retailer);
+        $retailer     = $retailer->getRetailerOrders($containerIds)->paginate($request['per_page'] ?? 10);
+
+        return $retailer;
+    }
+
+    public function setSupplierAndRetailerId(object $retailer): array
+    {
+        $suppliers  = Supplier::getStoreSupplier('id', 'supplier_name')->toArray();
+
+        /**
+         * If user retail is store supplier, it will store the store supp ids. If not 
+         * it will store user retailer id and supp id. $retailerId is to get all product
+         * that provide from the retailer.
+        */
+        return in_array($retailer->supplier_id, $suppliers) 
+            ? [$suppliers, null] 
+            : [[$retailer->supplier_id], $retailer->id];
     }
 }
