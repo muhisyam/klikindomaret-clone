@@ -172,7 +172,7 @@ class OrderService
             'longitude'             => $dataPlace['longitude'],
             'latitude'              => $dataPlace['latitude'],
             'reciever_name'         => $dataPlace[$detailAttr['reciever_name']],
-            'reciever_phone_number' => $dataPlace[$detailAttr['reciever_phone_number']],
+            'reciever_phone_number' => $dataPlace[$detailAttr['reciever_phone_number']] ?? '-',
         ];
     }
 
@@ -221,18 +221,13 @@ class OrderService
         return $newArr;
     }
 
-    public function getDataRetailerOrders(object|null $retailer)
-    {
-        if (is_null($retailer)) {
-            return [];
-        }
-
-        $containerIds = $this->setSupplierAndRetailerId($retailer);
-        $retailer     = $retailer->getRetailerOrders($containerIds)->paginate($request['per_page'] ?? 10);
-
-        return $retailer;
-    }
-
+    /**
+     * Set supplier and retailer id for spesific product to be taken according
+     * the retailer.
+     * 
+     * @param object $retailer
+     * @return array [supplierId, retailerId]
+    */
     public function setSupplierAndRetailerId(object $retailer): array
     {
         $suppliers  = Supplier::getStoreSupplier('id', 'supplier_name')->toArray();
