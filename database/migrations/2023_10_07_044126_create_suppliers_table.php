@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('flag_code', 2)->unique();
             $table->string('flag_name', 20)->unique();
             $table->string('supplier_name', 200);
+            $table->boolean('is_official_store');
             $table->timestamps();
         });
     }

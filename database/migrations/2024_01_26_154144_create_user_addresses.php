@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('address_label');
             $table->string('reciever_name');
             $table->string('reciever_phone_number');
+            $table->decimal('longitude', 10, 7);
+            $table->decimal('latitude', 10, 7);
             $table->timestamps();
         });
     }

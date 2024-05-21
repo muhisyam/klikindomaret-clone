@@ -23,6 +23,10 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->string('retailer_code', 5)->unique();
             $table->string('retailer_name', 200);
             $table->string('retailer_address', 200);

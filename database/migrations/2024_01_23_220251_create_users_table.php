@@ -15,20 +15,19 @@ return new class extends Migration
             $table->id();
             $table->foreignId('role_id')
                 ->nullable()
-                ->default(1) // default user
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             $table->string('fullname', 200);
             $table->string('username', 100)->unique();
             $table->string('email')->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->dateTime('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('gender', ['laki-laki', 'perempuan'])->nullable();
+            $table->string('gender', 15)->nullable();
             $table->date('birthdate');
-            $table->string('mobile_number')->unique();
-            $table->timestamp('mobile_number_verified_at')->nullable();
-            $table->string('user_image_name')->nullable();
+            $table->string('mobile_number', 13)->unique();
+            $table->dateTime('mobile_number_verified_at')->nullable();
+            $table->string('user_image_name', 50)->nullable();
             $table->dateTime('last_login')->nullable();
             $table->rememberToken();
             $table->timestamps();
