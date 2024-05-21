@@ -37,9 +37,9 @@ class Order extends Model
     public static $retailerStatusMessage = [
         'Dibuat'      => 'Pesanan Dibuat',
         'Masuk'       => 'Pesanan Masuk',
-        'Diterima'    => 'Pesanan diterima oleh',
-        'Diproses'    => 'Pesanan sedang diproses oleh',
-        'Dikirim'     => 'Pesanan sudah dikirim oleh',
+        'Diterima'    => 'Pesanan diterima',
+        'Diproses'    => 'Pesanan sedang diproses',
+        'Dikirim'     => 'Pesanan sudah dikirim',
         'Siap'        => 'Pesanan siap diambil',
         'Selesai'     => 'Pesanan telah diambil',
         'Kadaluwarsa' => 'Pesanan kadaluwarsa',
@@ -51,6 +51,16 @@ class Order extends Model
     public static $basedOnRetailer = [
         'Diterima', 'Diproses', 'Dikirim'
     ];
+
+    /**
+     * Override the route key use other database column for the model class.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'order_key';
+    }
+
+    // All relations of order model.
 
     public function user()
     {
@@ -108,6 +118,75 @@ class Order extends Model
         return $result;
     }
 
+    /**
+     * Scope to get list of retailer order in admin page.
+     * 
+     * @param $query
+     * @param array<int, string> $containerIds The order is supplierId, retailerId
+     * @return Order
+    */
+    public function scopeGetListRetailerOrders($query, array $containerIds)
+    {
+        $supplierId  = $containerIds[0];
+        $retailerId  = $containerIds[1];
+        $result      = $query
+            ->with([
+                'user',
+                'pickupAddress',
+                /**
+                 * Why use whereIn, just to be safe if the retailer chosen by the user is an official store. So it will 
+                 * retrieve all data related to the official store.
+                 */
+                'supplierDeliveries' => fn($delivery) => $delivery->whereIn('supplier_id', $supplierId),
+                'retailers'          => fn($retailer) => $retailer->whereIn('supplier_id', $supplierId)->orderByPivot('created_at', 'desc'),
+                'products'           => function($products) use ($supplierId, $retailerId) {
+                    /**
+                     * If $retailerId null it means the user retailer is official store supplier, then it will return all
+                     * products from official store retailer. Else it will return all products that provide from the retailer.
+                    */
+                    return is_null($retailerId) 
+                        ? $products->whereIn('supplier_id', $supplierId) 
+                        : $products->whereHas('retailers', fn ($retailers) => $retailers->where('retailer_id', $retailerId));
+                }, 
+            ]);
+
+        return $result;
+    }
+
+    /**
+     * Accessor to get detail retailer order in admin page.
+     * 
+     * @param array<int, string> $containerIds The order is supplierId, retailerId
+     * @return Order
+    */
+    public function getDetailRetailerOrder(array $containerIds): Order
+    {
+        $supplierId  = $containerIds[0];
+        $retailerId  = $containerIds[1];
+        $result      = $this
+            ->load([
+                'user',
+                'pickupAddress',
+                /**
+                 * Why use whereIn, just to be safe if the retailer chosen by the user is an official store. So it will 
+                 * retrieve all data related to the official store.
+                 */
+                'supplierDeliveries' => fn($delivery) => $delivery->whereIn('supplier_id', $supplierId),
+                'retailers'          => fn($retailer) => $retailer->whereIn('supplier_id', $supplierId)->orderByPivot('created_at', 'desc'),
+                'products'           => function($products) use ($supplierId, $retailerId) {
+                    /**
+                     * If $retailerId null it means the user retailer is official store supplier, then it will return all
+                     * products from official store retailer. Else it will return all products that provide from the retailer.
+                    */
+                    return is_null($retailerId) 
+                        ? $products->whereIn('supplier_id', $supplierId) 
+                        : $products->whereHas('retailers', fn ($retailers) => $retailers->where('retailer_id', $retailerId));
+                }, 
+            ]);
+
+        return $result;
+    }
+
     public static function getHeaderStyle(string $label)
     {
         return match ($label) {
@@ -127,6 +206,19 @@ class Order extends Model
             self::$userStatus['settlement'] => 'filter-primary',
             self::$userStatus['completed']  => 'filter-success',
             default                         => 'grayscale',
+        };
+    }
+
+    public static function getStyleRetailerStatus(string $label)
+    {
+        return match ($label) {
+            self::$retailerStatus['incoming'] => 'bg-primary-100 text-primary-600',
+            self::$retailerStatus['accept']   => 'bg-primary-100 text-primary-600',
+            self::$retailerStatus['delivery'] => 'bg-success-100 text-success-600',
+            self::$retailerStatus['ready']    => 'bg-success-100 text-success-600',
+            self::$retailerStatus['complete'] => 'bg-secondary-50 text-secondary',
+            self::$retailerStatus['expire']   => 'bg-danger-100 text-danger',
+            default                           => 'bg-light-gray-100 text-black',
         };
     }
 }
