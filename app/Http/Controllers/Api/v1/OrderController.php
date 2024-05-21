@@ -34,8 +34,56 @@ class OrderController extends Controller
     ) {}
 
     /**
-     * Create new order, call when user click pay the order
-     * in checkout page.
+     * Get user orders data for user page. 
+     *
+     * @param User $user
+     * @param Request<string, mixed> $request
+     */
+    public function indexUserOrder(User $user, Request $request): JsonResource
+    {
+        $userOrders = $this->geDatatUserOrder($user, $request);
+
+        if (! $this->orderService->ensureDontHasFreshOrder($userOrders)) {
+            $userOrders = $this->geDatatUserOrder($user, $request);
+        }
+
+        return OrderUserResource::collection($userOrders);
+    }
+
+    private function geDatatUserOrder(User $user, Request $request): Collection
+    {
+        return $this->getUserOrderData(
+            user           : $user,
+            withSchema     : ['products', 'products.images'],
+            withCountSchema: ['products'],
+        )
+        ->take($request['take_amount'])
+        ->get();
+    }
+
+    /**
+     * Get list retailer orders with spesific product to be taken according 
+     * the retailer in admin page.
+     *
+     * @param User $user
+     * @param Request<string, mixed> $request
+     */
+    public function indexRetailerOrder(User $user, Request $request): JsonResource
+    {
+        $retailer = $user->retailer;
+
+        if (is_null($retailer)) {
+            return [];
+        }
+
+        $containerIds   = $this->orderService->setSupplierAndRetailerId($retailer);
+        $retailerOrders = Order::getListRetailerOrders($containerIds)->paginate($request['per_page'] ?? 10);
+
+        return OrderPageRetailerResource::collection($retailerOrders)->additional($this->metaSuccess);
+    }
+
+    /**
+     * Create new order, call when user click pay the order in checkout page.
      *
      * @param array<string, mixed> $request
      */
@@ -47,34 +95,6 @@ class OrderController extends Controller
             $order->products()->attach($request['product_ids']);
             $order->retailers()->attach($request['retailer_ids']);
         });
-    }
-
-    /**
-     * Get user orders data for user page. 
-     *
-     * @param User $user
-     * @param Request<string, mixed> $request
-     */
-    public function showUserOrder(User $user, Request $request): JsonResource
-    {
-        $userOrders = $this->getDataShowUserOrder($user, $request);
-
-        if (! $this->orderService->ensureDontHasFreshOrder($userOrders)) {
-            $userOrders = $this->getDataShowUserOrder($user, $request);
-        }
-
-        return OrderUserResource::collection($userOrders);
-    }
-
-    private function getDataShowUserOrder(User $user, Request $request): Collection
-    {
-        return $this->getUserOrderData(
-            user           : $user,
-            withSchema     : ['products', 'products.images'],
-            withCountSchema: ['products'],
-        )
-        ->take($request['take_amount'])
-        ->get();
     }
 
     /**
@@ -92,17 +112,18 @@ class OrderController extends Controller
     }
 
     /**
-     * Get retailer orders data for admin page. 
+     * Get detail retailer order with spesific product to be taken according 
+     * the retailer in admin page.
      *
      * @param User $user
-     * @param Request<string, mixed> $request
+     * @param Order $order
      */
-    public function showRetailerOrder(User $user, Request $request): JsonResource
+    public function showRetailerDetailOrder(User $user, Order $order): OrderPageRetailerResource
     {
-        $retailer       = $user->retailer;
-        $retailerOrders = $this->orderService->getDataRetailerOrders($retailer);
+        $containerIds   = $this->orderService->setSupplierAndRetailerId($user->retailer);
+        $retailerOrders = $order->getDetailRetailerOrder($containerIds);
 
-        return OrderPageRetailerResource::collection($retailerOrders)->additional($this->metaSuccess);
+        return new OrderPageRetailerResource($retailerOrders);
     }
 
     /**
@@ -172,6 +193,30 @@ class OrderController extends Controller
         });
         
         return new OrderUserResource($userOrder);
+    }
+
+    /**
+     * Update retailer pivot order status to current status according in retailer live store
+     * 
+     * @param User $user
+     * @param Request<string, mixed> $request
+     */
+    public function retailerUpdateStatus(User $user, Order $order, Request $request): OrderPageRetailerResource
+    {
+        $retailerId = $user->retailer->id;
+        $status     = $request->status;
+        $message    = $request->message ?? Order::$retailerStatusMessage[$status];
+
+        if ($request->status == 'complete') {
+            $order->update(['order_completed' => now()]);
+        }
+
+        $order->retailers()->attach($retailerId, [
+            'retailer_order_status' => $status,
+            'message'               => $message,
+        ]);
+
+        return new OrderPageRetailerResource($order);
     }
 
     /**
