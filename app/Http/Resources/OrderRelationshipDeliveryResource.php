@@ -15,10 +15,12 @@ class OrderRelationshipDeliveryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $expectedTime = $this->expected_time_between . ' WIB' ?? '-';
+
         return [
             'delivery_option'       => $this->delivery_option,
             'expected_pickup_date'  => formatToIdnLocale(Carbon::parse($this->expected_pickup_date), 'j M Y'),
-            'expected_time_between' => $this->expected_time_between,
+            'expected_time_between' => $expectedTime,
             'delivery_price'        => $this->delivery_price,
         ];
     }
