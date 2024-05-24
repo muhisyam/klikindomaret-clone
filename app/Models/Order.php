@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -62,7 +64,7 @@ class Order extends Model
 
     // All relations of order model.
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -123,9 +125,9 @@ class Order extends Model
      * 
      * @param $query
      * @param array<int, string> $containerIds The order is supplierId, retailerId
-     * @return Order
+     * @return Builder
     */
-    public function scopeGetListRetailerOrders($query, array $containerIds)
+    public function scopeGetListRetailerOrders($query, array $containerIds): Builder
     {
         $supplierId  = $containerIds[0];
         $retailerId  = $containerIds[1];
@@ -187,7 +189,7 @@ class Order extends Model
         return $result;
     }
 
-    public static function getHeaderStyle(string $label)
+    public static function getHeaderStyle(string $label): string
     {
         return match ($label) {
             self::$userStatus['expire']     => 'bg-danger-100 text-danger',
@@ -198,7 +200,7 @@ class Order extends Model
         };
     }
 
-    public static function getIconColorStyle(string $label)
+    public static function getIconColorStyle(string $label): string
     {
         return match ($label) {
             self::$userStatus['expire']     => 'filter-danger',
@@ -209,7 +211,7 @@ class Order extends Model
         };
     }
 
-    public static function getStyleRetailerStatus(string $label)
+    public static function getStyleRetailerStatus(string $label): string
     {
         return match ($label) {
             self::$retailerStatus['incoming'] => 'bg-primary-100 text-primary-600',
