@@ -1,14 +1,14 @@
 <table class="min-w-full w-max" wire:init="loadContent">
     <thead class="bg-[#f5f5f5] text-[#999] text-sm text-left uppercase rounded-t">
         <tr>
-            <th class="p-3"><input type="checkbox" aria-label="Checkbox select all data"></th>
+            <th class="p-3 rounded-tl-md w-12"><input type="checkbox" class="block m-auto" aria-label="Checkbox select all data"></th>
             <th class="py-3 px-4">
                 <div @class([
                     'relative flex cursor-pointer', 
                     'active-asc'  => $sortBy === "order_key" && $orderBy === "asc",
                     'active-desc' => $sortBy === "order_key" && $orderBy === "desc",
                 ]) wire:click="sortBy('order_key')">
-                    <div class="me-1">Id Pesanan</div>
+                    <div class="me-1">Kode</div>
                     <div class="sortable" data-sort></div>
                 </div>
             </th>
@@ -65,7 +65,7 @@
                     <div class="sortable" data-sort></div>
                 </div>
             </th>
-            <th class="py-3 px-4 rounded-tr"></th>
+            <th class="py-3 px-4 rounded-tr-md w-9"></th>
         </tr>
     </thead>
 
@@ -73,7 +73,7 @@
 
     @unless (is_null($orders))
 
-    @forelse ($orders as $order)
+    @forelse ($orders as $index => $order)
         
         <tr class="border-b">
             <td class="py-2 px-3"><input type="checkbox" aria-label="Checkbox select data"></td>
@@ -107,15 +107,18 @@
                 </div>
             </td>
             <td class="py-2 px-4">
-                <div class="status bg-green-100 text-green-700 font-bold text-center rounded-lg p-1">
-                    <div class="info">{{ $order['retailer_order_status'] }}</div>
+                <div class="rounded-lg py-1 min-w-[112px] font-bold text-center {{ \App\Models\Order::getStyleRetailerStatus($order['retailer_order_status']) }}">
+                    {{ $order['retailer_order_status'] }}
                 </div>
             </td>
             <td class="py-2 px-4">{{ formatCurrencyIDR($order['grandtotal']) }}</td>
-            <td class="py-2 px-4 text-center">
-                <button class="hover:bg-[#fbde7e] hover:text-[#0079c2] rounded p-1 px-2" aria-label="Data action">
-                    <div class="icon h-6 pt-0.5"><i class="ri-more-2-line"></i></div>
-                </button>
+            <td class="py-2 px-2 flex justify-end">
+                <x-nav-link href="{{ route('orders.show', ['user' => session('user')['username'] ,'order' => $order['order_key']]) }}" 
+                            class="rounded-md h-9 w-9 cursor-pointer group hover:bg-tertiary" 
+                            data-tooltip-target="action-edit-{{ $index }}">
+                    <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
+                </x-nav-link>
+                <x-tooltip data-tooltip-trigger="action-edit-{{ $index }}" value="Edit" />
             </td>
         </tr>
 
@@ -131,23 +134,7 @@
         
     @else
     
-        @for ($i = 0; $i < 5; $i++)
-            
-        <tr class="border-b">
-            <td class="py-2 px-3"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
-            <td class="py-2 px-4"></td>
-        </tr>
-        
-        @endfor
+    <x-skeletons.table-body rows="10" cols="11"/>
 
     @endunless
 
