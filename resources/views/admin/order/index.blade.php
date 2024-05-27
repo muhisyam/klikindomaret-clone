@@ -13,3 +13,22 @@
         <livewire:admin.order.table/>
     </section>
 </x-admin-layout>
+
+<script type="module">
+    import { initTooltips, toggleActionDataTable, tableHasNewEntries } from "{{ asset('js/' . config('view.js_component')) }}";
+
+    document.addEventListener('livewire:initialized', () => {
+        Livewire.on('content-loaded', event => {
+            setTimeout(() => {
+                initTooltips();
+                toggleActionDataTable();
+            }, 1);
+        });
+
+        Livewire.on('load-new-entries', event => {
+            setTimeout(() => {
+                tableHasNewEntries();
+            }, 1);
+        });
+    });
+</script>
