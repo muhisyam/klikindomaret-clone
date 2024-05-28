@@ -52,3 +52,19 @@ function parseToCarbon(string $date, string $separator = ' '): Carbon
 
     return Carbon::create($arrDate[2], $monthInt[$arrDate[1]], $arrDate[0]);
 }
+
+/**
+ * Change to port web app when inside api port.
+ * 
+ * @param string $routeName
+*/
+function urlRouteApp(string $routeName): string
+{
+    $url = route($routeName);
+    $url = match (config('app.env')) {
+        'local' => str_replace(config('api.port'), config('app.port'), $url),
+        default => $url,
+    };
+
+    return $url;
+}
