@@ -25,15 +25,15 @@ class ImageService
      * 
      * @param object|null $dataImage
      * @param string $folderSaveName
-     * @return array [$randomImageName, $originalImageName]
+     * @return null|array [$randomImageName, $originalImageName]
      */
-    public function storeImage(object|null $dataImage, string $folderSaveName): array
+    public function storeImage(object|null $dataImage, string $folderSaveName): null|array
     {
         if (is_null($dataImage)) {
             return $dataImage;
         }
 
-        $randomImageName = null;
+        $randomImageName   = null;
         $originalImageName = null;
         
         $randomImageName = time() . mt_rand(11, 99) . '.' . strtolower($dataImage->getClientOriginalExtension());
@@ -67,10 +67,9 @@ class ImageService
             return $dataImage;
         }
 
-        $fileName = null;
-
+        $fileName     = null;
         $originalName = explode('.', $dataImage->getClientOriginalName());
-        $fileName = $originalName[0]  . '.' . strtolower($dataImage->getClientOriginalExtension());
+        $fileName     = $originalName[0]  . '.' . strtolower($dataImage->getClientOriginalExtension());
         
         return $fileName; 
     }
