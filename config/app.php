@@ -185,4 +185,16 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Application PORT
+    |--------------------------------------------------------------------------
+    |
+    | This port is used in the app url, which will differentiate the port 
+    | used in the api so that conflicts do not occur.
+    |
+    */
+
+    'port' => env('APP_PORT', ':8000'),
+
 ];

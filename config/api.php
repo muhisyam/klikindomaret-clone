@@ -15,4 +15,16 @@ return [
 
     'url' => env('API_URL', 'http://127.0.0.1:8080/api/'),
     
+    /*
+    |--------------------------------------------------------------------------
+    | API PORT
+    |--------------------------------------------------------------------------
+    |
+    | This port is used in the api endpoint, which will differentiate the port 
+    | used in the application so that conflicts do not occur.
+    |
+    */
+
+    'port' => env('API_PORT', ':8080'),
+    
 ];
