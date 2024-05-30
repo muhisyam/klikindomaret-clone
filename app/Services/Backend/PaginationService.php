@@ -4,114 +4,119 @@ namespace App\Services\Backend;
 
 class PaginationService 
 {
-    /**
-     * Change links paginate api url to current page url
-     */
-    public function changeLinksUrl(array $data, string $searchString) {
-        $curentUrl = url()->current();
-        
-        foreach ($data['links'] as $key => $value) {
-            $data['links'][$key]['url'] = str_replace($searchString, $curentUrl, $value['url']);
-        } 
+    protected $newLinks = [];
 
-        return $data;
+    /**
+     * Change links paginate api url to route page url.
+     * 
+     * @param array $response
+     * @param string $apiEndpoint
+     * @param string $routeName
+     */
+    public function changeLinksUrl(array $response, string $apiEndpoint, string $replacedUrl): array
+    {
+        foreach ($response['links'] as $key => $link) {
+            $response['links'][$key]['url'] = str_replace(rtrim($apiEndpoint, '/'), $replacedUrl, $link['url']);
+        }
+
+        return $response;
     }
 
     /**
      * Define new limit showing links page
      * 
-     * @param $data['meta']
+     * @param array $response['meta']
      */
-    public function customPaginationLinks(array $links) {
-        $customLinks = [];
+    public function customPaginationLinks(array $links): array
+    {
         $length = count($links['links']);
         
         if ($length > 9) {
-            $currentPage = $thisCurrent = $links['current_page'];
-            $firstPage = 1;
-            $lastPage = $thisLast = $length - 2;
+            $currentPage   = $links['current_page'];
+            $firstPage     = 1;
+            $lastPage      = $length - 2;
             $nearFirstPage = $firstPage + 4;
-            $nearLastPage = $lastPage - 4;
+            $nearLastPage  = $lastPage - 4;
 
             // < 1 ... 8 [9] 10 ... 13 >
             if ($currentPage >= $nearFirstPage && $nearLastPage >= $currentPage) {
-                $thisCurrent--;
-                $thisLast--;
+                // -1 for number in array index
+                $thisCurrent = $currentPage - 1;
+
+                // -2 because it start with arrow and first page,
+                $thisLast = $length - 2;
+
                 for ($i=0; $i < 9; $i++) {
                     if ($i < 2) {
-                        array_push($customLinks, $links['links'][$i]);
-                        continue;
+                        $this->addNewLinks($links['links'][$i]);
+                    } elseif ($i > 6) {
+                        $this->addNewLinks($links['links'][$thisLast++]);
+                    } elseif ($i == 2 || $i == 6) {
+                        $this->addSeparator();
+                    } else {
+                        $this->addNewLinks($links['links'][$thisCurrent++]);
                     }
-
-                    if ($i > 6) {
-                        array_push($customLinks, $links['links'][$thisLast++]);
-                        continue;
-                    }
-
-                    if ($i == 2 || $i == 6) {
-                        $separator = [
-                            'label' => 'separator'
-                        ];
-
-                        array_push($customLinks, $separator);
-                        continue;
-                    }
-
-                    array_push($customLinks, $links['links'][$thisCurrent++]);
                 }
             }
 
-            // < 1 2 3 4 5 ... 10 >
+            // < 1 2 [3] 4 5 ... 10 >
             if ($currentPage < $nearFirstPage) {
                 for ($i=0; $i < 9; $i++) {
                     if ($i == 6) {
-                        $separator = [
-                            'label' => 'separator'
-                        ];
-
-                        array_push($customLinks, $separator);
-                        continue;
+                        $this->addSeparator();
+                    } elseif ($i == 7) {
+                        $this->addNewLinks($links['links'][$lastPage]);
+                    } elseif ($i == 8) {
+                        $this->addNewLinks($links['links'][$length - 1]);
+                    } else {
+                        $this->addNewLinks($links['links'][$i]);
                     }
-
-                    if ($i == 7) {
-                        array_push($customLinks, $links['links'][$lastPage]);
-                        continue;
-                    }
-
-                    if ($i == 8) {
-                        array_push($customLinks, $links['links'][$length - 1]);
-                        continue;
-                    }
-
-                    array_push($customLinks, $links['links'][$i]);
                 }
             }
 
             // < 1 ... 6 7 [8] 9 10 >
             if ($currentPage > $nearLastPage) {
-
                 for ($i=0; $i < 9; $i++) {
                     if ($i < 2) {
-                        array_push($customLinks, $links['links'][$i]);
-                        continue;
+                        $this->addNewLinks($links['links'][$i]);
+                    } elseif ($i == 2) {
+                        $this->addSeparator();
+                    } else {
+                        $this->addNewLinks($links['links'][$nearLastPage++]);
                     }
-
-                    if ($i == 2) {
-                        $separator = [
-                            'label' => 'separator'
-                        ];
-
-                        array_push($customLinks, $separator);
-                        continue;
-                    }
-
-                    array_push($customLinks, $links['links'][$nearLastPage++]);
                 }
             }
-
-            return $customLinks;
+        } else {
+            for ($i = 0; $i < $length; $i++) { 
+                $this->addNewLinks($links['links'][$i]);
+            }
         }
             
-        return $links['links'];
+        return $this->newLinks;
+    }
+
+    /**
+     * Add new link page key and push data link to new array.
+     * 
+     * @param array $link
+    */
+    private function addNewLinks(array $link): int
+    {
+        $queryUrl = parse_url($link['url'], PHP_URL_QUERY);
+        parse_str($queryUrl, $queryParams);
+        $linkPage     = isset($queryParams['page']) ? $queryParams['page'] : null;
+        $link['page'] = $linkPage;
+
+        return array_push($this->newLinks, $link);
+    }
+
+    /**
+     * Add separator among link page.
+    */
+    private function addSeparator(): int
+    {
+        return array_push($this->newLinks, [
+            'label' => 'separator'
+        ]);
     }
 }
