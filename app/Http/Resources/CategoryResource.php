@@ -15,16 +15,15 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'parent_id' => $this->parent_id,
-            'parent' => new CategoryResource($this->whenLoaded('parent')),
-            'category_name' => $this->category_name,
-            'category_slug' => $this->category_slug,
-            'category_status' => $this->category_status,
-            'category_image_name' => $this->category_image_name,
+            'category_name'                => $this->category_name,
+            'category_slug'                => $this->category_slug,
+            'category_deploy_status'       => $this->category_deploy_status,
+            'category_image_name'          => $this->category_image_name,
             'original_category_image_name' => $this->original_category_image_name,
-            'children_count' => $this->children_count,
-            'children' => CategoryResource::collection($this->whenLoaded('children')),
+            'model_type'                   => $this->model_type,
+            'category_children_count'      => $this->whenCounted('children'),
+            'category_parent'              => new CategoryResource($this->whenLoaded('parent')),
+            'category_children'            => CategoryResource::collection($this->whenLoaded('children')),
         ];
     }
 }
