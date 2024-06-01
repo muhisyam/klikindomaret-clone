@@ -50,6 +50,23 @@ body:has([data-dropdown][overlay] [data-trigger-dropdown]:not(.hidden)) {
     overflow: hidden;
 }
 
+button[data-target-action].open {
+    background-color: #fbde7e;
+}
+
+button[data-target-action].open img[action-icon-open] {
+    display: none;
+}
+
+button[data-target-action].open img[action-icon-close] {
+    display: unset;
+}
+
+div:has(div[data-trigger-action].open) {
+    width: 82px;
+}
+
+
 .tooltip-arrow,
 .tooltip-arrow:before {
     background: inherit;

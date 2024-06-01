@@ -29,7 +29,7 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-button:disabled { opacity: .5; cursor: not-allowed;}
+button:disabled, button:disabled:hover { opacity: .5; cursor: not-allowed;}
 
 .promo-collection .item-product:hover,
 .section-collection .item-product:hover,
@@ -56,7 +56,7 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 */
 
 .guest-info {
-    animation: changeInfo 8s infinite;
+    animation: change-info 8s infinite;
 }
 
 .blink {
@@ -69,7 +69,7 @@ button:disabled { opacity: .5; cursor: not-allowed;}
 ########################################################
 */
 
-@keyframes changeInfo {
+@keyframes change-info {
     0%,
     25%,
     100% {
@@ -402,7 +402,7 @@ ul[data-product-desc].hide {
 /* 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ########################################################
----------=============    USER    =============---------
+-------===========    Informations    ===========-------
 ########################################################
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -414,6 +414,41 @@ ul[data-product-desc].hide {
 .user-info .left-side .sidebar-wrapper ul li.active > a {
     color: #0079c2;
     background-color: #e1eeff;
+}
+
+/* 
+--------------------===============----------------------
+==================== Orders Status ======================
+--------------------===============---------------------- 
+*/
+
+.status-tracker::before {
+    content: attr(data-text);
+    position: relative;
+    top: 5px;
+    border-radius: 50%;
+    padding-bottom: 2px;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10px;
+    height: 10px;
+    background-color: #ccc;
+}
+
+.status-tracker.tracker-pulse::before {
+    animation: tracker-pulse 2s infinite;
+}
+
+.status-tracker::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    display: block;
+    width: 2.5px;
+    height: 100%;
+    background-color: #ccc;
 }
 
 /* 
