@@ -109,55 +109,42 @@ export function toggleActionDataTable() {
     if (! actionBtnList) return;
 
     actionBtnList.forEach(triggerEl => {
-        triggerEl.addEventListener('click', () => {
-            const targetIndetity = triggerEl.getAttribute('data-target-action');
-            const targetEl = document.querySelector(`div[data-trigger-action="${targetIndetity}"`);
-            const isOpened = triggerEl.classList.contains('bg-tertiary', 'text-secondary');
-            const triggerAction = triggerEl.querySelector('[action-icon-open]');
-            const triggerClose = triggerEl.querySelector('[action-icon-close]');
-
-            hideOpenedActionDataTable();
-            
-            if (!isOpened) {
-                triggerEl.classList.add('bg-tertiary');
-                triggerAction.classList.add('hidden');
-                triggerClose.classList.remove('hidden');
-                targetEl.parentNode.classList.add('w-[82px]');
-                targetEl.parentNode.classList.remove('w-0');
-                
-                setTimeout(() => {
-                    targetEl.classList.remove('opacity-0');
-                    targetEl.classList.add('opacity-100');
-                }, 650);
-            };
-
-            initTooltips();
-        })
+        triggerEl.removeEventListener('click', actionDataTableHandler);
+        triggerEl.addEventListener('click', actionDataTableHandler);
     })
 }
 
+function actionDataTableHandler(event) {
+    const triggerEl      = event.currentTarget;
+    const targetIndetity = triggerEl.getAttribute('data-target-action');
+    const targetEl       = document.querySelector(`div[data-trigger-action="${targetIndetity}"`);
+    const isOpened       = triggerEl.classList.contains('open');
+
+    hideOpenedActionDataTable();
+
+    if (! isOpened) {
+        triggerEl.classList.add('open');
+        targetEl.classList.add('open');
+
+        setTimeout(() => {
+            targetEl.classList.remove('opacity-0');
+            targetEl.classList.add('opacity-100');
+        }, 650);
+    };
+
+    initTooltips();
+} 
+
 function hideOpenedActionDataTable() {
-    const activeActionElemenList = document.querySelectorAll('div[data-trigger-action].opacity-100');
-    const activeActionBtnList = document.querySelectorAll('button[data-target-action].bg-tertiary');
+    const activeActionElemenList = document.querySelectorAll('div[data-trigger-action].open');
+    const activeActionBtnList = document.querySelectorAll('button[data-target-action].open');
 
     activeActionElemenList.forEach(el => {
         el.classList.add('opacity-0');
-        el.classList.remove('opacity-100');
-        el.parentNode.classList.add('w-0');
-        el.parentNode.classList.remove('w-[82px]');
+        el.classList.remove('opacity-100', 'open');
     });
-    
-    activeActionBtnList.forEach(btnEl => {
-        const triggerAction = btnEl.querySelector('[action-icon-open]');
-        const triggerClose = btnEl.querySelector('[action-icon-close]');
 
-        triggerAction.classList.remove('hidden');
-        triggerClose.classList.add('hidden');
-
-        setTimeout(() => {
-            btnEl.classList.remove('bg-tertiary', 'text-secondary');
-        }, 700);
-    });
+    activeActionBtnList.forEach(btnEl => setTimeout(() => { btnEl.classList.remove('open') }, 700));
 }
 
 export function handleInputProductQty() { 
@@ -216,6 +203,35 @@ export function createElement({parentTag = 'div', parentClass = [], innerBody = 
     newHtmlObject.innerHTML = innerBody;
 
     return newHtmlObject;
+}
+
+/**
+ * Trigger click event to button modal create data. 
+ */
+export function tableNoContentBtn() {
+    const btnNoContent = document.querySelector('[data-no-content]');
+    if (! btnNoContent) return;
+
+    btnNoContent.addEventListener('click', () => document.querySelector('button[data-target-modal]').click())
+}
+
+/**
+ * Create new button trigger func load new data if detect new data created
+ */
+export function tableHasNewEntries() { 
+    const tableDataElement  = document.querySelector('tbody');
+    const btnLoadNewEntries = 
+        `<td class="border-b py-2 px-3 bg-light-gray-50" colspan="8">
+            <div wire:loading>Loading</div>
+            <x-button class="mx-auto text-secondary hover:underline" value="Muat Konten Baru" wire:click="loadContent" wire:loading.remove/>
+        </td>`;
+
+    const elLoadNewEntries = createElement({
+        parentTag: 'tr', 
+        innerBody: btnLoadNewEntries
+    });
+    
+    tableDataElement.insertBefore(elLoadNewEntries, tableDataElement.firstElementChild);
 }
 
 class Tooltip {
