@@ -2,7 +2,7 @@
 
 @for ($i = 0; $i < $rows; $i++)
             
-<tr class="border-b">
+<tr {{ $attributes->merge(['class' => 'border-b']) }}>
     
     @for ($j = 0; $j < $cols; $j++)
     
