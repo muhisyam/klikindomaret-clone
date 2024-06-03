@@ -27,7 +27,7 @@ class ModalDelete extends Component
     public $catalog;
     public $deleteRoute;
 
-    #[On('modal-show')] 
+    #[On('modal-delete')] 
     public function addModalInfo($data)
     {
         foreach ($data as $key => $value) {

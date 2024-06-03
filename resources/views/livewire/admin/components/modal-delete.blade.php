@@ -1,4 +1,4 @@
-<div class="modal-delete fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] modal {{ $showModal }}">
+<div class="modal-delete fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] modal {{ $showModal }}" data-trigger-modal>
     <div class="modal-wrapper min-w-[500px] bg-white rounded">
         <section class="header-section flex items-center justify-between border-b border-[#eee] p-2">
             <div class="left ms-2">
