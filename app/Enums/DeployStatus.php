@@ -4,17 +4,22 @@ namespace App\Enums;
 
 enum DeployStatus: string
 {
-    case DRAFT = 'Draft';
+    case DRAFT     = 'Draft';
     case PUBLISHED = 'Publish';
-    case EXPIRED = 'Expired';
+    case EXPIRED   = 'Expired';
 
     protected static function getStyleColor($label): string
     {
         return match($label){
-            self::DRAFT->value => 'bg-gray-100 text-gray-700', 
+            self::DRAFT->value     => 'bg-gray-100 text-gray-700', 
             self::PUBLISHED->value => 'bg-green-100 text-green-700', 
-            self::EXPIRED->value => 'bg-red-100 text-red-700', 
+            self::EXPIRED->value   => 'bg-red-100 text-red-700', 
         };
+    }
+
+    public static function values(): array
+    {
+        return array_column(DeployStatus::cases(), 'value');
     }
 
     public static function getStyle($label): string
