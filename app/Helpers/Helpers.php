@@ -7,11 +7,21 @@ function formatNumber($price): string
     return number_format($price, 0, '.', '.');
 }
 
+/**
+ * MARK: Format price number to idr format. 
+ * 
+ * Format price number to Rp #.###.
+*/
 function formatCurrencyIDR($price): string
 {
     return 'Rp ' . number_format($price, 0, '.', '.');
 }
 
+/**
+ * MARK: Prettier mobile number. 
+ * 
+ * Format string mobile phone to +62 ###-####-####.
+*/
 function prettierMobileNumber($number): string
 {
     $number = substr($number, 1);
@@ -22,6 +32,13 @@ function prettierMobileNumber($number): string
     return $prettierNumber;
 }
 
+/**
+ * MARK: Format fullname. 
+ * 
+ * Abbreviating user fullname.
+ * 
+ * @param string $fullname
+*/
 function formatFullname(string $fullname): string
 {
     $countName = str_word_count($fullname, 1);
@@ -31,11 +48,27 @@ function formatFullname(string $fullname): string
     return $formatedFullname;
 }
 
+/**
+ * MARK: Carbon to IDN locale. 
+ * 
+ * Get carbon idn locale with format date.
+ * 
+ * @param \Carbon\Carbon $datetime
+ * @param string $formatDate
+*/
 function formatToIdnLocale(Carbon $datetime, string $formatDate = ''): string
 {
     return $datetime->locale('id')->settings(['formatFunction' => 'translatedFormat'])->format($formatDate);
 }
 
+/**
+ * MARK: Carbon parse. 
+ * 
+ * Parse string date to carbon instance.
+ * 
+ * @param string $date
+ * @param string $separator
+*/
 function parseToCarbon(string $date, string $separator = ' '): Carbon 
 {
     if (str_contains($date, '|')) {
@@ -54,6 +87,8 @@ function parseToCarbon(string $date, string $separator = ' '): Carbon
 }
 
 /**
+ * MARK: URL route app 
+ * 
  * Change to port web app when inside api port.
  * 
  * @param string $routeName
@@ -67,4 +102,46 @@ function urlRouteApp(string $routeName): string
     };
 
     return $url;
+}
+
+/**
+ * MARK: Notification greets
+ * 
+ * Create greet text in notification.
+*/
+function createGreeting(): string
+{
+    $formateHtml = '<span>%s</span>, <span class="italic font-bold">%s!</span>';
+    $currentHour = now()->format('H');
+
+    if ($currentHour >= 5 && $currentHour < 12) {
+        $greetDay = 'Selamat Pagi';
+    } elseif ($currentHour >= 12 && $currentHour < 15) {
+        $greetDay = 'Selamat Siang';
+    } elseif ($currentHour >= 15 && $currentHour < 18) {
+        $greetDay = 'Selamat Sore';
+    } else {
+        $greetDay = 'Selamat Malam';
+    }
+
+    $username = session('user') 
+        ? formatFullname(session('user')['fullname']) 
+        : 'Intruders';
+
+    return sprintf($formateHtml, $greetDay, $username);
+}
+
+/**
+ * MARK: Slug to Title case
+ * 
+ * Convert slug case to title case.
+ * 
+ * @param string $slug
+*/
+function slugToTitle(string $slug): string
+{
+    $title = str_replace('-', ' ', $slug);
+    $title = ucwords($title);
+    
+    return $title;
 }
