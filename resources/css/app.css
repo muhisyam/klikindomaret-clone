@@ -13,7 +13,11 @@
 }
 
 .filter-primary {
-    filter: invert(46%) sepia(99%) saturate(649%) hue-rotate(354deg) brightness(104%) contrast(90%);
+    filter: hue-rotate(200deg) saturate(200%) brightness(255%) contrast(.975);
+}
+
+.hover-filter-primary:hover {
+    filter: hue-rotate(200deg) saturate(200%) brightness(255%) contrast(.975);
 }
 
 .filter-secondary {
@@ -21,9 +25,13 @@
 }
 
 .filter-danger {
-    filter: invert(37%) sepia(23%) saturate(6475%) hue-rotate(341deg) brightness(79%) contrast(90%);
+    filter: hue-rotate(160deg) saturate(600%) brightness(0.8) contrast(0.7);
 }
 
 .filter-white {
     filter: brightness(0%) invert(100%) ;
+}
+
+.animate-delay-600 {
+    animation-delay: 600ms;
 }

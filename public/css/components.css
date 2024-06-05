@@ -222,6 +222,7 @@ div:has(div[data-trigger-action].open) {
 }
 
 .select2-dropdown {
+    overflow: hidden;
     border: 1px solid #0079c2;
     background-color: #f9f9f9;
 }

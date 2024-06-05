@@ -356,7 +356,7 @@ section[data-section="data-table-wrapper"]:hover::-webkit-scrollbar-thumb,
     margin-bottom: 16px;
 }
 
-.category-input .category-input-wrapper {
+section[data-section="category-input-wrapper"] {
     height: calc(100vh - 290px);
 }
 
