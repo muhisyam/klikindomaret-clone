@@ -6,6 +6,7 @@ use App\Enums\MetaStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\SelectCategoryMinimalResource;
 use App\Models\Category;
 use App\Services\Backend\ImageService;
 use App\Services\CategoryService;
@@ -52,6 +53,20 @@ class CategoryController extends Controller
             ->getData($request);
 
         return CategoryResource::collection($categories)->additional(MetaStatus::get('OK'));
+    }
+
+    /**
+     * Retrieving categories data with minimal resource for select option.
+     * 
+     * @param \Illuminate\Http\Request $request
+    */
+    public function indexMinimal(Request $request): JsonResource
+    {
+        $categories = Category::query()
+            ->filterModel($request)
+            ->getData($request);
+
+        return SelectCategoryMinimalResource::collection($categories)->additional(MetaStatus::get('OK'));
     }
 
     /**
@@ -116,8 +131,8 @@ class CategoryController extends Controller
     {
         $contentName = ['data' => ['content_name' => $category->category_name]];
         
-        $imageService->deleteExistsImage($category, 'categories');
-        $category->delete();
+        // $imageService->deleteExistsImage($category, 'categories');
+        // $category->delete();
 
         return response()->json(array_merge($contentName, MetaStatus::get('OK')), 200);
     }

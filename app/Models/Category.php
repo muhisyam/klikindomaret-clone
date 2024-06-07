@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\File;
 
 class Category extends Model
 {
@@ -73,6 +74,7 @@ class Category extends Model
     public function scopeFilterModel(Builder $query, Request $request): Builder
     {
         $depth   = $request->depth;
+        $minimal = $request->minimal;
         $search  = $request->search;
         $value   = $request->value;
         $like    = $request->like;
@@ -81,7 +83,7 @@ class Category extends Model
         $sortDir = $request->sortDir;
 
         return $query
-            /* For category data in user client */
+            // For category data in user client.
             ->when($depth > 1, function($query) use ($depth) {
                 $query->with(['children' => function($categoryLvl2) use ($depth) {
                     $categoryLvl2
@@ -90,6 +92,12 @@ class Category extends Model
                            $categoryLv2->with(['children' => fn($categoryLv3) => $categoryLv3->whereNot('category_deploy_status', DeployStatus::DRAFT->value)]); 
                         });
                 }]);
+            })
+            // For minimal resource of category with depth until level 2.
+            ->when($minimal, function($query) {
+                $query->whereNull('categories.parent_id')
+                    ->rightJoin('categories as parent', 'categories.id', '=', 'parent.parent_id')
+                    ->orderBy('parent.parent_id', 'asc');
             })
             ->when($search, function($query) use ($search, $value, $like, $between) {
                 if($value) {
@@ -114,5 +122,19 @@ class Category extends Model
     public function scopeGetData(Builder $query, Request $request): LengthAwarePaginator|Collection
     {
         return $request->paginate ? $query->paginate($request->perPage ?? 10) : $query->get();
+    }
+
+    /**
+     * Accessor get image size.
+    */ 
+    public function getImageSize()
+    {
+        if (is_null($this->category_image_name)) {
+            return null;
+        }
+
+        $imagePath = 'img/uploads/categories/' . $this->category_image_name;
+
+        return File::exists($imagePath) ? round(filesize($imagePath) / 1024) . ' kB' : null;
     }
 }
