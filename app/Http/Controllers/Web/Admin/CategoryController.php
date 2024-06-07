@@ -84,24 +84,32 @@ class CategoryController extends Controller
     /**
      * Send request for store data category.
      * 
+     * @param \App\Http\Requests\CategoryRequest $request
+    */
+    public function store(CategoryRequest $request): CategoryResponse
+    {
+        $response = $this->postDataRequest($request);
+
+        return new CategoryResponse('Tambah Kategori', $response);
+    }
+
+    /**
+     * Post request form data categories.
+     * 
      * @param \App\Http\Requests\CategoryRequest|array $request
     */
-    public function store(CategoryRequest|array $request): CategoryResponse
-    {   
-        $formData = $request instanceof CategoryRequest ? $request->validated() : $request;
-        $redirect = $request instanceof CategoryRequest ? true : false;
-        $response = $this->clientAction->request(
+    public function postDataRequest(CategoryRequest|array $request): array
+    {
+        return $this->clientAction->request(
             new ClientRequestDto(
                 method: 'POST',
                 endpoint: $this->endpoint,
                 headers: [
                     'Authorization' => 'Bearer ' . session('auth_token')
                 ],
-                formData: $formData,
+                formData: $request,
             )
         );
-
-        return new CategoryResponse($response, $redirect);
     }
 
     /**
@@ -109,7 +117,7 @@ class CategoryController extends Controller
     */
     public function edit(string $categorySlug): View
     {
-        return view('admin.category.input-parent', [
+        return view('admin.category.input.input', [
             'categorySlug' => $categorySlug
         ]);
     }
@@ -135,7 +143,7 @@ class CategoryController extends Controller
             )
         );
 
-        return new CategoryResponse($response);
+        return new CategoryResponse('Ubah Kategori', $response);
     }
 
     /**
@@ -155,6 +163,6 @@ class CategoryController extends Controller
             )
         );
 
-        return new CategoryResponse($response);
+        return new CategoryResponse('Hapus Kategori', $response);
     }
 }
