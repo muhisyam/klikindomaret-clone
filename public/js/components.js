@@ -196,7 +196,7 @@ export function hideLoader() {
  * @param {array} parentClass - array
  * @param {string} innerBody - string
  */
-export function createElement({parentTag = 'div', parentClass = [], innerBody = ''}) {
+export function createNewElement({parentTag = 'div', parentClass = [], innerBody = ''}) {
     const newHtmlObject = document.createElement(parentTag);
 
     newHtmlObject.classList.add(...parentClass);
@@ -204,6 +204,8 @@ export function createElement({parentTag = 'div', parentClass = [], innerBody = 
 
     return newHtmlObject;
 }
+
+window.createNewElement = createNewElement;
 
 /**
  * Trigger click event to button modal create data. 
@@ -218,20 +220,20 @@ export function tableNoContentBtn() {
 /**
  * Create new button trigger func load new data if detect new data created
  */
-export function tableHasNewEntries() { 
-    const tableDataElement  = document.querySelector('tbody');
+export function tableHasNewEntries(colspan) { 
+    const tableDataElement  = document.querySelector('section[data-section="data-table-wrapper"] tbody');
     const btnLoadNewEntries = 
-        `<td class="border-b py-2 px-3 bg-light-gray-50" colspan="8">
-            <div wire:loading>Loading</div>
-            <x-button class="mx-auto text-secondary hover:underline" value="Muat Konten Baru" wire:click="loadContent" wire:loading.remove/>
+        `<td class="border-b py-2 px-3 bg-light-gray-50 text-center" colspan="${colspan}">
+            <div wire:loading>Loading...</div>
+            <button class="mx-auto block text-sm text-secondary hover:underline" wire:click="loadContent" wire:loading.remove>Muat Konten Baru</button>
         </td>`;
 
-    const elLoadNewEntries = createElement({
+    const elLoadNewEntries = createNewElement({
         parentTag: 'tr', 
         innerBody: btnLoadNewEntries
     });
     
-    tableDataElement.insertBefore(elLoadNewEntries, tableDataElement.firstElementChild);
+    tableDataElement.prepend(elLoadNewEntries);
 }
 
 class Tooltip {
