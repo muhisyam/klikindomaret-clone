@@ -12,6 +12,13 @@ use Illuminate\Validation\Rule;
 class CategoryRequest extends FormRequest
 {
     /**
+     * The validator instance.
+     *
+     * @var \Illuminate\Contracts\Validation\Validator
+     */
+    protected $validator;
+
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
@@ -31,7 +38,7 @@ class CategoryRequest extends FormRequest
             'category_name'          => ['required', 'string', 'max:100'],
             'category_slug'          => ['required', 'string', 'max:200'],
             'category_deploy_status' => ['required', Rule::enum(DeployStatus::class)],
-            'category_image_name'    => ['image', 'mimes:jpg,png,jpeg', 'max:512'],
+            'category_image_name'    => ['image', 'max:512', 'mimes:jpg,png,jpeg,webp'],
         ];
 
         switch ($this->method()) {
@@ -57,18 +64,44 @@ class CategoryRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
+        $this->validator = $validator;
+
+        // Using not operation, so it can work in livewire urls as well. When fail 
+        // validation occurs in livewire, it will return the error json response.
+        return ! str_contains(url()->current(), 'api') 
+            ? $this->failedValidationInWeb()
+            : $this->failedValidationInApi();
+    }
+
+    private function failedValidationInApi()
+    {
         $trace = app(ErrorTraceAction::class)->execute();
         
         throw new HttpResponseException(response([
-            'errors' => $validator->getMessageBag(),
+            'errors' => $this->validator->getMessageBag(),
             'meta'   => [
-                'status_code' => 400,
-                'message'     => 'Bad Request',
+                'status_code' => 422,
+                'message'     => 'Unprocessable Content',
                 'trace'       => [
                     'File' => $trace['filename'],
                     'Line' => $trace['line'],
                 ],
             ],
-        ], 400));
+        ], 422));
+    }
+
+    private function failedValidationInWeb()
+    {
+        return back()
+            // Why using with not withError, to ensure consistency with the error 
+            // format used in API, thereby simplifying the management of input error 
+            // components.
+            ->with([
+                'input_error' => [
+                    'errors' => $this->validator->getMessageBag()->getMessages(),
+                ]
+            ])
+            ->withInput()
+            ->setStatusCode(422, 'Unprocessable Content');
     }
 }
