@@ -1,12 +1,7 @@
-@props(['inputStyle' => 'default', 'error' => null])
+@props(['error' => []])
 
 @php
-    $classes = match ($inputStyle) {
-        'default' => ' bg-light-gray-50 transition-shadow focus:border-secondary focus:shadow-input focus:outline-secondary',
-        'custom' => '',
-    };
-
-    $isError = array_key_exists($attributes['name'], is_array($error) ? $error['errors'] : ['errors' => []]);
+    $isError = isset($error['errors'][$attributes['name']]);
 @endphp
 
 <input {{ $attributes->merge(['class' => 'hidden', 'type' => 'file']) }}>
