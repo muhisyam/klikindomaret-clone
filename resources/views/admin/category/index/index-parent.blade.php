@@ -9,26 +9,27 @@
     
     <livewire:admin.category.index.filter-table/>
 
-    <section class="border border-[#eee] rounded-xl p-4" data-section="data-table-wrapper">
+    <section class="border border-light-gray-100 rounded-xl p-4" data-section="data-table-wrapper">
         <livewire:admin.category.index.table/>
     </section>
 
 </x-admin-layout>
 
 <script type="module">
-    import { initTooltips, toggleActionDataTable, tableHasNewEntries } from "{{ asset('js/' . config('view.js_component')) }}";
+    import { tableNoContentBtn, initTooltips, toggleActionDataTable, tableHasNewEntries } from "{{ asset('js/' . config('view.js_component')) }}";
 
     document.addEventListener('livewire:initialized', () => {
         Livewire.on('content-loaded', event => {
             setTimeout(() => {
+                tableNoContentBtn();
                 initTooltips();
                 toggleActionDataTable();
             }, 1);
         });
 
-        Livewire.on('load-new-entries', event => {
+        Livewire.on('content-stored', event => {
             setTimeout(() => {
-                tableHasNewEntries();
+                tableHasNewEntries(5);
             }, 1);
         });
     });
