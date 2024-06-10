@@ -145,3 +145,22 @@ function slugToTitle(string $slug): string
     
     return $title;
 }
+
+/**
+ * MARK: Trim text
+ * 
+ * Trim text after specified word.
+ * 
+ * @param string $text The text that want to trimmed
+ * @param string $offset The needle used to locate the starting point for trimming
+ * @param bool $ucfirst First result word will be uppercase
+*/
+function trimText(string $text, string $offset, bool $ucfirst = true): string
+{
+    $position  = strpos($text, $offset);
+    $substring = substr($text, $position + strlen($offset));
+    $trimmed   = trim($substring);
+    $result    = $ucfirst ? ucfirst($trimmed) : $trimmed;
+    
+    return $result;
+}
