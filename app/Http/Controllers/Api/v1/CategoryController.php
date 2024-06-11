@@ -48,8 +48,11 @@ class CategoryController extends Controller
     {  
         $categories = $category
             ->children()
-            ->with('children')
+            ->with([
+                'children' => fn($children) => $children->withCount('products'),
+            ])
             ->withCount('children')
+            ->filterModel($request)
             ->getData($request);
 
         return CategoryResource::collection($categories)->additional(MetaStatus::get('OK'));
@@ -63,8 +66,9 @@ class CategoryController extends Controller
     public function indexMinimal(Request $request): JsonResource
     {
         $categories = Category::query()
-            ->filterModel($request)
-            ->getData($request);
+            ->parentModel($request)
+            ->with('children')
+            ->flattenModel();
 
         return SelectCategoryMinimalResource::collection($categories)->additional(MetaStatus::get('OK'));
     }

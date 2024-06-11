@@ -64,17 +64,20 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
     /**
      * Scope for retrieving filtered data according url parameters.
      * 
-     * @param Builder $query
-     * @param Request $request
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request $request
     */
     public function scopeFilterModel(Builder $query, Request $request): Builder
     {
         $depth   = $request->depth;
-        $minimal = $request->minimal;
         $search  = $request->search;
         $value   = $request->value;
         $like    = $request->like;
@@ -89,15 +92,11 @@ class Category extends Model
                     $categoryLvl2
                         ->whereNot('category_deploy_status', DeployStatus::DRAFT->value)
                         ->when($depth > 2, function($categoryLv2) {
-                           $categoryLv2->with(['children' => fn($categoryLv3) => $categoryLv3->whereNot('category_deploy_status', DeployStatus::DRAFT->value)]); 
+                           $categoryLv2->with([
+                                'children' => fn($categoryLv3) => $categoryLv3->whereNot('category_deploy_status', DeployStatus::DRAFT->value)
+                            ]); 
                         });
                 }]);
-            })
-            // For minimal resource of category with depth until level 2.
-            ->when($minimal, function($query) {
-                $query->whereNull('categories.parent_id')
-                    ->rightJoin('categories as parent', 'categories.id', '=', 'parent.parent_id')
-                    ->orderBy('parent.parent_id', 'asc');
             })
             ->when($search, function($query) use ($search, $value, $like, $between) {
                 if($value) {
@@ -115,9 +114,8 @@ class Category extends Model
     /**
      * Scope for retrieving data with or without pagination.
      * 
-     * @param Builder $query
-     * @param Request $request
-     * @return LengthAwarePaginator|Collection
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request $request
     */
     public function scopeGetData(Builder $query, Request $request): LengthAwarePaginator|Collection
     {
@@ -125,9 +123,47 @@ class Category extends Model
     }
 
     /**
+     * Scope for retrieving the appropriate parent category based on the request.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Illuminate\Http\Request $request
+    */
+    public function scopeParentModel(Builder $query, Request $request): Builder
+    {
+        $slug = $request->slug;
+
+        return $query
+            ->when($slug,
+                fn($query) => $query->where('category_slug', $slug),
+                fn($query) => $query->whereNull('parent_id'),
+            );
+    }
+
+    /**
+     * Scope for flattening the model collection such that each parent is followed by its children.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $query
+    */
+    public function scopeFlattenModel(Builder $query): object
+    {
+        $modelCollect     = $query->get(); 
+        $flattenedCollect = collect([]);
+
+        foreach ($modelCollect as $parent) {
+            $flattenedCollect = $flattenedCollect->merge([$parent]);
+
+            foreach ($parent->children as $child) {
+                $flattenedCollect = $flattenedCollect->merge([$child]);
+            }
+        }
+
+        return $flattenedCollect->sortBy('parent_id');
+    }
+
+    /**
      * Accessor get image size.
     */ 
-    public function getImageSize()
+    public function getImageSize(): null|string
     {
         if (is_null($this->category_image_name)) {
             return null;

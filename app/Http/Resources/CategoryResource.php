@@ -24,6 +24,7 @@ class CategoryResource extends JsonResource
             'model_type'                   => $this->model_type,
             'category_image_size'          => $this->getImageSize() ?? null,
             'category_children_count'      => $this->whenCounted('children'),
+            'category_products_count'      => $this->whenCounted('products'),
             'category_parent'              => new CategoryResource($this->whenLoaded('parent')),
             'category_children'            => CategoryResource::collection($this->whenLoaded('children')),
         ];

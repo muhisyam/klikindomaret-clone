@@ -42,9 +42,11 @@ class CategoryController extends Controller
     /**
      * Direct to admin category children list page.
     */
-    public function indexChildren(): View 
+    public function indexChildren(string $parentSlug): View 
     {
-        return view('admin.category.index.index-children');
+        return view('admin.category.index.index-children', [
+            'parentSlug' => $parentSlug
+        ]);
     }
 
     /**
@@ -88,7 +90,7 @@ class CategoryController extends Controller
     */
     public function store(CategoryRequest $request): CategoryResponse
     {
-        $response = $this->postDataRequest($request);
+        $response = $this->postDataRequest($request->validated());
 
         return new CategoryResponse('Tambah Kategori', $response);
     }
@@ -153,7 +155,19 @@ class CategoryController extends Controller
     */
     public function destroy(string $categorySlug): CategoryResponse
     {
-        $response = $this->clientAction->request(
+        $response = $this->deleteDataRequest($categorySlug);
+
+        return new CategoryResponse('Hapus Kategori', $response);
+    }
+
+    /**
+     * Delete request form data categories.
+     * 
+     * @param string $categorySlug
+    */
+    public function deleteDataRequest(string $categorySlug): array
+    {
+        return $this->clientAction->request(
             new ClientRequestDto(
                 method: 'DELETE',
                 endpoint: $this->endpoint . $categorySlug,
@@ -162,7 +176,5 @@ class CategoryController extends Controller
                 ],
             )
         );
-
-        return new CategoryResponse('Hapus Kategori', $response);
     }
 }
