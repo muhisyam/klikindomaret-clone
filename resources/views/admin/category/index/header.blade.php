@@ -43,8 +43,9 @@
                 <div class="h-7 w-[1px] bg-[#ccc] mx-3"></div>
 
                 @php
-                    $section = 'modal-add-category';
-                    $show    = false;
+                    $section    = 'modal-add-category';
+                    $show       = false;
+                    $parentSlug = isset($parentSlug) ? $parentSlug : '';
                 @endphp
 
                 <x-modal :section="$section" :showCondition="$show">
@@ -54,7 +55,7 @@
                     </x-slot>
 
                     <x-slot:content>
-                        <livewire:admin.category.index.modal-input :section="$section" :showCondition="$show"/>
+                        <livewire:admin.category.index.modal-input :section="$section" :showCondition="$show" :parentSlug="$parentSlug"/>
                     </x-slot>
                 </x-modal>
 
@@ -74,7 +75,9 @@
             </li>
             <li class="flex items-center text-light-gray-400">
                 <x-icon class="mx-2 w-3 grayscale" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
-                <span class="leading-none text-black">Induk</span>
+                <span class="leading-none text-black">
+                    {{ isRoute('index') ? 'Induk' : 'Sub Kategori' }}
+                </span>
             </li>
         </ol>
     </section>
