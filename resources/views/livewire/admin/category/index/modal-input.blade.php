@@ -1,10 +1,10 @@
-<div class="modal w-96 bg-white rounded-xl{{ $showCondition ? ' show' : '' }}" data-trigger-modal="{{ $section }}" wire:init="fetchDataOptionSelect">
-    <section class="p-3 border-b border-light-gray-100 flex items-center justify-center">
-        <x-button class="absolute top-0 left-0 h-12 w-12" data-target-modal="{{ $section }}">
-            <x-icon class="m-auto w-3" src="{{ asset('img/icons/icon-header-arrow-left.webp') }}"/>
+<div class="modal rounded-xl w-96 bg-white{{ $showCondition ? ' show' : '' }}" data-trigger-modal="{{ $section }}" wire:init="fetchDataOptionSelect">
+    <section class="p-2 border-b border-light-gray-100 flex items-center justify-center">
+        <x-icon class="ms-2 w-24" src="{{ asset('img/header/logo.png') }}"/>
+    
+        <x-button class="ml-auto p-2 h-7 w-7 group hover:bg-tertiary" data-target-modal="{{ $section }}" wire:loading.remove>
+            <x-icon class="h-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-header-close.webp') }}"/>
         </x-button>
-
-        <x-icon class="w-24" src="{{ asset('img/header/logo.png') }}"/>
 
         <span class="!absolute top-2.5 right-4 inline-flex loader-spin" wire:loading></span>
     </section>
@@ -100,7 +100,7 @@
 
             return $(
                 `<div class="pe-1 flex gap-1.5 text-sm" prevent-close="">
-                    <span>${textSplit[0]}</span>
+                    <span class="shrink-0">${textSplit[0]}</span>
                     <span>|</span>
                     <span class="font-bold italic">${textSplit[1]}</span>
                 </div>`

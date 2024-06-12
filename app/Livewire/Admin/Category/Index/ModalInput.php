@@ -3,7 +3,6 @@
 namespace App\Livewire\Admin\Category\Index;
 
 use App\Http\Controllers\Web\Admin\CategoryController;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,6 +10,13 @@ use Livewire\WithFileUploads;
 class ModalInput extends Component
 {
     use WithFileUploads;
+    
+    /**
+     * Slug category parent, that use to API endpoint.
+     * 
+     * @var string $parentSlug
+    */
+    public string $parentSlug;
     
     /**
      * Modal section name.
@@ -57,7 +63,7 @@ class ModalInput extends Component
     public function fetchDataOptionSelect(): void
     {
         $this->categoryOption = app(CategoryController::class)->getDataCategories(
-            extendedUrl: 'index/minimal?minimal=true',
+            extendedUrl: 'index/minimal?slug=' . $this->parentSlug,
             header: [],
         )['data'];
 
@@ -125,7 +131,10 @@ class ModalInput extends Component
             'category_image_name', 
         );
 
-        $this->dispatch('content-stored');
+        $this->dispatch('content-stored', notif: [
+            'title'   => 'Tambah Kategori',
+            'message' => $response['data']['content_name'],
+        ]);
     }
 
     public function render()
