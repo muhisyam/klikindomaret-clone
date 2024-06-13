@@ -164,3 +164,15 @@ function trimText(string $text, string $offset, bool $ucfirst = true): string
     
     return $result;
 }
+
+/**
+ * MARK: Check current route
+ * 
+ * Checks if the current route contains the specified key URL.
+ * 
+ * @param string $keyUrl The URL key to check against the current route.
+*/
+function isRoute(string $keyUrl): bool
+{
+    return str_contains(url()->current(), $keyUrl) ? true : false;
+}
