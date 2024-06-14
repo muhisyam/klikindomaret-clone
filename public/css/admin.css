@@ -297,65 +297,34 @@ section[data-section="data-table-wrapper"]:hover::-webkit-scrollbar-thumb,
     width: 0;
 }
 
-/* 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-########################################################
----------===========    CATEGORY    ===========---------
-########################################################
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/*
+ MARK: - Category
 */
 
-.category-list .border-l-custom {
-    height: calc(100% - 4px);
-}
-
-.category-list .border-b-custom {
-    width: 100%;
-    border-bottom-left-radius: 0;
-}
-
-.category-list .accordion-category-wrapper .border-b-custom {
+/* Index */
+tr[data-row="index-category-lvl-2"].open .border-b-custom,
+div[data-row="index-category-lvl-3"] .border-b-custom {
     width: calc(100% - 24px);
     border-bottom-left-radius: 16px;
 }
 
-.category-list .accordion-category-item.active .border-b-custom {
-    width: calc(100% - 24px);
-    border-bottom-left-radius: 16px;
-}
-
-.category-list .accordion-category-item.active button .icon,
-.category-input .accordion-category-heading button.active .icon {
+tr[data-row="index-category-lvl-2"].open button[data-accordion-target] img {
     rotate: 180deg;
-    color: #0079c2;
 }
 
-.category-list .accordion-category-wrapper::-webkit-scrollbar {
-    width: 0;
-}
-
-.category-list .accordion-category-wrapper {
+div[data-row="index-category-lvl-3"] {
     overflow: auto;
+
+    &.hide {
+        overflow: hidden;
+    }
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 }
 
-.category-list .accordion-category-wrapper.hide {
-    overflow: hidden;
-}
-
-.category-list .accordion-category-wrapper.hide .border-l-custom {
-    display: none;
-}
-
-.category-list .item-category:not(:last-child) .accordion-category-content,
-.category-input .item-category:not(:last-child) .accordion-category-content {
-    margin-bottom: 6px;
-}
-
-.category-list .item-category:not(:last-child) .accordion-category-content.hide,
-.category-input .item-category:not(:last-child) .accordion-category-content.hide {
-    margin-bottom: 16px;
-}
-
+/* Input */
 section[data-section="category-input-wrapper"] {
     height: calc(100vh - 290px);
 }

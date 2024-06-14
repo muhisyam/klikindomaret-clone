@@ -369,12 +369,12 @@ class SingleImageUploader {
         const classElement = ['image-invalid-feedback', 'mb-2', 'rounded-md', 'p-2', 'bg-red-100', 'text-red-700', 'text-sm'];
         const innerBody    = `
             <ul>
-                <li class="flex items-center gap-1">
+                <li class="mb-1 flex items-center gap-1">
                     <img class="filter-danger h-4" src="/img/icons/icon-warning-error.webp" alt="Icon" loading="lazy"/>
                     <div class="font-bold leading-none">Category Image Name</div>
                 </li>
-                <li class="mt-2 ps-4 flex items-center gap-1 text-xs">
-                    <img class="filter-danger h-2" src="/img/icons/icon-dot-circle.webp" alt="Icon" loading="lazy"/>
+                <li class="ps-4 flex items-center gap-1 text-xs">
+                    <img class="filter-danger h-1.5" src="/img/icons/icon-dot-circle.webp" alt="Icon" loading="lazy"/>
                     <p class="message">Ukuran gambar >500kB</p>
                 </li>
             </ul>
@@ -457,5 +457,33 @@ class ImageFileHandler {
         // Add image file to form input.
         this.formInputImg.files = el.dataTransfer.files;
         new SingleImageUploader();
+    };
+}
+
+/**
+ * MARK: Accordion.
+ * 
+ * Class for handling accordion element.
+*/
+class Accordion {
+    /**
+     * Toggle the accordion state.
+     * 
+     * @param {Object} opt - Options object
+     * @param {boolean} opt.isHide - Indicates whether the accordion element target has the 'hide' class
+     * @param {string} opt.hideClass - Name of 'hide' class
+     * @param {HTMLElement} opt.targetEl - The accordion element target
+     * @param {HTMLElement} opt.wrapperEl - The element that wraps the target element
+     * @param {string} opt.additionalClass - Additional classes want to add to wrapper class
+    */
+    toogleAccordion({isHide, hideClass = 'hide', targetEl, wrapperEl, additionalClass = 'active'}) { 
+        if (isHide) {
+            console.log('asd');
+            targetEl.classList.remove(hideClass);
+            wrapperEl.classList.add(additionalClass);
+        } else {
+            targetEl.classList.add(hideClass);
+            wrapperEl.classList.remove(additionalClass);
+        }
     };
 }

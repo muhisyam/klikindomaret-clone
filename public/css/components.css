@@ -37,7 +37,7 @@
 [data-dropdown][overlay]:has([data-trigger-dropdown]:not(.hidden))::before {
     content: '';
     position: fixed;
-    z-index: 1;
+    z-index: 50;
     top: 0;
     right: 0;
     width: 100%;
