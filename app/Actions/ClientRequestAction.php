@@ -20,6 +20,7 @@ class ClientRequestAction
      * @param ClientRequestDto $dto       Client param object transfer include below.
      * @param string           $method    HTTP method.
      * @param string           $endpoint  URI of endpoint.
+     * @param string           $formImage Key name of form image.
      * @param array            $header    Associative array of headers to add to the request.
      * @param array            $formData  Parameter from Request. See \GuzzleHttp\RequestOptions.
      */
@@ -29,7 +30,10 @@ class ClientRequestAction
         $acceptJson = ['Accept' => 'application/json'];
         $options    = [
             'headers'   => array_merge($acceptJson, $dto->headers),
-            'multipart' => $this->multipartAction->create($dto->formData),
+            'multipart' => $this->multipartAction->create(
+                formRequest: $dto->formData, 
+                formImage  : $dto->formImage,
+            ),
         ];
 
         try {
@@ -47,8 +51,8 @@ class ClientRequestAction
     /**
      * Add metadata resource to the response for convinience checking responses.
      * 
-     * @param Response $response Response data from request.
-     * @return array [data => [...], meta => [...]]
+     * @param  Response $response Response data from request.
+     * @return array    [data => [...], meta => [...]]
     */
     private function withMetadata(Response $response): array
     {
