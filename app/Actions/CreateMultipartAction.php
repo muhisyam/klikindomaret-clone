@@ -2,117 +2,75 @@
 
 namespace App\Actions;
 
-use Illuminate\Support\Str;
-
 class CreateMultipartAction
 {
     private array $param = [];
 
-    private function handleDataImage($key, $value): array 
+    /**
+     * Creates a new multipart assoc array based on form request data and image input.
+     *
+     * @param array  $formRequest The form request data
+     * @param string $formImage   Key name of image input
+    */
+    public function create(array $formRequest, string $formImage): array
     {
-        if (is_array($value)) {
-            foreach ($value as $index => $dataImage) {
-                $this->param[] = [
-                    'name'  => $key . '[' . $index . ']',
-                    'contents' => fopen($dataImage->path(), 'r'),
-                    'filename' => $dataImage->getClientOriginalName(), 
-                ];
-            }
-        } else {
-            $this->param[] =[
-                'name'  => $key,
-                'contents' => fopen($value->path(), 'r'),
-                'filename' => $value->getClientOriginalName(), 
-            ];
-        }
-
-        return $this->param;
-    }
-
-    private function handleDataNonImage($key, $value): array 
-    {
-        $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
-        
-        if (is_array($value)) {
-            foreach ($value as $index => $dataForm) {
-                if (!is_null($dataForm)) {
-                    $this->param[] = [
-                        'name' => $key . '[' . $index . ']',
-                        'contents' => $dataForm === 'all_store' ? null : $dataForm,
-                    ];
-                }
-            }
-        } else {
-            $this->param[] = [
-                'name' => $key,
-                'contents' => $value,
-            ];
-        }
-
-        return $this->param;
-    }
-
-    private function handleDidntHasImage($key): array 
-    {
-        $keyList = [
-            'product_images' => 'product_images[]'
-        ];
-
-        if (array_key_exists($key, $keyList)) {
-            $key = $keyList[$key];
-            
-            $this->param[] = [
-                'name' => $key,
-                'contents' => null,
-            ];
-        }
-
-        return $this->param;
-    }
-
-    private function handleDeleteExitsImage(array|string $dataForm): array 
-    {
-        if (is_array($dataForm)) {
-            foreach ($dataForm as $index => $dataForm) {
-                if (!is_null($dataForm)) {
-                    $this->param[] = [
-                        'name' => 'delete_images[' . $index . ']',
-                        'contents' => $dataForm,
-                    ];
-                }
-            }
-        } else {
-            $this->param[] = [
-                'name' => 'delete_image',
-                'contents' => $dataForm,
-            ];
-        }
-
-        return $this->param;
-    }
-
-    public function create(array $formRequest, string $imageFormName = null): array
-    {
-        $isUpdateProduct = isset($formRequest['_method']);
-        $didntHasImage = true;
-
         foreach ($formRequest as $key => $value) {
-            if (Str::contains($key, $imageFormName)) {
-                $didntHasImage = false;
-                $this->handleDataImage($key, $value);
-            } else {
-                $this->handleDataNonImage($key, $value);
-            }
+            $key = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $key));
+
+            $this->checkIsImageExists($formImage, $key)
+                ? $this->handleDataRequest($key, $value, 'image')
+                : $this->handleDataRequest($key, $value, 'non-image');
         }
                 
-        if ($didntHasImage && !$isUpdateProduct) {
-            if (isset($formRequest['delete_image'])) {
-                $this->handleDeleteExitsImage($formRequest['delete_image']);
-            } else {
-                $this->handleDidntHasImage($imageFormName, NULL);
-            }  
+        return $this->param;
+    }
+
+    private function checkIsImageExists($formImage, $key)
+    {
+        return ! empty($formImage) && $key == $formImage;
+    }
+    
+    /**
+     * Set the data contents of a multipart array.
+     *
+     * @param string $key   The key name for the data
+     * @param mixed  $value The value to be prepared
+     * @param string $form  The type of form ('image' or 'non-image')
+    */
+    private function handleDataRequest(string $key, mixed $value, string $form): array 
+    {
+        if (is_array($value)) {
+            foreach ($value as $index => $data) {
+                $keyName = $key . '[' . $index . ']';
+                
+                $this->param[] = $this->prepareData($keyName, $data, $form);
+            }
+        } else {
+            $this->param[] = $this->prepareData($key, $value, $form);
         }
 
         return $this->param;
+    }
+
+    /**
+     * Create key-values pairs of multipart body.
+     *
+     * @param string $key   The key name for the data
+     * @param mixed  $value The value to be prepared
+     * @param string $form  The type of form ('image' or 'non-image')
+    */
+    private function prepareData(string $key, $value, $form): array 
+    {
+        return match ($form) {
+            'image' => [
+                'name'     => $key,
+                'contents' => fopen($value->path(), 'r'),
+                'filename' => $value->getClientOriginalName(),
+            ],
+            'non-image' => [
+                'name'     => $key,
+                'contents' => $value,
+            ],
+        };
     }
 }
