@@ -6,9 +6,8 @@ use App\Enums\MetaStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
-use App\Http\Resources\SelectCategoryMinimalResource;
 use App\Models\Category;
-use App\Services\Backend\ImageService;
+use App\Services\ImageService;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,7 +16,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class CategoryController extends Controller
 {
     /**
-     * Retrieving categories data with request filter parameters, including:
+     * Retrieving data categories with request filter parameters, including:
      * - (int)    depth    => between 2 - 3 level
      * - (string) sortBy   => sort by category column
      * - (string) orderBy  => asc or desc
@@ -29,20 +28,19 @@ class CategoryController extends Controller
     public function index(Request $request): JsonResource
     {
         $categories = Category::query()
-            ->where('parent_id', null)
-            ->withCount('children')
+            ->whereDoesntHave('parent')
             ->filterModel($request)
-            ->getData($request)
-            ->withPath(urlRouteApp('categories.index'));
+            ->withCount('children')
+            ->getData($request);
 
         return CategoryResource::collection($categories)->additional(MetaStatus::get('OK'));
     }
 
     /**
-     * Retrieving children categories data for admin interface.
+     * Retrieving children data categories for admin interface.
      * 
      * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Category $category
+     * @param \App\Models\Category     $category
     */
     public function indexChildren(Request $request, Category $category): JsonResource
     {  
@@ -59,38 +57,23 @@ class CategoryController extends Controller
     }
 
     /**
-     * Retrieving categories data with minimal resource for select option.
-     * 
-     * @param \Illuminate\Http\Request $request
-    */
-    public function indexMinimal(Request $request): JsonResource
-    {
-        $categories = Category::query()
-            ->parentModel($request)
-            ->with('children')
-            ->flattenModel();
-
-        return SelectCategoryMinimalResource::collection($categories)->additional(MetaStatus::get('OK'));
-    }
-
-    /**
-     * Store new category data.
+     * Store new data category.
      * 
      * @param \App\Http\Requests\CategoryRequest $request
-     * @param \App\Services\CategoryService $categoryService
+     * @param \App\Services\CategoryService      $categoryService
     */
     public function store(CategoryRequest $request, CategoryService $categoryService): CategoryResource
     {
-        $formData  = $request->validated();
-        $formData  = $categoryService->setNecessaryData($formData, ['parent_id', 'category_image_name']);
-        $category  = Category::create($formData);
-        $addtional = array_merge(MetaStatus::get('CREATED'), [
-            'data' => [
-                'content_name' => $category->category_name
-            ]
-        ]);
+        $formData = $request->validated();
+        $formData = $categoryService->setNecessaryData($formData, ['parent_id', 'category_image_name']);
+        $category = Category::create($formData);
 
-        return (new CategoryResource($category))->additional($addtional);
+        $categoryService->saveImagesToAsset($formData);
+
+        $contentName = ['data' => ['content_name' => $category->category_name]];
+        $additional  = array_merge(MetaStatus::get('CREATED'), $contentName);
+
+        return (new CategoryResource($category))->additional($additional);
     }
 
     /**
@@ -98,17 +81,21 @@ class CategoryController extends Controller
      * 
      * @param \App\Models\Category $category
     */
-    public function show(Category $category): CategoryResource
+    public function show(Request $request, Category $category): CategoryResource
     {
-        return (new CategoryResource($category->load('parent')))->additional(MetaStatus::get('OK'));
+        $additional = array_merge(MetaStatus::get('OK'), [
+            'with_form' => $request->with_form,
+        ]);
+
+        return (new CategoryResource($category->load('parent')))->additional($additional);
     }
 
     /**
      * Update spesific data category by route model binding.
      * 
      * @param \App\Http\Requests\CategoryRequest $request
-     * @param \App\Models\Category $category
-     * @param \App\Services\CategoryService $categoryService
+     * @param \App\Models\Category               $category
+     * @param \App\Services\CategoryService      $categoryService
     */
     public function update(CategoryRequest $request, Category $category, CategoryService $categoryService): JsonResponse
     {
@@ -117,26 +104,28 @@ class CategoryController extends Controller
         $formData    = $categoryService->setNecessaryData(
             formData: $formData, 
             category: $category,
-            column:   ['parent_id', 'set_image_value', 'category_image_name'],
+            column:   ['parent_id', 'category_image_name'],
         );
 
         $category->update($formData);
-
+        $categoryService->saveImagesToAsset($formData);
+        
         return response()->json(array_merge($contentName, MetaStatus::get('OK')), 200);
     }
 
     /**
      * Delete spesific data category by route model binding and remove the image if exists.
      * 
-     * @param \App\Models\Category $category
-     * @param \App\Services\Backend\ImageService $imageService
+     * @param \App\Models\Category       $category
+     * @param \App\Services\ImageService $imageService
     */
     public function destroy(Category $category, ImageService $imageService): JsonResponse
     {
         $contentName = ['data' => ['content_name' => $category->category_name]];
-        
-        // $imageService->deleteExistsImage($category, 'categories');
-        // $category->delete();
+        $imageName   = $category->category_image_name ?? '';
+
+        $category->delete();
+        $imageService->deleteExistsImage('categories', $imageName);
 
         return response()->json(array_merge($contentName, MetaStatus::get('OK')), 200);
     }
