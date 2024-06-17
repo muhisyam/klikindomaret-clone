@@ -2,122 +2,164 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Actions\ProductFilterAction;
-use App\DataTransferObjects\FindDataDto;
+use App\Enums\MetaStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use App\Services\Backend\ApiCallService;
+use App\Services\ImageService;
+use App\Services\ProductService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function __construct(
-        protected ApiCallService $apiService,
-        protected ProductImageController $productImageController,
-        protected ProductDescriptionController $productDescriptionController,
-    ){}
+    public function __construct() {
+        $this->middleware('auth:sanctum')->except('show');
+    }
 
+    /**
+     * Retrieve product data with request filter parameters, including:
+     * - (string) search   - Search for values in specific columns
+     * - (string) sortBy   - Column to sort by
+     * - (string) orderBy  - Sort order: asc or desc
+     * - (bool)   paginate - Whether to paginate the results
+     * - (int)    perPage  - Number of items per page if paginating
+     * 
+     * @param \Illuminate\Http\Request $request
+    */
     public function index(Request $request): JsonResource
     {
-        $productFilter = new ProductFilterAction();
-        $query = count($request->all()) === 0 
-            ? Product::query() 
-            : $productFilter->execute($request);
-        
-        $products = $query
-            ->with(['category', 'supplier', 'images'])
-            ->withCount(['images'])
-            ->paginate(10);
+        $products = Product::query()
+            ->relatedToRetailer($request)
+            ->join('categories', 'products.category_id', 'categories.id')
+            ->select('categories.category_name', 'products.*')
+            ->filterModel($request)
+            ->with([
+                'category', 
+                'supplier', 
+                'images',
+            ])
+            ->withCount([
+                'images',
+            ])
+            ->getData($request);
 
-        return ProductResource::collection($products);
+        return ProductResource::collection($products)->additional(MetaStatus::get('OK'));
     }
 
-    public function store(ProductRequest $request): ProductResource
+    /**
+     * Store new data product.
+     * 
+     * @param \App\Http\Requests\ProductRequest  $request
+     * @param \App\Services\ProductService       $productService
+    */
+    public function store(ProductRequest $request, ProductService $productService)
     {
-        $data = $request->validated();
-        $product = new Product($data);
-        
-        $product->save();
-        $product->stores()->attach($data['store_ids']);
-        $this->productImageController->store($data, $product->id);
-        $this->productDescriptionController->store($data, $product->id);
-
-        return new ProductResource($product);
-    }
-
-    public function show(string $productSlug): ProductResource
-    {
-        $product = $this->apiService->findData(
-            new FindDataDto(
-                model: new Product,
-                whereSchema: [
-                    ['product_slug', $productSlug],
-                ],
-                withSchema: [
-                    'category', 
-                    'supplier', 
-                    'descriptions',
-                    'images',
-                    'retailers',
-                ],
-                withCountSchema: [
-                    'images',
-                ],
-            )
+        $formData = $productService->setNecessaryData(
+            formData: $request->validated(), 
+            column  : ['keywords', 'raw_data_images'],
         );
 
-        return new ProductResource($product);
+        $product = DB::transaction(function () use ($formData, $productService) {
+            $product = Product::create($formData);
+
+            $product->retailers()->attach($formData['retailers_id']);
+            $productService->saveImageToDbIfExists($product, $formData);
+            $productService->saveImagesToAsset($formData);
+
+            return $product;
+        });
+        
+        $addtional = array_merge(MetaStatus::get('CREATED'), [
+            'data' => [
+                'content_name' => $product->product_name,
+            ]
+        ]);
+
+        return (new ProductResource($product))->additional($addtional);
     }
 
-    public function update(ProductRequest $request, string $productSlug): ProductResource
+     /**
+     * Show a product with loaded neccesary relations.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Product      $product
+     */
+    public function show(Request $request, Product $product): ProductResource
     {
-        $data = $request->validated();
-        $product = $this->getSpesificData($productSlug);
-        
-        if (isset($data['product_images']) || isset($data['delete_images'])) {
-            $this->productImageController->update($data, $product->id);
-        }
-        
-        $product->fill($data);
-        $product->save();
-        if ($data['supplier_id'] === '1' || $data['supplier_id'] === '2') {
-            $product->stores()->detach();
-        } else {
-            $product->stores()->sync($data['store_ids']);
-        }
-        
-        $this->productDescriptionController->update($data, $product->id);
+        $product = $product
+            ->load([
+                'category', 
+                'brand', 
+                'supplier', 
+                'retailers',
+                'images',
+            ])
+            ->loadCount([
+                'images',
+            ]);
 
-        return new ProductResource($product);
+        $addtional = array_merge(MetaStatus::get('OK'), [
+            'with_form' => $request->with_form,
+        ]);
+
+        return (new ProductResource($product))->additional($addtional);
     }
-
-    public function destroy(string $productSlug): JsonResponse
+    /**
+     * Update spesific data product by route model binding.
+     *
+     * @param \App\Http\Requests\ProductRequest $request        The validated request data.
+     * @param \App\Models\Product               $product        The product to be updated.
+     * @param \App\Services\ProductService      $productService The product service.
+    */
+    public function update(ProductRequest $request, Product $product, ProductService $productService): JsonResponse
     {
-        $product = $this->getSpesificData($productSlug);
-        $productName = ['product_name' => $product->product_name];
-        $productPath = 'img/uploads/products/' . $productSlug;
-        
-        $product->stores()->detach();
-        $product->delete();
-        File::exists($productPath) && File::deleteDirectory($productPath);
-
-        return response()->json(['data' => $productName], 200);
-    }
-
-    private function getSpesificData(string $productSlug)
-    {
-        return $this->apiService->findData(
-            new FindDataDto(
-                model: new Product,
-                whereSchema: [
-                    ['product_slug', $productSlug],
-                ],
-            )
+        $contentName = ['data' => ['content_name' => $product->product_name]];
+        $productSlug = $product->product_slug;
+        $formData    = $productService->setNecessaryData(
+            formData: $request->validated(), 
+            column:   ['keywords', 'raw_data_images'],
         );
+        
+        DB::transaction(function () use ($product, $productSlug, $formData, $productService) {
+            $product->update($formData);
+            $product->retailers()->sync($formData['retailers_id']);
+            $product->images()->deleteImages($formData, $productSlug);
+
+            // Delete image directory or image in directory.
+            $productService->handleImageDirectory(
+                formData:    $formData,
+                productSlug: $productSlug,
+            );
+
+            $productService->saveImageToDbIfExists($product, $formData);
+            $productService->saveImagesToAsset($formData);
+        });
+        
+        return response()->json(array_merge($contentName, MetaStatus::get('OK')), 200);
+    }
+
+    /**
+     * Delete spesific data product by route model binding and remove the image directory if exists.
+     * 
+     * @param \App\Models\Product        $product
+     * @param \App\Services\ImageService $imageService
+    */
+    public function destroy(Product $product, ImageService $imageService): JsonResponse
+    {
+        $contentName = ['data' => ['content_name' => $product->product_name]];
+        
+        DB::transaction(function () use ($product, $imageService) {
+            $imagePath = 'img/uploads/products/' . $product->product_slug;
+
+            $product->retailers()->detach();
+            $product->delete();
+            $imageService->deleteDirectory($imagePath);
+        });
+
+        return response()->json(array_merge($contentName, MetaStatus::get('OK')), 200);
     }
 }
