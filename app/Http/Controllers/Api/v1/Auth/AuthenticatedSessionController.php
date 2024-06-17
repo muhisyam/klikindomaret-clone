@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1\Auth;
 
+use App\Enums\MetaStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\Auth\AuthenticateResource;
 use App\Traits\Auth\AuthenticatesUser;
+use Illuminate\Http\Request;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -22,18 +24,28 @@ class AuthenticatedSessionController extends Controller
     {
         $this->authenticated($request);
 
-        $user = $request->user();
+        $user = $request
+            ->user()
+            ->load([
+                'roleAs',
+                'retailer.supplier',
+                'pickupMethod',
+            ]);
+
         $user->tokens()->delete();
         $user->token = $user->createToken('auth-token')->plainTextToken;
 
-        return new AuthenticateResource($user);
+        return (new AuthenticateResource($user))->additional(MetaStatus::get('OK'));
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove current auth token user.
+     * 
+     * @param  \Illuminate\Http\Request $request
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $user = $request->user();
+        $user->currentAccessToken()->delete();
     }
 }
