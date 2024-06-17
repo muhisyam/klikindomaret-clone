@@ -15,8 +15,8 @@ class AuthenticateWeb
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!session('auth_token')) {
-            return redirect()->route('auth.fail');
+        if (is_null(session('auth'))) {
+            return redirect()->route('homepage', ['auth' => 'login']);
         }
     
         return $next($request);
