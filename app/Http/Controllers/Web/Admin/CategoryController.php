@@ -52,7 +52,7 @@ class CategoryController extends Controller
     /**
      * Retieve category list either in admin or user interface.
     */
-    public function getListCategories(null|string $extendedUrl = null, array $header = []): array
+    public function getListCategories(string $extendedUrl = '', array $header = []): array
     {
         $response = $this->getDataCategories($extendedUrl, $header);
         $response = $this->categoryService->updatingMetaLink($response, $this->endpoint);
@@ -64,13 +64,13 @@ class CategoryController extends Controller
     /**
      * Retieve data categories with sub url or params.
     */
-    public function getDataCategories(null|string $extendedUrl, array $header): array
+    public function getDataCategories(string $extendedUrl, array $header): array
     {
         return $this->clientAction->request(
             new ClientRequestDto(
-                method: 'GET',
-                endpoint: $this->endpoint . ($extendedUrl ?? ''),
-                headers: $header,
+                method:   'GET',
+                endpoint: $this->endpoint . $extendedUrl,
+                headers:  $header,
             )
         );
     }
@@ -104,12 +104,13 @@ class CategoryController extends Controller
     {
         return $this->clientAction->request(
             new ClientRequestDto(
-                method: 'POST',
+                method:   'POST',
                 endpoint: $this->endpoint,
-                headers: [
-                    'Authorization' => 'Bearer ' . session('auth_token')
+                headers:  [
+                    'Authorization' => getAuthToken()
                 ],
                 formData: $request,
+                formImage: 'category_image',
             )
         );
     }
@@ -134,14 +135,16 @@ class CategoryController extends Controller
     {
         $formData  = $request->validated();
         $formData += ['_method' => 'put'];
-        $response  = $this->clientAction->request(
+
+        $response = $this->clientAction->request(
             new ClientRequestDto(
-                method: 'POST',
+                method:   'POST',
                 endpoint: $this->endpoint . $categorySlug,
-                headers: [
-                    'Authorization' => 'Bearer ' . session('auth_token')
+                headers:  [
+                    'Authorization' => getAuthToken()
                 ],
                 formData: $formData,
+                formImage: 'category_image',
             )
         );
 
@@ -169,10 +172,10 @@ class CategoryController extends Controller
     {
         return $this->clientAction->request(
             new ClientRequestDto(
-                method: 'DELETE',
+                method:   'DELETE',
                 endpoint: $this->endpoint . $categorySlug,
-                headers: [
-                    'Authorization' => 'Bearer ' . session('auth_token')
+                headers:  [
+                    'Authorization' => getAuthToken()
                 ],
             )
         );
