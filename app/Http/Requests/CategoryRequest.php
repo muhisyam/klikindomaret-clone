@@ -38,7 +38,7 @@ class CategoryRequest extends FormRequest
             'category_name'          => ['required', 'string', 'max:100'],
             'category_slug'          => ['required', 'string', 'max:200'],
             'category_deploy_status' => ['required', Rule::enum(DeployStatus::class)],
-            'category_image_name'    => ['image', 'max:512', 'mimes:jpg,png,jpeg,webp'],
+            'category_image'         => ['image', 'max:512', 'mimes:jpg,png,jpeg,webp'],
         ];
 
         switch ($this->method()) {
