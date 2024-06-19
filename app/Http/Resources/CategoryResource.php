@@ -14,6 +14,15 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $includeForm       = isset($this->additional['with_form']);
+        $hasParent         = ! is_null($this->whenLoaded('parent'));
+        $categoryLevelZero = [
+            'id'             => 0,
+            'category_name'  => 'Induk Kategori',
+            'category_level' => 'Kategori Level 0',
+            'parent'         => null,
+        ];
+
         return [
             'parent_id'                    => $this->parent_id,
             'category_name'                => $this->category_name,
@@ -27,6 +36,7 @@ class CategoryResource extends JsonResource
             'category_products_count'      => $this->whenCounted('products'),
             'category_parent'              => new CategoryResource($this->whenLoaded('parent')),
             'category_children'            => CategoryResource::collection($this->whenLoaded('children')),
+            'form_select_parent'           => $includeForm && $hasParent ? new SelectCategoryMinimalResource($this->whenLoaded('parent')) : $categoryLevelZero,
         ];
     }
 }
