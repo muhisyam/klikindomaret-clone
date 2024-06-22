@@ -9,9 +9,13 @@ class AuthenticatedSession
 {
     public function handle(object $event): void
     {
+        $dataResponse = $event->response['data'];
+
         session([
-            'auth_token' => $event->response['data']['token'],
-            'user' => $event->response['data']['user'],
+            'auth' => [
+                'user'  => $dataResponse['user'],
+                'token' => $dataResponse['token'],
+            ]
         ]);
 
         session()->regenerate();
