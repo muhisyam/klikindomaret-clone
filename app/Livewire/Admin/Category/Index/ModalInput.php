@@ -13,22 +13,16 @@ class ModalInput extends Component
     
     /**
      * Slug category parent, that use to API endpoint.
-     * 
-     * @var string $parentSlug
     */
     public string $parentSlug;
     
     /**
      * Modal section name.
-     *
-     * @var string
     */
     public string $section;
 
     /**
      * Modal show condition.
-     *
-     * @var bool
      */
     public bool $showCondition;
 
@@ -55,24 +49,7 @@ class ModalInput extends Component
      * updated method or reset. Therefore, it is important to adjust according to 
      * the module's requirements.
     */
-    public $category_image_name = '';
-
-    /**
-     * Fetch data category in format select resource for input select parent category.
-    */
-    public function fetchDataOptionSelect(): void
-    {
-        $this->categoryOption = app(CategoryController::class)->getDataCategories(
-            extendedUrl: 'index/minimal?slug=' . $this->parentSlug,
-            header: [],
-        )['data'];
-
-        $this->dispatch('content-option-loaded');
-
-        // This statement will prevent the modal from opening automatically after executing 
-        // the request to fetch option data.
-        $this->showCondition = false;
-    }
+    public $category_image = '';
 
     /**
      * This method will prevent modal from opening automatically when a component is created.
@@ -111,8 +88,8 @@ class ModalInput extends Component
             'category_deploy_status' => $this->category_deploy_status,
         ];
 
-        if (! empty($this->category_image_name)) {
-            $formData['category_image_name'] = $this->category_image_name;
+        if (! empty($this->category_image)) {
+            $formData['category_image'] = $this->category_image;
         }
 
         $response = app(CategoryController::class)->postDataRequest($formData);
@@ -128,7 +105,7 @@ class ModalInput extends Component
             'category_name', 
             'category_slug', 
             'category_deploy_status',
-            'category_image_name', 
+            'category_image', 
         );
 
         $this->dispatch('content-stored', notif: [
