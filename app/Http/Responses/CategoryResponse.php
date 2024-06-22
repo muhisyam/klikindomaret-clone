@@ -3,6 +3,7 @@
 namespace App\Http\Responses;
 
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryResponse implements Responsable
 {
@@ -11,10 +12,10 @@ class CategoryResponse implements Responsable
         public array $response,
     ) {}
 
-    public function toResponse($request)
+    public function toResponse($request): RedirectResponse
     {
         if ($this->isClientResponseStatusError()) {
-            return new ClientErrorResponse($this->response);
+            return app(ClientErrorResponse::class)->toResponse($this->response);
         }
 
         return redirect()->route('categories.index')->with([
@@ -25,7 +26,7 @@ class CategoryResponse implements Responsable
         ]);
     }
 
-    private function isClientResponseStatusError()
+    private function isClientResponseStatusError(): bool
     {
         return $this->response['meta']['status_code'] >= 400;
     }
