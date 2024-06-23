@@ -39,7 +39,7 @@ class FormTracker extends Component
     public function mount(): void
     {
         $this->formDefaultValue = [
-            'category_image_name'    => '',
+            'category_image'         => '',
             'parent_id'              => '0',
             'category_name'          => '',
             'category_slug'          => '',
@@ -47,7 +47,7 @@ class FormTracker extends Component
         ];
 
         $this->formLabelName = [
-            'category_image_name'    => 'Tambah Gambar',
+            'category_image'         => 'Tambah Gambar',
             'parent_id'              => 'Kategori Induk',
             'category_name'          => 'Nama Kategori',
             'category_slug'          => 'Slug Kategori',
@@ -55,7 +55,7 @@ class FormTracker extends Component
         ];
 
         $this->formGuarded = [
-            'category_image_name',
+            'category_image',
             'parent_id',
             'category_deploy_status',
         ];
@@ -81,6 +81,8 @@ class FormTracker extends Component
 
     /**
      * Re initialize form tracker value, when has data category.
+     * 
+     * @param string $slugFetch Slug of category
     */
     #[On('content-loaded')]
     public function validatedAllTracker(string $slugFetch): void
@@ -104,6 +106,8 @@ class FormTracker extends Component
     
     /**
      * Update data form tracker when form input had changes.
+     * 
+     * @param array $formUpdate Latest update Form data from js
     */
     #[On('updating-tracker')]
     public function updatingTracker(array $formUpdate): void
@@ -115,6 +119,7 @@ class FormTracker extends Component
                 continue;
             }
 
+            $delay                 = '0ms';
             $inputLabel            = $this->formLabelName[$key];
             $isInputNotChanged     = $value == $this->formDefaultValue[$key];
             $ensureInputNotGuarded = ! in_array($key, $this->formGuarded);
@@ -123,14 +128,12 @@ class FormTracker extends Component
             if (! $inputIsValidated) {
                 $delay = $index * $this->duration . 'ms';
                 $index ++;
-            } else {
-                $delay = '0ms';
             }
-            
+
             $this->formTracker[$inputLabel] = [
-                'is_active'         => $inputIsValidated,
-                'animate_duration'  => $this->duration . 'ms',
-                'animate_delay'     => $delay,
+                'is_active'        => $inputIsValidated,
+                'animate_duration' => $this->duration . 'ms',
+                'animate_delay'    => $delay,
             ];
         }
     }
