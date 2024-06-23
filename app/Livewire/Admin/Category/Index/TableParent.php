@@ -11,36 +11,26 @@ class TableParent extends Component
 {
     /**
      * Categories data instance.
-     * 
-     * @var null|array $categories
     */
     public null|array $categories = null;
 
     /**
      * Extended url for parameter endpoint purpose.
-     *
-     * @var string
     */
     public string $extendedUrl;
 
     /**
      * Filter boolean active or inactive current filter.
-     * 
-     * @var bool $filter
     */
     public bool $filter;
 
     /**
      * Sort by column.
-     * 
-     * @var string $sortBy
     */
     public string $sortBy = '';
 
     /**
      * Sort direction by ascending or descending.
-     * 
-     * @var string $sortDir
     */
     public string $sortDir = 'desc';
 
@@ -59,7 +49,6 @@ class TableParent extends Component
     #[On('load-content')]
     public function loadContent(): void
     {
-        // dd('sad');
         $this->categories = app(CategoryController::class)->getListCategories(
             extendedUrl: $this->extendedUrl,
         );
@@ -84,7 +73,7 @@ class TableParent extends Component
     /**
      * Sort filter for table data.
      * 
-     * @param string $column
+     * @param string $fieldName
     */
     public function sortByFilter(string $fieldName): void
     {
@@ -103,7 +92,7 @@ class TableParent extends Component
 
     /**
      * Listen when reset filter button is fire, then reset all variables 
-     * value that ​​related to the filter. Arter that get new data content.
+     * value that ​​related to the filter. After that get new data content.
     */
     #[On('reset-filter')]
     public function resetFilter(): void

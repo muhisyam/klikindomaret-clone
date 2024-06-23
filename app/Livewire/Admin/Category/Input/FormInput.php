@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Category\Input;
 
 use App\Http\Controllers\Web\Admin\CategoryController;
 use App\Http\Responses\ClientErrorResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -42,14 +43,13 @@ class FormInput extends Component
     public string $category_image_name          = '';
     public string $category_image_size          = '';
     public string $original_category_image_name = '';
+    public array $form_select_parent            = [];
 
     /**
      * Load content and fire the event.
     */
     public function loadContent(): void
     {
-        $this->fetchDataOptionSelect();
-
         if (! empty($this->slugFetch)) {
             $this->fetchDataCategory();
         }
@@ -62,38 +62,30 @@ class FormInput extends Component
     }
 
     /**
-     * Fetch data category in format select resource for input select parent category.
-    */
-    private function fetchDataOptionSelect(): void
-    {
-        $this->categoryOption = app(CategoryController::class)->getDataCategories(
-            extendedUrl: 'index/minimal?minimal=true',
-            header: [],
-        )['data'];
-    }
-
-    /**
      * Fetch data category when route is edit, for form input data. If data not found,
      * it will redirect to Page not found.
     */
-    private function fetchDataCategory(): ClientErrorResponse|bool
+    private function fetchDataCategory(): RedirectResponse|bool
     {
         $response = app(CategoryController::class)->getDataCategories(
-            extendedUrl: $this->slugFetch,
+            extendedUrl: $this->slugFetch . '?with_form=true',
             header: [],
         );
 
         if ($response['meta']['status_code'] >= 400) {
-            return new ClientErrorResponse($response);
+            return app(ClientErrorResponse::class)->toResponse($response);
         }
 
-        $this->category_image_name          = $response['data']['category_image_name'] ?? '';
-        $this->category_image_size          = $response['data']['category_image_size'] ?? '';
-        $this->original_category_image_name = $response['data']['original_category_image_name'] ?? '';
-        $this->parent_id                    = $response['data']['parent_id'] ?? 0;
-        $this->category_name                = $response['data']['category_name'];
-        $this->category_slug                = $response['data']['category_slug'];
-        $this->category_deploy_status       = $response['data']['category_deploy_status'];
+        $dataResponse = $response['data'];
+
+        $this->category_image_name          = $dataResponse['category_image_name'] ?? '';
+        $this->category_image_size          = $dataResponse['category_image_size'] ?? '';
+        $this->original_category_image_name = $dataResponse['original_category_image_name'] ?? '';
+        $this->parent_id                    = $dataResponse['parent_id'] ?? 0;
+        $this->category_name                = $dataResponse['category_name'];
+        $this->category_slug                = $dataResponse['category_slug'];
+        $this->category_deploy_status       = $dataResponse['category_deploy_status'];
+        $this->form_select_parent           = $dataResponse['form_select_parent'];
 
         return true;
     }
@@ -103,10 +95,12 @@ class FormInput extends Component
     */
     private function setInputOldValues(): void
     {
-        $this->parent_id              = $this->old['parent_id'] ?? 0;
-        $this->category_name          = $this->old['category_name'] ?? '';
-        $this->category_slug          = $this->old['category_slug'] ?? '';
-        $this->category_deploy_status = $this->old['category_deploy_status'] ?? 'Draft';
+        $dataOld = $this->old;
+
+        $this->parent_id              = $dataOld['parent_id'];
+        $this->category_name          = $dataOld['category_name'];
+        $this->category_slug          = $dataOld['category_slug'];
+        $this->category_deploy_status = $dataOld['category_deploy_status'];
     }
 
     /**
