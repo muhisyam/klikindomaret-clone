@@ -22,7 +22,8 @@ class Category extends Model
      * to mass assignable.
     */
     protected $guarded = [
-        'delete_category_image'
+        'category_image',
+        'delete_category_image',
     ];
 
     /**
@@ -52,7 +53,7 @@ class Category extends Model
         return 'category_slug';
     }
     
-    /* All relations of category model. */
+    // MARK: Model relationship.
 
     public function parent(): BelongsTo
     {
@@ -69,11 +70,12 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
+    // MARK: Filter model.
     /**
      * Scope for retrieving filtered data according url parameters.
      * 
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request              $request
     */
     public function scopeFilterModel(Builder $query, Request $request): Builder
     {
@@ -111,55 +113,60 @@ class Category extends Model
             ->when($sortBy == 'children_count', fn($query) => $query->orderBy($sortBy, $sortDir));
     }
 
+    // MARK: Filter by request.
+    /**
+     * Scope for filtering the category to get data starting from the specified point based on the request.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query   Category model query
+     * @param \Illuminate\Http\Request              $request The request object containing filter parameters
+    */
+    public function scopeFilterByRequest(Builder $query, Request $request): Builder
+    {   
+        $formParent = $request->from == 'parent';
+        $formChild  = $request->from == 'child';
+        $formSlug   = $request->slug;
+        $search     = $request->search;
+
+        // If no starting point is specified in the request, just perform a search
+        $globalSearch = ! ($request->from && $request->slug) && $search;
+
+        return $query
+            ->when($formParent, function($query) use ($search) {
+                $query
+                    ->whereHas('children')
+                    ->when($search, fn($parent) => $parent->where('category_name', 'LIKE', "%{$search}%"));
+            })
+            ->when($formChild, function($query) use ($search) {
+                $query
+                    ->whereDoesntHave('children')
+                    ->when($search, function($child) use ($search) {
+                        $child->where(function($where) use ($search) {
+                            $where
+                                ->where('category_name', 'LIKE', "%{$search}%")
+                                ->orWhereHas('parent', fn ($query) => $query->where('category_name', 'LIKE', "%{$search}%"))
+                                ->orWhereHas('parent.parent', fn ($query) => $query->where('category_name', 'LIKE', "%{$search}%"));
+                        });
+                    });
+            })
+            ->when($formSlug, fn($query) => $query->where('category_slug', $formSlug))
+            ->when($globalSearch, fn($query) => $query->where('category_name', 'LIKE', "%{$search}%"))
+            ->with('parent.parent')
+            ->orderBy('parent_id', 'asc');
+    }
+
+    // MARK: Get data.
     /**
      * Scope for retrieving data with or without pagination.
      * 
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request              $request
     */
     public function scopeGetData(Builder $query, Request $request): LengthAwarePaginator|Collection
     {
         return $request->paginate ? $query->paginate($request->perPage ?? 10) : $query->get();
     }
 
-    /**
-     * Scope for retrieving the appropriate parent category based on the request.
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Illuminate\Http\Request $request
-    */
-    public function scopeParentModel(Builder $query, Request $request): Builder
-    {
-        $slug = $request->slug;
-
-        return $query
-            ->when($slug,
-                fn($query) => $query->where('category_slug', $slug),
-                fn($query) => $query->whereNull('parent_id'),
-            );
-    }
-
-    /**
-     * Scope for flattening the model collection such that each parent is followed by its children.
-     * 
-     * @param \Illuminate\Database\Eloquent\Builder $query
-    */
-    public function scopeFlattenModel(Builder $query): object
-    {
-        $modelCollect     = $query->get(); 
-        $flattenedCollect = collect([]);
-
-        foreach ($modelCollect as $parent) {
-            $flattenedCollect = $flattenedCollect->merge([$parent]);
-
-            foreach ($parent->children as $child) {
-                $flattenedCollect = $flattenedCollect->merge([$child]);
-            }
-        }
-
-        return $flattenedCollect->sortBy('parent_id');
-    }
-
+    // MARK: Get image size.
     /**
      * Accessor get image size.
     */ 
