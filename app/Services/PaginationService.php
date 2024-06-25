@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Services\Backend;
+namespace App\Services;
 
 class PaginationService 
 {
     protected $newLinks = [];
 
+    // MARK: Change links url.
     /**
      * Change links paginate api url to route page url.
      * 
-     * @param array $response
+     * @param array  $response
      * @param string $apiEndpoint
      * @param string $routeName
      */
@@ -22,6 +23,7 @@ class PaginationService
         return $response;
     }
 
+    // MARK: Custom pagination links.
     /**
      * Define new limit showing links page
      * 
@@ -95,6 +97,7 @@ class PaginationService
         return $this->newLinks;
     }
 
+    // MARK: Add new links.
     /**
      * Add new link page key and push data link to new array.
      * 
@@ -110,6 +113,7 @@ class PaginationService
         return array_push($this->newLinks, $link);
     }
 
+    // MARK: Add separator.
     /**
      * Add separator among link page.
     */
