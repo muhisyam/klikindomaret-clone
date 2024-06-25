@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function roleAs(): BelongsTo
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     public function carts(): BelongsToMany
