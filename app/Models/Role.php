@@ -9,6 +9,13 @@ class Role extends Model
 {
     use HasFactory;
 
+    const ROLE_GOD   = 'Super Admin';
+    const ROLE_SUPER = [
+        self::ROLE_GOD,
+        'Super Admin Store',
+        'Super Admin Warehouse',
+    ];
+
     protected $table = 'roles';
 
     protected $fillable = [
