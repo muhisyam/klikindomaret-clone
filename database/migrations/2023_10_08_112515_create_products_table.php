@@ -38,7 +38,8 @@ return new class extends Migration
             $table->integer('product_stock');
             $table->string('product_deploy_status', 15);
             $table->string('model_type', 10);
-            $table->text('product_meta_keyword');
+            $table->text('product_description');
+            $table->text('product_meta_keyword')->index();
             $table->timestamps();
         });
     }
