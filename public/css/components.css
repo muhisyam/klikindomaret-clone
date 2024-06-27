@@ -16,6 +16,9 @@
     border-top-color: #ff3d00;
 }
 
+/* 
+    MARK: Modal
+*/
 .modal {
     position: fixed;
     top: -50%;
@@ -45,6 +48,9 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* 
+    MARK: Element
+*/
 body:has([data-trigger-modal].show),
 body:has([data-dropdown][overlay] [data-trigger-dropdown]:not(.hidden)) {
     overflow: hidden;
@@ -66,7 +72,15 @@ div:has(div[data-trigger-action].open) {
     width: 82px;
 }
 
+label.required-label::after {
+    content: "*";
+    color: red;
+    font-weight: bold;
+}
 
+/* 
+    MARK: Tooltip
+*/
 .tooltip-arrow,
 .tooltip-arrow:before {
     background: inherit;
@@ -221,6 +235,9 @@ div:has(div[data-trigger-action].open) {
     visibility: hidden;
 }
 
+/* 
+    MARK: Select2
+*/
 .select2-dropdown {
     overflow: hidden;
     border: 1px solid #0079c2;
@@ -321,4 +338,15 @@ div:has(div[data-trigger-action].open) {
     width: auto !important;
     padding-top: 1px;
     font-size: 14px;
+}
+
+/* 
+    MARK: Rich text editor
+*/
+.tox .tox-tbtn:active,
+.tox .tox-tbtn--active, 
+.tox .tox-tbtn--enabled, 
+.tox .tox-tbtn--enabled:focus, 
+.tox .tox-tbtn--enabled:hover {
+    background: #0079c2 !important;
 }

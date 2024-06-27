@@ -24,6 +24,10 @@
     filter: invert(29%) sepia(99%) saturate(1169%) hue-rotate(178deg) brightness(100%) contrast(101%);
 }
 
+.hover-filter-secondary:hover {
+    filter: invert(46%) sepia(100%) saturate(1600%) hue-rotate(180deg) brightness(75%) contrast();
+}
+
 .filter-danger {
     filter: hue-rotate(160deg) saturate(600%) brightness(0.8) contrast(0.7);
 }
@@ -34,4 +38,8 @@
 
 .animate-delay-600 {
     animation-delay: 600ms;
+}
+
+.grid-cols-16 {
+    grid-template-columns: repeat(16, minmax(0, 1fr));
 }
