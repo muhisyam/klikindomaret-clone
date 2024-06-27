@@ -76,7 +76,7 @@
             <li class="flex items-center text-light-gray-400">
                 <x-icon class="mx-2 w-3 grayscale" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                 <span class="leading-none text-black">
-                    {{ isRoute('index') ? 'Induk' : 'Sub Kategori' }}
+                    {{ isRouteContains('index') ? 'Induk' : 'Sub Kategori' }}
                 </span>
             </li>
         </ol>
