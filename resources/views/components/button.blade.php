@@ -4,6 +4,7 @@
     $style = match ($buttonStyle) {
         'secondary'         => ' border border-secondary bg-secondary text-white',
         'outline-secondary' => ' border border-secondary bg-white text-secondary',
+        'danger'            => ' border border-danger bg-danger text-white',
         'custom'            => '',
     }
 @endphp
