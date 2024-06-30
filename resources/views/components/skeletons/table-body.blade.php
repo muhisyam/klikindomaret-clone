@@ -6,7 +6,7 @@
     
     @for ($j = 0; $j < $cols; $j++)
     
-    <td class="py-2 px-3 h-[{{ $height }}]"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
+    <td class="py-5 px-4 h-[{{ $height }}]"><div class="rounded-lg h-3 w-full bg-light-gray-100 animate-pulse"></div></td>
 
     @endfor
 
