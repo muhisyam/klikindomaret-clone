@@ -1,16 +1,19 @@
 <form action="{{ $formRoute }}" method="POST" enctype="multipart/form-data" wire:init="loadContent">
     @csrf
-    @if (str_contains(url()->current(), '/edit')) @method('PUT') @endif
+
+    <div wire:ignore>
+        @if (isRouteContains('edit')) @method('PUT') @endif
+    </div>
 
     <section class="flex gap-4 mb-5" data-section="category-input-wrapper">
         <div class="relative overflow-auto rounded-xl p-4 border border-[#eee] h-full w-2/5">
             <div class="mb-4">
                 <x-input-label for="form-input-image" value="Tambah Gambar(optional)"/>
-                <x-input-field id="form-input-image" class="hidden" name="category_image_name" type="file" accept=".jpg, .jpeg, .png, .webp"/>
+                <x-input-field id="form-input-image" class="hidden" name="category_image" type="file" accept=".jpg, .jpeg, .png, .webp"/>
                 <x-input-image-fancy/>
             </div>
             <div class="flex flex-col gap-2">
-                <x-input-error field="category_image_name" :error="$error" validation="single-image"/>
+                <x-input-error field="category_image" :error="$error" validation="single-image"/>
                 
                 <div data-element="image-uploaded-wrapper">
                     
@@ -35,7 +38,7 @@
                                 <div class="text-xs font-light">{{ $category_image_size }}</div>
                             </div>
                         </div>
-                        <x-button class="px-1.5 h-8 hover:bg-tertiary hover:text-secondary" data-button-image="remove" data-original-image-name="{{ $original_category_image_name }}">
+                        <x-button class="px-1.5 h-8 hover:bg-tertiary hover:text-secondary" data-button-image="remove" data-image-name="{{ $category_image_name }}" data-original-image-name="{{ $original_category_image_name }}">
                             <x-icon class="h-4" src="{{ asset('img/icons/icon-delete.webp') }}"/>
                         </x-button>
                     </div>
@@ -51,11 +54,10 @@
             <div class="mb-4">
                 <x-input-label for="form-select-parent" value="Kategori Induk"/>
                 <x-input-select id="form-select-parent" name="parent_id" wire:model.change="parent_id">
-                    <option value="0" @selected(0 == $parent_id)>Kategori Level 0|Induk Kategori</option>
-
-                @foreach ($categoryOption as $option)
-                    <option value="{{ $option['category_id'] }}" @selected($option['category_id'] == $parent_id)>{{ $option['category_level'] . '|' .  $option['category_name']}}</option>
-                @endforeach
+                    
+                @unless (empty($form_select_parent))
+                    <option value="{{ $form_select_parent['id'] }}">{{ $form_select_parent['category_level'] . '|' . $form_select_parent['category_name'] }}</option>
+                @endunless
 
                 </x-input-select>
                 <x-input-error field="parent_id" :error="$error"/>
