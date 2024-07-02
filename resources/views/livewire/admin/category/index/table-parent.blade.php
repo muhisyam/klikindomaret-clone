@@ -44,7 +44,7 @@
             </td>
             <td class="py-2 px-4">{{ $category['category_name'] }}</td>
             <td class="py-2 px-4">{!! \App\Enums\DeployStatus::getStyle($category['category_deploy_status']) !!}</td>
-            <td class="py-2 px-4 text-end">{{ $category['category_children_count'] }}</td>
+            <td class="py-2 px-4 text-end">{{ formatNumber($category['category_children_count']) }}</td>
             <td class="py-2 px-4 flex justify-end">
                 <div class="-me-2.5 rounded-md h-9 w-0 bg-light-gray-50 transition-width duration-700">
                     <div class="flex opacity-0 duration-200" data-trigger-action="{{ $category['category_slug'] }}-action">
@@ -58,9 +58,7 @@
                             <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-delete.webp') }}"/>
                         </x-button>
                         
-                        <x-tooltip data-tooltip-trigger="action-delete-{{ $key }}" 
-                                data-tooltip-offset-x="-267" 
-                                value="Hapus {{ $category['category_name'] }}"/>
+                        <x-tooltip data-tooltip-trigger="action-delete-{{ $key }}" value="Hapus {{ $category['category_name'] }}"/>
 
                         <x-nav-link href="{{ route('categories.edit', ['category' => $category['category_slug']]) }}" 
                                     class="rounded-md h-9 w-9 cursor-pointer group hover:bg-light-gray-100" 
@@ -68,9 +66,7 @@
                             <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-nav-link>
                         
-                        <x-tooltip data-tooltip-trigger="action-edit-{{ $key }}" 
-                                data-tooltip-offset-x="-266" 
-                                value="Edit {{ $category['category_name'] }}"/>
+                        <x-tooltip data-tooltip-trigger="action-edit-{{ $key }}" value="Edit {{ $category['category_name'] }}"/>
                     </div>
                 </div>
                 <x-button class="z-10 justify-center h-9 w-9 group hover:bg-tertiary" data-target-action="{{ $category['category_slug'] }}-action">

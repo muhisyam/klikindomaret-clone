@@ -48,7 +48,7 @@
             <td class="py-2 px-4 text-end">-</td>
             <td class="py-2 px-4 flex justify-end">
                 <div class="-me-2.5 rounded-md h-9 w-0 bg-light-gray-50 transition-width duration-700">
-                    <div class="flex opacity-0 duration-200" data-trigger-action="{{ $categoryLvl2['category_slug'] }}-action">
+                    <div class="flex opacity-0 duration-200" data-trigger-action="{{ formatNumber($categoryLvl2['category_slug']) }}-action">
                         <x-button class="h-9 w-9 group hover:bg-light-gray-100" 
                                 data-tooltip-target="{{ $categoryLvl2['category_slug'] }}-action-delete-{{ $index }}"
                                 wire:click="delete(
@@ -59,9 +59,7 @@
                             <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-delete.webp') }}"/>
                         </x-button>
                         
-                        <x-tooltip data-tooltip-trigger="{{ $categoryLvl2['category_slug'] }}-action-delete-{{ $index }}" 
-                                data-tooltip-offset-x="-267" 
-                                value="Hapus {{ $categoryLvl2['category_name'] }}"/>
+                        <x-tooltip data-tooltip-trigger="{{ $categoryLvl2['category_slug'] }}-action-delete-{{ $index }}" value="Hapus {{ $categoryLvl2['category_name'] }}"/>
 
                         <x-nav-link href="{{ route('categories.edit', ['category' => $categoryLvl2['category_slug']]) }}" 
                                     class="rounded-md h-9 w-9 cursor-pointer group hover:bg-light-gray-100" 
@@ -69,9 +67,7 @@
                             <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                         </x-nav-link>
                         
-                        <x-tooltip data-tooltip-trigger="{{ $categoryLvl2['category_slug'] }}-action-edit-{{ $index }}" 
-                                data-tooltip-offset-x="-266" 
-                                value="Edit {{ $categoryLvl2['category_name'] }}"/>
+                        <x-tooltip data-tooltip-trigger="{{ $categoryLvl2['category_slug'] }}-action-edit-{{ $index }}" value="Edit {{ $categoryLvl2['category_name'] }}"/>
                     </div>
                 </div>
                 <x-button class="z-10 justify-center h-9 w-9 group hover:bg-tertiary" data-target-action="{{ $categoryLvl2['category_slug'] }}-action">
@@ -105,7 +101,7 @@
                                 <td class="py-2 px-4">{{ $categoryLvl3['category_name'] }}</td>
                                 <td class="py-2 px-4">{!! \App\Enums\DeployStatus::getStyle($categoryLvl3['category_deploy_status']) !!}</td>
                                 <td class="py-2 px-4 text-end">-</td>
-                                <td class="py-2 px-4 text-end">{{ $categoryLvl3['category_products_count'] }}</td>
+                                <td class="py-2 px-4 text-end">{{ formatNumber($categoryLvl3['category_products_count']) }}</td>
                                 <td class="py-2 px-4 flex justify-end">
                                     <div class="-me-2.5 rounded-md h-9 w-0 bg-light-gray-50 transition-width duration-700">
                                         <div class="flex opacity-0 duration-200" data-trigger-action="{{ $categoryLvl3['category_slug'] }}-action">
@@ -119,9 +115,7 @@
                                                 <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-delete.webp') }}"/>
                                             </x-button>
                                             
-                                            <x-tooltip data-tooltip-trigger="{{ $categoryLvl3['category_slug'] }}-action-delete-{{ $index }}" 
-                                                    data-tooltip-offset-x="-267" 
-                                                    value="Hapus {{ $categoryLvl3['category_name'] }}"/>
+                                            <x-tooltip data-tooltip-trigger="{{ $categoryLvl3['category_slug'] }}-action-delete-{{ $index }}" value="Hapus {{ $categoryLvl3['category_name'] }}"/>
 
                                             <x-nav-link href="{{ route('categories.edit', ['category' => $categoryLvl3['category_slug']]) }}" 
                                                         class="rounded-md h-9 w-9 cursor-pointer group hover:bg-light-gray-100" 
@@ -129,9 +123,7 @@
                                                 <x-icon class="mx-auto w-3 grayscale group-hover:grayscale-0" src="{{ asset('img/icons/icon-header-chevron-right.webp') }}"/>
                                             </x-nav-link>
                                             
-                                            <x-tooltip data-tooltip-trigger="{{ $categoryLvl3['category_slug'] }}-action-edit-{{ $index }}" 
-                                                    data-tooltip-offset-x="-266" 
-                                                    value="Edit {{ $categoryLvl3['category_name'] }}"/>
+                                            <x-tooltip data-tooltip-trigger="{{ $categoryLvl3['category_slug'] }}-action-edit-{{ $index }}" value="Edit {{ $categoryLvl3['category_name'] }}"/>
                                         </div>
                                     </div>
                                     <x-button class="z-10 justify-center h-9 w-9 group hover:bg-tertiary" data-target-action="{{ $categoryLvl3['category_slug'] }}-action">
