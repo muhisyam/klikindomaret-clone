@@ -7,6 +7,7 @@ use App\Enums\SelectSpesificRoute;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class PromotionBanner extends Model
 {
@@ -38,6 +39,13 @@ class PromotionBanner extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class)->withTimestamps();
+    }
+
+    public function keywords(): MorphToMany
+    {
+        return $this->morphToMany(MetaKeyword::class, 'meta_keyword_content')
+            ->withPivot('weight')
+            ->withTimestamps();
     }
 
     public function getEventStatus()
