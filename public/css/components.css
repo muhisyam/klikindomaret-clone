@@ -37,7 +37,8 @@
 
 [data-modal][overlay]:has([data-trigger-modal].show)::before,
 [data-trigger-modal].show ~ [separate-modal-overlay]::before,
-[data-dropdown][overlay]:has([data-trigger-dropdown]:not(.hidden))::before {
+[data-dropdown][overlay]:has([data-trigger-dropdown]:not(.hidden))::before,
+.search-bar.open::before {
     content: '';
     position: fixed;
     z-index: 50;

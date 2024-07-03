@@ -181,10 +181,29 @@ div[data-trigger-dropdown]::before {
 }
 
 /* 
---------------------=================--------------------
-==================== Header Section =====================
---------------------=================-------------------- 
+    MARK: Header
 */
+
+[data-element="search-result-wrapper"] {
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #cccccc;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: #999999;
+    }
+}
+
+input[name="search_key"]::-webkit-search-decoration,
+input[name="search_key"]::-webkit-search-cancel-button,
+input[name="search_key"]::-webkit-search-results-button,
+input[name="search_key"]::-webkit-search-results-decoration { 
+    display: none; 
+}
 
 .login-wrapper .body-section {
     min-height: calc(100vh - 380px);
