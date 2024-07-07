@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\File;
 class ProductService 
 {
     /**
-     * Amount essential data that included to keywords.
+     * Essential data that included to keywords.
     */ 
-    private int $amountEssentialKeywords;
+    private array $essentialKeywords = ['pn-', 'bn-', 'cn-'];
 
     /**
      * Create a new resource instance.
@@ -91,9 +91,11 @@ class ProductService
             $categoryName = Category::find($formData['category_id'])->category_name;
             $brandName    = Brand::find($formData['brand_id'])->brand_name;
             $keywords     = implode(',', $formData['product_meta_keyword']);
-            $keywords     = $keywords . ',pn-' . $formData['product_name'] . ',bn-' . $brandName . ',cn-' . $categoryName;
-            
-            $this->amountEssentialKeywords = 3;
+            $essentialKey = $this->essentialKeywords;
+            $keywords     = $keywords . 
+                ',' . $essentialKey[0] . $formData['product_name'] . 
+                ',' . $essentialKey[1] . $brandName . 
+                ',' . $essentialKey[2] . $categoryName;
 
             $formData['product_meta_keyword'] = $keywords;
         }
@@ -250,9 +252,10 @@ class ProductService
     */ 
     public function filterKeywords(string $productKeyword): array
     {
-        $keywordInArray   = explode(',', $productKeyword);
-        $newLength        = count($keywordInArray) - $this->amountEssentialKeywords;
-        $filteredKeywords = array_slice($keywordInArray, 0, $newLength);
+        $keywordInArray          = explode(',', $productKeyword);
+        $amountEssentialKeywords = count($this->essentialKeywords);
+        $newLength               = count($keywordInArray) - $amountEssentialKeywords;
+        $filteredKeywords        = array_slice($keywordInArray, 0, $newLength);
 
         return $filteredKeywords;
     }
