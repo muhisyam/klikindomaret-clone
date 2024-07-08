@@ -118,15 +118,7 @@
             </x-slot>
         </x-dropdown>
 
-        <div class="search-bar w-[39rem]">
-            <div class="relative">
-                <input type="search" id="default-search" class="block w-full px-3 py-1.5 text-sm text-[#555] border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 placeholder:text-slate-400" placeholder="Mau beli apa hari ini?" required>
-                
-                <a class="absolute right-4 bottom-[4.5px] rounded py-1 px-3 bg-tertiary" href="#">
-                    <x-icon class="w-4" src="{{ asset('img/icons/icon-header-search.webp') }}" data-arrow-category=""/>
-                </a>
-            </div>
-        </div>
+        <livewire:general.home.search/>
 
         <div class="relative flex items-center justify-end grow">
             @if(is_null(session('auth_token')))
@@ -324,3 +316,15 @@
 </nav>
 
 @endif
+
+@push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            const queryString = window.location.search;
+            const urlParams   = new URLSearchParams(queryString);
+    
+            if (urlParams.get('auth') == 'login') document.querySelector('button[data-target-modal="login"]').click();
+            if (urlParams.get('auth') == 'register') document.querySelector('button[data-target-modal="register"]').click();
+        });
+    </script>
+@endpush
