@@ -11,7 +11,7 @@ class KeywordFilter
 {
     function handle(array $result, Closure $next)
     {
-        $search   = request('search');
+        $search   = request('key');
         $keywords = MetaKeyword::query()
             ->where('keyword_deploy_status', DeployStatus::PUBLISHED->value)
             ->where('keyword_name', 'LIKE', "%{$search}%")

@@ -11,9 +11,9 @@ class PromotionBannerFilter
 {
     function handle(array $result, Closure $next)
     {
-        $search = request('search');
+        $search = request('key');
         $promos = PromotionBanner::query()
-            // ->where('banner_deploy_status', DeployStatus::PUBLISHED->value)
+            ->where('banner_deploy_status', DeployStatus::PUBLISHED->value)
             ->whereHas('keywords', function ($query) use ($search) {
                 $query
                     ->where('keyword_deploy_status', DeployStatus::PUBLISHED->value)

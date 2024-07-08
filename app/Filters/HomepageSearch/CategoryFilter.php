@@ -11,7 +11,7 @@ class CategoryFilter
 {
     function handle(array $result, Closure $next)
     {
-        $search     = request('search');
+        $search     = request('key');
         $categories = Category::query()
             ->whereHas('keywords', function ($query) use ($search) {
                 $query
