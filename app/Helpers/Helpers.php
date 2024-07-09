@@ -198,3 +198,23 @@ function checkErrorKeyExist(null|array $error, string $field): bool|array
 
     return preg_grep('/^' . $field . '\./', array_keys($error['errors']));
 }
+
+// MARK: Highlight string.
+/**
+ * Highlights occurrences of a given string in another string by wrapping them in a span tag with a specific CSS class.
+ *
+ * @param string $needle   The string to search for in the haystack.
+ * @param string $haystack The string to search within.
+ */
+function highlightString(string $needle, string $haystack): string
+{
+    $needleWords = array_filter(explode(' ', $needle));
+    $haystack    = str_replace(' ', '&nbsp;', $haystack);
+
+    foreach ($needleWords as $word) {
+        $regex = '/' . preg_quote($word, '/') . '/i';
+        $haystack = preg_replace($regex, '<span class="text-secondary">$0</span>', $haystack);
+    }
+
+    return $haystack;
+}
