@@ -14,8 +14,11 @@ class SearchFilterKeywordResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $highlightedKey = highlightString($request->key, $this->keyword_name);
+
         return [
-            'keyword_name'  => $this->keyword_name,
+            'highlighted'  => $highlightedKey,
+            'keyword_name' => $this->keyword_name,
         ];
     }
 }
