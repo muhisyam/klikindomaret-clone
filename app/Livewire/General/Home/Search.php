@@ -2,17 +2,18 @@
 
 namespace App\Livewire\General\Home;
 
-use App\Actions\ClientRequestAction;
-use App\DataTransferObjects\ClientRequestDto;
+use App\Http\Controllers\Web\General\SearchController;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class Search extends Component
 {
     /**
-     * Key name input search.
+     * The key of the parameter in the URL used to search for products.
     */
-    public string $search_key;
-
+    #[Url]
+    public string $key = '';
+    
     /**
      * Container for result of filters. 
     */
@@ -24,12 +25,12 @@ class Search extends Component
     public bool $isAllEmpty = true;
 
     /**
-     * listen when @var search_key value had changes. It will get filters content when
-     * @var search_key length > 4.
+     * listen when @var key value had changes. It will get filters content when
+     * @var key length > 4.
     */
-    public function updatedSearchKey()
+    public function updatedKey(): bool
     {
-        if (strlen($this->search_key) < 4) {
+        if (strlen($this->key) < 3) {
             $this->result = [
                 'banners'         => [],
                 'keywords'        => [],
@@ -37,31 +38,22 @@ class Search extends Component
                 'official_stores' => [],
             ];
 
-            $this->checkResultAreEmpty();
-
-            return false;
+            return $this->checkResultAreEmpty();
         }
 
-        $clientAction = app(ClientRequestAction::class);
-
-        $this->result = $clientAction->request(
-            new ClientRequestDto(
-                method:   'GET',
-                endpoint: config('api.url') . 'search?search=' . $this->search_key,
-            )
-        );
+        $this->result = app(SearchController::class)->getListCategories('navbar?key=' . $this->key);
 
         if (! empty($this->result['banners'])) {
             $this->setSwiperJs();
         }
 
-        $this->checkResultAreEmpty();
+        return $this->checkResultAreEmpty();
     }
 
     /**
      * Set swiper js for banners filter when exists.
     */
-    private function setSwiperJs()
+    private function setSwiperJs(): void
     {
         $this->js(<<<JS
             setTimeout(() => {
@@ -80,9 +72,9 @@ class Search extends Component
     /**
      * Check the result filter are empty.
     */
-    private function checkResultAreEmpty()
+    private function checkResultAreEmpty(): bool
     {
-        $this->isAllEmpty =
+        return $this->isAllEmpty =
             empty($this->result['banners']) && 
             empty($this->result['keywords']) && 
             empty($this->result['categories']) && 
