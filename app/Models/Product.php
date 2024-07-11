@@ -10,8 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -57,11 +59,6 @@ class Product extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    public function descriptions(): HasMany
-    {
-        return $this->hasMany(ProductDescription::class);
-    }
-
     public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class);
@@ -71,6 +68,14 @@ class Product extends Model
     {
         return $this->belongsToMany(Retailer::class)->withTimestamps();
     }
+
+    public function keywords(): MorphToMany
+    {
+        return $this->morphToMany(MetaKeyword::class, 'meta_keyword_content')
+            ->withPivot('weight')
+            ->withTimestamps();
+    }
+
 
     // MARK: Related to retailer.
     /**
@@ -108,14 +113,20 @@ class Product extends Model
     */
     public function scopeFilterModel(Builder $query, Request $request): Builder
     {
-        $search  = $request->search;
-        $value   = $request->value;
-        $like    = $request->like;
-        $between = $request->between;
-        $sortBy  = $request->sortBy;
-        $sortDir = $request->sortDir;
+        $search     = $request->search;
+        $brand      = $request->brand;
+        $supplier   = $request->supplier;
+        $minPrice   = $request->minPrice ?? 0;
+        $maxPrice   = $request->maxPrice ?? 99999999;
+        $categories = $request->categories;
+        $value      = $request->value;
+        $like       = $request->like;
+        $between    = $request->between;
+        $sortBy     = $request->sortBy;
+        $sortDir    = $request->sortDir;
 
         return $query
+            // Where 
             ->when($search, function($query) use ($search, $value, $like, $between) {
                 if($value) {
                     $query->where($search, $value);
@@ -125,10 +136,18 @@ class Product extends Model
                     $query->whereBetween($search, explode('|', $between));
                 }
             })
-            ->when($sortBy == 'category_name', fn($query) => $query->orderBy('categories.category_name', $sortDir))
-            ->when($sortBy == 'product_price', fn($query) => $query->orderByRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE normal_price END ' . $sortDir))
-            ->when($sortBy == 'product_name',  fn($query) => $query->orderBy($sortBy, $sortDir))
-            ->when($sortBy == 'product_stock', fn($query) => $query->orderBy($sortBy, $sortDir));
+            ->when($categories, fn($query) => $query->whereIn('categories.category_slug', explode('|', $categories)))
+            ->when($brand,      fn($query) => $query->where('brands.brand_slug', $brand))
+            ->when($supplier,   fn($query) => $query->whereIn('suppliers.flag_name', explode('|', $supplier)))
+            ->whereBetween(DB::raw('CASE WHEN discount_price > 0 THEN discount_price ELSE normal_price END'), [$minPrice, $maxPrice])
+
+            // Order By
+            ->when($sortBy == 'category_name',    fn($query) => $query->orderBy('categories.category_name', $sortDir))
+            ->when($sortBy == 'product_price',    fn($query) => $query->orderByRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE normal_price END ' . $sortDir))
+            ->when($sortBy == 'product_discount', fn($query) => $query->orderByRaw('CASE WHEN discount_price > 0 THEN 0 ELSE 1 END, discount_price ' . $sortDir))
+            ->when($sortBy == 'product_name',     fn($query) => $query->orderBy($sortBy, $sortDir))
+            ->when($sortBy == 'product_stock',    fn($query) => $query->orderBy($sortBy, $sortDir))
+            ->when($sortBy == 'created_at',       fn($query) => $query->orderBy($sortBy, $sortDir));
     }
 
     // MARK: Get data.
