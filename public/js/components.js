@@ -448,3 +448,29 @@ export function initInvalidSelect2() {
         s2Wrapper.style.borderColor = '#dc2626';
     });
 }
+
+// MARK: Accordion
+/**
+ * Class for handling accordion element.
+*/
+export class Accordion {
+    /**
+     * Toggle the accordion state.
+     * 
+     * @param {Object}  opt                 - Options object
+     * @param {boolean} opt.isHide          - Indicates whether the accordion element target has the 'hide' class
+     * @param {string}  opt.hideClass       - Name of 'hide' class
+     * @param {object}  opt.targetEl        - The accordion element target
+     * @param {object}  opt.wrapperEl       - The element that wraps the target element
+     * @param {string}  opt.additionalClass - Additional classes want to add to wrapper class
+    */
+    toogleAccordion({isHide, hideClass = 'hide', targetEl, wrapperEl, additionalClass = 'active'}) { 
+        if (isHide) {
+            targetEl.classList.remove(hideClass);
+            wrapperEl.classList.add(additionalClass);
+        } else {
+            targetEl.classList.add(hideClass);
+            wrapperEl.classList.remove(additionalClass);
+        }
+    };
+}
