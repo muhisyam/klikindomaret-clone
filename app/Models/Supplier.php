@@ -12,6 +12,11 @@ class Supplier extends Model
 
     protected $fillable = [];
 
+    public static array $staticStoreSupplier = [
+        1,
+        2,
+    ];
+
     /**
      * The model's default values for attributes.
      *
