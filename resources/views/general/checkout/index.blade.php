@@ -1,4 +1,8 @@
 <x-general-layout class="mb-[84px] flex gap-6">
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
+    
     <section class="w-3/4 space-y-4" data-section="checkout-product">
         <div class="rounded-lg py-3 px-6 flex items-center gap-3 bg-sky-100 text-black" role="alert">
             <x-icon class="w-6" src="{{ asset('img/icons/icon-info-fill.webp') }}"/>
@@ -47,13 +51,3 @@
         </div>
     </section>
 </x-general-layout>
-
-<script>
-    // document.addEventListener('livewire:initialized', () => {
-    //     Livewire.on('run-js-content-loaded', event => {
-    //         setTimeout(() => {
-    //             console.log('xzcxzcxzcxz');
-    //         }, 1);
-    //     });
-    // });
-</script>

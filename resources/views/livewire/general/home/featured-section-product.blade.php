@@ -33,10 +33,12 @@
                     @php /*TODO: Fix dis image url*/ @endphp
                     <img class="rounded-t-lg object-cover mb-5" src="{{ asset('img/uploads/products/' . $product['product_images'][0]['product_image_name']) }}" alt="Product Image" loading="lazy">
                     {{-- <img class="rounded-t-lg object-cover mb-5" src="{{ asset('img/uploads/products/' . $product['product_slug'] . '/' . $product['product_images'][0]['product_image_name']) }}" alt="Product Image" loading="lazy"> --}}
+                    
                     <div class="p-2" >
                         <div class="mb-1 min-h-[32px] line-clamp-2 text-xs text-black font-bold">
                             {{ $product['product_name'] }}
                         </div>
+                        
                         <div @class([
                             'mb-2 flex items-center gap-1 text-xs', 
                             'text-secondary' => in_array($retailerIcon, $officialSupList),
@@ -45,7 +47,9 @@
                             <x-icon class="w-3" src="{{ asset('img/icons/icon-send-by-' . $retailerIcon . '.webp') }}"/>
                             <span class="line-clamp-1 text-[10px] leading-none">{{ $retailerName }}</span>
                         </div>
+                        
                         <div class="mb-7 h-11 flex flex-col">
+                        
                         @if ($product['discount_price'])
                             <div class="discount-wrapper flex items-center text-[10px]">
                                 <div class="left-side max-w-[40px] rounded bg-primary-50 text-primary-600 text-center font-bold me-2 px-1.5 py-1">
@@ -56,6 +60,7 @@
                                 </div>
                             </div>
                         @endif
+                            
                             <div @class([
                                 'mt-auto line-clamp-1 text-sm font-bold leading-none', 
                                 'text-black'       => ! $product['discount_price'],
@@ -64,11 +69,13 @@
                                 Rp {{ formatCurrencyIDR($product['discount_price'] ?? $product['normal_price']) }}
                             </div>
                         </div>
+                        
                         <x-button class="px-5 py-1.5 justify-center gap-1.5 w-full text-xs" buttonStyle="outline-secondary">
                             <x-icon class="mt-[-2px] w-2 rotate-45" src="{{ asset('img/icons/icon-header-close.webp') }}"/>
                             <span>Keranjang</span>
                         </x-button>
                     </div>
+                    
                     <div class="favorite absolute top-1 right-1 bg-[#F5F5F5] rounded-full z-10">
                         <x-button>
                             <x-icon class="w-7" src="{{ asset('img/icons/icon-favorite.webp') }}"/>

@@ -108,7 +108,7 @@
 
                     <div class="flex items-center gap-2">
                         <img class="h-5" src="{{ asset('img/checkout/choose-' . $delivery['delivery_option'] . '.webp') }}" alt="">
-                        <div class="text-xs">{{ formatToIdnLocale(\Carbon\Carbon::parse($delivery['expected_pickup_date']), 'j M Y') }} {{ $delivery['expected_time_between'] ? '| ' . $delivery['expected_time_between'] . ' WIB' : ''}}</div>
+                        <div class="text-xs">{{ $delivery['expected_pickup_date'] }} {{ $delivery['expected_time_between'] ? '| ' . $delivery['expected_time_between'] . ' WIB' : ''}}</div>
                     </div>
         
                     {{-- Pickup Address --}}

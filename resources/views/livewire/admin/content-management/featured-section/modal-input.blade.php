@@ -54,7 +54,7 @@
 @push('scripts')
 
     <script type="module">
-        import { hideOpenedModal } from "../js/components.js";
+        import { hideOpenedModal } from "{{ asset('js/' . config('view.js_component')) }}";
 
         // Jquery for convert purpose(✌ ͡• ₃ ͡•)✌
         $('#form-select-featured-type').select2();

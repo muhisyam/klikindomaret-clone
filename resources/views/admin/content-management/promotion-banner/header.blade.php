@@ -58,14 +58,14 @@
     <section class="bottom-section">
         <nav class="flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center text-sm">
-                <li class="flex items-center text-[#95989A]">
-                    <span >Konten</span>
+                <li class="flex items-center text-light-gray-400">
+                    <span>Konten</span>
                 </li>
-                <li class="flex items-center text-[#95989A]">
+                <li class="flex items-center text-light-gray-400">
                     <i class="ri-arrow-right-s-line mx-2"></i>
                     <a href="{{ route('promotions.index') }}" class="hover:text-[#0079C2]">Promosi</a>
                 </li>
-                <li class="flex items-center text-[#95989A]">
+                <li class="flex items-center text-light-gray-400">
                     <i class="ri-arrow-right-s-line mx-2"></i>
                     <span class="text-black">List Promosi</span>
                 </li>

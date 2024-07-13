@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -127,7 +127,7 @@ class Order extends Model
      * @param array<int, string> $containerIds The order is supplierId, retailerId
      * @return Builder
     */
-    public function scopeGetListRetailerOrders($query, array $containerIds): Builder
+    public function scopeGetListRetailerOrders(Builder $query, array $containerIds): Builder
     {
         $supplierId  = $containerIds[0];
         $retailerId  = $containerIds[1];
